@@ -1,0 +1,20 @@
+﻿@using BookBuddy.Models.Pages
+@using BookBuddy.Models.ViewModels
+@model IPageViewModel<SitePageData>
+
+<!DOCTYPE html>
+
+<html lang="@Model.CurrentPage.Language">
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <meta title="@Model.CurrentPage.MetaTitle" />
+    <title></title>
+</head>
+<body>
+
+    <main>
+       @RenderBody()
+    </main>
+
+</body>
+</html>

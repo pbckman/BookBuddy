@@ -1,0 +1,29 @@
+﻿using System.ComponentModel.DataAnnotations;
+using static BookBuddy.Globals;
+
+namespace BookBuddy.Models.Pages
+{
+    [ContentType(
+    GUID = "F7A0B723-F6D5-498D-AAAB-69B7C69D19A2",
+    GroupName = GroupNames.Specialized
+    )]
+
+    public class StartPage : SitePageData
+    {
+        [Display(
+            GroupName = SystemTabNames.Content,
+            Order = 10
+        )]
+        [CultureSpecific]
+        public virtual string Heading { get; set; } = string.Empty;
+
+        [Display(
+           GroupName = SystemTabNames.Content,
+           Order = 20
+        )]
+        [CultureSpecific]
+        public virtual XhtmlString? MainBody { get; set; }
+
+
+    }
+}
