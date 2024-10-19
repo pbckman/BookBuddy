@@ -7,5 +7,7 @@ namespace BookBuddy.Models.ViewModels
         T CurrentPage { get; }
 
         LayoutModel Layout { get; set; }
+
+        SiteSettingsPage SiteSettings { get; }
     }
 }

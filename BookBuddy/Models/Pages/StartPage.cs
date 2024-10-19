@@ -24,6 +24,11 @@ namespace BookBuddy.Models.Pages
         [CultureSpecific]
         public virtual XhtmlString? MainBody { get; set; }
 
-
+        [Display(
+           GroupName = SystemTabNames.Content,
+           Order = 30
+        )]
+        [CultureSpecific]
+        public virtual ContentReference? SiteSettingsPage { get; set; }
     }
 }

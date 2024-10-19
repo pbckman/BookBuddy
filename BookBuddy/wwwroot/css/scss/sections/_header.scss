@@ -1,0 +1,32 @@
+.navbar-wrapper {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+
+    .nav-logo {
+        display: flex;
+        justify-content: center;
+        margin-top: 10%;
+        gap: 10px;
+    }
+
+    .nav-items {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        align-items: center;
+        height: 100%;
+
+        .nav-links {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            margin-top: 10%;
+            gap: 30px;
+        }
+
+        .nav-logout {
+            margin-bottom: 10%;
+        }
+    }
+}

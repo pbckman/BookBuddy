@@ -2,7 +2,7 @@
 
 namespace BookBuddy.Models.ViewModels
 {
-    public class StartPageViewModel(StartPage currentPage) : PageViewModel<StartPage>(currentPage)
+    public class StartPageViewModel(StartPage currentPage, SiteSettingsPage siteSettings) : PageViewModel<StartPage>(currentPage, siteSettings)
     {
     }
 }

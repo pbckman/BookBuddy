@@ -24,4 +24,12 @@
   <ItemGroup>
     <EmbeddedResource Include="Resources\Translations\**\*" />
   </ItemGroup>
+  
+  <ItemGroup>
+    <Content Remove="compilerconfig.json" />
+  </ItemGroup>
+  
+  <ItemGroup>
+    <None Include="compilerconfig.json" />
+  </ItemGroup>
 </Project>

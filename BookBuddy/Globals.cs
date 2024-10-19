@@ -20,6 +20,17 @@ namespace BookBuddy
             )]
             public const string Specialized = "Specialized";
 
+            [Display(
+                Name = "Header",
+                Order = 30
+            )]
+            public const string Header = "Header";
+
+            [Display(
+                Name = "Footer",
+                Order = 40
+            )]
+            public const string Footer = "Footer";
         }
     }
 }

@@ -1,0 +1,41 @@
+﻿@using BookBuddy.Models.Pages
+@using BookBuddy.Models.ViewModels
+@using EPiServer.Web.Mvc.Html
+
+
+@model IPageViewModel<SitePageData>
+
+
+    @if (Model.SiteSettings != null)
+    {
+        <div class="footer-wrapper">
+            <div class="footer-items">
+                @if (Model.SiteSettings.SocialLinks != null)
+                {
+                    @foreach (var item in Model.SiteSettings.SocialLinks.FilteredItems)
+                    {
+                        var socialLinkBlock = item.LoadContent() as BookBuddy.Models.Blocks.SocialLinkBlock;
+                        if (socialLinkBlock != null)
+                        {
+                            <a href="@socialLinkBlock.Url" target="_blank" rel="noopener noreferrer">
+                                @if (socialLinkBlock.Icon != null)
+                                {
+                                    <img src="@Url.ContentUrl(socialLinkBlock.Icon)" alt="@socialLinkBlock.PlatformName" class="social-link" />
+                                }
+                            </a>
+                        }
+                    }
+                }
+
+            </div>
+
+            <div class="footer-copyright">
+                <p>@Model.SiteSettings.FooterText</p>
+            </div>
+        </div>
+        
+    }
+    else
+    {
+        <p>Footer settings not available</p>
+    }

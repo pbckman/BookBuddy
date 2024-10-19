@@ -1,0 +1,37 @@
+﻿﻿@using BookBuddy.Models.Pages
+@using BookBuddy.Models.ViewModels
+@using EPiServer.Web.Mvc.Html
+
+@model IPageViewModel<SitePageData>
+
+
+    @if (Model.SiteSettings != null)
+    {
+        <div class="navbar-wrapper">
+            <div class="nav-logo">
+                <img class="nav-logo-img" src="@Url.ContentUrl(Model.SiteSettings.HeaderLogo)" alt="Company Logo" />
+                <h1>@Model.SiteSettings.HeaderTitle</h1>
+            </div>
+
+            <div class="nav-items">
+
+                <div class="nav-links">
+                    @foreach (var link in Model.SiteSettings.HeaderLinks!)
+                     {
+                    <a href="@link.Href" target="@link.Target">@link.Text</a>
+                     }
+                </div>
+
+                <div class="nav-logout">
+                    <button>
+                        Logout
+                    </button>
+                </div>
+
+            </div>
+        </div>
+    }
+    else
+    {
+        <p>Site settings not available</p>
+    }
