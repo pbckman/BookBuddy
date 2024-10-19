@@ -1,0 +1,21 @@
+﻿@using Microsoft.AspNetCore.Components.Forms
+@using Microsoft.AspNetCore.Components.Web
+@using Microsoft.JSInterop
+
+@inject IJSRuntime JSRuntime;
+
+
+<h3>CounterBlazorPage</h3>
+
+<p>Current count: @count </p>
+<button @onclick="IncrementCount">Increment</button>
+
+@code {
+    public int count = 0;
+
+    private void IncrementCount()
+    {
+        count++;
+        StateHasChanged();
+    }
+}

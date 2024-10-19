@@ -29,6 +29,8 @@ namespace BookBuddy
                 .AddCms()
                 .AddAdminUserRegistration()
                 .AddEmbeddedLocalization<Startup>();
+
+            services.AddServerSideBlazor();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -46,6 +48,8 @@ namespace BookBuddy
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapContent();
+
+                endpoints.MapBlazorHub();
             });
         }
     }

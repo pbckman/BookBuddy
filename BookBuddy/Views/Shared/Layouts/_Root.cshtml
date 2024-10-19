@@ -15,7 +15,9 @@
 </head>
 <body>
     <div class="container-fluid">
+
         <div class="row">
+
             <div class="col-2 bg-light vh-100 d-flex flex-column">
                 @await Html.PartialAsync("_Header", Model)
             </div>
@@ -29,7 +31,10 @@
                     @await Html.PartialAsync("_Footer", Model)
                 </div>
             </div>
+
         </div>
+
     </div>
+    <script src="_framework/blazor.server.js"></script>
 </body>
 </html>
