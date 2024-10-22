@@ -1,0 +1,16 @@
+.form-group {
+    margin-bottom: 1rem;
+}
+
+.form-control {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    &:focus-visible, :focus {
+        outline: none;
+        // border-color: $primary;
+        box-shadow: none;
+        border: none;
+        background-color: rgba(0, 0, 0, 0.2);
+    }
+}

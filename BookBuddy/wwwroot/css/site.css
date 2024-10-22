@@ -1,4 +1,34 @@
-﻿.navbar-wrapper {
+.card {
+  box-shadow: 0 4px 12px 0 rgba(0, 0, 0, 0.6);
+  padding: 1.25rem;
+  margin: 0.5rem;
+}
+
+.form-group {
+  margin-bottom: 1rem;
+}
+
+.form-control {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+}
+.form-control:focus-visible, .form-control :focus {
+  outline: none;
+  box-shadow: none;
+  border: none;
+  background-color: rgba(0, 0, 0, 0.2);
+}
+
+a {
+  text-decoration: none;
+}
+
+.btn:hover {
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.3);
+}
+
+.navbar-wrapper {
   display: flex;
   flex-direction: column;
   height: 100%;
