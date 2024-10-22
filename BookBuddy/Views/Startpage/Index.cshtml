@@ -1,17 +1,14 @@
-﻿@using BookBuddy.Models.ViewModels
-@using BookBuddy.Shared
-@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
-
-@model StartPageViewModel
+﻿@model StartPageViewModel
 
 <div class="startpage-wrapper">
-    <div class="startpage-header">
-        <h1>@Model.CurrentPage.Heading</h1>
+    <div class="startpage-header card">
+        <h1 class="card-title">@Model.CurrentPage.Heading</h1>
     </div>
 
-    <div class="startpage-mainbody">
+    <div class="startpage-mainbody card">
         @Html.Raw(Model.CurrentPage.MainBody)
     </div>
 
     <component type="typeof(CounterBlazorPage)" render-mode="Server" />
+    <component type="typeof(TestForm)" render-mode="Server" />
 </div>
