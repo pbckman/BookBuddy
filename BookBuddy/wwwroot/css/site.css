@@ -1,3 +1,4 @@
+﻿@import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
 .card {
   box-shadow: 0 4px 12px 0 rgba(0, 0, 0, 0.6);
   padding: 1.25rem;
@@ -24,8 +25,23 @@ a {
   text-decoration: none;
 }
 
+:root {
+  --color-danger: #F5D7DA;
+  --color-success: #22C55E;
+  --color-warning: #EF4444;
+  --color-info: #4C82F7;
+}
+
 .btn:hover {
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.3);
+}
+
+:root {
+  --font-poppins: "Poppins", san-serif;
+}
+
+body {
+  font-family: var(--font-poppins);
 }
 
 .navbar-wrapper {
