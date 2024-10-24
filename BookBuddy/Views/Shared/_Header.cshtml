@@ -2,10 +2,15 @@
 
 <div class="header-wrapper">
     <div class="header-items">
+        <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon">
+                    <i class="fa-solid fa-bars"></i>
+                </span>
+        </button>
 
         <div class="dropdown">
-            <button class="btn btn-light dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                <img class="profile-image" src="~/images/default-profile.jpg" alt="Company Logo" /> Profile Name            
+            <button class="btn btn-light dropdown-toggle d-flex align-items-center" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                <img class="profile-image" src="~/images/default-profile.jpg" alt="Company Logo" /> <span class="d-none d-lg-block">Profile Name</span>            
             </button>
             <ul class="dropdown-menu">
                 <li><a class="dropdown-item" href="#">Action</a></li>

@@ -1,28 +1,40 @@
-.side-navbar {
-    position: fixed;
-    width: 14rem;
-    display: block;
-    overflow: auto;
+.offcanvas.offcanvas-start {
+    --bs-offcanvas-width: 16rem;
+}
+
+@media (min-width: 992px) {
+    #offcanvasNavbar {
+        position: fixed;
+        top: 0;
+        left: 0;
+        height: 100%;
+        z-index: 1045;
+        display: block;
+        visibility: visible;
+        transform: none;
+    }
+    .main-content {
+        margin-left: 16rem;
+    }
+}
+.navbar {
+    width: 16rem;
+    padding: 3rem 0;
     height: 100%;
-    min-height: 100vh;
-    padding: 3rem 5rem;
-    // background-color: #F2F2F2;
+    // z-index: 1050;
     background-image: url('../images/sidebar.jpg');
     background-size: cover;
     background-repeat: no-repeat;
-    // // opacity: 0.1;
-    z-index: 1050;
     box-shadow: 4px 0 14px 0 rgba(0, 0, 0, 0.55);
     .navbar-wrapper {
         display: flex;
         flex-direction: column;
         height: 100%;
-        gap: 4rem;
-    
         .nav-logo {
             display: flex;
             justify-content: center;
             gap: 10px;
+            margin-bottom: 3rem;
             .nav-logo-img {
                 height: 8rem;
             }
@@ -43,10 +55,6 @@
                 margin-top: 25%;
                 gap: 30px;
                 font-size: 1.25rem;
-            }
-    
-            .nav-logout {
-                // margin-bottom: 15%;
             }
         }
     }

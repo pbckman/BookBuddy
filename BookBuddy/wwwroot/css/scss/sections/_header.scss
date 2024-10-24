@@ -1,17 +1,24 @@
 .header {
     position: sticky;
-    padding: 1.5rem 2.5rem;
-    // background: transparent;
+    padding: .75rem 2rem;
+    background-color: rgb(255, 218, 89, .5);
     .header-wrapper {
         display: flex;
-        justify-content: right;
         .header-items {
             display: flex;
-            justify-content: center;
+            justify-content: space-between;
             align-items: center;
-            gap: 20px;
-            padding: 1rem;
+            padding: 0;
+            width: 100%;
+            .navbar-toggler {
+                font-size: 1.5rem;
+                .navbar-toggler-icon {
+                    display: flex;
+                    align-items: center;
+                }
+            }
             .dropdown {
+                margin-left: auto;
                 .dropdown-toggle {
                     padding: .75rem 1.25rem;
                     border-radius: 1rem;
@@ -22,6 +29,22 @@
                         margin-right: .5rem;
                     }
                 }
+            }
+        }
+    }
+}
+
+@media (min-width: 992px) {
+    .navbar-toggler {
+        display: none;
+    }
+    .header {
+        background: transparent;
+        padding: .5rem 2rem;
+        .header-wrapper {
+            display: flex;
+            .header-items {
+                padding: 1rem;
             }
         }
     }
