@@ -1,14 +1,14 @@
-﻿@using BookBuddy.Models.Pages
-@using BookBuddy.Models.ViewModels
-@using EPiServer.Web.Mvc.Html
-
-
-@model IPageViewModel<SitePageData>
+﻿@model IPageViewModel<SitePageData>
 
 
     @if (Model.SiteSettings != null)
     {
         <div class="footer-wrapper">
+
+            <div class="footer-copyright">
+                <p>@Model.SiteSettings.FooterText</p>
+            </div>
+            
             <div class="footer-items">
                 @if (Model.SiteSettings.SocialLinks != null)
                 {
@@ -29,9 +29,6 @@
 
             </div>
 
-            <div class="footer-copyright">
-                <p>@Model.SiteSettings.FooterText</p>
-            </div>
         </div>
         
     }

@@ -1,37 +1,22 @@
-﻿﻿@using BookBuddy.Models.Pages
-@using BookBuddy.Models.ViewModels
-@using EPiServer.Web.Mvc.Html
-
 @model IPageViewModel<SitePageData>
 
+<div class="header-wrapper">
+    <div class="header-items">
+        <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon">
+                    <i class="fa-solid fa-bars"></i>
+                </span>
+        </button>
 
-    @if (Model.SiteSettings != null)
-    {
-        <div class="navbar-wrapper">
-            <div class="nav-logo">
-                <img class="nav-logo-img" src="@Url.ContentUrl(Model.SiteSettings.HeaderLogo)" alt="Company Logo" />
-                <h1>@Model.SiteSettings.HeaderTitle</h1>
-            </div>
-
-            <div class="nav-items">
-
-                <div class="nav-links">
-                    @foreach (var link in Model.SiteSettings.HeaderLinks!)
-                     {
-                    <a href="@link.Href" target="@link.Target">@link.Text</a>
-                     }
-                </div>
-
-                <div class="nav-logout">
-                    <button>
-                        Logout
-                    </button>
-                </div>
-
-            </div>
+        <div class="dropdown">
+            <button class="btn btn-light dropdown-toggle d-flex align-items-center" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                <img class="profile-image" src="~/images/default-profile.jpg" alt="Company Logo" /> <span class="d-none d-lg-block">Profile Name</span>            
+            </button>
+            <ul class="dropdown-menu">
+                <li><a class="dropdown-item" href="#">Action</a></li>
+                <li><a class="dropdown-item" href="#">Another action</a></li>
+                <li><a class="dropdown-item" href="#">Something else here</a></li>
+            </ul>
         </div>
-    }
-    else
-    {
-        <p>Site settings not available</p>
-    }
+    </div>
+</div>
