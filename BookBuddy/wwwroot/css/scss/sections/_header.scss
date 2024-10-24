@@ -1,32 +1,28 @@
-.navbar-wrapper {
-    display: flex;
-    flex-direction: column;
-    height: 100%;
-
-    .nav-logo {
+.header {
+    position: sticky;
+    padding: 1.5rem 2.5rem;
+    // background: transparent;
+    .header-wrapper {
         display: flex;
-        justify-content: center;
-        margin-top: 10%;
-        gap: 10px;
-    }
-
-    .nav-items {
-        display: flex;
-        flex-direction: column;
-        justify-content: space-between;
-        align-items: center;
-        height: 100%;
-
-        .nav-links {
+        justify-content: right;
+        .header-items {
             display: flex;
-            flex-direction: column;
             justify-content: center;
-            margin-top: 10%;
-            gap: 30px;
-        }
-
-        .nav-logout {
-            margin-bottom: 10%;
+            align-items: center;
+            gap: 20px;
+            padding: 1rem;
+            .dropdown {
+                .dropdown-toggle {
+                    padding: .75rem 1.25rem;
+                    border-radius: 1rem;
+                    .profile-image {
+                        height: 40px;
+                        width: 40px;
+                        border-radius: 50%;
+                        margin-right: .5rem;
+                    }
+                }
+            }
         }
     }
 }
