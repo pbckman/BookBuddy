@@ -1,3 +1,4 @@
+﻿@import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
 .card {
   box-shadow: 0 4px 12px 0 rgba(0, 0, 0, 0.6);
   padding: 1.25rem;
@@ -74,10 +75,18 @@ a {
   color: #3EBFAC;
 }
 
+:root {
+  --color-danger: #F5D7DA;
+  --color-success: #22C55E;
+  --color-warning: #EF4444;
+  --color-info: #4C82F7;
+}
+
 .btn:hover {
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.3);
 }
 
+<<<<<<< HEAD
 .header {
   position: sticky;
   padding: 0.75rem 2rem;
@@ -187,6 +196,17 @@ a {
   box-shadow: 4px 0 14px 0 rgba(0, 0, 0, 0.55);
 }
 .navbar .navbar-wrapper {
+=======
+:root {
+  --font-poppins: "Poppins", san-serif;
+}
+
+body {
+  font-family: var(--font-poppins);
+}
+
+.navbar-wrapper {
+>>>>>>> 038844a0e2eb2472a5e4e039bda59e36aa0cf25d
   display: flex;
   flex-direction: column;
   height: 100%;
@@ -214,5 +234,28 @@ a {
   justify-content: center;
   margin-top: 25%;
   gap: 30px;
+<<<<<<< HEAD
   font-size: 1.25rem;
 }
+=======
+}
+.navbar-wrapper .nav-items .nav-logout {
+  margin-bottom: 10%;
+}
+
+.footer-wrapper .footer-items {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  margin-bottom: 10px;
+}
+.footer-wrapper .footer-items img {
+  height: 25px;
+  width: auto;
+}
+.footer-wrapper .footer-copyright {
+  display: flex;
+  justify-content: center;
+  font-size: 12px;
+}
+>>>>>>> 038844a0e2eb2472a5e4e039bda59e36aa0cf25d
