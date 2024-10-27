@@ -1,20 +1,57 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <languages>
 	<language id="en">
+		<error code="400">
+			<caption>Bad Request</caption>
+			<help>The server could not understand the request due to invalid syntax.</help>
+		</error>
+		<error code="401">
+			<caption>Unauthorized</caption>
+			<help>The client must authenticate itself to get the requested response.</help>
+		</error>
+		<error code="403">
+			<caption>Forbidden</caption>
+			<help>The client does not have access rights to the content.</help>
+		</error>
 		<error code="404">
 			<caption>Page not found</caption>
 			<help>The page you are looking for could not be found.</help>
 		</error>
 		<error code="500">
-			<caption>Internal server error</caption>
+			<caption>Internal Server Error</caption>
 			<help>An internal server error occurred. Please try again later.</help>
+		</error>
+		<error code="502">
+			<caption>Bad Gateway</caption>
+			<help>The server received an invalid response from the upstream server.</help>
+		</error>
+		<error code="503">
+			<caption>Service Unavailable</caption>
+			<help>The server is not ready to handle the request.</help>
+		</error>
+		<error code="504">
+			<caption>Gateway Timeout</caption>
+			<help>The server did not receive a timely response from the upstream server.</help>
 		</error>
 		<common>
 			<errorText>Error</errorText>
 			<goToHome>Go to Home</goToHome>
 		</common>
 	</language>
+
 	<language id="sv">
+		<error code="400">
+			<caption>Ogiltig begäran</caption>
+			<help>Servern kunde inte förstå begäran på grund av felaktig syntax.</help>
+		</error>
+		<error code="401">
+			<caption>Obehörig</caption>
+			<help>Klienten måste autentisera sig för att få åtkomst till innehållet.</help>
+		</error>
+		<error code="403">
+			<caption>Förbjudet</caption>
+			<help>Klienten har inte åtkomsträttigheter till innehållet.</help>
+		</error>
 		<error code="404">
 			<caption>Sidan kunde inte hittas</caption>
 			<help>Sidan du letar efter kunde inte hittas.</help>
@@ -22,6 +59,18 @@
 		<error code="500">
 			<caption>Internt serverfel</caption>
 			<help>Ett internt serverfel inträffade. Försök igen senare.</help>
+		</error>
+		<error code="502">
+			<caption>Felaktig Gateway</caption>
+			<help>Servern fick ett ogiltigt svar från uppströmsservern.</help>
+		</error>
+		<error code="503">
+			<caption>Tjänsten är inte tillgänglig</caption>
+			<help>Servern är inte redo att hantera begäran.</help>
+		</error>
+		<error code="504">
+			<caption>Gateway-timeout</caption>
+			<help>Servern fick inget svar i tid från uppströmsservern.</help>
 		</error>
 		<common>
 			<errorText>Fel</errorText>
