@@ -7,6 +7,11 @@ namespace BookBuddy.Models.Pages
     GUID = "F7A0B723-F6D5-498D-AAAB-69B7C69D19A2",
     GroupName = GroupNames.Specialized
     )]
+    [AvailableContentTypes(Availability.Specific , Include =
+    [
+        typeof(ErrorPage),
+        typeof(XmlSitemap),
+    ])]
 
     public class StartPage : SitePageData
     {

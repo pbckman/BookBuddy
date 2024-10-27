@@ -1,8 +1,11 @@
+using BookBuddy.Business.Services;
+using BookBuddy.Business.Services.Interfaces;
 using EPiServer.Cms.Shell;
 using EPiServer.Cms.UI.AspNetIdentity;
 using EPiServer.Scheduler;
 using EPiServer.ServiceLocation;
 using EPiServer.Web.Routing;
+
 
 namespace BookBuddy
 {
@@ -22,6 +25,7 @@ namespace BookBuddy
                 AppDomain.CurrentDomain.SetData("DataDirectory", Path.Combine(_webHostingEnvironment.ContentRootPath, "App_Data"));
 
                 services.Configure<SchedulerOptions>(options => options.Enabled = false);
+   
             }
 
             services
@@ -30,6 +34,9 @@ namespace BookBuddy
                 .AddAdminUserRegistration()
                 .AddEmbeddedLocalization<Startup>();
 
+            services.AddHttpContextAccessor();
+            services.AddScoped<IXmlSitemapService, XmlSitemapService>();
+            services.AddSingleton<ErrorMessageService>();
             services.AddServerSideBlazor();
         }
 
@@ -38,8 +45,23 @@ namespace BookBuddy
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
-            }
+             }
 
+
+            app.UseStatusCodePages(async context =>
+            {
+                var response = context.HttpContext.Response;
+                var statusCode = response.StatusCode;
+
+                if (!context.HttpContext.Request.Path.StartsWithSegments("/error"))
+                {
+                    response.Redirect($"/error?statusCode={statusCode}");
+                    await Task.Yield();
+                }
+            });
+
+
+            app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseRouting();
             app.UseAuthentication();
@@ -50,6 +72,8 @@ namespace BookBuddy
                 endpoints.MapContent();
 
                 endpoints.MapBlazorHub();
+
+               endpoints.MapControllers();
             });
         }
     }
