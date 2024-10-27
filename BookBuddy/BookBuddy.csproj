@@ -36,6 +36,10 @@
   </ItemGroup>
   
   <ItemGroup>
+    <None Remove="Resources\Translations\Error.xml" />
+  </ItemGroup>
+  
+  <ItemGroup>
     <None Include="compilerconfig.json" />
   </ItemGroup>
 </Project>

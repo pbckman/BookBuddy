@@ -1,0 +1,31 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<languages>
+	<language id="en">
+		<error code="404">
+			<caption>Page not found</caption>
+			<help>The page you are looking for could not be found.</help>
+		</error>
+		<error code="500">
+			<caption>Internal server error</caption>
+			<help>An internal server error occurred. Please try again later.</help>
+		</error>
+		<common>
+			<errorText>Error</errorText>
+			<goToHome>Go to Home</goToHome>
+		</common>
+	</language>
+	<language id="sv">
+		<error code="404">
+			<caption>Sidan kunde inte hittas</caption>
+			<help>Sidan du letar efter kunde inte hittas.</help>
+		</error>
+		<error code="500">
+			<caption>Internt serverfel</caption>
+			<help>Ett internt serverfel inträffade. Försök igen senare.</help>
+		</error>
+		<common>
+			<errorText>Fel</errorText>
+			<goToHome>Gå till startsidan</goToHome>
+		</common>
+	</language>
+</languages>
