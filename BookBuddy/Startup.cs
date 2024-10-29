@@ -1,10 +1,12 @@
 using BookBuddy.Business.Services;
 using BookBuddy.Business.Services.Interfaces;
+using BookBuddy.Data.Contexts;
 using EPiServer.Cms.Shell;
 using EPiServer.Cms.UI.AspNetIdentity;
 using EPiServer.Scheduler;
 using EPiServer.ServiceLocation;
 using EPiServer.Web.Routing;
+using Microsoft.EntityFrameworkCore;
 
 
 namespace BookBuddy
@@ -13,9 +15,12 @@ namespace BookBuddy
     {
         private readonly IWebHostEnvironment _webHostingEnvironment;
 
-        public Startup(IWebHostEnvironment webHostingEnvironment)
+        public IConfiguration Configuration { get; }
+
+        public Startup(IWebHostEnvironment webHostingEnvironment, IConfiguration configuration)
         {
             _webHostingEnvironment = webHostingEnvironment;
+            Configuration = configuration;
         }
 
         public void ConfigureServices(IServiceCollection services)
@@ -25,7 +30,7 @@ namespace BookBuddy
                 AppDomain.CurrentDomain.SetData("DataDirectory", Path.Combine(_webHostingEnvironment.ContentRootPath, "App_Data"));
 
                 services.Configure<SchedulerOptions>(options => options.Enabled = false);
-   
+                
             }
 
             services
@@ -33,6 +38,9 @@ namespace BookBuddy
                 .AddCms()
                 .AddAdminUserRegistration()
                 .AddEmbeddedLocalization<Startup>();
+
+            services.AddDbContext<DataContext>(options =>
+            options.UseSqlServer(Configuration.GetConnectionString("EPiServerDB")));
 
             services.AddHttpContextAccessor();
             services.AddScoped<IXmlSitemapService, XmlSitemapService>();
@@ -69,11 +77,11 @@ namespace BookBuddy
 
             app.UseEndpoints(endpoints =>
             {
+                endpoints.MapControllers();
+
                 endpoints.MapContent();
 
                 endpoints.MapBlazorHub();
-
-               endpoints.MapControllers();
             });
         }
     }
