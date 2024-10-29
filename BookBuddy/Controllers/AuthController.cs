@@ -14,13 +14,14 @@ namespace BookBuddy.Controllers
         private readonly SignInManager<ApplicationUser> _signInManager = signInManager;
         private readonly DataContext _context = dataContext;
 
-        [Route("/signup")]
+        [Route("/auth/signup")]
         public IActionResult SignUp()
         {
             return View();
         }
 
         [HttpPost]
+        [Route("/auth/signup")]
         public async Task<IActionResult> SignUp(SignUpViewModel model)
         {
             if (ModelState.IsValid)
@@ -63,13 +64,14 @@ namespace BookBuddy.Controllers
             return View(model);
         }
 
-        [Route("/signin")]
+        [Route("/auth/signin")]
         public IActionResult SignIn()
         {
             return View();
         }
 
         [HttpPost]
+        [Route("/auth/signin")]
         public async Task<IActionResult> SignIn(SignInViewModel model)
         {
             if (ModelState.IsValid)
@@ -80,7 +82,7 @@ namespace BookBuddy.Controllers
                     var result = await _signInManager.PasswordSignInAsync(user, model.Password, model.RememberMe, false);
                     if (result.Succeeded)
                     {
-                        return RedirectToAction("Index", "StartPage");
+                        return RedirectToAction("Index", "Startpage");
                     }
                 }
             }

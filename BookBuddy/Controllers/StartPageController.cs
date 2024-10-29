@@ -13,6 +13,7 @@ namespace BookBuddy.Controllers
             _contentLoader = contentLoader;
         }
 
+        [Route("/")]
         public IActionResult Index(StartPage currentPage)
         {
             var siteSettingsReference = currentPage.SiteSettingsPage;

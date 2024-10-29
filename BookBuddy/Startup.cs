@@ -30,9 +30,11 @@ namespace BookBuddy
                 AppDomain.CurrentDomain.SetData("DataDirectory", Path.Combine(_webHostingEnvironment.ContentRootPath, "App_Data"));
 
                 services.Configure<SchedulerOptions>(options => options.Enabled = false);
-                
+                services.AddControllersWithViews();
+                services.AddRazorPages();
             }
-
+            services.AddControllersWithViews();
+            services.AddRazorPages();
             services
                 .AddCmsAspNetIdentity<ApplicationUser>()
                 .AddCms()
@@ -46,6 +48,8 @@ namespace BookBuddy
             services.AddScoped<IXmlSitemapService, XmlSitemapService>();
             services.AddSingleton<ErrorMessageService>();
             services.AddServerSideBlazor();
+
+            
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
