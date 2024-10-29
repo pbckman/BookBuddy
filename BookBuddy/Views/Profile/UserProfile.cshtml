@@ -1,0 +1,25 @@
+﻿@model UserProfileViewModel
+
+@{
+    Layout = "~/Views/Shared/Layouts/AuthLayout.cshtml";
+    ViewData["Title"] = "Create profile";
+}
+
+
+<div>
+    <div>
+        <h1>Create profile</h1>
+    </div>
+
+    <form method="post" asp-action="UserProfile" asp-controller="Profile">
+        <div>
+            <label asp-for="Firstname"></label>
+            <input asp-for="Firstname" />
+            <span asp-validation-for="Firstname"></span>
+        </div>
+
+        <button type="submit">Create profile</button>
+    </form>
+
+
+</div>

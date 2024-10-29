@@ -74,6 +74,7 @@ namespace BookBuddy.Controllers
         [Route("/auth/signin")]
         public async Task<IActionResult> SignIn(SignInViewModel model)
         {
+
             if (ModelState.IsValid)
             {
                 var user = await _userManager.FindByEmailAsync(model.Email);
@@ -82,7 +83,7 @@ namespace BookBuddy.Controllers
                     var result = await _signInManager.PasswordSignInAsync(user, model.Password, model.RememberMe, false);
                     if (result.Succeeded)
                     {
-                        return RedirectToAction("Index", "Startpage");
+                        return RedirectToAction("Index", "StartPage");
                     }
                 }
             }
