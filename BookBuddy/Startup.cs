@@ -1,6 +1,7 @@
 using BookBuddy.Business.Services;
 using BookBuddy.Business.Services.Interfaces;
 using BookBuddy.Data.Contexts;
+using BookBuddy.Services;
 using EPiServer.Cms.Shell;
 using EPiServer.Cms.UI.AspNetIdentity;
 using EPiServer.Scheduler;
@@ -30,11 +31,10 @@ namespace BookBuddy
                 AppDomain.CurrentDomain.SetData("DataDirectory", Path.Combine(_webHostingEnvironment.ContentRootPath, "App_Data"));
 
                 services.Configure<SchedulerOptions>(options => options.Enabled = false);
-                services.AddControllersWithViews();
-                services.AddRazorPages();
             }
-            services.AddControllersWithViews();
-            services.AddRazorPages();
+
+            services.AddScoped<AccountService>();
+            services.AddScoped<ProfileService>();
             services
                 .AddCmsAspNetIdentity<ApplicationUser>()
                 .AddCms()

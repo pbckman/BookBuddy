@@ -1,0 +1,29 @@
+﻿@model ProfileViewModel
+
+@{
+    Layout = "~/Views/Shared/Layouts/AuthLayout.cshtml";
+    ViewData["Title"] = "Update profile";
+}
+
+
+<div>
+    <div>
+        <h1>Update profile</h1>
+    </div>
+
+    <form method="post" asp-action="UpdateProfile" asp-controller="Profile">
+        @Html.AntiForgeryToken()
+
+        <div>
+            <label asp-for="FirstName"></label>
+            <input asp-for="FirstName" />
+            <span asp-validation-for="FirstName"></span>
+        </div>
+
+        
+
+        <button type="submit">Save changes</button>
+    </form>
+
+
+</div>

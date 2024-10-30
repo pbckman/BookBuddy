@@ -11,7 +11,9 @@
         <h1>Create profile</h1>
     </div>
 
-    <form method="post" asp-action="UserProfile" asp-controller="Profile">
+    <form method="post" asp-action="CreateProfile" asp-controller="Profile">
+        @Html.AntiForgeryToken()
+
         <div>
             <label asp-for="Firstname"></label>
             <input asp-for="Firstname" />
