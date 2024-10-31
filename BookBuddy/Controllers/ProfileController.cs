@@ -74,7 +74,7 @@ namespace BookBuddy.Controllers
             var success = await _profileService.UpdateProfileAsync(user, model);
             if (!success)
             {
-                ModelState.AddModelError("", "Profile update failed");
+                ViewData["StatusMessage"] = "Could not update profile, please try again later.";
                 return View(model);
             }
 
@@ -100,8 +100,8 @@ namespace BookBuddy.Controllers
             var success = await _profileService.DeleteProfileAsync(profile);
             if (!success)
             {
-                ModelState.AddModelError("", "Failed to delete profile");
-                return RedirectToAction("UserProfile", "Profile");
+                ViewData["StatusMessage"] = "Failed to delete profile";
+                return View(profile);
             }
 
             return RedirectToAction("UserProfile", "Profile");

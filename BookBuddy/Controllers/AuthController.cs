@@ -56,6 +56,7 @@ namespace BookBuddy.Controllers
                     var result = await _signInManager.PasswordSignInAsync(user, model.Password, model.RememberMe, false);
                     if (result.Succeeded)
                     {
+                        await _signInManager.RefreshSignInAsync(user);
                         return RedirectToAction("Index", "StartPage");
                     }
                 }

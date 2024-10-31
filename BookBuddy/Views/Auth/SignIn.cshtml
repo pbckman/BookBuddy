@@ -17,6 +17,9 @@
 
     <form method="post" asp-action="SignIn" asp-controller="Auth">
         @Html.AntiForgeryToken()
+        <div>
+            @ViewData["StatusMessage"]
+        </div>
             <div>
                 <label asp-for="Email"></label>
                 <input asp-for="Email" />

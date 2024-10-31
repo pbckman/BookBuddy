@@ -1,0 +1,39 @@
+﻿@model UpdateUserViewModel
+
+@{
+    Layout = "~/Views/Shared/Layouts/AuthLayout.cshtml";
+    ViewData["Title"] = "Sign in";
+}
+
+
+<div>
+    <div>
+        <h1>Update account</h1>
+    </div>
+
+    <form method="post" asp-action="UpdateUser" asp-controller="Account">
+        @Html.AntiForgeryToken()
+        <div>
+            @ViewData["StatusMessage"]
+        </div>
+        <div>
+            <label asp-for="CurrentPassword"></label>
+            <input asp-for="CurrentPassword" />
+            <span asp-validation-for="CurrentPassword"></span>
+        </div>
+
+        <div>
+            <label asp-for="NewPassword"></label>
+            <input asp-for="NewPassword" />
+            <span asp-validation-for="NewPassword"></span>
+        </div>
+
+        <div>
+            <label asp-for="ConfirmNewPassword"></label>
+            <input asp-for="ConfirmNewPassword" />
+            <span asp-validation-for="ConfirmNewPassword"></span>
+        </div>
+
+        <button type="submit">Update</button>
+    </form>
+</div>

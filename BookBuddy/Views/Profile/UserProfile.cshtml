@@ -13,7 +13,9 @@
 
     <form method="post" asp-action="CreateProfile" asp-controller="Profile">
         @Html.AntiForgeryToken()
-
+        <div>
+            @ViewData["StatusMessage"]
+        </div>
         <div>
             <label asp-for="Firstname"></label>
             <input asp-for="Firstname" />

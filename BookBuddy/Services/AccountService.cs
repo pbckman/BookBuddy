@@ -1,5 +1,4 @@
-﻿using BookBuddy.Data.Contexts;
-using BookBuddy.Data.Entities;
+﻿using BookBuddy.Data.Entities;
 using BookBuddy.Models.ViewModels;
 using EPiServer.Cms.UI.AspNetIdentity;
 using Microsoft.AspNetCore.Identity;
@@ -7,7 +6,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace BookBuddy.Services;
 
-public class AccountService(UserManager<ApplicationUser> userManager, DataContext dataContext, ProfileService profileService)
+public class AccountService(UserManager<ApplicationUser> userManager, ProfileService profileService)
 {
     private readonly UserManager<ApplicationUser> _userManager = userManager;
     private readonly ProfileService _profileService = profileService;
@@ -26,8 +25,11 @@ public class AccountService(UserManager<ApplicationUser> userManager, DataContex
         };
 
         var result = await _userManager.CreateAsync(user, model.Password);
-        if (!result.Succeeded) return (result, null);
-
+        if (!result.Succeeded)
+        {
+            return (result, null);
+        }
+            
         var profile = await _profileService.CreateProfileAsync(user.Id, model.Firstname, model.Lastname, isMainProfile: true);
         return (result, profile);
     }

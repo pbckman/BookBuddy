@@ -13,6 +13,7 @@
         </div>
 
         <form method="post" asp-action="SignUp" asp-controller="Auth">
+            @Html.AntiForgeryToken()
             <div>
                 @ViewData["StatusMessage"]
             </div>

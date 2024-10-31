@@ -14,9 +14,16 @@ public class AccountController(UserManager<ApplicationUser> userManager, SignInM
     private readonly SignInManager<ApplicationUser> _signInManager = signInManager;
     private readonly AccountService _accountService = accountService;
 
+    [HttpGet]
+    [Route("/account/updateuser")]
+    public IActionResult UpdateUser()
+    {
+        return View(new UpdateUserViewModel());
+    }
 
     [HttpPost]
-    public async Task<IActionResult> ChangePassword(ChangePassWordViewModel model)
+    [Route("/account/updateuser")]
+    public async Task<IActionResult> UpdateUser(UpdateUserViewModel model)
     {
         if (!ModelState.IsValid)
         {
@@ -34,8 +41,7 @@ public class AccountController(UserManager<ApplicationUser> userManager, SignInM
 
         if (!result.Succeeded)
         {
-            foreach (var error in result.Errors)
-                ModelState.AddModelError("", error.Description);
+            ViewData["StatusMessage"] = "Failed to update password";
             return View(model);
         }
 
@@ -47,30 +53,20 @@ public class AccountController(UserManager<ApplicationUser> userManager, SignInM
     [ValidateAntiForgeryToken]
     public async Task<IActionResult> DeleteUser()
     {
-        var userId = _userManager.GetUserId(User);
-        var user = await _userManager.FindByIdAsync(userId);
-
-        if (user != null)
+        var user = await _userManager.GetUserAsync(User);
+        if (user == null)
         {
-            IdentityResult result = await _userManager.DeleteAsync(user);
-            if (result.Succeeded)
-            {
-                await _signInManager.SignOutAsync();
-                ViewData["StatusMessage"] = "Your account has been successfully deleted.";
-                return RedirectToAction("SignUp", "Auth");
-            }
-            else
-            {
-                foreach (var error in result.Errors)
-                {
-                    ModelState.AddModelError("", error.Description);
-                }
-                return View("Error");
-            }
+            return Unauthorized();
         }
-        else
-            return RedirectToAction("SignIn", "Auth");
+        
+        var deleteResult = await _userManager.DeleteAsync(user);
+        if (!deleteResult.Succeeded)
+        {
+            ViewData["StatusMessage"] = "Failed to delete account";
+            return View(user);
+        }
+
+        await _signInManager.SignOutAsync();
+        return RedirectToAction("SignIn", "Auth");
     }
-
-
 }
