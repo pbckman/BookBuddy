@@ -1,0 +1,31 @@
+﻿@{
+    ViewBag.Title = "Cookie Policy";
+
+    // Hämta språk från URL:en
+    var userLang = Context.Request.Path.Value.Split('/')[1];
+    if (string.IsNullOrEmpty(userLang))
+    {
+        userLang = "en";
+    }
+
+    string langAttribute;
+
+    if (userLang == "sv")
+    {
+        langAttribute = "sv-SE"; // Svenska
+    }
+    else
+    {
+        langAttribute = "en-GB"; // Engelska som standard
+    }
+}
+<div class="container-sm startpage-wrapper">
+    <h1>@(langAttribute == "sv-SE" ? "Cookie Policy" : "Cookie Policy")</h1>
+    <p>@(langAttribute == "sv-SE" ? "Denna sida innehåller information om hur vi använder cookies." : "This page contains information about how we use cookies.")</p>
+
+    <div id="CookieDeclaration"></div>
+</div>
+
+
+<script src="https://cdn.cookietractor.com/cookietractor-declaration.js" data-lang="@langAttribute" data-id="8c1cad13-6fe3-4f93-8ef4-1b81e0cca58d" defer></script>
+

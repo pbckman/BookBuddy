@@ -5,6 +5,8 @@ using EPiServer.Cms.UI.AspNetIdentity;
 using EPiServer.Scheduler;
 using EPiServer.ServiceLocation;
 using EPiServer.Web.Routing;
+using Microsoft.AspNetCore.Localization;
+using System.Globalization;
 
 
 namespace BookBuddy
@@ -55,10 +57,13 @@ namespace BookBuddy
 
                 if (!context.HttpContext.Request.Path.StartsWithSegments("/error"))
                 {
-                    response.Redirect($"/error?statusCode={statusCode}");
+                    var culture = CultureInfo.CurrentCulture.TwoLetterISOLanguageName;
+                    response.Redirect($"/{culture}/error?statusCode={statusCode}");
                     await Task.Yield();
                 }
             });
+
+
 
 
             app.UseHttpsRedirection();

@@ -15,11 +15,11 @@ namespace BookBuddy.Controllers
             _errorMessageService = errorMessageService;
         }
 
-        [Route("/error")]
+        [Route("/{culture}/error")]
         public IActionResult Index(int statusCode, ErrorPage currentPage)
         {
 
-            var model = new ErrorPageViewModel(currentPage, null)
+            var model = new ErrorPageViewModel(currentPage, null!)
             {
                 StatusCode = statusCode,
                 ErrorMessage = _errorMessageService.GetErrorMessage(statusCode),

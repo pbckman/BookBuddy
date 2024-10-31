@@ -1,12 +1,14 @@
 ﻿@{
-    Layout = "~/Views/Shared/Layouts/ErrorLayout.cshtml";
+    Layout = "~/Views/Shared/Layouts/_ErrorLayout.cshtml";
 }
-<div class="d-flex align-items-center justify-content-center min-vh-100">
+
+
+<div class=" d-flex align-items-center justify-content-center min-vh-100">
     <div class="container text-center">
-        <img src="~/images/error-icon.png" alt="Error Icon" class="img-fluid mb-4" style="max-width: 150px;">
+        <img src="~/images/boy-error.png" style="max-width: 350px;" alt="Boy holding error sign" />
         <h1 class="display-1 text-danger">@Model.ErrorText @Model.StatusCode</h1>
         <p class="lead text-muted mb-4">@Model.ErrorMessage</p>
-        <a href="/" class="btn btn-primary btn-lg">@Model.GoToHomeButtonText</a>
+        <a href="/" class="btn btn-success btn-lg">@Model.GoToHomeButtonText</a>
     </div>
 </div>
 

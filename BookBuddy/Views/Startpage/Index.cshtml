@@ -9,6 +9,10 @@
         @Html.Raw(Model.CurrentPage.MainBody)
     </div>
 
+    <component type="typeof(CookieButton)" render-mode="Server"/>
     <component type="typeof(CounterBlazorPage)" render-mode="Server" />
     <component type="typeof(TestForm)" render-mode="Server" />
 </div>
+
+
+<script src="~/js/cookietractor.js"></script>

@@ -1,9 +1,18 @@
+using Serilog;
+
 namespace BookBuddy
 {
     public class Program
     {
-        public static void Main(string[] args) => CreateHostBuilder(args).Build().Run();
+        //public static void Main(string[] args) => CreateHostBuilder(args).Build().Run();
 
+        public static void Main(string[] args)
+        {
+            Log.Logger = new LoggerConfiguration()
+            .ReadFrom.Configuration(Configuration).WriteTo.Console().CreateLogger();
+
+            CreateHostBuilder(args).Build().Run();
+        }
         public static IConfiguration Configuration { get; } =
             new ConfigurationBuilder()
             .AddJsonFile("appSettings.json", false, true)
@@ -14,6 +23,7 @@ namespace BookBuddy
         public static IHostBuilder CreateHostBuilder(string[] args) =>
             Host.CreateDefaultBuilder(args)
                 .ConfigureCmsDefaults()
+                .UseSerilog()
                 .ConfigureWebHostDefaults(webBuilder => webBuilder.UseStartup<Startup>());
     }
 }
