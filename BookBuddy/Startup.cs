@@ -1,5 +1,11 @@
+using BookBuddy.Business.Clients;
 using BookBuddy.Business.Services;
+using BookBuddy.Business.Services.AiService;
+using BookBuddy.Business.Services.BookContentService;
+using BookBuddy.Business.Services.BookPageService;
+using BookBuddy.Business.Services.BookService;
 using BookBuddy.Business.Services.Interfaces;
+using BookBuddy.Business.Services.PageService;
 using EPiServer.Cms.Shell;
 using EPiServer.Cms.UI.AspNetIdentity;
 using EPiServer.Scheduler;
@@ -37,6 +43,13 @@ namespace BookBuddy
             services.AddHttpContextAccessor();
             services.AddScoped<IXmlSitemapService, XmlSitemapService>();
             services.AddSingleton<ErrorMessageService>();
+            services.AddScoped<IBookService, BookService>();
+            services.AddScoped<IBookContentService, GutenbergService>();
+            services.AddScoped<IAiService, OpenAiService>();
+            services.AddScoped<IBookPageService, BookPageService>();
+            services.AddScoped<IPageService, PageService>();
+            services.AddScoped<OpenAiClient>();
+            services.AddHttpClient();
             services.AddServerSideBlazor();
         }
 

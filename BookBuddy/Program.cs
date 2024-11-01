@@ -9,10 +9,15 @@ namespace BookBuddy
             .AddJsonFile("appSettings.json", false, true)
             .AddJsonFile($"appsettings.{Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT")}.json", true, true)
             .AddJsonFile($"appsettings.{Environment.MachineName}.json", true, true)
+            .AddUserSecrets<Program>()
             .AddEnvironmentVariables()
             .Build();
         public static IHostBuilder CreateHostBuilder(string[] args) =>
             Host.CreateDefaultBuilder(args)
+                .ConfigureAppConfiguration((hostingContext, config) =>
+                {
+                    config.AddConfiguration(Configuration);
+                })
                 .ConfigureCmsDefaults()
                 .ConfigureWebHostDefaults(webBuilder => webBuilder.UseStartup<Startup>());
     }
