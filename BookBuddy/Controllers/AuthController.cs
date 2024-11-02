@@ -66,12 +66,13 @@ namespace BookBuddy.Controllers
             return View(model);
         }
 
-        [HttpGet]
-
-        public new async Task<IActionResult> SignOut()
+        [HttpPost]
+        [Route("/")]
+        public async Task<IActionResult> SignOut()
         {
             await _signInManager.SignOutAsync();
-            return RedirectToAction("SignIn", "Auth");
+
+            return RedirectToAction("Index", "StartPage");
         }
     }
 }

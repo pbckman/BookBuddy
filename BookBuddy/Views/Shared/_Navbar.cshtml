@@ -19,13 +19,28 @@
                      }
                 </div>
 
-                <div class="nav-logout">
+            @if (User.Identity.IsAuthenticated)
+            {
+                <form asp-action="SignOut" asp-controller="Auth" method="post">
+                    <div class="nav-logout">
+                        <button class="btn btn-warning" type="submit">
+                            Sign out
+                        </button>
+                    </div>
+                </form>
+            }
+            else
+            {
+                
+                @* <div class="nav-logout">
                     <button class="btn btn-warning">
-                        Logout
+                        Sign in
                     </button>
-                </div>
+                </div> *@
+            }
 
             </div>
+
         </div>
     }
     else
