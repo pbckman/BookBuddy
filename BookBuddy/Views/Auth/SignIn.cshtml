@@ -5,49 +5,38 @@
     ViewData["Title"] = "Sign in";
 }
 
-    <div>
 
-        <div>
-            <h1>Welcome Back</h1>
-            <div >
-                <p>Don’t have an account yet?</p>
-                <a asp-action="SignUp" asp-controller="Auth">Sign up here</a>
-            </div>
-        </div>
+<section class="auth-right">
+    <div class="login-card">
+        <h2 class="text-center">Login to your Account</h2>
+        <p class="text-center mb-4">with your registered Email Address</p>
 
-    <form method="post" asp-action="SignIn" asp-controller="Auth">
-        @Html.AntiForgeryToken()
-        <div>
-            @ViewData["StatusMessage"]
-        </div>
-            <div>
-                <label asp-for="Email"></label>
-                <input asp-for="Email" />
+        <form asp-action="SignIn" asp-controller="Auth" method="post">
+            @Html.AntiForgeryToken()
+
+            <div class="form-group mb-3">
+                <label asp-for="Email">Email address *</label>
+                <input asp-for ="Email" type="email" class="form-control" id="email" name="Email" placeholder="Enter email address">
                 <span asp-validation-for="Email"></span>
             </div>
 
-            <div >
-                <label asp-for="Password"></label>
-                <input asp-for="Password" />
+            <div class="form-group mb-3 position-relative">
+                <label asp-for="Password">Enter password*</label>
+                <input asp-for="Password" type="password" class="form-control" id="password" name="Password" placeholder="Password">
                 <span asp-validation-for="Password"></span>
             </div>
 
-            <div>
-                <div>
-                    <input asp-for="RememberMe" />
-                    <label asp-for="RememberMe"></label>
-                </div>
+            <div class="form-check mb-4">
+                <input asp-for="RememberMe" type="checkbox" class="form-check-input" id="rememberMe">
+                <label asp-for="RememberMe" class="form-check-label" for="rememberMe">Remember my password</label>
+                <span asp-validation-for="RememberMe"></span>
             </div>
 
-            <div>
-                <button type="submit">Sign In</button>
-            </div>
+            <button type="submit" class="btn btn-success w-100 mb-3">Login</button>
 
-            <div >
-                <a asp-action="SignUp" asp-controller="Auth">Forgot your password?</a>
-            </div>
-
+           @*  <div class="text-center mt-3">
+                <a href="#" class="forgot-password">Forgot Password?</a>
+            </div> *@
         </form>
-
-
     </div>
+</section>
