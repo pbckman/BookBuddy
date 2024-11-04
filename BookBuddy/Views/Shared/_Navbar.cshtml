@@ -31,12 +31,14 @@
             }
             else
             {
-                
-                @* <div class="nav-logout">
-                    <button class="btn btn-warning">
-                        Sign in
-                    </button>
-                </div> *@
+
+                <form asp-action="SignUp" asp-controller="Auth" method="post">
+                    <div class="nav-logout">
+                        <button class="btn btn-warning" type="submit">
+                            Sign up
+                        </button>
+                    </div>
+                </form>
             }
 
             </div>
