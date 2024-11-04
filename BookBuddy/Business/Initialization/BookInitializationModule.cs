@@ -1,8 +1,8 @@
-﻿using BookBuddy.App_Data.Models;
-using EPiServer.Data.Dynamic;
+﻿using EPiServer.Data.Dynamic;
 using EPiServer.Framework.Initialization;
 using EPiServer.Framework;
 using BookBuddy.Business.Helpers;
+using BookBuddy.Models.DDS;
 
 namespace BookBuddy.Business.Initialization
 {

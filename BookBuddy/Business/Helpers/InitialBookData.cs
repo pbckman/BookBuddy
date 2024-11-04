@@ -1,4 +1,4 @@
-﻿using BookBuddy.App_Data.Models;
+﻿using BookBuddy.Models.DDS;
 
 namespace BookBuddy.Business.Helpers
 {
