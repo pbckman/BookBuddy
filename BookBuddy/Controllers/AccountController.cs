@@ -1,5 +1,5 @@
-﻿using BookBuddy.Models.ViewModels;
-using BookBuddy.Services;
+﻿using BookBuddy.Business.Services.AccountService;
+using BookBuddy.Models.ViewModels;
 using EPiServer.Cms.UI.AspNetIdentity;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;

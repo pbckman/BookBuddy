@@ -1,5 +1,6 @@
+@using BookBuddy.Business.Services.AccountService
 @using BookBuddy.Models.ViewModels
-@using BookBuddy.Services
+@using BookBuddy.Business.Services
 @using BookBuddy.Shared
 @using BookBuddy.Models.Pages
 @using EPiServer.Cms.UI.AspNetIdentity
@@ -9,6 +10,7 @@
 @inject SignInManager<ApplicationUser> _signInManager
 @inject UserManager<ApplicationUser> _userManager
 @inject IConfiguration _configuration
+
 
 
 @addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers

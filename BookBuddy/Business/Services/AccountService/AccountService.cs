@@ -4,7 +4,7 @@ using EPiServer.Cms.UI.AspNetIdentity;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
-namespace BookBuddy.Services;
+namespace BookBuddy.Business.Services.AccountService;
 
 public class AccountService(UserManager<ApplicationUser> userManager, ProfileService profileService)
 {
@@ -29,7 +29,7 @@ public class AccountService(UserManager<ApplicationUser> userManager, ProfileSer
         {
             return (result, null);
         }
-            
+
         var profile = await _profileService.CreateProfileAsync(user.Id, model.Firstname, model.Lastname, isMainProfile: true);
         return (result, profile);
     }

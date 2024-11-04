@@ -1,7 +1,7 @@
 using BookBuddy.Business.Services;
+using BookBuddy.Business.Services.AccountService;
 using BookBuddy.Business.Services.Interfaces;
 using BookBuddy.Data.Contexts;
-using BookBuddy.Services;
 using EPiServer.Cms.Shell;
 using EPiServer.Cms.UI.AspNetIdentity;
 using EPiServer.Scheduler;
