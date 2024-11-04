@@ -1,8 +1,16 @@
 ﻿@model UpdateUserViewModel
+@inject ProfileService ProfileService
 
 @{
     Layout = "~/Views/Shared/Layouts/AuthLayout.cshtml";
-    ViewData["Title"] = "Sign in";
+    ViewData["Title"] = "Change password";
+
+
+    var user = await _userManager.GetUserAsync(User);
+    var userId = user?.Id;
+    var profiles = await ProfileService.GetAllProfilesAsync(userId);
+    var selectedProfile = await ProfileService.GetSelectedProfileAsync();
+    var mainProfile = await ProfileService.GetMainProfileAsync();
 }
 
 
@@ -11,29 +19,38 @@
         <h1>Update account</h1>
     </div>
 
-    <form method="post" asp-action="UpdateUser" asp-controller="Account">
-        @Html.AntiForgeryToken()
-        <div>
-            @ViewData["StatusMessage"]
-        </div>
-        <div>
-            <label asp-for="CurrentPassword"></label>
-            <input asp-for="CurrentPassword" />
-            <span asp-validation-for="CurrentPassword"></span>
-        </div>
 
-        <div>
-            <label asp-for="NewPassword"></label>
-            <input asp-for="NewPassword" />
-            <span asp-validation-for="NewPassword"></span>
-        </div>
+    @if (selectedProfile == mainProfile)
+    {
+        <form method="post" asp-action="UpdateUser" asp-controller="Account">
+            @Html.AntiForgeryToken()
+            <div>
+                @ViewData["StatusMessage"]
+            </div>
+            <div>
+                <label asp-for="CurrentPassword"></label>
+                <input asp-for="CurrentPassword" />
+                <span asp-validation-for="CurrentPassword"></span>
+            </div>
 
-        <div>
-            <label asp-for="ConfirmNewPassword"></label>
-            <input asp-for="ConfirmNewPassword" />
-            <span asp-validation-for="ConfirmNewPassword"></span>
-        </div>
+            <div>
+                <label asp-for="NewPassword"></label>
+                <input asp-for="NewPassword" />
+                <span asp-validation-for="NewPassword"></span>
+            </div>
 
-        <button type="submit">Update</button>
-    </form>
+            <div>
+                <label asp-for="ConfirmNewPassword"></label>
+                <input asp-for="ConfirmNewPassword" />
+                <span asp-validation-for="ConfirmNewPassword"></span>
+            </div>
+
+            <button type="submit">Update</button>
+        </form>
+    }
+    else
+    {
+        <h2>Mainprofile needed to change password</h2>
+    }
+
 </div>
