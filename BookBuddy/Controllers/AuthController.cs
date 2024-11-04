@@ -13,6 +13,7 @@ namespace BookBuddy.Controllers
         private readonly SignInManager<ApplicationUser> _signInManager = signInManager;
         private readonly AccountService _accountService = accountService;
 
+        [HttpGet]
         [Route("/auth/signup")]
         public IActionResult SignUp()
         {
@@ -23,8 +24,11 @@ namespace BookBuddy.Controllers
         [Route("/auth/signup")]
         public async Task<IActionResult> SignUp(SignUpViewModel model)
         {
-            if (!ModelState.IsValid) return View(model);
-
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+                
             var (result, profile) = await _accountService.CreateUserAsync(model);
 
             if (result.Succeeded)
@@ -51,9 +55,11 @@ namespace BookBuddy.Controllers
             if (ModelState.IsValid)
             {
                 var user = await _userManager.FindByEmailAsync(model.Email);
+
                 if (user != null)
                 {
                     var result = await _signInManager.PasswordSignInAsync(user, model.Password, model.RememberMe, false);
+
                     if (result.Succeeded)
                     {
                         await _signInManager.RefreshSignInAsync(user);
