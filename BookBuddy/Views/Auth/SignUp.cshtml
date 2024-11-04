@@ -5,54 +5,53 @@
     ViewData["Title"] = "Sign up";
 }
 
-<section >
-    <div class= "container">
+<section class="auth-right">
+    <div class="login-card">
 
-        <div class="sign-up-title">
-            <h1>Create account</h1>
+        <div class="text-center">
+            <h1>Create Account</h1>
+            <p class="text-center mb-4">Fill in the details below to create a new account</p>
         </div>
 
         <form method="post" asp-action="SignUp" asp-controller="Auth">
             @Html.AntiForgeryToken()
+
             <div>
                 @ViewData["StatusMessage"]
             </div>
 
-            <div class="signup-name">
-            <div class="input-group">
-                <label asp-for="Firstname"></label>
-                <input asp-for="Firstname" />
-                <span asp-validation-for="Firstname"></span>
+            <div class="form-group-container row row-cols-1 row-cols-sm-2">
+                <div class="form-group mb-3">
+                    <label asp-for="Firstname">First name</label>
+                    <input asp-for="Firstname" class="form-control" placeholder="Enter your firstname" />
+                    <span asp-validation-for="Firstname"></span>
+                </div>
+                <div class="form-group mb-3">
+                    <label asp-for="Lastname">Last name</label>
+                    <input asp-for="Lastname" class="form-control" placeholder="Enter your lastname" />
+                    <span asp-validation-for="Lastname"></span>
+                </div>
             </div>
 
-            <div class="input-group">
-                <label asp-for="Lastname"></label>
-                <input asp-for="Lastname" />
-                <span asp-validation-for="Lastname"></span>
-            </div>
-            </div>
-
-            <div class="input-group">
-                <label asp-for="Email"></label>
-                <input asp-for="Email" />
+            <div class="form-group mb-3">
+                <label asp-for="Email">Email</label>
+                <input asp-for="Email" type="email" class="form-control" placeholder="Enter your email" />
                 <span asp-validation-for="Email"></span>
             </div>
 
-            <div class="input-group">
-                <label asp-for="Password"></label>
-                <input asp-for="Password" />
+            <div class="form-group mb-4">
+                <label asp-for="Password">Password</label>
+                <input asp-for="Password" type="password" class="form-control" placeholder="Enter your password" />
                 <span asp-validation-for="Password"></span>
             </div>
 
-            <div class="input-group">
-                <label asp-for="ConfirmPassword"></label>
-                <input asp-for="ConfirmPassword" />
+            <div class="form-group mb-5">
+                <label asp-for="ConfirmPassword">Confirm Password</label>
+                <input asp-for="ConfirmPassword" type="password" class="form-control" placeholder="Confirm your password" />
                 <span asp-validation-for="ConfirmPassword"></span>
             </div>
 
-            <button type="submit">Sign up</button>
-
+            <button type="submit" class="btn btn-success w-100">Sign up</button>
         </form>
-
     </div>
 </section>

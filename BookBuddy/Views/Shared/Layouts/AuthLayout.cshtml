@@ -1,4 +1,6 @@
-﻿<!DOCTYPE html>
+﻿
+
+<!DOCTYPE html>
 <html lang="sv">
 <head>
     <meta charset="UTF-8">
@@ -8,9 +10,22 @@
     <link rel="stylesheet" href="~/css/site.css" />
 </head>
 <body>
-    <div class="container d-flex flex-column align-items-center justify-content-center min-vh-100">
-        @RenderBody()
+    <div class="auth-container d-flex flex-column flex-lg-row">
+        <div id="particles-js" class="auth-left"></div>
+
+        <div class="auth-right">
+            <div class="auth-content">
+                <div class="logo-container">
+                    <img src="~/images/BookBuddyLogo2.png" alt="Logotyp" class="logo">
+                </div>
+                <div class="form-container">
+                        @RenderBody()
+                </div>
+            </div>
+        </div>
     </div>
 
+    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+    <script src="~/js/particles-config.js"></script>
 </body>
 </html>

@@ -94,6 +94,31 @@ body {
   font-family: var(--font-poppins);
 }
 
+.form-group {
+  margin-bottom: 1.5rem;
+}
+.form-group label {
+  font-weight: 600;
+}
+.form-group input {
+  border-radius: 8px;
+  border: 1px solid #ddd;
+  padding: 10px;
+  font-size: 1rem;
+  width: 100%;
+}
+.form-group .col {
+  padding: 0 5px;
+}
+.form-group .login-card h1 {
+  font-size: 2rem;
+  margin-bottom: 10px;
+}
+.form-group .login-card p {
+  font-size: 1rem;
+  margin-bottom: 20px;
+}
+
 .header {
   position: sticky;
   padding: 0.75rem 2rem;
@@ -236,3 +261,104 @@ body {
   gap: 30px;
   font-size: 1.25rem;
 }
+
+
+.auth-container {
+  display: flex;
+  min-height: 100vh;
+}
+.auth-container .auth-left {
+  width: 50%;
+  background-color: #d9e6ea;
+}
+.auth-container .auth-left #particles-js {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+}
+.auth-container .auth-right {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.auth-container .auth-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+.auth-container .auth-content .logo-container {
+  margin-bottom: 20px;
+}
+.auth-container .auth-content .logo-container .logo {
+  width: 80px;
+  height: auto;
+}
+.auth-container .auth-content .form-container {
+  padding: 0.5rem;
+  max-width: 450px;
+  width: 100%;
+}
+@media (max-width: 768px) {
+  .auth-container .auth-content .form-container {
+    background-color: rgba(255, 255, 255, 0.9);
+    border-radius: 8px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+  }
+}
+
+@media (max-width: 768px) {
+  .auth-container {
+    flex-direction: column;
+  }
+  .auth-container .auth-left {
+    width: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    z-index: -1;
+  }
+  .auth-container .auth-right {
+    width: 100%;
+    position: relative;
+    z-index: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+  }
+  .auth-container .auth-content {
+    padding: 20px;
+  }
+}
+.auth-right .login-card h1 {
+  font-size: 2rem;
+  margin-bottom: 10px;
+}
+.auth-right .login-card p {
+  font-size: 1rem;
+  margin-bottom: 20px;
+}
+.auth-right .login-card .form-group {
+  margin-bottom: 1.5rem;
+}
+.auth-right .login-card .form-group label {
+  font-weight: 600;
+}
+.auth-right .login-card .form-group input {
+  border-radius: 8px;
+  border: 1px solid #ddd;
+  padding: 10px;
+  font-size: 1rem;
+  width: 100%;
+}
+.auth-right .login-card .form-group .col {
+  padding: 0 5px;
+}
+
