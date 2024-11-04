@@ -1,8 +1,0 @@
-.auth-container {
-    display: flex;
-    min-height: 100vh;
-
-    @media (max-width: 768px) {
-        flex-direction: column;
-    }
-}
