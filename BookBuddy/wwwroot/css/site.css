@@ -262,7 +262,6 @@ body {
   font-size: 1.25rem;
 }
 
-
 .auth-container {
   display: flex;
   min-height: 100vh;
@@ -361,4 +360,3 @@ body {
 .auth-right .login-card .form-group .col {
   padding: 0 5px;
 }
-
