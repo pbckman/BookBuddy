@@ -57,5 +57,13 @@ namespace BookBuddy.Models.Pages
          )]
         [CultureSpecific]
         public virtual string ImageUrl { get; set; }
+
+        [Display(
+       GroupName = SystemTabNames.Content,
+       Order = 60,
+       Name = "Image alt text"
+   )]
+        [CultureSpecific]
+        public virtual string ImageAltText { get; set; }
     }
 }

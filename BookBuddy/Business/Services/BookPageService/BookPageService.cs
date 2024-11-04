@@ -41,6 +41,7 @@ namespace BookBuddy.Business.Services.BookPageService
                 bookPage.Authors = string.Join(", ", bookQuizModel.Metadata.Authors.Select(x => x.Name));
                 bookPage.Plot = bookQuizModel.Metadata.Plot;
                 bookPage.ImageUrl = bookQuizModel.Metadata.Links.ImageUrl;
+                bookPage.ImageAltText = selectedLanguage == "sv" ? $"Bokomslag för {bookQuizModel.Metadata.Title}" : $"Book cover for {bookQuizModel.Metadata.Title}";
                 bookPage.ChildSortOrder = EPiServer.Filters.FilterSortOrder.CreatedAscending;
 
                 var bookPageReference = _contentRepository.Save(bookPage, SaveAction.Publish, AccessLevel.NoAccess);
