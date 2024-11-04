@@ -7,10 +7,11 @@ using Microsoft.EntityFrameworkCore;
 
 namespace BookBuddy.Services
 {
-    public class ProfileService(UserManager<ApplicationUser> userManager, DataContext dataContext)
+    public class ProfileService(UserManager<ApplicationUser> userManager, DataContext dataContext, IHttpContextAccessor httpContextAccessor )
     {
         private readonly UserManager<ApplicationUser> _userManager = userManager;
         private readonly DataContext _dataContext = dataContext;
+        private readonly IHttpContextAccessor _httpContextAccessor = httpContextAccessor;
 
         public async Task<UserProfileEntity> CreateProfileAsync(string userId, string firstName, string lastName, bool isMainProfile = false)
         {
@@ -36,20 +37,34 @@ namespace BookBuddy.Services
         {
 
             return await _dataContext.Profiles
-                                     .Where(profile => profile.UserId == userId && profile.IsMainProfile == false)
+                                     .Where(profile => profile.UserId == userId)
                                      .ToListAsync();
         }
 
-        public async Task<UserProfileEntity> GetMainProfilesAsync(ApplicationUser user)
+        public async Task<UserProfileEntity> GetMainProfileAsync()
         {
 
             return await _dataContext.Profiles.FirstOrDefaultAsync(profile => profile.IsMainProfile == true);
-                                     
+
         }
 
         public async Task<UserProfileEntity?> GetProfileByIdAsync(int profileId)
         {
             return await _dataContext.Profiles.FirstOrDefaultAsync(p => p.Id == profileId);
+        }
+
+        public async Task<UserProfileEntity> GetSelectedProfileAsync()
+        {
+            if (_httpContextAccessor.HttpContext.Request.Cookies.TryGetValue("SelectedProfileId", out string profileIdValue))
+            {
+                if (int.TryParse(profileIdValue, out int profileId))
+                {
+                    return await _dataContext.Profiles.FirstOrDefaultAsync(p => p.Id == profileId);
+                }
+
+            }
+
+            return await GetMainProfileAsync();
         }
 
         public async Task<bool> UpdateProfileAsync(ApplicationUser user, ProfileViewModel model)
