@@ -33,6 +33,23 @@ namespace BookBuddy.Controllers
             return RedirectToAction("UserProfile", "Profile");
         }
 
+        [HttpPost]
+        [Route("/profile/selectprofile")]
+        public IActionResult SelectProfile(int profileId)
+        {
+            var cookieOptions = new CookieOptions
+            {
+                Expires = DateTimeOffset.Now.AddDays(7),
+                HttpOnly = true,
+                IsEssential = true,
+                SameSite = SameSiteMode.Lax
+            };
+
+            Response.Cookies.Append("SelectedProfileId", profileId.ToString(), cookieOptions);
+
+            return Redirect(Request.Headers["Referer"].ToString());
+        }
+
         [HttpGet]
         [Route("/profile/updateprofile")]
         public async Task<IActionResult> UpdateProfile()
