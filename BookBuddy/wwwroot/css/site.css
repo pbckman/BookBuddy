@@ -148,7 +148,11 @@ body {
   padding: 0.75rem 1.25rem;
   border-radius: 1rem;
 }
-.header .header-wrapper .header-items .dropdown .dropdown-toggle .profile-image {
+.header .header-wrapper .header-items .dropdown .header-signin {
+  border-radius: 1rem;
+  padding: 0.75rem 1.25rem;
+}
+.header .header-wrapper .header-items .dropdown .profile-image {
   height: 40px;
   width: 40px;
   border-radius: 50%;
@@ -258,6 +262,7 @@ body {
   font-size: 1.25rem;
 }
 
+
 .auth-container {
   display: flex;
   min-height: 100vh;
@@ -356,3 +361,4 @@ body {
 .auth-right .login-card .form-group .col {
   padding: 0 5px;
 }
+

@@ -32,6 +32,21 @@ namespace BookBuddy.Services
             return await _dataContext.Profiles.FirstOrDefaultAsync(p => p.UserId == user.Id);
         }
 
+        public async Task<IEnumerable<UserProfileEntity>?> GetAllProfilesAsync(string userId)
+        {
+
+            return await _dataContext.Profiles
+                                     .Where(profile => profile.UserId == userId && profile.IsMainProfile == false)
+                                     .ToListAsync();
+        }
+
+        public async Task<UserProfileEntity> GetMainProfilesAsync(ApplicationUser user)
+        {
+
+            return await _dataContext.Profiles.FirstOrDefaultAsync(profile => profile.IsMainProfile == true);
+                                     
+        }
+
         public async Task<UserProfileEntity?> GetProfileByIdAsync(int profileId)
         {
             return await _dataContext.Profiles.FirstOrDefaultAsync(p => p.Id == profileId);
