@@ -11,6 +11,8 @@ using EPiServer.Cms.UI.AspNetIdentity;
 using EPiServer.Scheduler;
 using EPiServer.ServiceLocation;
 using EPiServer.Web.Routing;
+using Microsoft.AspNetCore.Localization;
+using System.Globalization;
 
 
 namespace BookBuddy
@@ -33,6 +35,8 @@ namespace BookBuddy
                 services.Configure<SchedulerOptions>(options => options.Enabled = false);
    
             }
+           
+
 
             services
                 .AddCmsAspNetIdentity<ApplicationUser>()
@@ -66,12 +70,24 @@ namespace BookBuddy
                 var response = context.HttpContext.Response;
                 var statusCode = response.StatusCode;
 
-                if (!context.HttpContext.Request.Path.StartsWithSegments("/error"))
+                // Hämta den aktuella kulturen från URL-segment eller använd default "en" om inget segment finns
+                var culture = context.HttpContext.Request.Path.Value?.Split('/').FirstOrDefault(s => s == "sv" || s == "en") ?? "en";
+
+                // Om ingen kultur hittas i URL:en, använd standardkulturen (engelska)
+                if (string.IsNullOrEmpty(culture))
                 {
-                    response.Redirect($"/error?statusCode={statusCode}");
-                    await Task.Yield();
+                    culture = "en";
                 }
+
+                // Bygg om URL:en med rätt språksegment och felkod
+                var redirectUrl = $"/{culture}/error?statusCode={statusCode}";
+
+                response.Redirect(redirectUrl);
+                await Task.Yield();
+               
             });
+
+
 
 
             app.UseHttpsRedirection();

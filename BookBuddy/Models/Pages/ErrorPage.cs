@@ -4,7 +4,8 @@ namespace BookBuddy.Models.Pages
 {
     [ContentType(
    GUID = "0D6CF6A9-D993-4AD9-BD58-AFB782EC0CB6",
-   GroupName = GroupNames.Specialized
+   GroupName = GroupNames.Specialized,
+        Description ="this is an error page"
    )]
     public class ErrorPage : SitePageData
     {
