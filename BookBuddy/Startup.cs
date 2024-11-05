@@ -1,12 +1,20 @@
+using BookBuddy.Business.Clients;
 using BookBuddy.Business.Services;
+using BookBuddy.Business.Services.AiService;
+using BookBuddy.Business.Services.BookContentService;
+using BookBuddy.Business.Services.BookPageService;
+using BookBuddy.Business.Services.BookService;
 using BookBuddy.Business.Services.AccountService;
 using BookBuddy.Business.Services.Interfaces;
+using BookBuddy.Business.Services.PageService;
 using BookBuddy.Data.Contexts;
 using EPiServer.Cms.Shell;
 using EPiServer.Cms.UI.AspNetIdentity;
 using EPiServer.Scheduler;
 using EPiServer.ServiceLocation;
 using EPiServer.Web.Routing;
+using Microsoft.AspNetCore.Localization;
+using System.Globalization;
 using Microsoft.EntityFrameworkCore;
 
 
@@ -47,6 +55,13 @@ namespace BookBuddy
             services.AddHttpContextAccessor();
             services.AddScoped<IXmlSitemapService, XmlSitemapService>();
             services.AddSingleton<ErrorMessageService>();
+            services.AddScoped<IBookService, BookService>();
+            services.AddScoped<IBookContentService, GutenbergService>();
+            services.AddScoped<IAiService, OpenAiService>();
+            services.AddScoped<IBookPageService, BookPageService>();
+            services.AddScoped<IPageService, PageService>();
+            services.AddScoped<OpenAiClient>();
+            services.AddHttpClient();
             services.AddServerSideBlazor();
 
             
@@ -65,12 +80,24 @@ namespace BookBuddy
                 var response = context.HttpContext.Response;
                 var statusCode = response.StatusCode;
 
-                if (!context.HttpContext.Request.Path.StartsWithSegments("/error"))
+                // Hämta den aktuella kulturen från URL-segment eller använd default "en" om inget segment finns
+                var culture = context.HttpContext.Request.Path.Value?.Split('/').FirstOrDefault(s => s == "sv" || s == "en") ?? "en";
+
+                // Om ingen kultur hittas i URL:en, använd standardkulturen (engelska)
+                if (string.IsNullOrEmpty(culture))
                 {
-                    response.Redirect($"/error?statusCode={statusCode}");
-                    await Task.Yield();
+                    culture = "en";
                 }
+
+                // Bygg om URL:en med rätt språksegment och felkod
+                var redirectUrl = $"/{culture}/error?statusCode={statusCode}";
+
+                response.Redirect(redirectUrl);
+                await Task.Yield();
+               
             });
+
+
 
 
             app.UseHttpsRedirection();

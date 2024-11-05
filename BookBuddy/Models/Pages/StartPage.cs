@@ -11,7 +11,7 @@ namespace BookBuddy.Models.Pages
     [
         typeof(ErrorPage),
         typeof(XmlSitemap),
-        //typeof(CookieInfoPage),
+        typeof(BooksPage)
     ])]
 
     public class StartPage : SitePageData
