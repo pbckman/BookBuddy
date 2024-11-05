@@ -1,4 +1,19 @@
 ﻿
+document.addEventListener("DOMContentLoaded", function () {
+    const isLocal = window.location.protocol === 'http:';
+
+    CookieTractor.init({
+        cookieName: '_cc_cookieConsent',
+        cookieValue: 'true',
+        cookieOptions: {
+            secure: !isLocal, 
+            sameSite: 'None'
+        }
+    });
+});
+
+
+
 console.log("cookieConsent.js is loaded and running!");
 
 // Funktion för att avgöra användarens språk

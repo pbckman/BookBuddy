@@ -7,7 +7,8 @@ namespace BookBuddy.Models.Pages
     [ContentType(
         DisplayName = "CookieInformationPage",
       GUID = "4244B252-60B8-4F01-B418-C83D305571CD",
-      GroupName = GroupNames.Specialized
+      GroupName = GroupNames.Specialized,
+        Description ="This is a cookie page"
     )]
     public class CookieInfoPage : SitePageData
     {

@@ -266,8 +266,22 @@ body {
   display: flex;
   flex-direction: column;
   flex: 1;
-  background-image: url("../images/rm245-bb-17-a.jpg");
+  background-image: url("../images/background-img.webp");
   background-size: cover;
   background-repeat: no-repeat;
   z-index: 2;
+}
+.error-content .container .d-flex .text-center .responsive-img {
+  max-width: 100%;
+  height: auto;
+}
+@media (min-width: 768px) {
+  .error-content .container .d-flex .text-center .responsive-img {
+    max-width: 300px;
+  }
+}
+@media (max-width: 767px) {
+  .error-content .container .d-flex .text-center .responsive-img {
+    max-width: 150px;
+  }
 }
