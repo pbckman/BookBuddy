@@ -91,18 +91,11 @@ namespace BookBuddy.Business.Services.BookService
 
         public List<int> GetCurrentBooks(string currentCulture)
         {
-            LanguageContainerPage languageContainerPage = _pageService.GetLanguageContainerPage(currentCulture);
-            if (languageContainerPage == null)
-            {
-                return null!;
-            }
-
             List<BookPage> bookPages = _pageService.GetBookPages(currentCulture);
             if (bookPages.Count > 0)
             {
                 return bookPages.Select(bookPage => bookPage.BookId).ToList();
             }
-
 
             return [];
         }

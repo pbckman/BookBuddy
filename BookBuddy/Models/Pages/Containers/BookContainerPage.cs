@@ -6,9 +6,8 @@
     [AvailableContentTypes(
        Availability.Specific,
        Include =
-           [typeof(AvailableBooksPage),
-            typeof(LanguageContainerPage)
-   ]
+           [typeof(AvailableBooksPage)
+        ]
 
    )]
     public class BookContainerPage : PageData, IContainerPage

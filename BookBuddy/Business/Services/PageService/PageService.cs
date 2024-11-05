@@ -50,27 +50,48 @@ public class PageService : IPageService
         return null!;
     }
 
+    public BooksPage GetBooksPage(string currentCulture)
+    {
+        try
+        {
+            var startPage = GetStartPage(currentCulture);
+            if (startPage == null)
+            {
+                return null!;
+            }
+
+            var booksPage = _contentRepository.GetChildren<BooksPage>(startPage.ContentLink, new LanguageSelector(currentCulture)).FirstOrDefault();
+
+            return booksPage ?? null!;
+        }
+        catch (Exception)
+        {
+        }
+
+        return null!;
+    }
+
     public List<BookPage> GetBookPages(string currentCulture)
     {
-        var languageContainerPage = GetLanguageContainerPage(currentCulture);
-        if (languageContainerPage == null)
+        var booksPage = GetBooksPage(currentCulture);
+        if (booksPage == null)
         {
             return null!;
         }
 
-        var bookPages = _contentLoader.GetChildren<BookPage>(languageContainerPage.ContentLink, new LanguageSelector(currentCulture)).ToList();
+        var bookPages = _contentLoader.GetChildren<BookPage>(booksPage.ContentLink, new LanguageSelector(currentCulture)).ToList();
         return bookPages ?? [];
     }
 
     public AvailableBooksPage GetAvailableBooksPage(string currentCulture)
     {
-        var bookContainerPage = GetBookContainerPage(currentCulture);
-        if (bookContainerPage == null)
+        var booksPage = GetBooksPage(currentCulture);
+        if (booksPage == null)
         {
             return null!;
         }
 
-        var availableBookPage = _contentRepository.GetChildren<AvailableBooksPage>(bookContainerPage.ContentLink, new LanguageSelector(currentCulture)).FirstOrDefault();
+        var availableBookPage = _contentRepository.GetChildren<AvailableBooksPage>(booksPage.ContentLink, new LanguageSelector(currentCulture)).FirstOrDefault();
 
         return availableBookPage ?? null!;
 

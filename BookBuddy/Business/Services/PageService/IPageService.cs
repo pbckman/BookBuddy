@@ -8,5 +8,6 @@ namespace BookBuddy.Business.Services.PageService
         AvailableBooksPage GetAvailableBooksPage(string name);
         List<BookPage> GetBookPages(string currentCulture);
         LanguageContainerPage GetLanguageContainerPage(string currentCulture);
+        BooksPage GetBooksPage(string currentCulture);
     }
 }

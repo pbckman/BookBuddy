@@ -28,13 +28,11 @@ namespace BookBuddy.Business.Services.BookPageService
         {
             try
             {
-                var languageContainerPage = _pageService.GetLanguageContainerPage(selectedLanguage);
-
-                if (languageContainerPage == null)
+                var booksPage = _pageService.GetBooksPage(selectedLanguage);
+                if (booksPage == null)
                     return false;
 
-
-                var bookPage = _contentRepository.GetDefault<BookPage>(languageContainerPage.ContentLink, CultureInfo.GetCultureInfo(selectedLanguage));
+                var bookPage = _contentRepository.GetDefault<BookPage>(booksPage.ContentLink, CultureInfo.GetCultureInfo(selectedLanguage));
                 bookPage.BookId = bookQuizModel.Metadata.Id;
                 bookPage.Name = bookQuizModel.Metadata.Title;
                 bookPage.Title = bookQuizModel.Metadata.Title;
@@ -46,10 +44,14 @@ namespace BookBuddy.Business.Services.BookPageService
 
                 var bookPageReference = _contentRepository.Save(bookPage, SaveAction.Publish, AccessLevel.NoAccess);
 
+                var quizPage = _contentRepository.GetDefault<QuizPage>(bookPageReference, CultureInfo.GetCultureInfo(selectedLanguage));
+                quizPage.Name = "Quiz";
+                quizPage.ChildSortOrder = EPiServer.Filters.FilterSortOrder.CreatedAscending;
+                var quizPageReference = _contentRepository.Save(quizPage, SaveAction.Publish, AccessLevel.NoAccess);
 
                 foreach (var chapter in bookQuizModel.Chapters)
                 {
-                    var chapterPage = _contentRepository.GetDefault<ChapterPage>(bookPageReference, CultureInfo.GetCultureInfo(selectedLanguage));
+                    var chapterPage = _contentRepository.GetDefault<ChapterPage>(quizPageReference, CultureInfo.GetCultureInfo(selectedLanguage));
                     chapterPage.Name = chapter.ChapterTitle;
                     chapterPage.ChildSortOrder = EPiServer.Filters.FilterSortOrder.CreatedAscending;
 
