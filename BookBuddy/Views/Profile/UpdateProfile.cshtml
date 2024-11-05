@@ -3,6 +3,7 @@
 @{
     Layout = "~/Views/Shared/Layouts/AuthLayout.cshtml";
     ViewData["Title"] = "Update profile";
+    ViewData["Description"] = "Update a sub-profile for your user account by entering a new name";
 }
 
 
@@ -16,13 +17,13 @@
         <div>
             @ViewData["StatusMessage"]
         </div>
-        <div>
+        <div class="form-group mb-3">
             <label asp-for="FirstName"></label>
             <input asp-for="FirstName" />
             <span asp-validation-for="FirstName"></span>
         </div>
 
-        <button type="submit">Save changes</button>
+        <button type="submit" class="btn btn-success w-100 mb-3">Save changes</button>
 
     </form>
 

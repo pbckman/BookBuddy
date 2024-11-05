@@ -18,8 +18,8 @@
 
     @if (selectedProfile == mainProfile)
     {
-        <div>
-            <h1>Update account</h1>
+        <div class="text-center">
+            <h1>Change password</h1>
         </div>
 
         <form method="post" asp-action="UpdateUser" asp-controller="Account">
@@ -27,25 +27,25 @@
             <div>
                 @ViewData["StatusMessage"]
             </div>
-            <div>
+            <div class="form-group mb-3">
                 <label asp-for="CurrentPassword"></label>
                 <input asp-for="CurrentPassword" />
                 <span asp-validation-for="CurrentPassword"></span>
             </div>
 
-            <div>
+            <div class="form-group mb-3">
                 <label asp-for="NewPassword"></label>
                 <input asp-for="NewPassword" />
                 <span asp-validation-for="NewPassword"></span>
             </div>
 
-            <div>
+            <div class="form-group mb-3">
                 <label asp-for="ConfirmNewPassword"></label>
                 <input asp-for="ConfirmNewPassword" />
                 <span asp-validation-for="ConfirmNewPassword"></span>
             </div>
 
-            <button type="submit">Update</button>
+            <button type="submit" class="btn btn-success w-100 mb-3">Update</button>
         </form>
     }
     else
