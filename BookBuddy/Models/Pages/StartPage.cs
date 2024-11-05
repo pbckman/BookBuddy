@@ -10,7 +10,8 @@ namespace BookBuddy.Models.Pages
     [AvailableContentTypes(Availability.Specific , Include =
     [
         typeof(ErrorPage),
-        typeof(XmlSitemap)
+        typeof(XmlSitemap),
+        typeof(BooksPage)
     ])]
 
     public class StartPage : SitePageData
