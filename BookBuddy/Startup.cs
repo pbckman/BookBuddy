@@ -29,11 +29,7 @@ namespace BookBuddy
                 services.Configure<SchedulerOptions>(options => options.Enabled = false);
    
             }
-            //services.Configure<CookiePolicyOptions>(options =>
-            //{
-            //    options.Secure = CookieSecurePolicy.Always;
-            //    options.MinimumSameSitePolicy = SameSiteMode.Lax; 
-            //});
+           
 
 
             services

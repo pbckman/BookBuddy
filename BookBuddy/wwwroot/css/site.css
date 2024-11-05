@@ -271,17 +271,18 @@ body {
   background-repeat: no-repeat;
   z-index: 2;
 }
-.error-content .container .d-flex .text-center .responsive-img {
+
+img {
   max-width: 100%;
   height: auto;
 }
 @media (min-width: 768px) {
-  .error-content .container .d-flex .text-center .responsive-img {
+  img {
     max-width: 300px;
   }
 }
 @media (max-width: 767px) {
-  .error-content .container .d-flex .text-center .responsive-img {
+  img {
     max-width: 150px;
   }
 }
