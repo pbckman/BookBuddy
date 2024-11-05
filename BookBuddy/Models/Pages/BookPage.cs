@@ -12,7 +12,7 @@ namespace BookBuddy.Models.Pages
         Availability.Specific,
         Include =
         [
-            typeof(ChapterPage)
+            typeof(QuizPage)
         ]
     )]
     public class BookPage : SitePageData
