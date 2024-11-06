@@ -154,6 +154,34 @@ a {
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.3);
 }
 
+.cookie-consent-button {
+  position: fixed;
+  bottom: 5rem;
+  right: 20px;
+  z-index: 1;
+}
+.cookie-consent-button .cookie-btn {
+  width: 40px;
+  height: 40px;
+  padding: 0;
+  font-size: 1.5rem;
+  background-color: black;
+  color: white;
+  /*        border: 2px solid white;*/
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+.cookie-consent-button .cookie-btn:hover {
+  background-color: gainsboro;
+  transform: scale(1.1);
+}
+.cookie-consent-button .cookie-btn:focus {
+  outline: none;
+}
+.cookie-consent-button .cookie-btn i {
+  display: contents;
+}
+
 :root {
   --font-poppins: "Poppins", san-serif;
 }
@@ -299,6 +327,32 @@ body {
   margin-top: 25%;
   gap: 30px;
   font-size: 1.25rem;
+}
+
+.error-content {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  background-image: url("../images/background-img.webp");
+  background-size: cover;
+  background-repeat: no-repeat;
+  z-index: 2;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+}
+@media (min-width: 768px) {
+  img {
+    max-width: 300px;
+  }
+}
+@media (max-width: 767px) {
+  img {
+    max-width: 150px;
+  }
 }
 
 .search-box {
