@@ -1,54 +1,63 @@
-.bookcard {
-    width: 100%;
-    padding: 0.75rem;
-    display: flex;
-    flex-direction: column; /* Gör kortet kolumn-baserat */
-    justify-content: space-between;
-    aspect-ratio: 9/4;
-    margin: 0 auto;
-    max-width: 480px;
-
-    .bookcard-content {
+.bookcard-btn {
+    .bookcard {
+        width: 100%;
+        padding: 0.75rem;
         display: flex;
-        height: 100%; /* Se till att innehållsbehållaren fyller kortets höjd */
-    }
-
-    .image-div {
-        height: auto; /* Låt bilden ta upp det utrymme den behöver */
-        flex-shrink: 0; /* Förhindra att bild-div krymper */
-        img {
-            max-height: 100%;
+        flex-direction: column; /* Gör kortet kolumn-baserat */
+        justify-content: space-between;
+        aspect-ratio: 9/4;
+        margin: 0 auto;
+        max-width: 480px;
+        &:hover {
+            background-color: #F3F3F3;
+            transform: scale(1.05);
+            transition: transform 0.3s ease-in-out;
+            cursor: pointer;
         }
-    }
-
-    .content-div {
-        flex-grow: 1; /* Gör att content-div tar upp återstående plats */
-        display: flex;
-        flex-direction: column;
-        .card-body {
-            padding: .5rem 1rem;
-            .card-title {
-                font-size: 1.2em;
+    
+        .bookcard-content {
+            display: flex;
+            height: 100%; /* Se till att innehållsbehållaren fyller kortets höjd */
+        }
+    
+        .image-div {
+            height: auto; /* Låt bilden ta upp det utrymme den behöver */
+            flex-shrink: 0; /* Förhindra att bild-div krymper */
+            img {
+                max-height: 100%;
             }
-            .plot-text {
-                max-height: 100px; /* Begränsa höjden för att passa antalet rader */
-                overflow: hidden;
-                text-overflow: ellipsis;
-                display: -webkit-box;
-                -webkit-line-clamp: 4; /* Begränsa antalet synliga rader */
-                -webkit-box-orient: vertical;
-                line-height: 1.5em; /* Justera linjehöjd om det behövs för att anpassa */
-                height: calc(1.5em * 4); /* Ställ in höjden för att matcha linjehöjden och antalet rader */
-            }
-            p {
-                font-size: .8em;
-            }
-            .authors {
-                margin-top: auto;
+        }
+    
+        .content-div {
+            flex-grow: 1; /* Gör att content-div tar upp återstående plats */
+            display: flex;
+            flex-direction: column;
+            .card-body {
+                padding: .5rem 1rem;
+                .card-title {
+                    font-size: 1.2em;
+                }
+                .plot-text {
+                    max-height: 100px; /* Begränsa höjden för att passa antalet rader */
+                    overflow: hidden;
+                    text-overflow: ellipsis;
+                    display: -webkit-box;
+                    -webkit-line-clamp: 4; /* Begränsa antalet synliga rader */
+                    -webkit-box-orient: vertical;
+                    line-height: 1.5em; /* Justera linjehöjd om det behövs för att anpassa */
+                    height: calc(1.5em * 4); /* Ställ in höjden för att matcha linjehöjden och antalet rader */
+                }
+                p {
+                    font-size: .8em;
+                }
+                .authors {
+                    margin-top: auto;
+                }
             }
         }
     }
 }
+
 @media (max-width: 768px) {
     .content-div {
         font-size: 0.9em; /* Minska grundstorleken för alla barn */

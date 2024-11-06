@@ -23,7 +23,7 @@
   background-color: rgba(0, 0, 0, 0.2);
 }
 
-.bookcard {
+.bookcard-btn .bookcard {
   width: 100%;
   padding: 0.75rem;
   display: flex;
@@ -33,29 +33,35 @@
   margin: 0 auto;
   max-width: 480px;
 }
-.bookcard .bookcard-content {
+.bookcard-btn .bookcard:hover {
+  background-color: #F3F3F3;
+  transform: scale(1.05);
+  transition: transform 0.3s ease-in-out;
+  cursor: pointer;
+}
+.bookcard-btn .bookcard .bookcard-content {
   display: flex;
   height: 100%; /* Se till att innehållsbehållaren fyller kortets höjd */
 }
-.bookcard .image-div {
+.bookcard-btn .bookcard .image-div {
   height: auto; /* Låt bilden ta upp det utrymme den behöver */
   flex-shrink: 0; /* Förhindra att bild-div krymper */
 }
-.bookcard .image-div img {
+.bookcard-btn .bookcard .image-div img {
   max-height: 100%;
 }
-.bookcard .content-div {
+.bookcard-btn .bookcard .content-div {
   flex-grow: 1; /* Gör att content-div tar upp återstående plats */
   display: flex;
   flex-direction: column;
 }
-.bookcard .content-div .card-body {
+.bookcard-btn .bookcard .content-div .card-body {
   padding: 0.5rem 1rem;
 }
-.bookcard .content-div .card-body .card-title {
+.bookcard-btn .bookcard .content-div .card-body .card-title {
   font-size: 1.2em;
 }
-.bookcard .content-div .card-body .plot-text {
+.bookcard-btn .bookcard .content-div .card-body .plot-text {
   max-height: 100px; /* Begränsa höjden för att passa antalet rader */
   overflow: hidden;
   text-overflow: ellipsis;
@@ -65,10 +71,10 @@
   line-height: 1.5em; /* Justera linjehöjd om det behövs för att anpassa */
   height: 6em; /* Ställ in höjden för att matcha linjehöjden och antalet rader */
 }
-.bookcard .content-div .card-body p {
+.bookcard-btn .bookcard .content-div .card-body p {
   font-size: 0.8em;
 }
-.bookcard .content-div .card-body .authors {
+.bookcard-btn .bookcard .content-div .card-body .authors {
   margin-top: auto;
 }
 
@@ -357,6 +363,7 @@ img {
 
 .search-box {
   max-width: 600px;
+  width: 80%;
   margin: 0 auto;
 }
 
