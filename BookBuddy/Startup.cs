@@ -4,10 +4,12 @@ using BookBuddy.Business.Services.AiService;
 using BookBuddy.Business.Services.BookContentService;
 using BookBuddy.Business.Services.BookPageService;
 using BookBuddy.Business.Services.BookService;
+using BookBuddy.Business.Services.BooksPageService;
 using BookBuddy.Business.Services.Interfaces;
 using BookBuddy.Business.Services.PageService;
 using EPiServer.Cms.Shell;
 using EPiServer.Cms.UI.AspNetIdentity;
+using EPiServer.Find.Cms;
 using EPiServer.Scheduler;
 using EPiServer.ServiceLocation;
 using EPiServer.Web.Routing;
@@ -37,6 +39,8 @@ namespace BookBuddy
             services
                 .AddCmsAspNetIdentity<ApplicationUser>()
                 .AddCms()
+                .AddFind()
+                .AddFindCms()
                 .AddAdminUserRegistration()
                 .AddEmbeddedLocalization<Startup>();
 
@@ -49,6 +53,7 @@ namespace BookBuddy
             services.AddScoped<IBookPageService, BookPageService>();
             services.AddScoped<IPageService, PageService>();
             services.AddScoped<OpenAiClient>();
+            services.AddScoped<IBooksPageService, BooksPageService>();
             services.AddHttpClient();
             services.AddServerSideBlazor();
         }

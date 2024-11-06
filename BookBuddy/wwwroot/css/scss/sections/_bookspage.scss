@@ -1,0 +1,12 @@
+.search-box {
+    max-width: 600px;
+    margin: 0 auto;
+}
+.book-cards-wrapper {
+    padding: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(20rem, 1fr));
+    row-gap: 2rem;
+    column-gap: 1.5rem;
+    margin-top: 4rem;
+}
