@@ -1,4 +1,5 @@
 using BookBuddy.Business.Clients;
+using BookBuddy.Business.Factories;
 using BookBuddy.Business.Services;
 using BookBuddy.Business.Services.AiService;
 using BookBuddy.Business.Services.BookContentService;
@@ -54,6 +55,7 @@ namespace BookBuddy
             services.AddScoped<IPageService, PageService>();
             services.AddScoped<OpenAiClient>();
             services.AddScoped<IBooksPageService, BooksPageService>();
+            services.AddTransient<BookPageFactory>();
             services.AddHttpClient();
             services.AddServerSideBlazor();
         }

@@ -11,4 +11,5 @@ public class BookPageModel
     public string Plot { get; set; } = string.Empty;
     public string ImageUrl { get; set; }
     public string ImageAltText { get; set; }
+    public string PageUrl { get; set; }
 }

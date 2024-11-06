@@ -6,7 +6,7 @@
             <form asp-controller="BooksPage" asp-action="Search" class="d-flex" id="findForm" method="post">
                 <div class="input-group search-box">
                     <input class="form-control search-input" id="findQuery" name="query" type="search" placeholder="Search for a book..." aria-label="Find">
-                    <button class="input-group-text search-button">
+                    <button class="input-group-text search-button" aria-label="Search">
                         <i class="fas fa-search"></i>
                     </button>
                 </div>
@@ -31,7 +31,7 @@
                 {
                     @foreach (var result in Model.Result)
                     {
-                        <component type="typeof(BookCard)" render-mode="ServerPrerendered" param-Result="result" param-Query="Model.Query"/>
+                        <component type="typeof(BookCard)" render-mode="Server" param-Result="result" param-Query="Model.Query"/>
                     }
                 }
                 else
