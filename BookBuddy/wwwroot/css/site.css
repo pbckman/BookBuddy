@@ -391,23 +391,6 @@ img {
   }
 }
 
-<<<<<<< HEAD
-.search-box {
-  max-width: 600px;
-  width: 80%;
-  margin: 0 auto;
-}
-
-.book-cards-wrapper {
-  padding: 0 auto;
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(20rem, 1fr));
-  row-gap: 2rem;
-  -moz-column-gap: 1.5rem;
-       column-gap: 1.5rem;
-  margin-top: 4rem;
-}
-=======
 .cookie-container {
   width: 80%;
 }
@@ -722,7 +705,8 @@ img {
   left: 0;
   width: 100%;
   height: 100%;
-  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+          backdrop-filter: blur(10px);
   background: rgba(0, 0, 0, 0.2);
   z-index: -1;
 }
@@ -772,7 +756,8 @@ img {
 .book-card .book-container .book-cover img {
   width: 100%;
   height: auto;
-  object-fit: cover;
+  -o-object-fit: cover;
+     object-fit: cover;
   max-width: 100%;
   border-radius: inherit;
 }
@@ -846,4 +831,19 @@ img {
 .book-card .button-quiz .quiz-button:hover {
   background-color: #8b56f1;
 }
->>>>>>> e6098638a387d14a0e7ff17098af63d405e8a5a7
+
+.search-box {
+  max-width: 600px;
+  width: 80%;
+  margin: 0 auto;
+}
+
+.book-cards-wrapper {
+  padding: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(20rem, 1fr));
+  row-gap: 2rem;
+  -moz-column-gap: 1.5rem;
+       column-gap: 1.5rem;
+  margin-top: 4rem;
+}
