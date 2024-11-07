@@ -1,0 +1,115 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<languages>
+	<language name="English" id="en">
+		<contenttypes>
+			<signin>
+				<properties>
+					<title>Sign in</title>
+					<description>Sign in to your account using your registered email and password.</description>
+					<loginHeading>Login to your Account</loginHeading>
+					<emailPlaceholder>Enter email address</emailPlaceholder>
+					<passwordPlaceholder>Password</passwordPlaceholder>
+					<rememberMeLabel>Remember my password</rememberMeLabel>
+					<loginButton>Login</loginButton>
+					<errorMessage>Incorrect email or password</errorMessage>
+				</properties>
+			</signin>
+			<signup>
+				<properties>
+					<title>Sign up</title>
+					<description>Sign up as user by filling in firstname, lastname, email and password.</description>
+					<createAccountHeading>Create Account</createAccountHeading>
+					<createAccountPrompt>Fill in the details below to create a new account</createAccountPrompt>
+					<firstnamePlaceholder>Enter your firstname</firstnamePlaceholder>
+					<lastnamePlaceholder>Enter your lastname</lastnamePlaceholder>
+					<emailPlaceholder>Enter your email</emailPlaceholder>
+					<passwordPlaceholder>Enter your password</passwordPlaceholder>
+					<confirmPasswordPlaceholder>Confirm your password</confirmPasswordPlaceholder>
+					<signUpButton>Sign up</signUpButton>
+					<statusMessage>Something went wrong, please try again later.</statusMessage>
+				</properties>
+			</signup>
+			<updateuser>
+				<properties>
+					<title>Change password</title>
+					<description>Change your current password with confirmed new password.</description>
+					<currentPasswordPlaceholder>Enter your current password</currentPasswordPlaceholder>
+					<newPasswordPlaceholder>Enter your new password</newPasswordPlaceholder>
+					<confirmNewPasswordPlaceholder>Confirm your new password</confirmNewPasswordPlaceholder>
+					<updateButton>Update</updateButton>
+					<statusMessage>Something went wrong, please try again later.</statusMessage>
+					<accessDenied>ACCESS DENIED</accessDenied>
+					<mainProfileNeeded>Main profile needed to change password.</mainProfileNeeded>
+				</properties>
+			</updateuser>
+			<userprofile>
+				<title>Create profile</title>
+				<description>Create a profile with a name</description>
+				<firstname>Firstname</firstname>
+				<saveButton>Create profile</saveButton>
+			</userprofile>
+			<updateprofile>
+				<title>Update profile</title>
+				<description>Update profile with a new name</description>
+				<firstname>Firstname</firstname>
+				<saveButton>Save changes</saveButton>
+			</updateprofile>
+		</contenttypes>
+	</language>
+	<language name="Svenska" id="sv">
+		<contenttypes>
+			<signin>
+				<properties>
+					<title>Logga in</title>
+					<description>Logga in på ditt konto med din registrerade e-postadress och lösenord.</description>
+					<loginHeading>Logga in på ditt konto</loginHeading>
+					<emailPlaceholder>Fyll i e-postadress</emailPlaceholder>
+					<passwordPlaceholder>Lösenord</passwordPlaceholder>
+					<rememberMeLabel>Kom ihåg mitt lösenord</rememberMeLabel>
+					<loginButton>Logga in</loginButton>
+					<errorMessage>Felaktig e-post eller lösenord</errorMessage>
+				</properties>
+			</signin>
+			<signup>
+				<properties>
+					<title>Registrera dig</title>
+					<description>Registrera dig som användare genom att fylla i förnamn, efternamn, e-post och lösenord.</description>
+					<createAccountHeading>Skapa konto</createAccountHeading>
+					<createAccountPrompt>Fyll i uppgifterna nedan för att skapa ett nytt konto</createAccountPrompt>
+					<firstnamePlaceholder>Fyll i ditt förnamn</firstnamePlaceholder>
+					<lastnamePlaceholder>Fyll i ditt efternamn</lastnamePlaceholder>
+					<emailPlaceholder>Fyll i din e-post</emailPlaceholder>
+					<passwordPlaceholder>Fyll i ditt lösenord</passwordPlaceholder>
+					<confirmPasswordPlaceholder>Bekräfta ditt lösenord</confirmPasswordPlaceholder>
+					<signUpButton>Registrera dig</signUpButton>
+					<statusMessage>Något gick fel, försök igen senare.</statusMessage>
+				</properties>
+			</signup>
+			<updateuser>
+				<properties>
+					<title>Ändra lösenord</title>
+					<description>Ändra ditt nuvarande lösenord med bekräftat nytt lösenord.</description>
+					<currentPasswordPlaceholder>Fyll i ditt nuvarande lösenord</currentPasswordPlaceholder>
+					<newPasswordPlaceholder>Fyll i ditt nya lösenord</newPasswordPlaceholder>
+					<confirmNewPasswordPlaceholder>Bekräfta ditt nya lösenord</confirmNewPasswordPlaceholder>
+					<updateButton>Uppdatera</updateButton>
+					<statusMessage>Något gick fel, försök igen senare.</statusMessage>
+					<accessDenied>SAKNAR BEHÖRIGHET</accessDenied>
+					<mainProfileNeeded>Huvudprofil behövs för att ändra lösenord.</mainProfileNeeded>
+				</properties>
+			</updateuser>
+			<userprofile>
+				<title>Skapa profil</title>
+				<description>Skapa ny profil genom att ange namn</description>
+				<firstname>Namn</firstname>
+				<saveButton>Skapa profil</saveButton>
+			</userprofile>
+			<updateprofile>
+				<title>Uppdatera profil</title>
+				<description>Uppdatera befintlig profil med nytt namn</description>
+				<firstname>Namn</firstname>
+				<saveButton>Spara ändring</saveButton>
+			</updateprofile>
+		</contenttypes>
+	</language>
+</languages>

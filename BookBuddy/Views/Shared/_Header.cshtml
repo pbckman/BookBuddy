@@ -1,3 +1,4 @@
+@using System.Globalization
 @model IPageViewModel<SitePageData>
 @inject ProfileService ProfileService
 @inject UserManager<ApplicationUser> _userManager
@@ -8,6 +9,7 @@
     var profiles = await ProfileService.GetAllProfilesAsync(userId);
     var selectedProfile = await ProfileService.GetSelectedProfileAsync();
     var mainProfile = await ProfileService.GetMainProfileAsync();
+    var currentCulture = CultureInfo.CurrentCulture.TwoLetterISOLanguageName;
 }
 
 @if (User != null)
@@ -45,7 +47,7 @@
                 }
                 else
                 {
-                    <form action="@Url.Action("SignIn", "Auth")" >
+                    <form action="@Url.Action("SignIn", "Auth", new { lang = currentCulture })">
                         @Html.AntiForgeryToken()
                         <button class="btn btn-light header-signin d-flex align-items-center" type="submit" aria-expanded="false">
                             <img class="profile-image" src="~/images/default-profile.jpg" alt="Company Logo" /> <span class="d-none d-lg-block">Sign in</span>

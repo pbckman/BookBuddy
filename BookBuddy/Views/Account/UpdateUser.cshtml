@@ -1,9 +1,11 @@
-﻿@model UpdateUserViewModel
+﻿@using System.Globalization
+@model UpdateUserViewModel
 @inject ProfileService ProfileService
 
 @{
     Layout = "~/Views/Shared/Layouts/AuthLayout.cshtml";
-    ViewData["Title"] = "Change password";
+    ViewData["Title"] = ViewData["Title"];
+    ViewData["Description"] = ViewData["Description"];
 
 
     var user = await _userManager.GetUserAsync(User);
@@ -19,7 +21,7 @@
     @if (selectedProfile == mainProfile)
     {
         <div class="text-center">
-            <h1>Change password</h1>
+            <h1>@ViewData["Title"]</h1>
         </div>
 
         <form method="post" asp-action="UpdateUser" asp-controller="Account">
@@ -28,32 +30,32 @@
                 @ViewData["StatusMessage"]
             </div>
             <div class="form-group mb-3">
-                <label asp-for="CurrentPassword"></label>
-                <input asp-for="CurrentPassword" />
+                <label asp-for="CurrentPassword">@ViewData["CurrentPasswordPlaceholder"]</label>
+                <input asp-for="CurrentPassword" placeholder="@ViewData["CurrentPasswordPlaceholder"]" />
                 <span asp-validation-for="CurrentPassword"></span>
             </div>
 
             <div class="form-group mb-3">
-                <label asp-for="NewPassword"></label>
-                <input asp-for="NewPassword" />
+                <label asp-for="NewPassword">@ViewData["NewPasswordPlaceholder"]</label>
+                <input asp-for="NewPassword" placeholder="@ViewData["NewPasswordPlaceholder"]" />
                 <span asp-validation-for="NewPassword"></span>
             </div>
 
             <div class="form-group mb-3">
-                <label asp-for="ConfirmNewPassword"></label>
-                <input asp-for="ConfirmNewPassword" />
+                <label asp-for="ConfirmNewPassword">@ViewData["ConfirmNewPasswordPlaceholder"]</label>
+                <input asp-for="ConfirmNewPassword" placeholder="@ViewData["ConfirmNewPasswordPlaceholder"]" />
                 <span asp-validation-for="ConfirmNewPassword"></span>
             </div>
 
-            <button type="submit" class="btn btn-success w-100 mb-3">Update</button>
+            <button type="submit" class="btn btn-success w-100 mb-3">@ViewData["UpdateButton"]</button>
         </form>
     }
     else
     {
         <div>
-            <h1>ACCESS DENIED</h1>
+            <h1>@ViewData["AccessTitle"]</h1>
         </div>
-        <h2>Mainprofile needed to change password</h2>
+        <h2>@ViewData["AccessMessage"]</h2>
     }
 
 </div>

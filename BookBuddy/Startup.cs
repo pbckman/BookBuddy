@@ -16,6 +16,7 @@ using EPiServer.Web.Routing;
 using Microsoft.AspNetCore.Localization;
 using System.Globalization;
 using Microsoft.EntityFrameworkCore;
+using BookBuddy.Business.Services.TranslationService;
 
 
 namespace BookBuddy
@@ -55,6 +56,7 @@ namespace BookBuddy
             services.AddHttpContextAccessor();
             services.AddScoped<IXmlSitemapService, XmlSitemapService>();
             services.AddSingleton<ErrorMessageService>();
+            services.AddSingleton<AuthTranslationService>(new AuthTranslationService(Path.Combine(Directory.GetCurrentDirectory(), "Resources", "Translations", "Auth.xml")));
             services.AddScoped<IBookService, BookService>();
             services.AddScoped<IBookContentService, GutenbergService>();
             services.AddScoped<IAiService, OpenAiService>();

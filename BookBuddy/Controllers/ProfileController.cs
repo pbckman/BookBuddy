@@ -1,4 +1,5 @@
 ﻿using BookBuddy.Business.Services.AccountService;
+using BookBuddy.Business.Services.TranslationService;
 using BookBuddy.Models.ViewModels;
 using EPiServer.Cms.UI.AspNetIdentity;
 using Microsoft.AspNetCore.Identity;
@@ -6,22 +7,29 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace BookBuddy.Controllers
 {
-    public class ProfileController(UserManager<ApplicationUser> userManager, ProfileService profileService) : Controller
+    public class ProfileController(UserManager<ApplicationUser> userManager, ProfileService profileService, AuthTranslationService translationService) : Controller
     {
         private readonly UserManager<ApplicationUser> _userManager = userManager;
         private readonly ProfileService _profileService = profileService;
+        private readonly AuthTranslationService _translationService = translationService;
+
 
         [HttpGet]
-        [Route("/profile/userprofile")]
-        public IActionResult UserProfile()
+        [Route("{lang}/profile/userprofile")]
+        public IActionResult UserProfile(string lang = "en")
         {
+            ViewData["Title"] = _translationService.GetTranslation("userprofile", "title", lang);
+            ViewData["Description"] = _translationService.GetTranslation("userprofile", "description", lang);
+            ViewData["FirstName"] = _translationService.GetTranslation("userprofile", "firstname", lang);
+            ViewData["SaveButton"] = _translationService.GetTranslation("userprofile", "saveButton", lang);
+
             return View();
         }
 
 
         [HttpPost]
-        [Route("/profile/userprofile")]
-        public async Task<IActionResult> CreateProfile(ProfileViewModel model)
+        [Route("{lang}/profile/userprofile")]
+        public async Task<IActionResult> CreateProfile(ProfileViewModel model, string lang = "en")
         {
             var user = await _userManager.GetUserAsync(User);
             if (user == null)
@@ -51,9 +59,15 @@ namespace BookBuddy.Controllers
         }
 
         [HttpGet]
-        [Route("/profile/updateprofile")]
-        public async Task<IActionResult> UpdateProfile()
+        [Route("{lang}/profile/updateprofile")]
+        public async Task<IActionResult> UpdateProfile(string lang = "en")
         {
+            ViewData["Title"] = _translationService.GetTranslation("updateprofile", "title", lang);
+            ViewData["Description"] = _translationService.GetTranslation("updateprofile", "description", lang);
+            ViewData["FirstName"] = _translationService.GetTranslation("updateprofile", "firstname", lang);
+            ViewData["SaveButton"] = _translationService.GetTranslation("updateprofile", "saveButton", lang);
+
+
             var user = await _userManager.GetUserAsync(User);
             if (user == null)
             {
@@ -74,8 +88,8 @@ namespace BookBuddy.Controllers
         }
 
         [HttpPost]
-        [Route("/profile/updateprofile")]
-        public async Task<IActionResult> UpdateProfile(ProfileViewModel model)
+        [Route("{lang}/profile/updateprofile")]
+        public async Task<IActionResult> UpdateProfile(ProfileViewModel model, string lang = "en")
         {
             if (!ModelState.IsValid)
             {
