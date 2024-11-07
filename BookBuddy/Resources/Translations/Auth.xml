@@ -43,16 +43,20 @@
 				</properties>
 			</updateuser>
 			<userprofile>
+				<properties>
 				<title>Create profile</title>
 				<description>Create a profile with a name</description>
 				<firstname>Firstname</firstname>
 				<saveButton>Create profile</saveButton>
+				</properties>
 			</userprofile>
 			<updateprofile>
+				<properties>
 				<title>Update profile</title>
 				<description>Update profile with a new name</description>
 				<firstname>Firstname</firstname>
 				<saveButton>Save changes</saveButton>
+				</properties>
 			</updateprofile>
 		</contenttypes>
 	</language>
@@ -99,16 +103,20 @@
 				</properties>
 			</updateuser>
 			<userprofile>
+				<properties>
 				<title>Skapa profil</title>
 				<description>Skapa ny profil genom att ange namn</description>
 				<firstname>Namn</firstname>
 				<saveButton>Skapa profil</saveButton>
+				</properties>
 			</userprofile>
 			<updateprofile>
+				<properties>
 				<title>Uppdatera profil</title>
 				<description>Uppdatera befintlig profil med nytt namn</description>
 				<firstname>Namn</firstname>
 				<saveButton>Spara ändring</saveButton>
+				</properties>
 			</updateprofile>
 		</contenttypes>
 	</language>
