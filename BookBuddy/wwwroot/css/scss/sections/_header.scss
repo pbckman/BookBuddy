@@ -2,32 +2,44 @@
     position: sticky;
     padding: .75rem 2rem;
     background-color: rgb(255, 218, 89, .5);
+
     .header-wrapper {
         display: flex;
+
         .header-items {
             display: flex;
             justify-content: space-between;
             align-items: center;
             padding: 0;
             width: 100%;
+
             .navbar-toggler {
                 font-size: 1.5rem;
+
                 .navbar-toggler-icon {
                     display: flex;
                     align-items: center;
                 }
             }
+
             .dropdown {
                 margin-left: auto;
+
                 .dropdown-toggle {
                     padding: .75rem 1.25rem;
                     border-radius: 1rem;
-                    .profile-image {
-                        height: 40px;
-                        width: 40px;
-                        border-radius: 50%;
-                        margin-right: .5rem;
-                    }
+                }
+
+                .header-signin {
+                    border-radius: 1rem;
+                    padding: .75rem 1.25rem;
+                }
+
+                .profile-image {
+                    height: 40px;
+                    width: 40px;
+                    border-radius: 50%;
+                    margin-right: .5rem;
                 }
             }
         }

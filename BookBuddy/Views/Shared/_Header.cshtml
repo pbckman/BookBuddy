@@ -1,6 +1,20 @@
+@using System.Globalization
 @model IPageViewModel<SitePageData>
+@inject ProfileService ProfileService
+@inject UserManager<ApplicationUser> _userManager
 
-<div class="header-wrapper">
+@{
+    var user = await _userManager.GetUserAsync(User);
+    var userId = user?.Id;
+    var profiles = await ProfileService.GetAllProfilesAsync(userId);
+    var selectedProfile = await ProfileService.GetSelectedProfileAsync();
+    var mainProfile = await ProfileService.GetMainProfileAsync();
+    var currentCulture = CultureInfo.CurrentCulture.TwoLetterISOLanguageName;
+}
+
+@if (User != null)
+{
+    <div class="header-wrapper">
     <div class="header-items">
         <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon">
@@ -8,15 +22,41 @@
                 </span>
         </button>
 
-        <div class="dropdown">
-            <button class="btn btn-light dropdown-toggle d-flex align-items-center" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                <img class="profile-image" src="~/images/default-profile.jpg" alt="Company Logo" /> <span class="d-none d-lg-block">Profile Name</span>            
-            </button>
-            <ul class="dropdown-menu">
-                <li><a class="dropdown-item" href="#">Action</a></li>
-                <li><a class="dropdown-item" href="#">Another action</a></li>
-                <li><a class="dropdown-item" href="#">Something else here</a></li>
-            </ul>
-        </div>
+            <div class="dropdown">
+                @if (User.Identity.IsAuthenticated)
+                {
+                    <button class="btn btn-light dropdown-toggle d-flex align-items-center" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        <img class="profile-image" src="~/images/default-profile.jpg" alt="Company Logo" /> <span class="d-none d-lg-block">@selectedProfile?.ProfileFirstName</span>
+                    </button>
+
+                    <ul class="dropdown-menu">
+                        
+                        @foreach (var profile in profiles)
+                        {
+                            if (profile.Id != selectedProfile.Id)
+                            {
+                                <li>
+                                    <form action="@Url.Action("SelectProfile", "Profile")" method="post">
+                                        <input type="hidden" name="profileId" value="@profile.Id" />
+                                        <button type="submit" class="dropdown-item">@profile.ProfileFirstName</button>
+                                    </form>
+                                </li>
+                            }
+                        }
+                    </ul>
+                }
+                else
+                {
+                    <form action="@Url.Action("SignIn", "Auth", new { lang = currentCulture })">
+                        @Html.AntiForgeryToken()
+                        <button class="btn btn-light header-signin d-flex align-items-center" type="submit" aria-expanded="false">
+                            <img class="profile-image" src="~/images/default-profile.jpg" alt="Company Logo" /> <span class="d-none d-lg-block">Sign in</span>
+                        </button>
+                    </form>
+                    
+                }
+            </div>
+   
     </div>
 </div>
+}

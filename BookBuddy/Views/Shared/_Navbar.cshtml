@@ -1,4 +1,9 @@
+@using System.Globalization
 @model IPageViewModel<SitePageData>
+
+@{
+    var currentCulture = CultureInfo.CurrentCulture.TwoLetterISOLanguageName; 
+}
 
     @if (Model.SiteSettings != null)
     {
@@ -19,13 +24,28 @@
                      }
                 </div>
 
-                <div class="nav-logout">
-                    <button class="btn btn-warning">
-                        Logout
-                    </button>
-                </div>
+            @if (User.Identity.IsAuthenticated)
+            {
+                <form asp-action="SignOut" asp-controller="Auth" method="post">
+                    <div class="nav-logout">
+                        <button class="btn btn-warning" type="submit">
+                            Sign out
+                        </button>
+                    </div>
+                </form>
+            }
+            else
+            {
+
+                <form action="@Url.Action("SignUp", "Auth", new { lang = currentCulture })" method="get">
+                        <button class="btn btn-warning" type="submit">
+                            Sign up
+                        </button>
+                </form>
+            }
 
             </div>
+
         </div>
     }
     else
