@@ -5,9 +5,11 @@ using BookBuddy.Business.Services.AiService;
 using BookBuddy.Business.Services.BookContentService;
 using BookBuddy.Business.Services.BookPageService;
 using BookBuddy.Business.Services.BookService;
+using BookBuddy.Business.Services.AccountService;
 using BookBuddy.Business.Services.BooksPageService;
 using BookBuddy.Business.Services.Interfaces;
 using BookBuddy.Business.Services.PageService;
+using BookBuddy.Data.Contexts;
 using EPiServer.Cms.Shell;
 using EPiServer.Cms.UI.AspNetIdentity;
 using EPiServer.Find.Cms;
@@ -16,6 +18,8 @@ using EPiServer.ServiceLocation;
 using EPiServer.Web.Routing;
 using Microsoft.AspNetCore.Localization;
 using System.Globalization;
+using Microsoft.EntityFrameworkCore;
+using BookBuddy.Business.Services.TranslationService;
 
 
 namespace BookBuddy
@@ -24,9 +28,12 @@ namespace BookBuddy
     {
         private readonly IWebHostEnvironment _webHostingEnvironment;
 
-        public Startup(IWebHostEnvironment webHostingEnvironment)
+        public IConfiguration Configuration { get; }
+
+        public Startup(IWebHostEnvironment webHostingEnvironment, IConfiguration configuration)
         {
             _webHostingEnvironment = webHostingEnvironment;
+            Configuration = configuration;
         }
 
         public void ConfigureServices(IServiceCollection services)
@@ -36,11 +43,10 @@ namespace BookBuddy
                 AppDomain.CurrentDomain.SetData("DataDirectory", Path.Combine(_webHostingEnvironment.ContentRootPath, "App_Data"));
 
                 services.Configure<SchedulerOptions>(options => options.Enabled = false);
-   
             }
-           
 
-
+            services.AddScoped<AccountService>();
+            services.AddScoped<ProfileService>();
             services
                 .AddCmsAspNetIdentity<ApplicationUser>()
                 .AddCms()
@@ -49,9 +55,13 @@ namespace BookBuddy
                 .AddAdminUserRegistration()
                 .AddEmbeddedLocalization<Startup>();
 
+            services.AddDbContext<DataContext>(options =>
+            options.UseSqlServer(Configuration.GetConnectionString("EPiServerDB")));
+
             services.AddHttpContextAccessor();
             services.AddScoped<IXmlSitemapService, XmlSitemapService>();
             services.AddSingleton<ErrorMessageService>();
+            services.AddSingleton<AuthTranslationService>(new AuthTranslationService(Path.Combine(Directory.GetCurrentDirectory(), "Resources", "Translations", "Auth.xml")));
             services.AddScoped<IBookService, BookService>();
             services.AddScoped<IBookContentService, GutenbergService>();
             services.AddScoped<IAiService, OpenAiService>();
@@ -62,6 +72,8 @@ namespace BookBuddy
             services.AddTransient<BookPageFactory>();
             services.AddHttpClient();
             services.AddServerSideBlazor();
+
+            
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -77,16 +89,16 @@ namespace BookBuddy
                 var response = context.HttpContext.Response;
                 var statusCode = response.StatusCode;
 
-                // Hämta den aktuella kulturen från URL-segment eller använd default "en" om inget segment finns
+                // Hï¿½mta den aktuella kulturen frï¿½n URL-segment eller anvï¿½nd default "en" om inget segment finns
                 var culture = context.HttpContext.Request.Path.Value?.Split('/').FirstOrDefault(s => s == "sv" || s == "en") ?? "en";
 
-                // Om ingen kultur hittas i URL:en, använd standardkulturen (engelska)
+                // Om ingen kultur hittas i URL:en, anvï¿½nd standardkulturen (engelska)
                 if (string.IsNullOrEmpty(culture))
                 {
                     culture = "en";
                 }
 
-                // Bygg om URL:en med rätt språksegment och felkod
+                // Bygg om URL:en med rï¿½tt sprï¿½ksegment och felkod
                 var redirectUrl = $"/{culture}/error?statusCode={statusCode}";
 
                 response.Redirect(redirectUrl);
@@ -105,11 +117,11 @@ namespace BookBuddy
 
             app.UseEndpoints(endpoints =>
             {
+                endpoints.MapControllers();
+
                 endpoints.MapContent();
 
                 endpoints.MapBlazorHub();
-
-               endpoints.MapControllers();
             });
         }
     }

@@ -65,6 +65,11 @@ namespace BookBuddy.Models.Pages
    )]
         [CultureSpecific]
         public virtual string ImageAltText { get; set; }
-        public object SiteSettingsPage { get; internal set; }
+
+
+        [CultureSpecific]
+        public virtual ContentReference? SiteSettingsPage { get; set; }
     }
+
+
 }

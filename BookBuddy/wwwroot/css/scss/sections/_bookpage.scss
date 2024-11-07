@@ -1,0 +1,137 @@
+﻿.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    backdrop-filter: blur(10px); 
+    background: rgba(0, 0, 0, 0.2); 
+    z-index: -1; 
+}
+
+.book-card {
+    background-color: #fff;
+    border-radius: 8px;
+    padding: 30px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    max-width: 80%;
+    margin: 40px auto;
+    position: relative;
+
+    @media (max-width: 768px) {
+        padding: 15px;
+    }
+
+    .book-container {
+        display: flex;
+        align-items: center;
+        gap: 50px;
+
+        @media (max-width: 768px) {
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .book-cover {
+            width: 220px;
+            height: 220px;
+            border-radius: 8px;
+            margin-bottom: 100px;
+
+            @media (max-width: 768px) {
+                width: 200px;
+            }
+
+            @media (max-width: 425px) {
+                width: 100px;
+            }
+
+
+            img {
+                width: 100%;
+                height: auto;
+                object-fit: cover;
+                max-width: 100%;
+                border-radius: inherit;
+            }
+        }
+
+        .book-info {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            flex-grow: 1;
+
+            @media (max-width: 768px) {
+                align-items: center;
+            }
+
+            @media (max-width: 456px) {
+                align-items: baseline;
+            }
+
+            h1 {
+                font-size: 2.5rem;
+                font-weight: bold;
+                margin-bottom: 10px;
+            }
+
+            p {
+                font-size: 1.1rem;
+                line-height: 1.6;
+                color: #333;
+            }
+        }
+    }
+
+    .book-plot {
+        margin-top: 50px;
+
+        @media (max-width: 768px) {
+            margin-top: 30px;
+        }
+
+        p {
+            font-size: 1rem;
+            line-height: 1.6;
+            color: #333;
+        }
+    }
+
+    .favorite-button {
+        position: absolute;
+        top: 20px;
+        right: 20px;
+        font-size: 1.5rem;
+        color: #ffcc00;
+        cursor: pointer;
+
+        &:hover {
+            color: darken(#ffcc00, 10%);
+        }
+    }
+
+    .button-quiz {
+        display: flex;
+        justify-content: flex-end;
+        .quiz-button {
+            background-color: #9b6ef3;
+            color: #fff;
+            border: none;
+            border-radius: 8px;
+            padding: 15px 30px;
+            font-size: 1rem;
+            font-weight: bold;
+            text-transform: uppercase;
+            cursor: pointer;
+            margin-top: 30px;
+            text-align: center;
+
+            &:hover {
+                background-color: darken(#9b6ef3, 5%);
+            }
+        }
+    }
+}
+
