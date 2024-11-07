@@ -1,0 +1,29 @@
+﻿.form-group {
+    margin-bottom: 1.5rem;
+
+    label {
+        font-weight: 600;
+    }
+
+    input {
+        border-radius: 8px;
+        border: 1px solid #ddd;
+        padding: 10px;
+        font-size: 1rem;
+        width: 100%;
+    }
+
+    .col {
+        padding: 0 5px;
+    }
+
+    .login-card h1 {
+        font-size: 2rem;
+        margin-bottom: 10px;
+    }
+
+    .login-card p {
+        font-size: 1rem;
+        margin-bottom: 20px;
+    }
+}

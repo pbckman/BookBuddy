@@ -4,8 +4,10 @@ using BookBuddy.Business.Services.AiService;
 using BookBuddy.Business.Services.BookContentService;
 using BookBuddy.Business.Services.BookPageService;
 using BookBuddy.Business.Services.BookService;
+using BookBuddy.Business.Services.AccountService;
 using BookBuddy.Business.Services.Interfaces;
 using BookBuddy.Business.Services.PageService;
+using BookBuddy.Data.Contexts;
 using EPiServer.Cms.Shell;
 using EPiServer.Cms.UI.AspNetIdentity;
 using EPiServer.Scheduler;
@@ -13,6 +15,8 @@ using EPiServer.ServiceLocation;
 using EPiServer.Web.Routing;
 using Microsoft.AspNetCore.Localization;
 using System.Globalization;
+using Microsoft.EntityFrameworkCore;
+using BookBuddy.Business.Services.TranslationService;
 
 
 namespace BookBuddy
@@ -21,9 +25,12 @@ namespace BookBuddy
     {
         private readonly IWebHostEnvironment _webHostingEnvironment;
 
-        public Startup(IWebHostEnvironment webHostingEnvironment)
+        public IConfiguration Configuration { get; }
+
+        public Startup(IWebHostEnvironment webHostingEnvironment, IConfiguration configuration)
         {
             _webHostingEnvironment = webHostingEnvironment;
+            Configuration = configuration;
         }
 
         public void ConfigureServices(IServiceCollection services)
@@ -33,20 +40,23 @@ namespace BookBuddy
                 AppDomain.CurrentDomain.SetData("DataDirectory", Path.Combine(_webHostingEnvironment.ContentRootPath, "App_Data"));
 
                 services.Configure<SchedulerOptions>(options => options.Enabled = false);
-   
             }
-           
 
-
+            services.AddScoped<AccountService>();
+            services.AddScoped<ProfileService>();
             services
                 .AddCmsAspNetIdentity<ApplicationUser>()
                 .AddCms()
                 .AddAdminUserRegistration()
                 .AddEmbeddedLocalization<Startup>();
 
+            services.AddDbContext<DataContext>(options =>
+            options.UseSqlServer(Configuration.GetConnectionString("EPiServerDB")));
+
             services.AddHttpContextAccessor();
             services.AddScoped<IXmlSitemapService, XmlSitemapService>();
             services.AddSingleton<ErrorMessageService>();
+            services.AddSingleton<AuthTranslationService>(new AuthTranslationService(Path.Combine(Directory.GetCurrentDirectory(), "Resources", "Translations", "Auth.xml")));
             services.AddScoped<IBookService, BookService>();
             services.AddScoped<IBookContentService, GutenbergService>();
             services.AddScoped<IAiService, OpenAiService>();
@@ -55,6 +65,8 @@ namespace BookBuddy
             services.AddScoped<OpenAiClient>();
             services.AddHttpClient();
             services.AddServerSideBlazor();
+
+            
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -98,11 +110,11 @@ namespace BookBuddy
 
             app.UseEndpoints(endpoints =>
             {
+                endpoints.MapControllers();
+
                 endpoints.MapContent();
 
                 endpoints.MapBlazorHub();
-
-               endpoints.MapControllers();
             });
         }
     }
