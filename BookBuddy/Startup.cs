@@ -4,13 +4,19 @@ using BookBuddy.Business.Services.AiService;
 using BookBuddy.Business.Services.BookContentService;
 using BookBuddy.Business.Services.BookPageService;
 using BookBuddy.Business.Services.BookService;
+using BookBuddy.Business.Services.AccountService;
 using BookBuddy.Business.Services.Interfaces;
 using BookBuddy.Business.Services.PageService;
+using BookBuddy.Data.Contexts;
 using EPiServer.Cms.Shell;
 using EPiServer.Cms.UI.AspNetIdentity;
 using EPiServer.Scheduler;
 using EPiServer.ServiceLocation;
 using EPiServer.Web.Routing;
+using Microsoft.AspNetCore.Localization;
+using System.Globalization;
+using Microsoft.EntityFrameworkCore;
+using BookBuddy.Business.Services.TranslationService;
 
 
 namespace BookBuddy
@@ -19,9 +25,12 @@ namespace BookBuddy
     {
         private readonly IWebHostEnvironment _webHostingEnvironment;
 
-        public Startup(IWebHostEnvironment webHostingEnvironment)
+        public IConfiguration Configuration { get; }
+
+        public Startup(IWebHostEnvironment webHostingEnvironment, IConfiguration configuration)
         {
             _webHostingEnvironment = webHostingEnvironment;
+            Configuration = configuration;
         }
 
         public void ConfigureServices(IServiceCollection services)
@@ -31,18 +40,23 @@ namespace BookBuddy
                 AppDomain.CurrentDomain.SetData("DataDirectory", Path.Combine(_webHostingEnvironment.ContentRootPath, "App_Data"));
 
                 services.Configure<SchedulerOptions>(options => options.Enabled = false);
-   
             }
 
+            services.AddScoped<AccountService>();
+            services.AddScoped<ProfileService>();
             services
                 .AddCmsAspNetIdentity<ApplicationUser>()
                 .AddCms()
                 .AddAdminUserRegistration()
                 .AddEmbeddedLocalization<Startup>();
 
+            services.AddDbContext<DataContext>(options =>
+            options.UseSqlServer(Configuration.GetConnectionString("EPiServerDB")));
+
             services.AddHttpContextAccessor();
             services.AddScoped<IXmlSitemapService, XmlSitemapService>();
             services.AddSingleton<ErrorMessageService>();
+            services.AddSingleton<AuthTranslationService>(new AuthTranslationService(Path.Combine(Directory.GetCurrentDirectory(), "Resources", "Translations", "Auth.xml")));
             services.AddScoped<IBookService, BookService>();
             services.AddScoped<IBookContentService, GutenbergService>();
             services.AddScoped<IAiService, OpenAiService>();
@@ -51,6 +65,8 @@ namespace BookBuddy
             services.AddScoped<OpenAiClient>();
             services.AddHttpClient();
             services.AddServerSideBlazor();
+
+            
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -66,12 +82,24 @@ namespace BookBuddy
                 var response = context.HttpContext.Response;
                 var statusCode = response.StatusCode;
 
-                if (!context.HttpContext.Request.Path.StartsWithSegments("/error"))
+                // Hämta den aktuella kulturen från URL-segment eller använd default "en" om inget segment finns
+                var culture = context.HttpContext.Request.Path.Value?.Split('/').FirstOrDefault(s => s == "sv" || s == "en") ?? "en";
+
+                // Om ingen kultur hittas i URL:en, använd standardkulturen (engelska)
+                if (string.IsNullOrEmpty(culture))
                 {
-                    response.Redirect($"/error?statusCode={statusCode}");
-                    await Task.Yield();
+                    culture = "en";
                 }
+
+                // Bygg om URL:en med rätt språksegment och felkod
+                var redirectUrl = $"/{culture}/error?statusCode={statusCode}";
+
+                response.Redirect(redirectUrl);
+                await Task.Yield();
+               
             });
+
+
 
 
             app.UseHttpsRedirection();
@@ -82,11 +110,11 @@ namespace BookBuddy
 
             app.UseEndpoints(endpoints =>
             {
+                endpoints.MapControllers();
+
                 endpoints.MapContent();
 
                 endpoints.MapBlazorHub();
-
-               endpoints.MapControllers();
             });
         }
     }
