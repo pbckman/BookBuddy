@@ -10,7 +10,7 @@ html, body {
 
 main {
     flex-grow: 1;
-    padding-top: 10%;
+    padding-top: 8%;
     z-index: 5;
 }
 
@@ -25,7 +25,8 @@ main {
     display: flex;
     flex-direction: column;
     flex: 1;
-    background-image: url('../images/rm245-bb-17-a.jpg');
+/*    background-image: url('../images/rm245-bb-17-a.jpg');*/
+    background-image: url('../images/background-img.webp');
     background-size: cover;
     background-repeat: no-repeat;
     z-index: 2; 

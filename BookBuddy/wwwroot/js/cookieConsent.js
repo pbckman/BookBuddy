@@ -1,16 +1,16 @@
 ﻿
-document.addEventListener("DOMContentLoaded", function () {
-    const isLocal = window.location.protocol === 'http:';
+//document.addEventListener("DOMContentLoaded", function () {
+//    const isLocal = window.location.protocol === 'http:';
 
-    CookieTractor.init({
-        cookieName: '_cc_cookieConsent',
-        cookieValue: 'true',
-        cookieOptions: {
-            secure: !isLocal, 
-            sameSite: 'None'
-        }
-    });
-});
+//    CookieTractor.init({
+//        cookieName: '_cc_cookieConsent',
+//        cookieValue: 'true',
+//        cookieOptions: {
+//            secure: !isLocal, 
+//            sameSite: 'None'
+//        }
+//    });
+//});
 
 
 
