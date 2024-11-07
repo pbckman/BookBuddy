@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace BookBuddy.Controllers
 {
-    public class BookPageController : PageController<BookPage>
+    public class BookPageController : PageControllerBase<BookPage>
     {
         private readonly IContentLoader _contentLoader;
 
@@ -14,16 +14,15 @@ namespace BookBuddy.Controllers
             _contentLoader = contentLoader;
         }
 
+
         public IActionResult Index(BookPage currentPage)
         {
-            var siteSettingsReference = currentPage.SiteSettingsPage;
+            var startPage = _contentLoader.Get<StartPage>(ContentReference.StartPage);
 
-            SiteSettingsPage siteSettings = null;
-            if (siteSettingsReference != null)
-            {
-                siteSettings = _contentLoader.Get<SiteSettingsPage>(siteSettingsReference);
-            }
-            var model = new BookPageViewModel(currentPage, siteSettings);
+            var siteSettingsPage = _contentLoader.Get<SiteSettingsPage>(startPage.SiteSettingsPage);
+
+            var model = new BookPageViewModel(currentPage, siteSettingsPage);
+
             return View(model);
         }
     }

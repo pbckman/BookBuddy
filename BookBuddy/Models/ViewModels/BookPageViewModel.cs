@@ -13,7 +13,6 @@ namespace BookBuddy.Models.ViewModels
             Plot = currentPage.Plot;
             ImageUrl = currentPage.ImageUrl;
             ImageAltText = currentPage.ImageAltText;
-            SiteSettings = siteSettings;
         }
 
 
@@ -23,6 +22,6 @@ namespace BookBuddy.Models.ViewModels
         public string Plot { get; set; }
         public string ImageUrl { get; set; }
         public string ImageAltText { get; set; }
-        public SiteSettingsPage SiteSettings { get; set; }
+
     }
 }

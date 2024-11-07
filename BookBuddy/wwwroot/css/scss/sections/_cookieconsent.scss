@@ -1,25 +1,24 @@
-﻿#CookieDeclaration h3{
-    font-size: 2rem !important;
+﻿.cookie-container {
+    width: 80%;
+    h1, h2 {
+        font-weight: bold;
+        color: #007acc;
+    }
 }
 
+#CookieDeclaration h3 {
+    font-size: 2rem !important;
+    color: #007acc;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
 
-/*.container-sm{
-    max-width: 85%;
-}*/
 
 .CookieDeclaration p {
     color: #333;
     font-size: 14px;
     line-height: 1.6;
 }
-
-#CookieDeclaration h3 {
-    font-size: 3rem;
-    color: #007acc;
-    font-weight: bold;
-    margin-bottom: 10px;
-}
-
 
 
 #CookieDeclaration .cc-content,
@@ -68,7 +67,7 @@
 
 #cc-info-declaration.opened h3 {
     font-size: 18px;
-    color: #444;
+    color: #007acc;
     margin-bottom: 15px;
 }
 
