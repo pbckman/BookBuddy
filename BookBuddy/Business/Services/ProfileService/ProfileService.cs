@@ -2,14 +2,12 @@
 using BookBuddy.Data.Entities;
 using BookBuddy.Models.ViewModels;
 using EPiServer.Cms.UI.AspNetIdentity;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
 namespace BookBuddy.Business.Services.AccountService
 {
-    public class ProfileService(UserManager<ApplicationUser> userManager, DataContext dataContext, IHttpContextAccessor httpContextAccessor)
+    public class ProfileService(DataContext dataContext, IHttpContextAccessor httpContextAccessor)
     {
-        private readonly UserManager<ApplicationUser> _userManager = userManager;
         private readonly DataContext _dataContext = dataContext;
         private readonly IHttpContextAccessor _httpContextAccessor = httpContextAccessor;
 
