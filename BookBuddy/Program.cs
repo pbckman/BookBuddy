@@ -10,7 +10,7 @@ namespace BookBuddy
         {
             Log.Logger = new LoggerConfiguration()
             .ReadFrom.Configuration(Configuration).WriteTo.Console().CreateLogger();
-
+            
             CreateHostBuilder(args).Build().Run();
         }
         public static IConfiguration Configuration { get; } =

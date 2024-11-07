@@ -4,7 +4,7 @@ namespace BookBuddy.Models.Pages
 {
     public class SitePageData : PageData
     {
-        [Display(
+    [Display(
     GroupName = Globals.GroupNames.MetaData,
     Order = 100
     )]

@@ -1,4 +1,5 @@
-﻿@import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
+@charset "UTF-8";
+@import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
 .card {
   box-shadow: 0 4px 12px 0 rgba(0, 0, 0, 0.6);
   padding: 1.25rem;
@@ -22,6 +23,71 @@
   background-color: rgba(0, 0, 0, 0.2);
 }
 
+.bookcard-btn .bookcard {
+  width: 100%;
+  padding: 0.75rem;
+  display: flex;
+  flex-direction: column; /* Gör kortet kolumn-baserat */
+  justify-content: space-between;
+  aspect-ratio: 9/4;
+  margin: 0 auto;
+  max-width: 480px;
+}
+.bookcard-btn .bookcard:hover {
+  background-color: #F3F3F3;
+  transform: scale(1.05);
+  transition: transform 0.3s ease-in-out;
+  cursor: pointer;
+}
+.bookcard-btn .bookcard .bookcard-content {
+  display: flex;
+  height: 100%; /* Se till att innehållsbehållaren fyller kortets höjd */
+}
+.bookcard-btn .bookcard .image-div {
+  height: auto; /* Låt bilden ta upp det utrymme den behöver */
+  flex-shrink: 0; /* Förhindra att bild-div krymper */
+}
+.bookcard-btn .bookcard .image-div img {
+  max-height: 100%;
+}
+.bookcard-btn .bookcard .content-div {
+  flex-grow: 1; /* Gör att content-div tar upp återstående plats */
+  display: flex;
+  flex-direction: column;
+}
+.bookcard-btn .bookcard .content-div .card-body {
+  padding: 0.5rem 1rem;
+}
+.bookcard-btn .bookcard .content-div .card-body .card-title {
+  font-size: 1.2em;
+}
+.bookcard-btn .bookcard .content-div .card-body .plot-text {
+  max-height: 100px; /* Begränsa höjden för att passa antalet rader */
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 4; /* Begränsa antalet synliga rader */
+  -webkit-box-orient: vertical;
+  line-height: 1.5em; /* Justera linjehöjd om det behövs för att anpassa */
+  height: 6em; /* Ställ in höjden för att matcha linjehöjden och antalet rader */
+}
+.bookcard-btn .bookcard .content-div .card-body p {
+  font-size: 0.8em;
+}
+.bookcard-btn .bookcard .content-div .card-body .authors {
+  margin-top: auto;
+}
+
+@media (max-width: 768px) {
+  .content-div {
+    font-size: 0.9em; /* Minska grundstorleken för alla barn */
+  }
+}
+@media (max-width: 480px) {
+  .content-div {
+    font-size: 0.8em; /* Ytterligare minskning för små skärmar */
+  }
+}
 * {
   box-sizing: border-box;
   margin: 0;
@@ -57,10 +123,10 @@ main {
 }
 .main-content .flying-boy {
   position: absolute;
-  top: 10rem;
-  left: 10rem;
-  height: 20%;
-  width: auto;
+  top: 10%;
+  left: 10%;
+  max-width: 50%;
+  height: auto;
   z-index: 2;
   opacity: 0.5;
 }
@@ -69,6 +135,14 @@ main {
   .main-content .flying-boy {
     top: 5rem;
     left: 5rem;
+  }
+}
+@media (min-width: 1200px) {
+  .main-content .flying-boy {
+    top: 10rem;
+    left: 10rem;
+    height: 20%;
+    width: auto;
   }
 }
 a {
@@ -631,7 +705,8 @@ img {
   left: 0;
   width: 100%;
   height: 100%;
-  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+          backdrop-filter: blur(10px);
   background: rgba(0, 0, 0, 0.2);
   z-index: -1;
 }
@@ -681,7 +756,8 @@ img {
 .book-card .book-container .book-cover img {
   width: 100%;
   height: auto;
-  object-fit: cover;
+  -o-object-fit: cover;
+     object-fit: cover;
   max-width: 100%;
   border-radius: inherit;
 }
@@ -754,4 +830,20 @@ img {
 }
 .book-card .button-quiz .quiz-button:hover {
   background-color: #8b56f1;
+}
+
+.search-box {
+  max-width: 600px;
+  width: 80%;
+  margin: 0 auto;
+}
+
+.book-cards-wrapper {
+  padding: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(20rem, 1fr));
+  row-gap: 2rem;
+  -moz-column-gap: 1.5rem;
+       column-gap: 1.5rem;
+  margin-top: 4rem;
 }
