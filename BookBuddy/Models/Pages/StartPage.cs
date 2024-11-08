@@ -11,7 +11,8 @@ namespace BookBuddy.Models.Pages
     [
         typeof(ErrorPage),
         typeof(XmlSitemap),
-        typeof(BooksPage)
+        typeof(BooksPage),
+        typeof(SlideShowPage),
     ])]
 
     public class StartPage : SitePageData
@@ -36,5 +37,10 @@ namespace BookBuddy.Models.Pages
         )]
         [CultureSpecific]
         public virtual ContentReference? SiteSettingsPage { get; set; }
+
+        [Display(GroupName = SystemTabNames.Content, Order = 30, Name = "Slideshow", Description = "")]
+        [AllowedTypes(typeof(SlideShowPage))]
+
+        public virtual ContentArea SlideShowArea { get; set; }
     }
 }
