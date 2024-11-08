@@ -1,0 +1,124 @@
+﻿.quiz-page {
+    min-height: 100vh;
+    padding-left: 50px;
+    display: grid;
+    grid-template-columns: 1fr 2.5fr;
+    background-image: url(../images/quizbackground.svg);
+    background-size: cover; /* Ändra till cover för att täcka hela ytan */
+    background-repeat: no-repeat; /* Ingen upprepning */
+    background-position: center; /* Centrera bilden */
+    .card {
+        background-color: white;
+    }
+
+    .chapter-nav-component {
+        max-width: 350px;
+
+        h3 {
+            font-size: 1.1rem;
+            margin-bottom: 20px;
+        }
+
+        img {
+            width: 60px;
+            margin-bottom: 20px;
+        }
+
+        .chapter-list {
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+
+
+
+
+            .chapter-list-item {
+                margin-bottom: 8px;
+                font-size: 0.6rem;
+                font-weight: 500;
+
+
+                &.active {
+                    background-color: #cce5ff; /* Ljusblå färg */
+                    color: #004085; /* Mörkblå textfärg */
+                }
+            }
+
+            .question-list {
+                margin: 0;
+                margin-left: 10px;
+
+
+
+
+                .question-list-item {
+                    margin-bottom: 8px;
+                    font-size: 0.6rem;
+
+                    &.active {
+                        background-color: #d1ecf1; /* Ljus cyan färg */
+                        color: #0c5460; /* Mörk cyan textfärg */
+                    }
+                }
+            }
+        }
+
+
+        li {
+            text-decoration: none;
+            list-style-type: none;
+            cursor: pointer;
+            transition: 0.3s;
+            border: 2px solid #dee2e6;
+            border-radius: 12px;
+            padding: 6px;
+
+            &:hover {
+                background-color: #f8f9fa;
+            }
+        }
+    }
+
+    .quiz-component {
+        position: fixed;
+        top: 50%;
+        left: 40%;
+        width: 50%; /* Justera baserat på din layout */
+        max-width: 800px; /* Justera baserat på din layout */
+        height: auto; /* Justera baserat på innehållet */
+        transform: translateY(-50%);
+        overflow-y: auto;
+        padding: 20px; /* Valfritt: Lägg till padding */
+        h3 {
+            font-size: 1.1rem;
+            font-weight: 400;
+        }
+
+        h2 {
+            font-size: 1.3rem;
+        }
+
+        .question-section {
+        }
+
+        .options-section {
+            margin-top: 20px;
+            .option-item {
+                cursor: pointer;
+                transition: 0.3s;
+                border: 2px solid #dee2e6;
+                border-radius: 12px;
+                padding: 6px;
+                margin-bottom: 8px;
+
+                &.incorrect {
+                    background-color: #721c24;
+                }
+
+                &.correct {
+                    background-color: #721c24;
+                }
+            }
+        }
+    }
+}

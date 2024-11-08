@@ -1,0 +1,43 @@
+﻿@using BookBuddy.Models.QuizModels
+@using BookBuddy.Models.ResultModels
+
+<div class="card">
+
+    <h2>@CurrentChapter.ChapterTitle - @CurrentQuestion.QuestionTitle</h2>
+    <div class="question-section">
+        <h3>@CurrentQuestion.Question</h3>
+    </div>
+    <div class="options-section">
+        @if (CurrentQuestion.Options != null)
+        {
+            @foreach (var option in CurrentQuestion.Options)
+            {
+                <div class="option-item" onclick="@(() => HandleSelectedOption(@option.Key))">
+                    @option.Value
+                </div>
+            }
+        }
+        
+    </div>
+
+</div>
+
+
+
+@code {
+    [Parameter] public QuizResultModel? Result { get; set; }
+    [Parameter] public ChapterModel? CurrentChapter { get; set; }
+    [Parameter] public QuestionModel? CurrentQuestion { get; set; }
+
+    private void HandleSelectedOption(string selected)
+    {
+        if (selected == CurrentQuestion?.CorrectAnswer)
+        {
+
+        }
+        else
+        {
+            
+        }
+    }
+}
