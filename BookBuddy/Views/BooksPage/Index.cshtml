@@ -1,0 +1,43 @@
+@model BooksPageViewModel
+
+<div class="container">
+    <div class="row mt-5">
+        <div class="col-md-12">
+            <form asp-controller="BooksPage" asp-action="Search" class="d-flex" id="findForm" method="post">
+                <div class="input-group search-box">
+                    <input class="form-control search-input" id="findQuery" name="query" type="search" placeholder="Search for a book..." aria-label="Find">
+                    <button class="input-group-text search-button" aria-label="Search">
+                        <i class="fas fa-search"></i>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+        @* <div>
+            <p>Query: @Model.Query</p>
+            <p>Result is null: @(Model.Result == null)</p>
+            @if (Model.Result != null)
+            {
+                <p>Number of hits: @Model.Result.Count()</p>
+            }
+            else
+            {
+                <p>Hits are null or empty</p>
+            }
+        </div> *@
+        <div class="book-cards-wrapper">
+                @if (Model.Result != null)
+                {
+                    @foreach (var result in Model.Result)
+                    {
+                        <component type="typeof(BookCard)" render-mode="Server" param-Result="result" param-Query="Model.Query"/>
+                    }
+                }
+                else
+                {
+                    <p>Result is null</p>
+                }
+        </div>
+</div>
+

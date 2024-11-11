@@ -1,0 +1,18 @@
+﻿@{
+    Layout = "~/Views/Shared/Layouts/CookieLayout.cshtml";
+    ViewBag.Title = "Cookie Policy";
+
+   
+    var userLang = Context.Request.Path.Value.Contains("/sv/") ? "sv-SE" : "en-GB";
+    ViewData["LoadCookieScript"] = false; // Inaktivera cookietractor.js
+    ViewData["CookieLanguage"] = userLang; // Ange språk dynamiskt här
+
+}
+
+<div class="container-sm startpage-wrapper">
+    <h1>@(userLang == "sv-SE" ? "Cookie Policy" : "Cookie Policy")</h1>
+    <h2>@(userLang == "sv-SE" ? "Denna sida innehåller information om hur vi använder cookies." : "This page contains information about how we use cookies.")</h2>
+    <div id="CookieDeclaration"></div>
+</div>
+
+

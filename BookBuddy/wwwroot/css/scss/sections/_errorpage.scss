@@ -1,0 +1,28 @@
+﻿.error-content {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    background-image: url("../images/background-img.webp");
+    background-size: cover;
+    background-repeat: no-repeat;
+    z-index: 2;
+
+    
+}
+
+
+
+img {
+    max-width: 100%;
+    height: auto;
+
+    @media (min-width: 768px) {
+        max-width: 250px;
+    }
+
+    @media (max-width: 767px) {
+        max-width: 100px;
+    }
+}
+

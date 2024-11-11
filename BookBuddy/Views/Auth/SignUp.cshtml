@@ -1,0 +1,58 @@
+﻿@model SignUpViewModel
+
+@{
+    Layout = "~/Views/Shared/Layouts/AuthLayout.cshtml";
+    ViewData["Title"] = ViewData["Title"];
+    ViewData["Description"] = ViewData["Description"];
+}
+
+<section class="auth-right">
+    <div class="login-card">
+
+        <div class="text-center">
+            <h1>@ViewData["Title"]</h1>
+            <p class="text-center mb-4">@ViewData["Description"]</p>
+        </div>
+
+        <form method="post" asp-action="SignUp" asp-controller="Auth">
+            @Html.AntiForgeryToken()
+
+            <div>
+                @ViewData["StatusMessage"]
+            </div>
+
+            <div class="form-group-container row row-cols-1 row-cols-sm-2">
+                <div class="form-group mb-3">
+                    <label asp-for="Firstname">@ViewData["FirstnamePlaceholder"]</label>
+                    <input asp-for="Firstname" class="form-control" placeholder="@ViewData["FirstnamePlaceholder"]" />
+                    <span asp-validation-for="Firstname"></span>
+                </div>
+                <div class="form-group mb-3">
+                    <label asp-for="Lastname">@ViewData["LastnamePlaceholder"]</label>
+                    <input asp-for="Lastname" class="form-control" placeholder="@ViewData["LastnamePlaceholder"]" />
+                    <span asp-validation-for="Lastname"></span>
+                </div>
+            </div>
+
+            <div class="form-group mb-3">
+                <label asp-for="Email">@ViewData["EmailPlaceholder"]</label>
+                <input asp-for="Email" type="email" class="form-control" placeholder="@ViewData["EmailPlaceholder"]" />
+                <span asp-validation-for="Email"></span>
+            </div>
+
+            <div class="form-group mb-4">
+                <label asp-for="Password">@ViewData["PasswordPlaceholder"]</label>
+                <input asp-for="Password" type="password" class="form-control" placeholder="@ViewData["PasswordPlaceholder"]" />
+                <span asp-validation-for="Password"></span>
+            </div>
+
+            <div class="form-group mb-5">
+                <label asp-for="ConfirmPassword">@ViewData["PasswordPlaceholder"]</label>
+                <input asp-for="ConfirmPassword" type="password" class="form-control" placeholder="@ViewData["PasswordPlaceholder"]" />
+                <span asp-validation-for="ConfirmPassword"></span>
+            </div>
+
+            <button type="submit" class="btn btn-success w-100">@ViewData["SignUpButton"]</button>
+        </form>
+    </div>
+</section>

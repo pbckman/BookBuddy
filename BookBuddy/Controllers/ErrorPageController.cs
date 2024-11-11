@@ -3,6 +3,8 @@ using BookBuddy.Models.Pages;
 using BookBuddy.Models.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Globalization;
+using System.Text.RegularExpressions;
 
 namespace BookBuddy.Controllers
 {
@@ -15,19 +17,28 @@ namespace BookBuddy.Controllers
             _errorMessageService = errorMessageService;
         }
 
-        [Route("/error")]
-        public IActionResult Index(int statusCode, ErrorPage currentPage)
+        [Route("/{culture}/error")]
+        public IActionResult Index(string culture, int statusCode, ErrorPage currentPage)
         {
+            if (string.IsNullOrEmpty(culture) || (culture != "sv" && culture != "en"))
+            {
+                culture = "en"; 
+            }
 
-            var model = new ErrorPageViewModel(currentPage, null)
+            CultureInfo.CurrentCulture = new CultureInfo(culture);
+            CultureInfo.CurrentUICulture = new CultureInfo(culture);
+
+            // Skapa modellen med rätt språk
+            var model = new ErrorPageViewModel(currentPage, null!)
             {
                 StatusCode = statusCode,
-                ErrorMessage = _errorMessageService.GetErrorMessage(statusCode),
-                ErrorText = _errorMessageService.GetErrorMessage(0, "errorText"),
-                GoToHomeButtonText = _errorMessageService.GetErrorMessage(0, "goToHome")
-
+                ErrorMessage = _errorMessageService.GetErrorMessage(statusCode, culture: culture),
+                ErrorText = _errorMessageService.GetErrorMessage(0, "errorText", culture),
+                GoToHomeButtonText = _errorMessageService.GetErrorMessage(0, "goToHome", culture)
             };
+
             return View("Index", model);
+          
         }
 
     }
