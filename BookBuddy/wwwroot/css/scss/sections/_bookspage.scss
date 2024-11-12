@@ -2,6 +2,26 @@
     max-width: 600px;
     width: 80%;
     margin: 0 auto;
+    .search-input {
+        padding: .7rem 1rem;
+        -webkit-appearance: none;
+        -moz-appearance: none;
+        appearance: none;
+        &:focus-visible, :focus {
+            outline: none;
+            box-shadow: none;
+            border: none;
+            background-color: rgb(237, 237, 237);
+        }
+    }
+    .search-button {
+        padding: .7rem 1rem;
+        &:hover {
+            background-color: #EC9221;
+            color: white;
+            border: none;
+        }
+    }
 }
 .book-cards-wrapper {
     padding: 0 auto;
@@ -10,4 +30,17 @@
     row-gap: 2rem;
     column-gap: 1.5rem;
     margin-top: 4rem;
+}
+.no-results {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 20%;
+    width: 100%;
+    .no-result-img {
+        opacity: .8;
+        width: 50%;
+        max-width: 30rem;
+        height: auto;
+    }
 }

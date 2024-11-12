@@ -35,8 +35,8 @@ namespace BookBuddy.Controllers
             return View(model);
         }
 
-        [HttpPost]
-        public IActionResult Search(BooksPage currentPage, string query)
+        [HttpGet]
+        public async Task<IActionResult> Search(BooksPage currentPage, [FromQuery] string query)
         {
             var siteSettingsReference = currentPage.SiteSettingsPage;
 
@@ -46,7 +46,7 @@ namespace BookBuddy.Controllers
                 siteSettings = _contentLoader.Get<SiteSettingsPage>(siteSettingsReference);
             }
 
-            var searchResult = _booksPageService.Search(query, currentPage.Language);
+            var searchResult = await _booksPageService.SearchAsync(query, currentPage.Language);
             var bookPages = searchResult.Items.Select(item => item).ToList();
             var bookPageModels = bookPages.Select(bookpage => BookPageFactory.CreateBookPageModel(bookpage, _urlResolver)).ToList();
             var model = new BooksPageViewModel(currentPage, siteSettings)

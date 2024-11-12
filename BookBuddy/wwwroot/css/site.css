@@ -364,6 +364,30 @@ body {
   gap: 30px;
   font-size: 1.25rem;
 }
+.navbar .navbar-wrapper .nav-items .nav-links .navbar-list {
+  list-style: none;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+}
+.navbar .navbar-wrapper .nav-items .nav-links .navbar-list .navbar-item {
+  margin-right: 1rem;
+  margin-bottom: 1.25rem;
+  font-size: 1.5rem;
+}
+.navbar .navbar-wrapper .nav-items .nav-links .navbar-list .navbar-item a:hover {
+  color: #FA9F34;
+  transform: scale(1.05);
+  transition: transform 0.3s ease-in-out;
+  cursor: pointer;
+}
+.navbar .navbar-wrapper .nav-items .nav-links .navbar-list .navbar-item a .nav-icon {
+  filter: invert(67%) sepia(94%) saturate(2015%) hue-rotate(357deg) brightness(99%) contrast(103%);
+  width: 24px;
+  height: 24px;
+  display: inline-block;
+  margin-right: 0.5rem;
+}
 
 .error-content {
   position: relative;
@@ -523,6 +547,30 @@ img {
   margin-top: 25%;
   gap: 30px;
   font-size: 1.25rem;
+}
+.navbar .navbar-wrapper .nav-items .nav-links .navbar-list {
+  list-style: none;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+}
+.navbar .navbar-wrapper .nav-items .nav-links .navbar-list .navbar-item {
+  margin-right: 1rem;
+  margin-bottom: 1.25rem;
+  font-size: 1.5rem;
+}
+.navbar .navbar-wrapper .nav-items .nav-links .navbar-list .navbar-item a:hover {
+  color: #FA9F34;
+  transform: scale(1.05);
+  transition: transform 0.3s ease-in-out;
+  cursor: pointer;
+}
+.navbar .navbar-wrapper .nav-items .nav-links .navbar-list .navbar-item a .nav-icon {
+  filter: invert(67%) sepia(94%) saturate(2015%) hue-rotate(357deg) brightness(99%) contrast(103%);
+  width: 24px;
+  height: 24px;
+  display: inline-block;
+  margin-right: 0.5rem;
 }
 
 .auth-container {
@@ -837,6 +885,26 @@ img {
   width: 80%;
   margin: 0 auto;
 }
+.search-box .search-input {
+  padding: 0.7rem 1rem;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+}
+.search-box .search-input:focus-visible, .search-box .search-input :focus {
+  outline: none;
+  box-shadow: none;
+  border: none;
+  background-color: rgb(237, 237, 237);
+}
+.search-box .search-button {
+  padding: 0.7rem 1rem;
+}
+.search-box .search-button:hover {
+  background-color: #EC9221;
+  color: white;
+  border: none;
+}
 
 .book-cards-wrapper {
   padding: 0 auto;
@@ -846,4 +914,18 @@ img {
   -moz-column-gap: 1.5rem;
        column-gap: 1.5rem;
   margin-top: 4rem;
+}
+
+.no-results {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 20%;
+  width: 100%;
+}
+.no-results .no-result-img {
+  opacity: 0.8;
+  width: 50%;
+  max-width: 30rem;
+  height: auto;
 }

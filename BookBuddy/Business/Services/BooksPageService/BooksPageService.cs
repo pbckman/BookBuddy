@@ -11,7 +11,7 @@ namespace BookBuddy.Business.Services.BooksPageService;
 
 public class BooksPageService : IBooksPageService
 {
-    public IContentResult<BookPage> Search(string query, CultureInfo culture)
+    public Task<IContentResult<BookPage>> SearchAsync(string query, CultureInfo culture)
     {
         var searchClient = SearchClient.Instance;
         var language = new Language(
@@ -29,7 +29,7 @@ public class BooksPageService : IBooksPageService
             .Filter(x => x.Language.Name.Match(culture.Name))
             .GetContentResult();
 
-        return results;
+        return Task.FromResult(results);
     }
 
     public UnifiedSearchResults SearchBooks(string query, CultureInfo culture)

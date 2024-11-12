@@ -25,7 +25,7 @@ public class BookPageFactory
             Plot = bookPage.Plot,
             ImageUrl = bookPage.ImageUrl,
             ImageAltText = bookPage.ImageAltText,
-            PageUrl = urlResolver.GetUrl(bookPage.ContentLink)
+            PageUrl = pageUrl
         };
     }
 }

@@ -6,8 +6,9 @@ using static BookBuddy.Globals;
 namespace BookBuddy.Models.Pages;
 
 [ContentType(
- GroupName = GroupNames.Specialized,
- GUID = "DBB457FA-4F76-475B-951D-0294CD67CA82"
+    GroupName = GroupNames.Specialized,
+    GUID = "DBB457FA-4F76-475B-951D-0294CD67CA82",
+    Description = "A page for available books"
 )]
 [ImageUrl("/pages/CMS-icon-page-02.png")]
 
