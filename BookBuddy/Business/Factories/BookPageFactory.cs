@@ -13,9 +13,6 @@ public class BookPageFactory
         var contentLink = bookPage.ContentLink;
         var pageUrl = urlResolver.GetUrl(contentLink);
 
-        // Debugging output
-        Console.WriteLine($"ContentLink: {contentLink}");
-        Console.WriteLine($"PageUrl: {pageUrl}");
         return new BookPageModel
         {
             Id = bookPage.ContentLink.ID,
