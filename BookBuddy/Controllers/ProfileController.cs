@@ -78,10 +78,41 @@ namespace BookBuddy.Controllers
             if (profile == null)
             {
                 return NotFound();
-            }  
-            var model = new ProfileViewModel
+            }
+            var model = new UserProfileViewModel
             {
-                FirstName = profile.ProfileFirstName
+                Firstname = profile.ProfileFirstName,
+                Lastname = profile.ProfileLastName
+            };
+
+            return View(model);
+        }
+
+        [HttpGet]
+        [Route("{lang}/profile/details")]
+        public async Task<IActionResult> Details(string lang = "en")
+        {
+            ViewData["Title"] = _translationService.GetTranslation("updateprofile", "title", lang);
+            ViewData["Description"] = _translationService.GetTranslation("updateprofile", "description", lang);
+            ViewData["FirstName"] = _translationService.GetTranslation("updateprofile", "firstname", lang);
+            ViewData["SaveButton"] = _translationService.GetTranslation("updateprofile", "saveButton", lang);
+
+
+            var user = await _userManager.GetUserAsync(User);
+            if (user == null)
+            {
+                return Unauthorized();
+            }
+
+            var profile = await _profileService.GetProfileAsync(user);
+            if (profile == null)
+            {
+                return NotFound();
+            }
+            var model = new UserProfileViewModel
+            {
+                Firstname = profile.ProfileFirstName,
+                Lastname = profile.ProfileLastName
             };
 
             return View(model);

@@ -43,41 +43,6 @@
             <input asp-for="@user.Email" class="form-control" disabled />
         </div>
 
-        @*         <div class="dropdown">
-
-        <button class="btn btn-light dropdown-toggle d-flex align-items-center" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-        <span class="d-none d-lg-block">@selectedProfile?.ProfileFirstName</span>
-        </button>
-
-        <ul class="dropdown-menu">
-        @if (mainProfile != null)
-        {
-        <li>
-        <form action="@Url.Action("SelectProfile", "Profile")" method="post">
-        <input type="hidden" name="profileId" value="@mainProfile.Id" />
-        <button type="submit" class="dropdown-item">@mainProfile.ProfileFirstName</button>
-        </form>
-        </li>
-        <div class="dropdown-divider"></div>
-        }
-
-        @foreach (var profile in profiles)
-        {
-        if (profile.Id != mainProfile.Id)
-        {
-        <li>
-        <form action="@Url.Action("SelectProfile", "Profile")" method="post">
-        <input type="hidden" name="profileId" value="@profile.Id" />
-        <button type="submit" class="dropdown-item">@profile.ProfileFirstName</button>
-        </form>
-        </li>
-        }
-        }
-
-        </ul>
-
-        </div> *@
-
         <h3>Sub Profiles</h3>
 
         <div class="dropdown">
@@ -90,7 +55,7 @@
                 @foreach (var profile in profiles)
                 {
                     <li>
-                        <form action="@Url.Action("SelectSubProfile", "Profile")" method="post">
+                        <form action="@Url.Action("SelectProfile", "Profile")" method="post">
                             <input type="hidden" name="profileId" value="@profile.Id" />
                             <button type="submit" class="dropdown-item">@profile.ProfileFirstName</button>
                         </form>
