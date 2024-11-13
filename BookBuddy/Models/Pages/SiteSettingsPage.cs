@@ -30,10 +30,6 @@ namespace BookBuddy.Models.Pages
         [CultureSpecific]
         [Display(Name = "Footer text", GroupName = Globals.GroupNames.Footer, Order = 40)]
         public virtual string FooterText { get; set; } = string.Empty;
-        
-        [CultureSpecific]
-        [Display(Name = "Navbar Links", GroupName = Globals.GroupNames.Navbar, Order = 50)]
-        public virtual LinkItemCollection? NavbarLinks { get; set; }
 
         [CultureSpecific]
         [Display(Name = "Navbar Logo", GroupName = Globals.GroupNames.Navbar, Order =55)]
@@ -45,8 +41,7 @@ namespace BookBuddy.Models.Pages
         public virtual string NavbarLogoAltText { get; set; } = string.Empty;
 
         [CultureSpecific]
-        [Display(Name = "Navbar Link List", GroupName = Globals.GroupNames.Navbar, Order = 65)]
+        [Display(Name = "Navbar Links", GroupName = Globals.GroupNames.Navbar, Order = 65)]
         public virtual IList<PageReference>? NavbarLinkList { get; set; }
-
     }
 }
