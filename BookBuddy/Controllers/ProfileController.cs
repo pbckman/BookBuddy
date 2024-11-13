@@ -119,8 +119,8 @@ namespace BookBuddy.Controllers
         }
 
         [HttpPost]
-        [Route("{lang}/profile/updateprofile")]
-        public async Task<IActionResult> UpdateProfile(ProfileViewModel model, string lang = "en")
+        [Route("{lang}/profile/details")]
+        public async Task<IActionResult> Details(UserProfileViewModel model, string lang = "en")
         {
             if (!ModelState.IsValid)
             {
@@ -140,8 +140,10 @@ namespace BookBuddy.Controllers
                 return View(model);
             }
 
-            return RedirectToAction("UserProfile", "Profile");
+            ViewData["StatusMessage"] = "Profile updated successfully!";
+            return RedirectToAction("Details", "Profile");
         }
+
 
         [HttpPost]
         [Route("/profile/deleteprofile/{profileId}")]

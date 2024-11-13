@@ -26,9 +26,10 @@
     </div>
 
 
-    <form method="post" asp-action="Details" asp-controller="Profile">
-
-        <input type="hidden" asp-for="Firstname" />
+    <form method="post" action="@Url.Action("Details", "Profile", new { lang = currentCulture })">
+        <div>
+            @ViewData["StatusMessage"]
+        </div>
         <div class="form-group">
             <label asp-for="Firstname">First Name</label>
             <input asp-for="Firstname" class="form-control" />
@@ -41,27 +42,6 @@
         <div class="form-group">
             <label>Email</label>
             <input asp-for="@user.Email" class="form-control" disabled />
-        </div>
-
-        <h3>Sub Profiles</h3>
-
-        <div class="dropdown">
-
-            <button class="btn btn-light dropdown-toggle d-flex align-items-center" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                <span class="d-none d-lg-block">Choose profile</span>
-            </button>
-
-            <ul class="dropdown-menu">
-                @foreach (var profile in profiles)
-                {
-                    <li>
-                        <form action="@Url.Action("SelectProfile", "Profile")" method="post">
-                            <input type="hidden" name="profileId" value="@profile.Id" />
-                            <button type="submit" class="dropdown-item">@profile.ProfileFirstName</button>
-                        </form>
-                    </li>
-                }
-            </ul>
         </div>
 
         <button type="submit" class="btn btn-primary">Save Changes</button>

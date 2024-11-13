@@ -65,13 +65,13 @@ namespace BookBuddy.Business.Services.AccountService
             return await GetMainProfileAsync(userId);
         }
 
-        public async Task<bool> UpdateProfileAsync(ApplicationUser user, ProfileViewModel model)
+        public async Task<bool> UpdateProfileAsync(ApplicationUser user, UserProfileViewModel model)
         {
             var profile = await GetProfileAsync(user);
             if (profile == null) return false;
 
-            profile.ProfileFirstName = model.FirstName;
-            profile.ProfileLastName = model.LastName;
+            profile.ProfileFirstName = model.Firstname;
+            profile.ProfileLastName = model.Lastname;
 
             _dataContext.Profiles.Update(profile);
             await _dataContext.SaveChangesAsync();
