@@ -9,5 +9,5 @@ namespace BookBuddy.Business.Services.BooksPageService;
 public interface IBooksPageService
 {
     public UnifiedSearchResults SearchBooks(string query, CultureInfo culture);
-    public IContentResult<BookPage> Search(string query, CultureInfo culture);
+    public Task<IContentResult<BookPage>> SearchAsync(string query, CultureInfo culture);
 }

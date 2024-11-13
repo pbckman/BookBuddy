@@ -1,27 +1,48 @@
 @using System.Globalization
+@using EPiServer.Core.Internal
+@inject IContentLoader ContentLoader
 @model IPageViewModel<SitePageData>
 
 @{
-    var currentCulture = CultureInfo.CurrentCulture.TwoLetterISOLanguageName; 
+    var navbarLinks = Model.SiteSettings.NavbarLinkList?.Select(item => item).ToList() ?? new List<PageReference>();
+    var currentCulture = CultureInfo.CurrentCulture.Name;
+    var startPage = ContentLoader.Get<StartPage>(ContentReference.StartPage);
+    var startPageUrl = Url.ContentUrl(startPage.ContentLink);
 }
 
     @if (Model.SiteSettings != null)
     {
         <div class="navbar-wrapper">
             <div class="nav-logo text-primary">
-                @* <img class="nav-logo-img" src="@Url.ContentUrl(Model.SiteSettings.HeaderLogo)" alt="Company Logo" /> *@
-                @* <img class="nav-logo-img" src="~/images/Bookbuddy-logo.PNG" alt="Bookbuddy logo"> *@
-                <img class="nav-logo-img" src="~/images/BookBuddyLogo2.png" alt="Bookbuddy logo">
-                @* <h3>@Model.SiteSettings.HeaderTitle</h3> *@
+                <a href="@startPageUrl">
+                    <img class="nav-logo-img" src="@Url.ContentUrl(Model.SiteSettings.NavbarLogo)" alt="@Model.SiteSettings.NavbarLogoAltText">
+                </a>
             </div>
 
             <div class="nav-items">
 
                 <div class="nav-links">
-                    @foreach (var link in Model.SiteSettings.HeaderLinks!)
-                     {
-                    <a href="@link.Href" target="@link.Target">@link.Text</a>
-                     }
+                    <ul class="navbar-list">
+                        @foreach (var pageRef in navbarLinks)
+                        {
+                            if (ContentLoader.TryGet(pageRef, out SitePageData site))
+                            {
+                                <li class="navbar-item">
+                                    <a href="@Url.ContentUrl(site.ContentLink)" target="_self">
+                                        @if (site.NavbarIcon != null)
+                                        {
+                                            <img src="@Url.ContentUrl(site.NavbarIcon)" alt="@(!string.IsNullOrEmpty(site.NavbarIconAltText) ? site.NavbarIconAltText : $"Icon for {site.NavbarTitle} link")" class="nav-icon" />
+                                        }
+                                        else
+                                        {
+                                            <img src="~/images/Box_Ikon.svg" alt="Icon for @site.NavbarTitle link" class="nav-icon">
+                                        }
+                                        <span>@site.NavbarTitle</span>
+                                    </a>
+                                </li>
+                            }
+                        }
+                    </ul>
                 </div>
 
             @if (User.Identity.IsAuthenticated)

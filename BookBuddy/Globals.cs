@@ -31,6 +31,13 @@ namespace BookBuddy
                 Order = 40
             )]
             public const string Footer = "Footer";
+
+            [Display(
+                Name = "Navbar",
+                Order = 50
+            )]
+            public const string Navbar = "Navbar";
+        
         }
     }
 }

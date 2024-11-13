@@ -14,47 +14,66 @@ namespace BookBuddy.Controllers
         private readonly IContentLoader _contentLoader;
         private readonly IBooksPageService _booksPageService;
         private readonly UrlResolver _urlResolver;
+        private readonly ILogger<BooksPageController> _logger;
 
-        public BooksPageController(IContentLoader contentLoader, IBooksPageService booksPageService, UrlResolver urlResolver)
+        public BooksPageController(IContentLoader contentLoader, IBooksPageService booksPageService, UrlResolver urlResolver, ILogger<BooksPageController> logger)
         {
             _contentLoader = contentLoader;
             _booksPageService = booksPageService;
             _urlResolver = urlResolver;
+            _logger = logger;
         }
 
         public IActionResult Index(BooksPage currentPage)
         {
-            var siteSettingsReference = currentPage.SiteSettingsPage;
-
-            SiteSettingsPage siteSettings = null;
-            if (siteSettingsReference != null)
+            try
             {
-                siteSettings = _contentLoader.Get<SiteSettingsPage>(siteSettingsReference);
+                var siteSettingsReference = currentPage.SiteSettingsPage;
+
+                SiteSettingsPage siteSettings = null;
+                if (siteSettingsReference != null)
+                {
+                    siteSettings = _contentLoader.Get<SiteSettingsPage>(siteSettingsReference);
+                }
+                var model = new BooksPageViewModel(currentPage, siteSettings);
+                return View(model);
             }
-            var model = new BooksPageViewModel(currentPage, siteSettings);
-            return View(model);
+            catch (Exception ex)
+            {
+                _logger.LogError($"ERROR :  BooksPageController.Index() : {ex.Message}");
+                return View("Error");
+            }
         }
 
-        [HttpPost]
-        public IActionResult Search(BooksPage currentPage, string query)
+        [HttpGet]
+        public async Task<IActionResult> Search(BooksPage currentPage, [FromQuery] string query)
         {
-            var siteSettingsReference = currentPage.SiteSettingsPage;
-
-            SiteSettingsPage siteSettings = null;
-            if (siteSettingsReference != null)
+            try
             {
-                siteSettings = _contentLoader.Get<SiteSettingsPage>(siteSettingsReference);
+                var siteSettingsReference = currentPage.SiteSettingsPage;
+
+                SiteSettingsPage siteSettings = null;
+                if (siteSettingsReference != null)
+                {
+                    siteSettings = _contentLoader.Get<SiteSettingsPage>(siteSettingsReference);
+                }
+
+                var searchResult = await _booksPageService.SearchAsync(query, currentPage.Language);
+                var bookPages = searchResult.Items.Select(item => item).ToList();
+                var bookPageModels = bookPages.Select(bookpage => BookPageFactory.CreateBookPageModel(bookpage, _urlResolver)).ToList();
+                var model = new BooksPageViewModel(currentPage, siteSettings)
+                {
+                    Query = query,
+                    Result = bookPageModels
+                };
+                return View("Index", model);
+                
             }
-
-            var searchResult = _booksPageService.Search(query, currentPage.Language);
-            var bookPages = searchResult.Items.Select(item => item).ToList();
-            var bookPageModels = bookPages.Select(bookpage => BookPageFactory.CreateBookPageModel(bookpage, _urlResolver)).ToList();
-            var model = new BooksPageViewModel(currentPage, siteSettings)
+            catch (Exception ex)
             {
-                Query = query,
-                Result = bookPageModels
-            };
-            return View("Index", model);
+                _logger.LogError($"ERROR :  BooksPageController.Search() : {ex.Message}");
+                return View("Error");
+            }
         }
     }
 }
