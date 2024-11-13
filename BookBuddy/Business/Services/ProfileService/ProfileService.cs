@@ -39,10 +39,10 @@ namespace BookBuddy.Business.Services.AccountService
                                      .ToListAsync();
         }
 
-        public async Task<UserProfileEntity> GetMainProfileAsync()
+        public async Task<UserProfileEntity> GetMainProfileAsync(string userId)
         {
 
-            return await _dataContext.Profiles.FirstOrDefaultAsync(profile => profile.IsMainProfile == true);
+            return await _dataContext.Profiles.FirstOrDefaultAsync(profile => profile.UserId == userId && profile.IsMainProfile == true);
 
         }
 
@@ -51,7 +51,7 @@ namespace BookBuddy.Business.Services.AccountService
             return await _dataContext.Profiles.FirstOrDefaultAsync(p => p.Id == profileId);
         }
 
-        public async Task<UserProfileEntity> GetSelectedProfileAsync()
+        public async Task<UserProfileEntity> GetSelectedProfileAsync(string userId)
         {
             if (_httpContextAccessor.HttpContext.Request.Cookies.TryGetValue("SelectedProfileId", out string profileIdValue))
             {
@@ -62,7 +62,7 @@ namespace BookBuddy.Business.Services.AccountService
 
             }
 
-            return await GetMainProfileAsync();
+            return await GetMainProfileAsync(userId);
         }
 
         public async Task<bool> UpdateProfileAsync(ApplicationUser user, ProfileViewModel model)

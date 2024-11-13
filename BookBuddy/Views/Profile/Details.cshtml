@@ -1,0 +1,108 @@
+﻿@using System.Globalization
+
+@model UserProfileViewModel
+@inject ProfileService ProfileService
+@inject UserManager<ApplicationUser> _userManager
+
+@{
+    Layout = "~/Views/Shared/Layouts/AccountLayout.cshtml";
+    ViewData["Title"] = ViewData["Title"];
+    ViewData["Description"] = ViewData["Description"];
+
+    var user = await _userManager.GetUserAsync(User);
+    var userId = user?.Id;
+    var profiles = await ProfileService.GetAllProfilesAsync(userId);
+    var selectedProfile = await ProfileService.GetSelectedProfileAsync(userId);
+    var mainProfile = await ProfileService.GetMainProfileAsync(userId);
+
+    var currentCulture = CultureInfo.CurrentCulture.TwoLetterISOLanguageName;
+}
+
+
+<div>
+    <div>
+        <h3>@ViewData["Title"]</h3>
+        <p class="text-center mb-4">@ViewData["Description"]</p>
+    </div>
+
+
+    <form method="post" asp-action="Details" asp-controller="Profile">
+
+        <input type="hidden" asp-for="Firstname" />
+        <div class="form-group">
+            <label asp-for="Firstname">First Name</label>
+            <input asp-for="Firstname" class="form-control" />
+        </div>
+        <div class="form-group">
+            <label asp-for="Lastname">Last Name</label>
+            <input asp-for="Lastname" class="form-control" />
+        </div>
+
+        <div class="form-group">
+            <label>Email</label>
+            <input asp-for="@user.Email" class="form-control" disabled />
+        </div>
+
+        @*         <div class="dropdown">
+
+        <button class="btn btn-light dropdown-toggle d-flex align-items-center" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+        <span class="d-none d-lg-block">@selectedProfile?.ProfileFirstName</span>
+        </button>
+
+        <ul class="dropdown-menu">
+        @if (mainProfile != null)
+        {
+        <li>
+        <form action="@Url.Action("SelectProfile", "Profile")" method="post">
+        <input type="hidden" name="profileId" value="@mainProfile.Id" />
+        <button type="submit" class="dropdown-item">@mainProfile.ProfileFirstName</button>
+        </form>
+        </li>
+        <div class="dropdown-divider"></div>
+        }
+
+        @foreach (var profile in profiles)
+        {
+        if (profile.Id != mainProfile.Id)
+        {
+        <li>
+        <form action="@Url.Action("SelectProfile", "Profile")" method="post">
+        <input type="hidden" name="profileId" value="@profile.Id" />
+        <button type="submit" class="dropdown-item">@profile.ProfileFirstName</button>
+        </form>
+        </li>
+        }
+        }
+
+        </ul>
+
+        </div> *@
+
+        <h3>Sub Profiles</h3>
+
+        <div class="dropdown">
+
+            <button class="btn btn-light dropdown-toggle d-flex align-items-center" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                <span class="d-none d-lg-block">Choose profile</span>
+            </button>
+
+            <ul class="dropdown-menu">
+                @foreach (var profile in profiles)
+                {
+                    <li>
+                        <form action="@Url.Action("SelectSubProfile", "Profile")" method="post">
+                            <input type="hidden" name="profileId" value="@profile.Id" />
+                            <button type="submit" class="dropdown-item">@profile.ProfileFirstName</button>
+                        </form>
+                    </li>
+                }
+            </ul>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Save Changes</button>
+    </form>
+
+
+</div>
+
+

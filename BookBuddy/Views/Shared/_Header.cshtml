@@ -7,8 +7,8 @@
     var user = await _userManager.GetUserAsync(User);
     var userId = user?.Id;
     var profiles = await ProfileService.GetAllProfilesAsync(userId);
-    var selectedProfile = await ProfileService.GetSelectedProfileAsync();
-    var mainProfile = await ProfileService.GetMainProfileAsync();
+    var selectedProfile = await ProfileService.GetSelectedProfileAsync(userId);
+    var mainProfile = await ProfileService.GetMainProfileAsync(userId);
     var currentCulture = CultureInfo.CurrentCulture.TwoLetterISOLanguageName;
 }
 

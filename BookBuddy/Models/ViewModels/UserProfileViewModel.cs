@@ -9,5 +9,7 @@ namespace BookBuddy.Models.ViewModels
         [Display(Name = "Name", Prompt = "Enter your name")]
 
         public string Firstname { get; set; } = null!;
+
+        public string Lastname { get; set; } = null!;
     }
 }
