@@ -1,0 +1,60 @@
+﻿@using BookBuddy.Business.Services.StartPageService
+@inject IContentLoader ContentLoader
+@inject StartPageService StartPageService
+
+@code {
+    [Parameter]
+
+    public List<BookPageModel> books { get; set; } = new List<BookPageModel>();
+    [Parameter]
+    public StartPage currentPage { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        try
+        {
+            books = await StartPageService.GetBooksAsync(currentPage);
+            System.Console.WriteLine($"Number of books retrieved: {books.Count}");
+        }
+        catch (Exception ex)
+        {
+            System.Console.WriteLine($"Error fetching books: {ex.Message}");
+        }
+    }
+
+     // var currentPage = Model.CurrentPage;
+     // var books = _startPageService.GetBooksAsync(currentPage).Result;
+}
+
+<div id="bookCardCarousel" class="carousel slide" data-bs-ride="carousel">
+    <div class="carousel-inner">
+        @if (books != null && books.Count > 0)
+        {
+            var isFirst = true;
+            foreach (var book in books)
+            {
+                <div class="carousel-item @(isFirst ? "active" : "")">
+                    <div class="d-flex justify-content-center">
+                        <BookCard Result="book" />
+                    </div>
+                </div>
+                isFirst = false;
+            }
+        }
+        else
+        {
+            <p>No books available to display.</p>
+        }
+    </div>
+
+    <button class="carousel-control-prev" type="button" data-bs-target="#bookCardCarousel" data-bs-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Previous</span>
+    </button>
+    <button class="carousel-control-next" type="button" data-bs-target="#bookCardCarousel" data-bs-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Next</span>
+    </button>
+</div>
+
+

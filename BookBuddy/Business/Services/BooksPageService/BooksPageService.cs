@@ -48,4 +48,5 @@ public class BooksPageService : IBooksPageService
 
         return searchClient.UnifiedSearchFor(query, language).Track().GetResult();
     }
+
 }

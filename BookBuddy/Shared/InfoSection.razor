@@ -1,0 +1,55 @@
+﻿@code {
+    [Parameter]
+    public InfoSectionModel InfoSectionModel{ get; set; }
+}
+
+
+
+@* <div class="bullet-points">
+    <h1>@InfoSectionModel.InfoTitle</h1>
+    <h5>@InfoSectionModel.InfoFooter</h5>
+    @if (InfoSectionModel.BulletPoints != null )
+    {
+        <ul>
+            @foreach (var bullet in InfoSectionModel.BulletPoints)
+            {
+                <li>@bullet.Text</li>
+            }
+        </ul>
+    }
+    else
+    {
+        <p>No bullet points available.</p>
+    }
+</div> *@
+
+
+<div class="learning-section">
+    <div class="container">
+        <div class="row info-row">
+            <!-- Left side: Title -->
+            <div class="col-md-4">
+                <h1>@InfoSectionModel.InfoTitle</h1>
+            </div>
+
+            <div class="col-md-8">
+                <h5>@InfoSectionModel.InfoFooter</h5>
+                @if (InfoSectionModel.BulletPoints != null)
+                {
+                    <ul class="benefits-list">
+                        @foreach (var bullet in InfoSectionModel.BulletPoints)
+                        {
+                            <li>
+                                <span class="icon">✔</span> @bullet.Text
+                            </li>
+                        }
+                    </ul>
+                }
+                else
+                {
+                    <p>No bullet points available.</p>
+                }
+            </div>
+        </div>
+    </div>
+</div>

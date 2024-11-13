@@ -20,6 +20,7 @@ using Microsoft.AspNetCore.Localization;
 using System.Globalization;
 using Microsoft.EntityFrameworkCore;
 using BookBuddy.Business.Services.TranslationService;
+using BookBuddy.Business.Services.StartPageService;
 
 
 namespace BookBuddy
@@ -70,6 +71,8 @@ namespace BookBuddy
             services.AddScoped<OpenAiClient>();
             services.AddScoped<IBooksPageService, BooksPageService>();
             services.AddTransient<BookPageFactory>();
+            services.AddTransient<StartPageFactory>();
+            services.AddScoped<StartPageService>();
             services.AddHttpClient();
             services.AddServerSideBlazor();
 

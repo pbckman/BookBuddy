@@ -1,12 +1,13 @@
-﻿@using BookBuddy.Models.Components.SlideShow
+﻿@* @using BookBuddy.Models.Components.SlideShow
 @using EPiServer.Web.Mvc.Html
 @model SlideShowViewComponentModel
 
 
 
-<main>
     @if (Model.Pages != null && Model.Pages.Any())
     {
+        <div class="container"></div>
+        <div class="carousel-container mx-auto">
         <div id="myCarousel" class="carousel slide mb-6" data-bs-ride="carousel">
             <!-- Carousel Indicators -->
             <div class="carousel-indicators">
@@ -55,9 +56,49 @@
                 <span class="visually-hidden">Next</span>
             </button>
         </div>
+        </div>
     }
     else
     {
         <p>No slides available.</p>
     }
-</main>
+ 
+
+<div id="bookCardCarousel" class="carousel slide" data-bs-ride="carousel">
+    <div class="carousel-inner">
+        @if (Model.BookCards != null && Model.BookCards.Any())
+        {
+            var isActive = true; // Första "slide" ska vara aktiv
+                                 // Dela upp korten i grupper om 3 (eller valfritt antal)
+            foreach (var group in Model.BookCards.Select((card, index) => new { card, index })
+            .GroupBy(x => x.index / ))
+            {
+                <div class="carousel-item @(isActive ? "active" : "")">
+                    <div class="d-flex justify-content-center">
+                        @foreach (var item in group)
+                        {
+                            <div class="col-4 px-2">
+                                @Html.Partial("BookCard", item.card)
+                            </div>
+                        }
+                    </div>
+                </div>
+                isActive = false;
+            }
+        }
+        else
+        {
+            <p>No books available for display.</p>
+        }
+    </div>
+
+    <!-- Carousel Controls -->
+    <button class="carousel-control-prev" type="button" data-bs-target="#bookCardCarousel" data-bs-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Previous</span>
+    </button>
+    <button class="carousel-control-next" type="button" data-bs-target="#bookCardCarousel" data-bs-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Next</span>
+    </button>
+</div> *@

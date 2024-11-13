@@ -1,0 +1,104 @@
+﻿
+@* @* Slideshow.razor *@
+@* @using EPiServer.Web.Mvc.Html
+@using BookBuddy.Models
+@using BookBuddy.Models.Pages
+@using BookBuddy.Models.Components.SlideShow
+@inherits LayoutComponentBase
+
+@if (Pages != null && Pages.Any())
+{
+    <div id="myCarousel" class="carousel slide mb-6" data-bs-ride="carousel">
+        <!-- Carousel Indicators -->
+        <div class="carousel-indicators">
+            @for (int i = 0; i < Pages.Count(); i++)
+            {
+                var active = (i == 0) ? "active" : null;
+                var ariaCurrent = (i == 0) ? "true" : null;
+
+                <button type="button" data-bs-target="#myCarousel" data-bs-slide-to="@i" class="@active" aria-label="Slide @(i+1)" aria-current="@ariaCurrent"></button>
+            }
+        </div>
+
+        <!-- Carousel Items -->
+        <div class="carousel-inner">
+            @for (int i = 0; i < Pages.Count(); i++)
+            {
+                var active = (i == 0) ? "active" : null;
+                var slide = Pages[i];
+
+                <div class="carousel-item @active">
+                    @if (slide.Image != null)
+                    {
+                        <img src="@Url.ContentUrl(slide.Image)" class="carousel-poster" alt="@slide.Title"/>
+                    }
+                    <div class="container">
+                        <div class="carousel-caption text-start">
+                            <h1>@slide.Title</h1>
+                            <p class="opacity-75">@slide.Description</p>
+                            @if (!string.IsNullOrEmpty(slide.ButtonText))
+                            {
+                                <p><a class="btn btn-lg btn-primary" href="#">@slide.ButtonText</a></p>
+                            }
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+
+        <!-- Carousel Controls -->
+        <button class="carousel-control-prev" type="button" data-bs-target="#myCarousel" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Previous</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#myCarousel" data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Next</span>
+        </button>
+    </div>
+}
+else
+{
+    <p>No slides available.</p>
+}
+
+@code {
+    [Parameter]
+    public List<SlideShowPage> Pages { get; set; } = new List<SlideShowPage>();
+}
+  *@
+
+@* 
+<div id="bookCardCarousel" class="carousel slide" data-bs-ride="carousel">
+    <div class="carousel-inner">
+        @if (Books != null && Books.Count > 0)
+        {
+            var isFirst = true;
+            foreach (var book in Books)
+            {
+                <div class="carousel-item @(isFirst ? "active" : "")">
+                    <div class="d-flex justify-content-center">
+                        <BookCard Result="book" />
+                    </div>
+                </div>
+                isFirst = false;
+            }
+        }
+    </div>
+
+    <!-- Carousel Controls -->
+    <button class="carousel-control-prev" type="button" data-bs-target="#bookCardCarousel" data-bs-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Previous</span>
+    </button>
+    <button class="carousel-control-next" type="button" data-bs-target="#bookCardCarousel" data-bs-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Next</span>
+    </button>
+</div>
+
+@code {
+    [Parameter]
+    public List<BookPageModel> Books { get; set; } = new List<BookPageModel>();
+}
+ *@

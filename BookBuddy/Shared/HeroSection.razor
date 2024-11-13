@@ -1,0 +1,28 @@
+﻿
+
+@code {
+
+    [Parameter]
+    public HeroSectionModel? HeroSectionModel { get; set; }
+}
+
+
+@* <div class="container text-center my-5">
+    <h1>@HeroSectionModel.Title</h1>
+    <p>@HeroSectionModel.Description</p>
+    <div class="d-flex justify-content-center gap-3 mt-4">
+        <a href="#" class="btn btn-primary">@HeroSectionModel.ButtonSignUp</a>
+        <a href="#" class="btn btn-secondary">@HeroSectionModel.ButtonSignIn</a>
+    </div>
+</div>
+ *@
+
+<div class="hero-section container">
+    <h1>@HeroSectionModel.Title</h1>
+    <p>@HeroSectionModel.Description</p>
+    <div class="button-group">
+        <a href="#" class="btn btn-primary">@HeroSectionModel.ButtonSignUp</a>
+        <a href="#" class="btn btn-secondary">@HeroSectionModel.ButtonSignIn</a>
+    </div>
+</div>
+

@@ -10,4 +10,5 @@ public interface IBooksPageService
 {
     public UnifiedSearchResults SearchBooks(string query, CultureInfo culture);
     public IContentResult<BookPage> Search(string query, CultureInfo culture);
+
 }
