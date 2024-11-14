@@ -136,11 +136,11 @@ namespace BookBuddy.Controllers
             var success = await _profileService.UpdateProfileAsync(user, model);
             if (!success)
             {
-                ViewData["StatusMessage"] = "Could not update profile, please try again later.";
+                TempData["StatusMessage"] = "Could not update profile, please try again later.";
                 return View(model);
             }
 
-            ViewData["StatusMessage"] = "Profile updated successfully!";
+            TempData["StatusMessage"] = "Profile updated successfully!";
             return RedirectToAction("Details", "Profile");
         }
 

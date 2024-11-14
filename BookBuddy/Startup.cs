@@ -20,6 +20,7 @@ using Microsoft.AspNetCore.Localization;
 using System.Globalization;
 using Microsoft.EntityFrameworkCore;
 using BookBuddy.Business.Services.TranslationService;
+using Microsoft.AspNetCore.Mvc.ViewFeatures;
 
 
 namespace BookBuddy
@@ -72,8 +73,9 @@ namespace BookBuddy
             services.AddTransient<BookPageFactory>();
             services.AddHttpClient();
             services.AddServerSideBlazor();
+            services.AddSingleton<ITempDataProvider, CookieTempDataProvider>();
 
-            
+            services.AddControllersWithViews();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -81,7 +83,7 @@ namespace BookBuddy
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
-             }
+            }
 
 
             app.UseStatusCodePages(async context =>
@@ -103,7 +105,7 @@ namespace BookBuddy
 
                 response.Redirect(redirectUrl);
                 await Task.Yield();
-               
+
             });
 
 

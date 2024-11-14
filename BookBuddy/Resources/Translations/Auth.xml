@@ -37,9 +37,10 @@
 					<newPasswordPlaceholder>Enter your new password</newPasswordPlaceholder>
 					<confirmNewPasswordPlaceholder>Confirm your new password</confirmNewPasswordPlaceholder>
 					<updateButton>Update</updateButton>
-					<statusMessage>Something went wrong, please try again later.</statusMessage>
+					<statusMessage>Password successfully updated</statusMessage>
 					<accessDenied>ACCESS DENIED</accessDenied>
 					<mainProfileNeeded>Main profile needed to change password.</mainProfileNeeded>
+					<errorMessage>Something went wrong, please try again later.</errorMessage>
 				</properties>
 			</updateuser>
 			<userprofile>

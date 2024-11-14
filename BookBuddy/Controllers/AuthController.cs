@@ -44,7 +44,7 @@ namespace BookBuddy.Controllers
 
             if (result.Succeeded)
             {
-                return RedirectToAction("SignIn", "Auth");
+                return RedirectToAction("SignIn", "Auth", new { lang });
             }
 
             ViewData["StatusMessage"] = "Something went wrong, please try again later.";
