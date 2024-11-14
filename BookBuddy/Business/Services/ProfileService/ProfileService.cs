@@ -31,6 +31,7 @@ namespace BookBuddy.Business.Services.AccountService
             return await _dataContext.Profiles.FirstOrDefaultAsync(p => p.UserId == user.Id);
         }
 
+
         public async Task<IEnumerable<UserProfileEntity>?> GetAllProfilesAsync(string userId)
         {
 
@@ -44,6 +45,20 @@ namespace BookBuddy.Business.Services.AccountService
 
             return await _dataContext.Profiles.FirstOrDefaultAsync(profile => profile.UserId == userId && profile.IsMainProfile == true);
 
+        }
+
+        public async Task<UserProfileEntity> GetSubProfileAsync(string userId)
+        {
+
+            return await _dataContext.Profiles.FirstOrDefaultAsync(profile => profile.UserId == userId && profile.IsMainProfile != true);
+        }
+
+        public async Task<IEnumerable<UserProfileEntity>> GetSubProfilesAsync(string userId)
+        {
+
+            return await _dataContext.Profiles
+                                    .Where(profile => profile.UserId == userId && profile.IsMainProfile != true)
+                                    .ToListAsync();
         }
 
         public async Task<UserProfileEntity?> GetProfileByIdAsync(int profileId)
@@ -65,6 +80,20 @@ namespace BookBuddy.Business.Services.AccountService
             return await GetMainProfileAsync(userId);
         }
 
+        public async Task<UserProfileEntity> GetSelectedSubProfileAsync(string userId)
+        {
+            if (_httpContextAccessor.HttpContext.Request.Cookies.TryGetValue("SelectedSubProfileId", out string profileIdValue))
+            {
+                if (int.TryParse(profileIdValue, out int profileId))
+                {
+                    return await _dataContext.Profiles.FirstOrDefaultAsync(p => p.Id == profileId);
+                }
+
+            }
+
+            return await GetMainProfileAsync(userId);
+        }
+
         public async Task<bool> UpdateProfileAsync(ApplicationUser user, UserProfileViewModel model)
         {
             var profile = await GetProfileAsync(user);
@@ -72,6 +101,18 @@ namespace BookBuddy.Business.Services.AccountService
 
             profile.ProfileFirstName = model.Firstname;
             profile.ProfileLastName = model.Lastname;
+
+            _dataContext.Profiles.Update(profile);
+            await _dataContext.SaveChangesAsync();
+            return true;
+        }
+
+        public async Task<bool> UpdateProfileAsync(ApplicationUser user, ProfileViewModel model)
+        {
+            var profile = await GetProfileAsync(user);
+            if (profile == null) return false;
+
+            profile.ProfileFirstName = model.FirstName;
 
             _dataContext.Profiles.Update(profile);
             await _dataContext.SaveChangesAsync();

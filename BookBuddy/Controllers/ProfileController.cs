@@ -58,6 +58,23 @@ namespace BookBuddy.Controllers
             return Redirect(Request.Headers["Referer"].ToString());
         }
 
+        [HttpPost]
+        [Route("/profile/selectsubprofile")]
+        public IActionResult SelectSubProfile(int profileId)
+        {
+            var cookieOptions = new CookieOptions
+            {
+                Expires = DateTimeOffset.Now.AddDays(7),
+                HttpOnly = true,
+                IsEssential = true,
+                SameSite = SameSiteMode.Lax
+            };
+
+            Response.Cookies.Append("SelectedSubProfileId", profileId.ToString(), cookieOptions);
+
+            return Redirect(Request.Headers["Referer"].ToString());
+        }
+
         [HttpGet]
         [Route("{lang}/profile/updateprofile")]
         public async Task<IActionResult> UpdateProfile(string lang = "en")
@@ -74,18 +91,46 @@ namespace BookBuddy.Controllers
                 return Unauthorized();
             }
 
-            var profile = await _profileService.GetProfileAsync(user);
+            var userId = user.Id;
+
+            var profile = await _profileService.GetSubProfileAsync(userId);
             if (profile == null)
             {
                 return NotFound();
             }
-            var model = new UserProfileViewModel
+            var model = new ProfileViewModel
             {
-                Firstname = profile.ProfileFirstName,
-                Lastname = profile.ProfileLastName
+                FirstName = profile.ProfileFirstName
+
             };
 
             return View(model);
+        }
+
+        [HttpPost]
+        [Route("{lang}/profile/updateprofile")]
+        public async Task<IActionResult> UpdateProfile(ProfileViewModel model, string lang = "en")
+        {
+            if (!ModelState.IsValid)
+            {
+                return RedirectToAction("UpdateProfile", "Profile");
+            }
+
+            var user = await _userManager.GetUserAsync(User);
+            if (user == null)
+            {
+                return Unauthorized();
+            }
+
+            var success = await _profileService.UpdateProfileAsync(user, model);
+            if (!success)
+            {
+                TempData["StatusMessage"] = "Could not update profile, please try again later.";
+                return View(model);
+            }
+
+            TempData["StatusMessage"] = "Profile updated successfully!";
+            return RedirectToAction("UpdateProfile", "Profile");
         }
 
         [HttpGet]
