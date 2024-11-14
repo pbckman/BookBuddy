@@ -92,11 +92,13 @@ namespace BookBuddy.Controllers
         [Route("{lang}/profile/details")]
         public async Task<IActionResult> Details(string lang = "en")
         {
-            ViewData["Title"] = _translationService.GetTranslation("updateprofile", "title", lang);
-            ViewData["Description"] = _translationService.GetTranslation("updateprofile", "description", lang);
-            ViewData["FirstName"] = _translationService.GetTranslation("updateprofile", "firstname", lang);
-            ViewData["SaveButton"] = _translationService.GetTranslation("updateprofile", "saveButton", lang);
-
+            ViewData["Title"] = _translationService.GetTranslation("details", "title", lang);
+            ViewData["Description"] = _translationService.GetTranslation("details", "description", lang);
+            ViewData["FirstName"] = _translationService.GetTranslation("details", "firstname", lang);
+            ViewData["LastName"] = _translationService.GetTranslation("details", "firstname", lang);
+            ViewData["Email"] = _translationService.GetTranslation("details", "firstname", lang);
+            ViewData["SaveButton"] = _translationService.GetTranslation("details", "saveButton", lang);
+            ViewData["StatusMessage"] = "";
 
             var user = await _userManager.GetUserAsync(User);
             if (user == null)
@@ -114,7 +116,6 @@ namespace BookBuddy.Controllers
                 Firstname = profile.ProfileFirstName,
                 Lastname = profile.ProfileLastName
             };
-
             return View(model);
         }
 
@@ -136,11 +137,11 @@ namespace BookBuddy.Controllers
             var success = await _profileService.UpdateProfileAsync(user, model);
             if (!success)
             {
-                TempData["StatusMessage"] = "Could not update profile, please try again later.";
+                TempData["StatusMessage"] = "Could not update user, please try again later.";
                 return View(model);
             }
 
-            TempData["StatusMessage"] = "Profile updated successfully!";
+            TempData["StatusMessage"] = "User updated successfully!";
             return RedirectToAction("Details", "Profile");
         }
 

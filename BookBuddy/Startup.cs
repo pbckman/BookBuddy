@@ -73,9 +73,6 @@ namespace BookBuddy
             services.AddTransient<BookPageFactory>();
             services.AddHttpClient();
             services.AddServerSideBlazor();
-            services.AddSingleton<ITempDataProvider, CookieTempDataProvider>();
-
-            services.AddControllersWithViews();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

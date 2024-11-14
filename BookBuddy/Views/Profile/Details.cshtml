@@ -25,11 +25,14 @@
         <p class="text-center mb-4">@ViewData["Description"]</p>
     </div>
 
-
+    @if (TempData["StatusMessage"] != null)
+    {
+                            <div class="alert alert-success">
+            @TempData["StatusMessage"]
+                            </div>
+    }
     <form method="post" action="@Url.Action("Details", "Profile", new { lang = currentCulture })">
-        <div>
-            @ViewData["StatusMessage"]
-        </div>
+
         <div class="form-group">
             <label asp-for="Firstname">First Name</label>
             <input asp-for="Firstname" class="form-control" />

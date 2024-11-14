@@ -59,6 +59,15 @@
 				<saveButton>Save changes</saveButton>
 				</properties>
 			</updateprofile>
+			<details>
+				<properties>
+					<title>Update user</title>
+					<description>Update user with a new name</description>
+					<firstname>First Name</firstname>
+					<lastname>Last Name</lastname>
+					<saveButton>Save changes</saveButton>
+				</properties>
+			</details>
 		</contenttypes>
 	</language>
 	<language name="Svenska" id="sv">
@@ -119,6 +128,15 @@
 				<saveButton>Spara ändring</saveButton>
 				</properties>
 			</updateprofile>
+			<details>
+				<properties>
+					<title>Uppdatera användare</title>
+					<description>Uppdatera användare med ett nytt namn</description>
+					<firstname>Förnamn</firstname>
+					<lastname>Efternamn</lastname>
+					<saveButton>Spara ändringar</saveButton>
+				</properties>
+			</details>
 		</contenttypes>
 	</language>
 </languages>
