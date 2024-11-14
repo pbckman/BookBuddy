@@ -70,6 +70,7 @@ namespace BookBuddy
             services.AddScoped<OpenAiClient>();
             services.AddScoped<IBooksPageService, BooksPageService>();
             services.AddTransient<BookPageFactory>();
+            services.AddTransient<CategorySelectionFactory>();
             services.AddHttpClient();
             services.AddServerSideBlazor();
 

@@ -22,7 +22,8 @@ public class BookPageFactory
             Plot = bookPage.Plot,
             ImageUrl = bookPage.ImageUrl,
             ImageAltText = bookPage.ImageAltText,
-            PageUrl = pageUrl
+            PageUrl = pageUrl,
+            Categories = bookPage.Categories?.Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries).ToList() ?? new List<string>()
         };
     }
 }

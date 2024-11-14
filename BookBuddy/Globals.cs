@@ -9,6 +9,12 @@ namespace BookBuddy
         public static class GroupNames
         {
             [Display(
+                Name = "Categories",
+                Order = 5
+            )]
+            public const string Categories = "Categories";
+
+            [Display(
                 Name = "MetaData",
                 Order = 10
             )]
