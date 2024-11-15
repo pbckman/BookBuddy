@@ -4,9 +4,9 @@ using System.ComponentModel.DataAnnotations;
 namespace BookBuddy.Models.Pages
 {
     [ContentType(
-    GroupName = GroupNames.Specialized,
-    GUID = "315D43CD-E4BD-47DB-98A6-621E31CC78D2"
-)]
+        GroupName = GroupNames.Specialized,
+        GUID = "315D43CD-E4BD-47DB-98A6-621E31CC78D2"
+    )]
     [ImageUrl("/pages/CMS-icon-page-02.png")]
     [AvailableContentTypes(
         Availability.Specific,

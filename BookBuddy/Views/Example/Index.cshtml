@@ -3,6 +3,5 @@
     Layout = "~/Views/Shared/Layouts/BasicLayout.cshtml";
     ViewData["Title"] = "Example";
 }
-<h1>@Model.CurrentPage.Heading</h1>
-
-<component type="typeof(CounterBlazorPage)" render-mode="Server" />
+<h1>Heading: @Model.CurrentPage.Heading</h1>
+<component type="typeof(CounterBlazorPage)" render-mode="ServerPrerendered" />

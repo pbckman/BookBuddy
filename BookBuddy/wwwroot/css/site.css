@@ -29,9 +29,14 @@
   display: flex;
   flex-direction: column; /* Gör kortet kolumn-baserat */
   justify-content: space-between;
-  aspect-ratio: 9/4;
+  aspect-ratio: 8/4;
   margin: 0 auto;
   max-width: 480px;
+}
+@media (max-width: 480px) {
+  .bookcard-btn .bookcard {
+    aspect-ratio: 7/4;
+  }
 }
 .bookcard-btn .bookcard:hover {
   background-color: #F3F3F3;
@@ -61,6 +66,11 @@
 .bookcard-btn .bookcard .content-div .card-body .card-title {
   font-size: 1.2em;
 }
+@media (max-width: 480px) {
+  .bookcard-btn .bookcard .content-div .card-body .card-title {
+    font-size: 1rem;
+  }
+}
 .bookcard-btn .bookcard .content-div .card-body .plot-text {
   max-height: 100px; /* Begränsa höjden för att passa antalet rader */
   overflow: hidden;
@@ -70,6 +80,7 @@
   -webkit-box-orient: vertical;
   line-height: 1.5em; /* Justera linjehöjd om det behövs för att anpassa */
   height: 6em; /* Ställ in höjden för att matcha linjehöjden och antalet rader */
+  font-size: clamp(0.75rem, 2vw, 0.8rem);
 }
 .bookcard-btn .bookcard .content-div .card-body p {
   font-size: 0.8em;
@@ -81,11 +92,6 @@
 @media (max-width: 768px) {
   .content-div {
     font-size: 0.9em; /* Minska grundstorleken för alla barn */
-  }
-}
-@media (max-width: 480px) {
-  .content-div {
-    font-size: 0.8em; /* Ytterligare minskning för små skärmar */
   }
 }
 * {
@@ -329,7 +335,7 @@ body {
   width: 16rem;
   padding: 3rem 0;
   height: 100%;
-  background-image: url("../images/sidebar.jpg");
+  background-image: url("../images/sidebar.webp");
   background-size: cover;
   background-repeat: no-repeat;
   box-shadow: 4px 0 14px 0 rgba(0, 0, 0, 0.55);
@@ -364,6 +370,30 @@ body {
   gap: 30px;
   font-size: 1.25rem;
 }
+.navbar .navbar-wrapper .nav-items .nav-links .navbar-list {
+  list-style: none;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+}
+.navbar .navbar-wrapper .nav-items .nav-links .navbar-list .navbar-item {
+  margin-right: 1rem;
+  margin-bottom: 1.25rem;
+  font-size: 1.5rem;
+}
+.navbar .navbar-wrapper .nav-items .nav-links .navbar-list .navbar-item a:hover {
+  color: #FA9F34;
+  transform: scale(1.05);
+  transition: transform 0.3s ease-in-out;
+  cursor: pointer;
+}
+.navbar .navbar-wrapper .nav-items .nav-links .navbar-list .navbar-item a .nav-icon {
+  filter: invert(67%) sepia(94%) saturate(2015%) hue-rotate(357deg) brightness(99%) contrast(103%);
+  width: 24px;
+  height: 24px;
+  display: inline-block;
+  margin-right: 0.5rem;
+}
 
 .error-content {
   position: relative;
@@ -376,17 +406,17 @@ body {
   z-index: 2;
 }
 
-img {
+.responsive-img {
   max-width: 100%;
   height: auto;
 }
 @media (min-width: 768px) {
-  img {
+  .responsive-img {
     max-width: 250px;
   }
 }
 @media (max-width: 767px) {
-  img {
+  .responsive-img {
     max-width: 100px;
   }
 }
@@ -489,7 +519,7 @@ img {
   width: 16rem;
   padding: 3rem 0;
   height: 100%;
-  background-image: url("../images/sidebar.jpg");
+  background-image: url("../images/sidebar.webp");
   background-size: cover;
   background-repeat: no-repeat;
   box-shadow: 4px 0 14px 0 rgba(0, 0, 0, 0.55);
@@ -523,6 +553,30 @@ img {
   margin-top: 25%;
   gap: 30px;
   font-size: 1.25rem;
+}
+.navbar .navbar-wrapper .nav-items .nav-links .navbar-list {
+  list-style: none;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+}
+.navbar .navbar-wrapper .nav-items .nav-links .navbar-list .navbar-item {
+  margin-right: 1rem;
+  margin-bottom: 1.25rem;
+  font-size: 1.5rem;
+}
+.navbar .navbar-wrapper .nav-items .nav-links .navbar-list .navbar-item a:hover {
+  color: #FA9F34;
+  transform: scale(1.05);
+  transition: transform 0.3s ease-in-out;
+  cursor: pointer;
+}
+.navbar .navbar-wrapper .nav-items .nav-links .navbar-list .navbar-item a .nav-icon {
+  filter: invert(67%) sepia(94%) saturate(2015%) hue-rotate(357deg) brightness(99%) contrast(103%);
+  width: 24px;
+  height: 24px;
+  display: inline-block;
+  margin-right: 0.5rem;
 }
 
 .auth-container {
@@ -1008,6 +1062,26 @@ img {
   width: 80%;
   margin: 0 auto;
 }
+.search-box .search-input {
+  padding: 0.7rem 1rem;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+}
+.search-box .search-input:focus-visible, .search-box .search-input :focus {
+  outline: none;
+  box-shadow: none;
+  border: none;
+  background-color: rgb(237, 237, 237);
+}
+.search-box .search-button {
+  padding: 0.7rem 1rem;
+}
+.search-box .search-button:hover {
+  background-color: #EC9221;
+  color: white;
+  border: none;
+}
 
 .book-cards-wrapper {
   padding: 0 auto;
@@ -1016,4 +1090,23 @@ img {
   row-gap: 2rem;
   column-gap: 1.5rem;
   margin-top: 4rem;
+}
+  -moz-column-gap: 1.5rem;
+       column-gap: 1.5rem;
+  margin: 4rem auto 0;
+  max-width: 95%;
+}
+
+.no-results {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: calc(0.7rem + 10%);
+  width: 100%;
+}
+.no-results .no-result-img {
+  opacity: 0.8;
+  width: 50%;
+  max-width: 30rem;
+  height: auto;
 }
