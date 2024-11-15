@@ -12,6 +12,17 @@
                 </div>
             </form>
         </div>
+
+        <div class="filter-container">
+            <ul style="display: flex; gap: 1rem; list-style: none;">
+                @foreach (var category in Model.Categories)
+                {
+                    <li>
+                        <a href="/" class="category-filter-link">@category.Text</a>
+                    </li>
+                }
+            </ul>
+        </div>
     </div>
 
     @if (Model.Result.Count() > 0)

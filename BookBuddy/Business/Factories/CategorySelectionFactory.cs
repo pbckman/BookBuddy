@@ -21,7 +21,7 @@ public class CategorySelectionFactory : ISelectionFactory
 
     public IEnumerable<ISelectItem> GetSelections(ExtendedMetadata metadata)
     {        
-        var currentCulture = CultureInfo.CurrentCulture.TwoLetterISOLanguageName;
+        var currentCulture = CultureInfo.CurrentUICulture.TwoLetterISOLanguageName;
         var selectedValues = metadata.Model as IEnumerable<string> ?? new List<string>();
 
         var allCategories = _categoryService.GetAllCategories(currentCulture);
