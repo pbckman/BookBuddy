@@ -21,6 +21,7 @@ using System.Globalization;
 using Microsoft.EntityFrameworkCore;
 using BookBuddy.Business.Services.TranslationService;
 using BookBuddy.Business.Services.ScheduledJobsService;
+using BookBuddy.Business.Services.CategoryService;
 
 
 namespace BookBuddy
@@ -71,6 +72,7 @@ namespace BookBuddy
             services.AddScoped<OpenAiClient>();
             services.AddScoped<IBooksPageService, BooksPageService>();
             services.AddScoped<IScheduledJobsService, ScheduledJobsService>();
+            services.AddScoped<ICategoryService, CategoryService>();
             services.AddTransient<BookPageFactory>();
             services.AddTransient<CategorySelectionFactory>();
             services.AddHttpClient();

@@ -10,13 +10,13 @@ namespace BookBuddy
         {
             [Display(
                 Name = "Categories",
-                Order = 5
+                Order = 10
             )]
             public const string Categories = "Categories";
 
             [Display(
                 Name = "MetaData",
-                Order = 10
+                Order = 15
             )]
             public const string MetaData = "MetaData";
 
