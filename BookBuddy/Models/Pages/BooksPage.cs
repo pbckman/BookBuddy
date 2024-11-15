@@ -1,4 +1,5 @@
 using System;
+using System.ComponentModel.DataAnnotations;
 using static BookBuddy.Globals;
 
 namespace BookBuddy.Models.Pages;
@@ -17,4 +18,10 @@ namespace BookBuddy.Models.Pages;
    )]
     public class BooksPage : SitePageData
     {
+        [Display(
+           GroupName = SystemTabNames.Content,
+           Order = 30
+        )]
+        [CultureSpecific]
+        public virtual ContentReference? SiteSettingsPage { get; set; }
     }

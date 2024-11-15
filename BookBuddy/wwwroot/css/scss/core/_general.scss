@@ -10,7 +10,7 @@ html, body {
 
 main {
     flex-grow: 1;
-    padding-top: 10%;
+    padding-top: 8%;
     z-index: 5;
 }
 
@@ -25,16 +25,17 @@ main {
     display: flex;
     flex-direction: column;
     flex: 1;
-    background-image: url('../images/rm245-bb-17-a.jpg');
+/*    background-image: url('../images/rm245-bb-17-a.jpg');*/
+    background-image: url('../images/background-img.webp');
     background-size: cover;
     background-repeat: no-repeat;
     z-index: 2; 
     .flying-boy {
         position: absolute;
-        top: 10rem;
-        left: 10rem;
-        height: 20%;
-        width: auto;
+        top: 10%;
+        left: 10%;
+        max-width: 50%;
+        height: auto;
         z-index: 2;
         opacity: 0.5;
     }
@@ -45,6 +46,16 @@ main {
         .flying-boy {
             top: 5rem;
             left: 5rem;
+        }
+    }
+}
+@media (min-width: 1200px) {
+    .main-content {
+        .flying-boy {
+            top: 10rem;
+            left: 10rem;
+            height: 20%;
+            width: auto;
         }
     }
 }
