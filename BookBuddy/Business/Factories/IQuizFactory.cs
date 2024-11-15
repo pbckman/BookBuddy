@@ -8,6 +8,6 @@ namespace BookBuddy.Business.Factories
     public interface IQuizFactory
     {
         QuizModel Create(QuizPage currentPage);
-        QuizResultModel Create(QuizResultEntity result);
+       
     }
 }

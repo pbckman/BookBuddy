@@ -1,0 +1,70 @@
+﻿@using BookBuddy.Models.QuizModels
+@using BookBuddy.Models.ResultModels
+
+
+<div class="card">
+    @if (Model.Display == Display.ChapterIntro)
+    {
+        <ChapterIntro Model="@Model" OnStartedQuiz="HandleBtnStartClick" />
+    }
+    else if (Model.Display == Display.Question)
+    {
+        <Question 
+            Model="@Model" 
+            OnModelChange="UpdateModel" 
+            OnOptionSelected="HandleSelectedOption"
+            OnBtnSummaryClick="HandleBtnSummaryClick"
+            OnCompletedChapter="HandleBtnFinishClick"
+        />
+    }
+    
+    else if (Model.Display == Display.ChapterSummary)
+    {
+        <ChapterSummary Model="@Model" OnModelChange="UpdateModel" />
+    }
+    else if(Model.Display == Display.QuizSummary)
+    {
+        <h2>Quiz summary!</h2>
+    }
+</div>
+
+
+
+@code {
+    [Parameter] public QuizModel Model { get; set; } = null!;
+    [Parameter] public EventCallback OnModelChange { get; set; }
+    [Parameter] public EventCallback OnCompletedChapter { get; set; }
+    [Parameter] public EventCallback OnStartedQuiz { get; set; }
+    [Parameter] public EventCallback<string> OnSelectedOption { get; set; }
+    [Parameter] public EventCallback<int> OnBtnSummaryClick { get; set; }
+
+    private async Task HandleBtnStartClick()
+    {
+        if (OnStartedQuiz.HasDelegate)
+            await OnStartedQuiz.InvokeAsync();
+    }
+
+    private async Task HandleSelectedOption(string selectedOption)
+    {
+        if (OnSelectedOption.HasDelegate)
+            await OnSelectedOption.InvokeAsync(selectedOption);
+    }
+
+    private async Task HandleBtnFinishClick()
+    {
+        if (OnCompletedChapter.HasDelegate)
+            await OnCompletedChapter.InvokeAsync();
+    }
+
+    private async Task HandleBtnSummaryClick()
+    {
+        if (OnBtnSummaryClick.HasDelegate)
+            await OnBtnSummaryClick.InvokeAsync(Model.CurrentChapter!.ChapterId);
+    }
+
+    private async Task UpdateModel()
+    {
+        if (OnModelChange.HasDelegate)
+            await OnModelChange.InvokeAsync();
+    }
+}

@@ -7,5 +7,6 @@
         public List<ChapterResultEntity> ChapterResults { get; set; } = [];
         public int ProfileId { get; set; }
         public UserProfileEntity Profile { get; set; }
+        public bool IsCompleted { get; set; }
     }
 }

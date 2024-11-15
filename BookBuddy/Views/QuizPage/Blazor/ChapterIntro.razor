@@ -1,0 +1,27 @@
+﻿@using BookBuddy.Business.Services.StateService
+@using BookBuddy.Models.QuizModels
+@inject IStateService StateService
+
+<h2>@Model.CurrentChapter!.ChapterTitle</h2>
+<div class="button-next-section">
+    <button class="btn-next @(IsChapterStartedOrFinished() ? "disabled" : "")" disabled="@(IsChapterStartedOrFinished()  ? true : false)" onclick="@(() => HandleBtnStartClick())">@Model.StartBtnText</button>
+</div>
+
+@code {
+    [Parameter] public QuizModel Model { get; set; } = null!;
+    [Parameter] public EventCallback OnStartedQuiz { get; set; }
+
+    private async Task HandleBtnStartClick()
+    {
+        if (OnStartedQuiz.HasDelegate)
+        {
+            await OnStartedQuiz.InvokeAsync();
+        }
+    }
+
+    private bool IsChapterStartedOrFinished()
+    {
+        var state = StateService.IsStartedOrFinishedChapter(Model.CurrentChapter!, Model);
+        return state;
+    }
+}

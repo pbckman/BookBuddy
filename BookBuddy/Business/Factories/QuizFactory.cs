@@ -26,6 +26,13 @@ namespace BookBuddy.Business.Factories
                 quiz.Title = bookPage.Title;
                 quiz.ImageUrl = bookPage.ImageUrl;
                 quiz.ImageAltText = bookPage.ImageAltText;
+                quiz.NextQuestionBtnText = currentPage.Language.Name == "sv" ? "Nästa" : "Next";
+                quiz.SubmitBtnText = currentPage.Language.Name == "sv" ? "Avsluta kaptitlet" : "End chapter";
+                quiz.StartBtnText = currentPage.Language.Name == "sv" ? "Starta" : "Begin";
+                quiz.NextChapterBtnText = currentPage.Language.Name == "sv" ? "Nästa kapitel" : "Next chapter";
+                quiz.QuizResultTitle = currentPage.Language.Name == "sv" ? "Resultat" : "Result";
+
+
 
                 foreach (var chapterPage in chapterPages)
                 {
@@ -34,22 +41,15 @@ namespace BookBuddy.Business.Factories
                     {
                         ChapterId = chapterPage.ContentLink.ID,
                         ChapterTitle = chapterPage.Name,
-                        Questions = questionPages.Select(q => new QuestionModel
+                        Questions = GetQuestions(questionPages.ToList()),
+                       
+                        ChapterSelectionSummary = new ChapterSelectionSummaryModel
                         {
-                            QuestionId = q.ContentLink.ID,
-                            QuestionTitle = q.Name,
-                            Question = q.Question,
-                            CorrectAnswer = q.CorrectAnswer,
-                            Options = new Dictionary<string, string>
-                        {
-                            { q.AnswerAValue, q.AnswerAText },
-                            { q.AnswerBValue, q.AnswerBText },
-                            { q.AnswerCValue, q.AnswerCText },
-                            { q.AnswerDValue, q.AnswerDText },
+                            ChapterId = chapterPage.ContentLink.ID,
+                            Title = currentPage.Language.Name == "en" ? "Summary" : "Sammanfattning"
                         }
-                        }).ToList()
 
-                    });
+                    });;
                 }
 
                 return quiz;
@@ -62,27 +62,49 @@ namespace BookBuddy.Business.Factories
            
         }
 
-        public QuizResultModel Create(QuizResultEntity result)
-        {
-            return new QuizResultModel
-            {
-                Id = result.Id,
-                QuizId = result.QuizId,
-                ChapterResults = result.ChapterResults.Select(x => new ChapterResultModel
-                {
-                    Id = x.Id,
-                    ChapterId = x.ChapterId,
-                    QuestionResults = x.QuestionResults.Select(q => new QuestionResultModel
-                    {
-                        Id = q.Id,
-                        QuestionId = q.QuestionId,
-                        SelectedOption = q.SelectedOption,
-                        IsCorrect = q.IsCorrect,
-                        CorrectAnswer = q.CorrectAnswer
-                    }).ToList()
-                }).ToList(),
 
-            };
+
+        private List<QuestionModel> GetQuestions(List<QuestionPage> questionPages)
+        {
+            var result = new List<QuestionModel>();
+            for(int i = 0; i < questionPages.Count(); i++)
+            {
+                result.Add(new QuestionModel
+                {
+                    QuestionId = questionPages[i].ContentLink.ID,
+                    QuestionNumber = i + 1,
+                    QuestionTitle = questionPages[i].Name,
+                    Question = questionPages[i].Question,
+                    CorrectAnswer = questionPages[i].CorrectAnswer,
+                    Options = new List<OptionModel>
+                    {
+                        new()
+                        {
+                            OptionValue = questionPages[i].AnswerAValue,
+                            OptionText = questionPages[i].AnswerAText,
+                        },
+                        new()
+                        {
+                            OptionValue = questionPages[i].AnswerBValue,
+                            OptionText = questionPages[i].AnswerBText,
+                        },
+                        new()
+                        {
+                            OptionValue = questionPages[i].AnswerCValue,
+                            OptionText = questionPages[i].AnswerCText,
+                        },
+                        new()
+                        {
+                            OptionValue = questionPages[i].AnswerDValue,
+                            OptionText = questionPages[i].AnswerDText,
+                        }
+                    }
+                });
+            }
+
+            return result;
         }
+
+   
     }
 }

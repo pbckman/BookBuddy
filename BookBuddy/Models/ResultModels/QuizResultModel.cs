@@ -6,6 +6,7 @@ namespace BookBuddy.Models.ResultModels
     {
         public int Id { get; set; }
         public int QuizId { get; set; }
+        public int ProfileId { get; set; }
         public List<ChapterResultModel> ChapterResults { get; set; } = [];
     }
 }

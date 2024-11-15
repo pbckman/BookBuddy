@@ -22,6 +22,9 @@ using Microsoft.EntityFrameworkCore;
 using BookBuddy.Business.Services.TranslationService;
 using BookBuddy.Business.Factories;
 using BookBuddy.Business.Services.QuizService;
+using BookBuddy.Business.Services.QuizResultService;
+using BookBuddy.Business.Services.StateService;
+using Blazored.LocalStorage;
 
 
 namespace BookBuddy
@@ -71,13 +74,17 @@ namespace BookBuddy
             services.AddScoped<IPageService, PageService>();
             services.AddScoped<IQuizFactory, QuizFactory>();
             services.AddScoped<IQuizService, QuizService>();
+            services.AddScoped<IQuizResultService, QuizResultService>();
+            services.AddScoped<IStateService, StateService>();
+            services.AddScoped<QuizResultFactory>();
             services.AddScoped<OpenAiClient>();
             services.AddScoped<IBooksPageService, BooksPageService>();
             services.AddTransient<BookPageFactory>();
             services.AddHttpClient();
             services.AddServerSideBlazor();
+            services.AddBlazoredLocalStorage();
 
-            
+
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

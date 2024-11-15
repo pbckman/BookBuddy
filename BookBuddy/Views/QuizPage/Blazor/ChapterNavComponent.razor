@@ -1,0 +1,97 @@
+﻿@using BookBuddy.Business.Services.StateService
+@using BookBuddy.Models.QuizModels
+@using BookBuddy.Models.ResultModels
+
+@inject IStateService StateService
+
+<div class="card">
+    <img src="@Model.ImageUrl" alt="@Model.ImageAltText" />
+    <h3>@Model.Title</h3>
+    <ul class="chapter-list">
+        
+        @foreach (var chapter in Model.Chapters)
+        {
+            <li class="chapter-list-item @(IsCurrentChapter(chapter) ? "active" : "") @(!IsAvailableChapter(chapter) ? "disabled" : "")" onclick="@(() => DisplayIntro(chapter.ChapterId))">
+                @chapter.ChapterTitle
+            </li>
+            @if (chapter.ShowQuestions)
+            {
+                
+                @foreach (var question in chapter.Questions)
+                {
+                    <li class="question-list-item @(GetQuestionState(question)) @(Model.CurrentQuestion != null && question.QuestionId == Model.CurrentQuestion.QuestionId ? "active" : "")" onclick="@(() => DisplayQuestion(question.QuestionId))">
+                            @question.QuestionTitle
+                    </li>
+                }
+                @if(chapter.ChapterSelectionSummary != null)
+                {
+                    <li class="question-list-item @(chapter == Model.CurrentChapter && Model.Display == Display.ChapterSummary ? "active" : "") @(GetSummaryStatus(chapter))" onclick="@(() => DisplaySummary(chapter.ChapterId))">
+                        @chapter.ChapterSelectionSummary.Title
+                    </li>
+                }
+            }
+        }
+        @if (Model.IsCompleted)
+        {
+            <li class="question-list-item @(Model.Display == Display.QuizSummary ? "active" : "")" onclick="@(() => DisplayQuizResult())">
+                @Model.QuizResultTitle
+            </li>
+        }
+
+    </ul>
+</div>
+
+@code {
+    [Parameter] public QuizModel Model { get; set; } = null!;
+    [Parameter] public EventCallback<int> OnChapterSelected { get; set; }
+    [Parameter] public EventCallback<int> OnQuestionSelected { get; set; }
+    [Parameter] public EventCallback<int> OnSummarySelected { get; set; }
+    [Parameter] public EventCallback OnResultSelected { get; set; }
+
+    private string GetQuestionState(QuestionModel question)
+    {
+        return StateService.GetQuestionState(question, Model);
+    }
+
+    private string GetSummaryStatus(ChapterModel chapter)
+    {
+        if (StateService.IsFinishedChapter(chapter, Model))
+            return "";
+
+        return "disabled";
+    }
+
+    private bool IsCurrentChapter(ChapterModel chapter)
+    {
+        return chapter == Model.CurrentChapter ;
+    }
+
+    private bool IsAvailableChapter(ChapterModel chapter)
+    {
+        return StateService.IsAvailableChapter(chapter, Model);
+    }
+
+    private async Task DisplayIntro(int chapterId)
+    {
+        if (OnChapterSelected.HasDelegate)
+            await OnChapterSelected.InvokeAsync(chapterId);
+    }
+
+    private async Task DisplayQuestion(int questionId)
+    {
+        if (OnQuestionSelected.HasDelegate)
+            await OnQuestionSelected.InvokeAsync(questionId);
+    }
+
+    private async Task DisplaySummary(int chapterId)
+    {
+        if (OnSummarySelected.HasDelegate)
+            await OnSummarySelected.InvokeAsync(chapterId);
+    }
+
+    private async Task DisplayQuizResult()
+    {
+        if (OnResultSelected.HasDelegate)
+            await OnResultSelected.InvokeAsync();
+    }
+}
