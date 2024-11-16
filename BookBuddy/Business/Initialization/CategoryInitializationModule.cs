@@ -16,6 +16,7 @@ public class CategoryInitializationModule : IInitializableModule
 
         if (store.Items<CategoryItem>().Count() == 0)
         {
+            System.Diagnostics.Debug.WriteLine("Adding initial category data");
             var categories = new List<CategoryItem>();
             categories.AddRange(InitialCategoryData.CategoryItemsEN);
             categories.AddRange(InitialCategoryData.CategoryItemsSV);

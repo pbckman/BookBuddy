@@ -1,28 +1,59 @@
 @model BooksPageViewModel
 
-<div class="container">
+<component type="typeof(BookBuddy.Shared.BooksPage)" render-mode="Server" param-Result="Model.Result" param-Query="Model.Query" param-Categories="Model.Categories"/>
+
+@* <div class="container">
     <div class="row mt-5">
         <div class="col-md-12">
-            <form asp-controller="BooksPage" asp-action="Search" class="d-flex" id="findForm" method="get">
+            <form asp-controller="BooksPage" asp-action="SearchWithFilter" class="d-flex" id="findForm" method="get">
+                
                 <div class="input-group search-box">
                     <input class="form-control search-input" id="findQuery" name="query" type="search" placeholder="@Html.Translate("/books/searchforbooks")" aria-label="Find" value="@Model.Query">
                     <button class="input-group-text search-button" aria-label="Search">
                         <i class="fas fa-search"></i>
                     </button>
                 </div>
+
+                <div class="filter-container">
+                    <ul style="display: flex; gap: 1rem; list-style: none;">
+                        @foreach (var category in Model.Categories)
+                        {
+                            <li>
+                                <a href="/" class="category-filter-link">
+                                    <span class="badge bg-secondary">@category.Text</span>
+                                </a>
+                            </li>
+                        }
+                    </ul>
+                    <select name="category" class="form-select">
+                        <option value="">Alla kategorier</option>
+                        @foreach (var category in Model.Categories)
+                        {
+                            if (category.Value == Context.Request.Query["category"])
+                            {
+                                <option value="@category.Value" selected>@category.Text</option>
+                            }
+                            else
+                            {
+                                <option value="@category.Value">@category.Text</option>
+                            }
+                        }
+                    </select>
+                    <ul style="display: flex; gap: 1rem; list-style: none;">
+                        @foreach (var category in Model.Categories)
+                        {
+                            <li>
+                                <a href="/BooksPage/Search?query=@Model.Query&category=@category.Value" class="category-filter-link">
+                                    <span class="badge bg-secondary">@category.Text</span>
+                                </a>
+                            </li>
+                        }
+                    </ul>
+                </div>
+
             </form>
         </div>
 
-        <div class="filter-container">
-            <ul style="display: flex; gap: 1rem; list-style: none;">
-                @foreach (var category in Model.Categories)
-                {
-                    <li>
-                        <a href="/" class="category-filter-link">@category.Text</a>
-                    </li>
-                }
-            </ul>
-        </div>
     </div>
 
     @if (Model.Result.Count() > 0)
@@ -42,4 +73,4 @@
         </div>
     }
 </div>
-
+ *@

@@ -21,7 +21,7 @@ namespace BookBuddy.Models.Pages
     {
         [Display(
                 GroupName = GroupNames.Categories,
-                Order = 9,
+                Order = 1,
                 Name = "Category"
         )]
         [SelectMany(SelectionFactoryType = typeof(CategorySelectionFactory))]

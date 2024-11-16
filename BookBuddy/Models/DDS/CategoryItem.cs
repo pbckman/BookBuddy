@@ -4,7 +4,7 @@ using EPiServer.Data.Dynamic;
 
 namespace BookBuddy.Models.DDS;
 
-[EPiServerDataStore(AutomaticallyCreateStore = true, StoreName = "CategoryStore")]
+[EPiServerDataStore(AutomaticallyCreateStore = true, AutomaticallyRemapStore = true, StoreName = "CategoryStore")]
 public class CategoryItem
 {
     public Identity Id { get; set; } = Identity.NewIdentity();

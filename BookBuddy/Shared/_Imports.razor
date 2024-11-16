@@ -9,5 +9,8 @@
 @using EPiServer.Find.Cms
 @using EPiServer.Find.UnifiedSearch
 @using BookBuddy.Models
+@using EPiServer.Web.Routing
 
-@inject IJSRuntime JSRuntime;
+@inject NavigationManager NavigationManager
+@inject IUrlResolver UrlResolver
+@inject IJSRuntime JSRuntime

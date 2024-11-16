@@ -1,0 +1,30 @@
+﻿@code {
+    [Parameter]
+    public List<CategoryModel> Categories { get; set; } = new List<CategoryModel>();
+
+    [Parameter]
+    public EventCallback<string> OnCategorySelected { get; set; }
+    private string All = string.Empty;
+
+    private async Task SelectCategory(string category)
+    {
+        await OnCategorySelected.InvokeAsync(category);
+    }
+}
+<div class="filter-container">
+    <ul style="display: flex; gap: 1rem; list-style: none;">
+            <li>
+                <button class="btn btn-link" @onclick="() => SelectCategory(All)">
+                    <span class="badge bg-secondary">All</span>
+                </button>
+            </li>
+        @foreach (var category in Categories)
+        {
+            <li>
+                <button class="btn btn-link" @onclick="() => SelectCategory(category.Value)">
+                    <span class="badge bg-secondary">@category.Text</span>
+                </button>
+            </li>
+        }
+    </ul>
+</div>

@@ -1,8 +1,5 @@
 ﻿@code {
     [Parameter]
-    public string? Query { get; set; }
-
-    [Parameter]
     public BookPageModel? result { get; set; }
 
     protected override void OnParametersSet()
@@ -37,7 +34,7 @@
                                 @foreach (var category in result.Categories)
                                 {
                                     <li>
-                                        <span class="badge bg-secondary">@category</span>
+                                        <span class="badge bg-secondary">@category.Text</span>
                                     </li>
                                 }
                             </ul>

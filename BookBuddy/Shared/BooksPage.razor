@@ -1,0 +1,62 @@
+﻿@code {
+    [Parameter] public string? Query { get; set; }
+    [Parameter] [SupplyParameterFromQuery(Name = "category")] public string? Category { get; set; }
+    [Parameter] public List<BookPageModel>? Result { get; set; }
+    [Parameter] public List<CategoryModel> Categories { get; set; } = new List<CategoryModel>();
+
+    private Uri CurrentUri;
+    private string SelectedCategory
+    {
+        get => Category ?? string.Empty;
+        set => Category = value;
+    }
+    
+
+    protected override void OnInitialized()
+    {
+        CurrentUri = new Uri(NavigationManager.Uri);
+    }
+
+    private async Task HandleCategorySelected(string category)
+    {
+        SelectedCategory = category;
+        await SearchBookByFilter();
+    }
+    private async Task HandleBookSearch(string query)
+    {
+        Query = query;
+        await SearchBookByFilter();
+    }
+    private async Task SearchBookByFilter()
+    {
+        var uriBuilder = new UriBuilder(CurrentUri)
+        {
+            Query = $"query={Query}&category={SelectedCategory}"
+        };
+
+        NavigationManager.NavigateTo(uriBuilder.ToString(), forceLoad: true);
+    }
+}
+
+
+<div class="container">
+            
+    <BookSearchForm Query="@Query" OnSearch="HandleBookSearch" />
+
+    <BookCategoryFilter Categories="@Categories" OnCategorySelected="HandleCategorySelected" />
+
+
+    @if (Result?.Count() > 0)
+    {
+        <div class="book-cards-wrapper">
+            @foreach (var result in Result)
+            {
+                <BookCard result="@result"/>
+            }
+        </div>
+    }
+    else
+    {
+        <NoBookSearchResult Query="@Query" />
+    }
+</div>

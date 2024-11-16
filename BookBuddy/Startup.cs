@@ -22,6 +22,7 @@ using Microsoft.EntityFrameworkCore;
 using BookBuddy.Business.Services.TranslationService;
 using BookBuddy.Business.Services.ScheduledJobsService;
 using BookBuddy.Business.Services.CategoryService;
+using BookBuddy.Business.Services.SiteSettingsService;
 
 
 namespace BookBuddy
@@ -73,6 +74,7 @@ namespace BookBuddy
             services.AddScoped<IBooksPageService, BooksPageService>();
             services.AddScoped<IScheduledJobsService, ScheduledJobsService>();
             services.AddScoped<ICategoryService, CategoryService>();
+            services.AddTransient<SiteSettingsService>();
             services.AddTransient<BookPageFactory>();
             services.AddTransient<CategorySelectionFactory>();
             services.AddHttpClient();
