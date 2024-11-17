@@ -38,12 +38,17 @@ public class BooksPageService : IBooksPageService
                 null
             );
 
-            var results = searchClient.Search<BookPage>()
+            // var results = searchClient.Search<BookPage>()
+            //     .For(query)
+            //     .Filter(x => x.Language.Name.Match(culture.Name))
+            //     .GetContentResult();
+
+            var results = Task.Run(() => searchClient.Search<BookPage>()
                 .For(query)
                 .Filter(x => x.Language.Name.Match(culture.Name))
-                .GetContentResult();
+                .GetContentResult());
 
-            return Task.FromResult(results);
+            return results;
         }
         catch (Exception ex)
         {
@@ -70,6 +75,34 @@ public class BooksPageService : IBooksPageService
             var results = searchClient.Search<BookPage>()
                 .For(string.Empty)
                 .Filter(x => x.Language.Name.Match(culture.Name))
+                .GetContentResult();
+
+            return Task.FromResult(results);
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError($"ERROR :  BooksPageService.SearchAllAsync() : {ex.Message}");
+            return Task.FromResult<IContentResult<BookPage>>(null!);   
+        }
+    }
+    public Task<IContentResult<BookPage>> GetAllByLanguageAsync(string lang)
+    {
+        try
+        {
+            var searchClient = SearchClient.Instance;
+            var language = new Language(
+                lang,
+                "default",
+                lang,
+                "porter",
+                null,
+                null,
+                null
+            );
+
+            var results = searchClient.Search<BookPage>()
+                .For("story")
+                .Filter(x => x.Language.Name.Match(lang))
                 .GetContentResult();
 
             return Task.FromResult(results);
@@ -131,6 +164,22 @@ public class BooksPageService : IBooksPageService
         try
         {
             var searchResult = await GetAllAsync(currentPage.Language);
+            var bookPages = searchResult.Items.Select(item => item).ToList();
+            var bookPageModels = bookPages.Select(bookpage => BookPageFactory.CreateBookPageModel(bookpage, _urlResolver, allCategories)).ToList();
+            
+            return bookPageModels;
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError($"ERROR : BooksPageService.GetAllFilteredBookPages() : {ex.Message}");
+        }
+            return new List<BookPageModel>();   
+    }
+    public async Task<List<BookPageModel>> GetAllByLanguageBookPages(string lang, List<CategoryModel> allCategories)
+    {
+        try
+        {
+            var searchResult = await GetAllByLanguageAsync(lang);
             var bookPages = searchResult.Items.Select(item => item).ToList();
             var bookPageModels = bookPages.Select(bookpage => BookPageFactory.CreateBookPageModel(bookpage, _urlResolver, allCategories)).ToList();
             

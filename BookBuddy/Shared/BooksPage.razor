@@ -1,8 +1,15 @@
-﻿@code {
-    [Parameter] public string? Query { get; set; }
+﻿@using BookBuddy.Business.Services.BooksPageService
+@using BookBuddy.Business.Services.PageService
+@using EPiServer.Find
+@inject IBooksPageService BooksPageService
+@inject IPageService PageService
+
+@code {
+    [Parameter] [SupplyParameterFromQuery(Name = "query")] public string? Query { get; set; }
     [Parameter] [SupplyParameterFromQuery(Name = "category")] public string? Category { get; set; }
     [Parameter] public List<BookPageModel>? Result { get; set; }
     [Parameter] public List<CategoryModel> Categories { get; set; } = new List<CategoryModel>();
+    [Parameter] public string Language { get; set; }
 
     private Uri CurrentUri;
     private string SelectedCategory
@@ -10,10 +17,19 @@
         get => Category ?? string.Empty;
         set => Category = value;
     }
+    private string _internalQuery;
+    private string InternalQuery
+    {
+        get => _internalQuery ?? string.Empty;
+        set => _internalQuery = value;
+    }
+    private List<BookPageModel> FilteredBooks { get; set; }
     
 
     protected override void OnInitialized()
     {
+        _internalQuery = Query;
+        FilteredBooks = Result;
         CurrentUri = new Uri(NavigationManager.Uri);
     }
 
@@ -24,24 +40,27 @@
     }
     private async Task HandleBookSearch(string query)
     {
-        Query = query;
+        InternalQuery = query;
         await SearchBookByFilter();
     }
     private async Task SearchBookByFilter()
     {
         var uriBuilder = new UriBuilder(CurrentUri)
         {
-            Query = $"query={Query}&category={SelectedCategory}"
+            Query = $"query={InternalQuery}&category={SelectedCategory}"
         };
 
-        NavigationManager.NavigateTo(uriBuilder.ToString(), forceLoad: true);
+        NavigationManager.NavigateTo(uriBuilder.ToString(), forceLoad: false);
+        var currentPage = PageService.GetBooksPage(Language);
+        FilteredBooks = await BooksPageService.GetFilteredBookPages(InternalQuery, currentPage, SelectedCategory, Categories);
+        StateHasChanged();
     }
 }
 
 
 <div class="container">
             
-    <BookSearchForm Query="@Query" OnSearch="HandleBookSearch" />
+    <BookSearchForm Query="@InternalQuery" OnSearch="HandleBookSearch" />
 
     <BookCategoryFilter Categories="@Categories" OnCategorySelected="HandleCategorySelected" />
 
@@ -49,7 +68,7 @@
     @if (Result?.Count() > 0)
     {
         <div class="book-cards-wrapper">
-            @foreach (var result in Result)
+            @foreach (var result in FilteredBooks)
             {
                 <BookCard result="@result"/>
             }
@@ -57,6 +76,6 @@
     }
     else
     {
-        <NoBookSearchResult Query="@Query" />
+        <NoBookSearchResult Query="@InternalQuery" />
     }
 </div>
