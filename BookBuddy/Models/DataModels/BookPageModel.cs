@@ -12,5 +12,5 @@ public class BookPageModel
     public string ImageUrl { get; set; }
     public string ImageAltText { get; set; }
     public string PageUrl { get; set; }
-
+    public List<CategoryModel> Categories { get; set; } = new List<CategoryModel>();
 }

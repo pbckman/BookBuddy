@@ -1,0 +1,42 @@
+﻿@code {
+    [Parameter] [SupplyParameterFromQuery(Name = "query")] public string? Query { get; set; }
+    [Parameter] public EventCallback<string> OnSearch { get; set; }
+    [Parameter] public EventCallback<string> OnChange { get; set; }
+    [Parameter] public Dictionary<string, string>? Translations { get; set; }
+
+    private async Task HandleSearch()
+    {
+        await OnSearch.InvokeAsync(Query);
+    }
+    private async Task OnQueryChanged(ChangeEventArgs e)
+    {
+        Query = e.Value?.ToString();
+        await OnChange.InvokeAsync(Query);
+    }
+}
+
+<div class="row mt-5">
+    <div class="col-md-12">
+        <form @onsubmit="HandleSearch" class="search-form d-flex">
+            <div class="input-group search-box">
+                <input 
+                    class="form-control search-input" 
+                    id="findQuery" 
+                    name="query" 
+                    type="search" 
+                    placeholder="@(Translations != null 
+                                    && Translations.ContainsKey("searchforbooks") 
+                                    ? Translations["searchforbooks"] 
+                                    : "Search for books")" 
+                    aria-label="Find" 
+                    @bind="@Query" 
+                    @oninput="OnQueryChanged" >
+                <button 
+                    class="input-group-text search-button" 
+                    aria-label="Search">
+                        <i class="fas fa-search"></i>
+                </button>
+            </div>
+        </form>
+    </div>
+</div>

@@ -20,6 +20,15 @@ using Microsoft.AspNetCore.Localization;
 using System.Globalization;
 using Microsoft.EntityFrameworkCore;
 using BookBuddy.Business.Services.TranslationService;
+using BookBuddy.Business.Services.ScheduledJobsService;
+using BookBuddy.Business.Factories;
+using BookBuddy.Business.Services.QuizService;
+using BookBuddy.Business.Services.QuizResultService;
+using BookBuddy.Business.Services.StateService;
+using Blazored.LocalStorage;
+using BookBuddy.Business.Services.CategoryService;
+using BookBuddy.Business.Services.SiteSettingsService;
+using Microsoft.Extensions.Logging.Abstractions;
 using BookBuddy.Business.Services.StartPageService;
 
 
@@ -63,20 +72,28 @@ namespace BookBuddy
             services.AddScoped<IXmlSitemapService, XmlSitemapService>();
             services.AddSingleton<ErrorMessageService>();
             services.AddSingleton<AuthTranslationService>(new AuthTranslationService(Path.Combine(Directory.GetCurrentDirectory(), "Resources", "Translations", "Auth.xml")));
+            services.AddSingleton<ITranslationService>(provider => new TranslationService(Path.Combine(Directory.GetCurrentDirectory(), "Resources", "Translations"), provider.GetRequiredService<ILogger<TranslationService>>()));
             services.AddScoped<IBookService, BookService>();
             services.AddScoped<IBookContentService, GutenbergService>();
             services.AddScoped<IAiService, OpenAiService>();
             services.AddScoped<IBookPageService, BookPageService>();
             services.AddScoped<IPageService, PageService>();
+            services.AddScoped<IQuizFactory, QuizFactory>();
+            services.AddScoped<IQuizService, QuizService>();
+            services.AddScoped<IQuizResultService, QuizResultService>();
+            services.AddScoped<IStateService, StateService>();
+            services.AddScoped<QuizResultFactory>();
             services.AddScoped<OpenAiClient>();
             services.AddScoped<IBooksPageService, BooksPageService>();
+            services.AddScoped<IScheduledJobsService, ScheduledJobsService>();
+            services.AddScoped<ICategoryService, CategoryService>();
+            services.AddTransient<SiteSettingsService>();
             services.AddTransient<BookPageFactory>();
-            services.AddTransient<StartPageFactory>();
-            services.AddScoped<StartPageService>();
             services.AddHttpClient();
             services.AddServerSideBlazor();
+            services.AddBlazoredLocalStorage();
 
-            
+
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

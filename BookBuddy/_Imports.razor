@@ -1,0 +1,22 @@
+@using Microsoft.AspNetCore.Components.Forms
+@using Microsoft.AspNetCore.Components.Web
+@using Microsoft.JSInterop
+@using BootstrapBlazor.Components
+@using BookBuddy.Models.DataModels
+@using BookBuddy.Models.Pages
+@using BookBuddy.Models.ViewModels
+@using EPiServer.Find.Api
+@using EPiServer.Find.Cms
+@using EPiServer.Find.UnifiedSearch
+@using BookBuddy.Models
+@using EPiServer.Web.Routing
+@using BookBuddy.Shared
+@using BookBuddy.Business.Services.BooksPageService
+@using BookBuddy.Business.Services.PageService
+@using EPiServer.Find
+
+@inject IBooksPageService BooksPageService
+@inject IPageService PageService
+@inject NavigationManager NavigationManager
+@inject IUrlResolver UrlResolver
+@inject IJSRuntime JSRuntime

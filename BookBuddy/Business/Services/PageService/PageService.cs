@@ -108,4 +108,10 @@ public class PageService : IPageService
 
         return bookContainerPage ?? null!;
     }
+
+    public QuizPage GetQuizPageById(int quizPageId, string lang)
+    {
+        var quizPage = _contentLoader.Get<QuizPage>(new ContentReference(quizPageId), new LanguageSelector(lang));
+        return quizPage ?? null!;
+    }
 }

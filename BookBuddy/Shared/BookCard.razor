@@ -1,8 +1,5 @@
 ﻿@code {
     [Parameter]
-    public string? Query { get; set; }
-
-    [Parameter]
     public BookPageModel? result { get; set; }
 
     protected override void OnParametersSet()
@@ -14,6 +11,8 @@
         {
             System.Console.WriteLine($"Number of hits: {Result.Hits.Count()}");
         } *@
+        @* System.Console.WriteLine($"Current Culture: {System.Threading.Thread.CurrentThread.CurrentCulture}");
+        System.Console.WriteLine($"Current UI Culture: {System.Threading.Thread.CurrentThread.CurrentUICulture}"); *@
     }
 }
 @if (result != null)
@@ -22,13 +21,24 @@
         <div class="card bookcard">
             <div class="bookcard-content">
                 <div class="image-div">
-                    <img src="@result.ImageUrl" class="img-fluid" alt="@result.ImageAltText">
+                    <img src="@result.ImageUrl" loading="lazy" class="img-fluid" alt="@result.ImageAltText">
                 </div>
                 <div class="content-div">
                     <div class="card-body d-flex flex-column h-100">
                         <h5 class="card-title">@result.Title</h5>
                         <p class="card-text plot-text">@result.Plot</p>
                         <p class="card-text authors">@result.Authors</p>
+                        @* @if (result.Categories.Count() > 0)
+                        {
+                            <ul>
+                                @foreach (var category in result.Categories)
+                                {
+                                    <li>
+                                        <span class="badge bg-secondary">@category.Text</span>
+                                    </li>
+                                }
+                            </ul>
+                        } *@
                     </div>
                 </div>
             </div>

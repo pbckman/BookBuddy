@@ -15,5 +15,7 @@ namespace BookBuddy.Data.Entities
         public string UserId { get; set; }
 
         public IdentityUser User { get; set; }
+
+        public List<QuizResultEntity> QuizResults { get; set; } = [];
     }
 }

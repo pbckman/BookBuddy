@@ -1,4 +1,5 @@
 using System;
+using System.ComponentModel.DataAnnotations;
 using static BookBuddy.Globals;
 
 namespace BookBuddy.Models.Pages;
@@ -17,5 +18,4 @@ GUID = "2d9a8029-e666-4cde-93f0-e1a114527137"
 )]
 public class QuizPage : SitePageData
 {
-
 }
