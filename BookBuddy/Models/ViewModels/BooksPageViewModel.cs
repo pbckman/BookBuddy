@@ -8,4 +8,5 @@ public class BooksPageViewModel(BooksPage currentPage, SiteSettingsPage siteSett
 {
     public string Query { get; set; } = string.Empty;
     public List<BookPageModel> Result { get; set; } = new List<BookPageModel>();
+    public List<CategoryModel> Categories { get; set; } = new List<CategoryModel>();
 }

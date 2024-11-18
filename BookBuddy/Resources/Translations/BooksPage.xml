@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<languages>
+	<language name="English" id="en">
+		<contenttypes>
+			<bookspage>
+				<properties>
+					<nosearchresult>No book found for </nosearchresult>
+                    <searchforbooks>Search for a book... </searchforbooks>
+				</properties>
+			</bookspage>
+		</contenttypes>
+	</language>
+	<language name="Svenska" id="sv">
+		<contenttypes>
+			<bookspage>
+				<properties>
+					<nosearchresult>Inga böcker hittades för </nosearchresult>
+                    <searchforbooks>Sök böcker... </searchforbooks>
+				</properties>
+			</bookspage>
+		</contenttypes>
+	</language>
+</languages>

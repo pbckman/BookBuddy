@@ -1,0 +1,80 @@
+﻿@code {
+    [Parameter] [SupplyParameterFromQuery(Name = "query")] public string? Query { get; set; }
+    [Parameter] [SupplyParameterFromQuery(Name = "category")] public string? Category { get; set; }
+    [Parameter] public List<BookPageModel>? Result { get; set; }
+    [Parameter] public List<CategoryModel> Categories { get; set; } = new List<CategoryModel>();
+    [Parameter] public string? Language { get; set; }
+    [Parameter] public Dictionary<string, string>? Translations { get; set; }
+
+    private Uri CurrentUri;
+    private string SelectedCategory
+    {
+        get => Category ?? string.Empty;
+        set => Category = value;
+    }
+    private string _internalQuery;
+    private string InternalQuery
+    {
+        get => _internalQuery ?? string.Empty;
+        set => _internalQuery = value;
+    }
+    private List<BookPageModel> FilteredBooks { get; set; }
+    
+
+    protected override void OnInitialized()
+    {
+        _internalQuery = Query;
+        FilteredBooks = Result;
+        CurrentUri = new Uri(NavigationManager.Uri);
+    }
+
+    private async Task HandleCategorySelected(string category)
+    {
+        SelectedCategory = category;
+        await SearchBookByFilter();
+    }
+    private async Task HandleBookSearch(string query)
+    {
+        InternalQuery = query;
+        await SearchBookByFilter();
+    }
+    private async Task ChangeSearchQuery(string query)
+    {
+        InternalQuery = query;
+        StateHasChanged();
+    }
+    private async Task SearchBookByFilter()
+    {
+        var uriBuilder = new UriBuilder(CurrentUri)
+        {
+            Query = $"query={InternalQuery}&category={SelectedCategory}"
+        };
+
+        NavigationManager.NavigateTo(uriBuilder.ToString(), forceLoad: false);
+        var currentPage = PageService.GetBooksPage(Language);
+        FilteredBooks = await BooksPageService.GetFilteredBookPages(InternalQuery, currentPage, SelectedCategory, Categories);
+        StateHasChanged();
+    }
+}
+
+
+<div class="container">
+            
+    <BookSearchForm Query="@InternalQuery" OnSearch="HandleBookSearch" OnChange="ChangeSearchQuery" Translations="@Translations" />
+
+    <BookCategoryFilter Category="@SelectedCategory" Categories="@Categories" OnCategorySelected="HandleCategorySelected" />
+
+    @if (FilteredBooks?.Count() > 0)
+    {
+        <div class="book-cards-wrapper">
+            @foreach (var result in FilteredBooks)
+            {
+                <BookCard result="@result"/>
+            }
+        </div>
+    }
+    else
+    {
+        <NoBookSearchResult Query="@InternalQuery" Translations="@Translations" />
+    }
+</div>

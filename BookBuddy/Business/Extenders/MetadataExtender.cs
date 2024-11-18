@@ -15,6 +15,11 @@ public class MetadataExtender : IMetadataExtender
                     property.ShowForEdit = false;
                 }
 
+                if (property.PropertyName == "icategorizable_category")
+                {
+                    property.ShowForEdit = false;
+                }
+
                 foreach (var attribute in property.Attributes)
                 {
                     if (attribute is ScaffoldColumnAttribute scaffoldColumnAttribute)

@@ -1,5 +1,7 @@
 ﻿using static BookBuddy.Globals;
 using System.ComponentModel.DataAnnotations;
+using EPiServer.Shell.ObjectEditing;
+using BookBuddy.Business.Factories;
 
 namespace BookBuddy.Models.Pages
 {
@@ -17,6 +19,14 @@ namespace BookBuddy.Models.Pages
     )]
     public class BookPage : SitePageData
     {
+        [Display(
+                GroupName = GroupNames.Categories,
+                Order = 1,
+                Name = "Category"
+        )]
+        [SelectMany(SelectionFactoryType = typeof(CategorySelectionFactory))]
+        public virtual string Categories { get; set; }
+
         [Display(
                 GroupName = SystemTabNames.Content,
                 Order = 10,
