@@ -72,6 +72,12 @@
                 border-color: #bed1d4;
                 color: #206b78;
                 transition: background-color 0.3s, color 0.3s;
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                white-space: nowrap;
 
 
                 &.active {
@@ -89,12 +95,21 @@
                         box-shadow: none;
                     }
                 }
+                .chapter-title {
+                    flex: 1;
+                    white-space: nowrap;
+                    overflow: hidden;
+                    text-overflow: ellipsis;
+                }
+                .chapter-result {
+                    flex-shrink: 0;
+                    margin-left: .5rem;
+                    font-weight: 500;
+                    align-self: flex-end;
+                }
             }
 
             .question-list-item {
-                // margin-bottom: 8px;
-                // margin-left: 12px;
-                // font-size: 0.6rem;
                 margin-left: 1.25rem;
                 margin-bottom: .5rem;
                 font-size: 0.75rem;

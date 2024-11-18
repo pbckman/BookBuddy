@@ -13,8 +13,14 @@
         
         @foreach (var chapter in Model.Chapters)
         {
+            var chapterResult = Model.QuizResult?.ChapterResults.FirstOrDefault(cr => cr.ChapterId == chapter.ChapterId);
+
             <li class="chapter-list-item @(IsCurrentChapter(chapter) ? "active" : "") @(!IsAvailableChapter(chapter) ? "disabled" : "")" onclick="@(() => DisplayIntro(chapter.ChapterId))">
-                @chapter.ChapterTitle
+                <p class="chapter-title">@chapter.ChapterTitle</p>
+                @if (chapterResult != null)
+                {
+                    <span class="chapter-result">@(chapterResult.QuestionResults.Count(qr => qr.IsCorrect)) / @chapterResult.QuestionResults.Count</span>
+                }
             </li>
             @if (chapter.ShowQuestions)
             {

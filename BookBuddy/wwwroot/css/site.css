@@ -794,6 +794,12 @@ body {
   border-color: #bed1d4;
   color: #206b78;
   transition: background-color 0.3s, color 0.3s;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 .quiz-page .chapter-nav-component .chapter-list .chapter-list-item.active {
   border-color: #0c5460;
@@ -807,6 +813,18 @@ body {
 }
 .quiz-page .chapter-nav-component .chapter-list .chapter-list-item.disabled:hover {
   box-shadow: none;
+}
+.quiz-page .chapter-nav-component .chapter-list .chapter-list-item .chapter-title {
+  flex: 1;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.quiz-page .chapter-nav-component .chapter-list .chapter-list-item .chapter-result {
+  flex-shrink: 0;
+  margin-left: 0.5rem;
+  font-weight: 500;
+  align-self: flex-end;
 }
 .quiz-page .chapter-nav-component .chapter-list .question-list-item {
   margin-left: 1.25rem;
