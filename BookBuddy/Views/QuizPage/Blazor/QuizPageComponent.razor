@@ -16,8 +16,14 @@
 @inject IQuizResultService QuizResultService
 @inject IStateService StateService
 @inject ILocalStorageService localStorage
+@inject IJSRuntime JSRuntime
 
 <section class="quiz-page">
+    <button class="quiz-nav-open" @onclick="ToggleNav">
+        <span class="quiz-nav-toggler-icon">
+            <i class="fa-solid fa-bars"></i>
+        </span>
+    </button>
     <div class="chapter-nav-component">
         <ChapterNavComponent 
             Model="Model" 
@@ -25,7 +31,12 @@
             OnQuestionSelected="HandleSelectedQuestion"
             OnSummarySelected="HandleSelectedSummary"
             OnResultSelected="HandleSelectedResult" />
-        
+
+        <button class="quiz-nav-close" @onclick="ToggleNav">
+            <span class="quiz-nav-toggler-icon">
+                <i class="fa-solid fa-x"></i>
+            </span>
+        </button>
     </div>
     <div class="quiz-component">
         <QuizComponent 
@@ -37,6 +48,15 @@
             OnBtnSummaryClick="HandleSelectedSummary" />
     </div>
 </section>
+
+<script>
+    function ToggleNav() {
+        const chapterNav = document.querySelector('.chapter-nav-component');
+        chapterNav.classList.toggle('visible');
+        const navOpenBtn = document.querySelector('.quiz-nav-open');
+        navOpenBtn.classList.toggle('hidden');
+    }
+</script>
 
 @code {
     [Parameter] public int QuizPageId { get; set; }
@@ -60,6 +80,11 @@
             else
                 Model = QuizService.CreateQuiz(quiz);
         }
+    }
+
+    private async Task ToggleNav()
+    {
+        await JSRuntime.InvokeVoidAsync("ToggleNav");
     }
 
     private async Task HandleQuizStart()
