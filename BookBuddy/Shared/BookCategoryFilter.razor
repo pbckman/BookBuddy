@@ -4,6 +4,8 @@
 
     [Parameter]
     public EventCallback<string> OnCategorySelected { get; set; }
+    [Parameter]
+    public string Category { get; set; }
     private string All = string.Empty;
 
     private async Task SelectCategory(string category)
@@ -12,17 +14,17 @@
     }
 }
 <div class="filter-container">
-    <ul style="display: flex; gap: 1rem; list-style: none;">
-            <li>
-                <button class="btn btn-link" @onclick="() => SelectCategory(All)">
-                    <span class="badge bg-secondary">All</span>
-                </button>
-            </li>
+    <ul class="category-list">
+        <li class="category-list-item">
+            <button class="list-item-btn @(Category == All ? "active" : "")" @onclick="() => SelectCategory(All)">
+                <span class="btn-span">All</span>
+            </button>
+        </li>
         @foreach (var category in Categories)
         {
-            <li>
-                <button class="btn btn-link" @onclick="() => SelectCategory(category.Value)">
-                    <span class="badge bg-secondary">@category.Text</span>
+            <li class="category-list-item">
+                <button class="list-item-btn @(Category == category.Value ? "active" : "")" @onclick="() => SelectCategory(category.Value)">
+                    <span class="btn-span">@category.Text</span>
                 </button>
             </li>
         }

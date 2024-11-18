@@ -1,14 +1,16 @@
 ﻿@code {
     [Parameter] [SupplyParameterFromQuery(Name = "query")] public string? Query { get; set; }
     [Parameter] public EventCallback<string> OnSearch { get; set; }
+    [Parameter] public EventCallback<string> OnChange { get; set; }
 
     private async Task HandleSearch()
     {
         await OnSearch.InvokeAsync(Query);
     }
-    private void OnQueryChanged(ChangeEventArgs e)
+    private async Task OnQueryChanged(ChangeEventArgs e)
     {
         Query = e.Value?.ToString();
+        await OnChange.InvokeAsync(Query);
     }
 }
 

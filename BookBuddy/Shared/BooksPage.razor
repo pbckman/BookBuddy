@@ -43,6 +43,11 @@
         InternalQuery = query;
         await SearchBookByFilter();
     }
+    private async Task ChangeSearchQuery(string query)
+    {
+        InternalQuery = query;
+        StateHasChanged();
+    }
     private async Task SearchBookByFilter()
     {
         var uriBuilder = new UriBuilder(CurrentUri)
@@ -60,12 +65,12 @@
 
 <div class="container">
             
-    <BookSearchForm Query="@InternalQuery" OnSearch="HandleBookSearch" />
+    <BookSearchForm Query="@InternalQuery" OnSearch="HandleBookSearch" OnChange="ChangeSearchQuery" />
 
-    <BookCategoryFilter Categories="@Categories" OnCategorySelected="HandleCategorySelected" />
+    <BookCategoryFilter Category="@SelectedCategory" Categories="@Categories" OnCategorySelected="HandleCategorySelected" />
 
 
-    @if (Result?.Count() > 0)
+    @if (FilteredBooks?.Count() > 0)
     {
         <div class="book-cards-wrapper">
             @foreach (var result in FilteredBooks)

@@ -1,0 +1,45 @@
+.filter-container {
+    .category-list {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(0, auto));
+        gap: 1rem;
+        list-style: none;
+        padding: 0;
+        margin: 0;
+        justify-content: center;
+        margin-top: 2rem;
+        
+        .category-list-item {
+            .list-item-btn {
+                background-color: #f8f9fa; 
+                border: 1px solid #ced4da; 
+                border: none;
+                border-radius: 0.25rem; 
+                padding: 0.5rem 1rem; 
+                color: #495057; 
+                transition: all 0.3s ease; 
+                white-space: nowrap;
+
+                &:hover {
+                    background-color: #e2e6ea; 
+                    background-color: #cdebea; 
+                    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.3);
+                    cursor: pointer;
+                }
+
+                &.active {
+                    background-color: #76C0BD; 
+                    color: #fff; 
+                    &:hover {
+                        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.3);
+                        cursor: pointer;
+                    }
+                }
+
+                .btn-span {
+                    font-weight: 500 ; 
+                }
+            }
+        }
+    }
+}
