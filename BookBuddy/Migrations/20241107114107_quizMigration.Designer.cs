@@ -4,6 +4,7 @@ using BookBuddy.Data.Contexts;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BookBuddy.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20241107114107_quizMigration")]
+    partial class quizMigration
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -82,9 +85,6 @@ namespace BookBuddy.Migrations
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<bool>("IsCompleted")
-                        .HasColumnType("bit");
 
                     b.Property<int>("ProfileId")
                         .HasColumnType("int");
@@ -357,7 +357,7 @@ namespace BookBuddy.Migrations
             modelBuilder.Entity("BookBuddy.Data.Entities.QuizResultEntity", b =>
                 {
                     b.HasOne("BookBuddy.Data.Entities.UserProfileEntity", "Profile")
-                        .WithMany("QuizResults")
+                        .WithMany()
                         .HasForeignKey("ProfileId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -435,11 +435,6 @@ namespace BookBuddy.Migrations
             modelBuilder.Entity("BookBuddy.Data.Entities.QuizResultEntity", b =>
                 {
                     b.Navigation("ChapterResults");
-                });
-
-            modelBuilder.Entity("BookBuddy.Data.Entities.UserProfileEntity", b =>
-                {
-                    b.Navigation("QuizResults");
                 });
 #pragma warning restore 612, 618
         }

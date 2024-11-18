@@ -1,0 +1,52 @@
+﻿@using BookBuddy.Business.Services.QuizService
+@using BookBuddy.Models.QuizModels
+
+@inject IQuizService QuizService
+
+<h2>@Model.CurrentChapter!.ChapterTitle - @Model.CurrentChapter.ChapterSelectionSummary!.Title</h2>
+
+@if (Model.CurrentChapter != Model.Chapters.Last())
+{
+    <div class="button-next-section">
+        <button class="btn-next" onclick="@(() => HandleBtnNextChapterClick())">@(Model.NextChapterBtnText)</button>
+    </div>
+}
+else
+{
+    <div class="button-next-section">
+        <button class="btn-next" onclick="@(() => HandleBtnShowResultClick())">@(Model.QuizResultTitle)</button>
+    </div>
+}
+
+
+@code {
+    [Parameter] public QuizModel Model { get; set; } = null!;
+    [Parameter] public EventCallback OnModelChange { get; set; }
+
+
+    private async Task HandleBtnNextChapterClick()
+    {
+        if (Model.CurrentChapter != null && Model.Chapters.IndexOf(Model.CurrentChapter) < Model.Chapters.Count - 1)
+        {
+            Model.CurrentChapter = Model.Chapters[Model.Chapters.IndexOf(Model.CurrentChapter) + 1];
+            Model.Display = Display.ChapterIntro;
+        }
+
+        if (OnModelChange.HasDelegate)
+        {
+            await OnModelChange.InvokeAsync();
+        }
+
+    }
+
+    private async Task HandleBtnShowResultClick()
+    {
+        Model.CurrentChapter = null;
+        Model.Display = Display.QuizSummary;
+
+        if (OnModelChange.HasDelegate)
+        {
+            await OnModelChange.InvokeAsync();
+        }
+    }
+}

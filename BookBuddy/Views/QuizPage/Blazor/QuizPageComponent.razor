@@ -1,0 +1,176 @@
+﻿@using BookBuddy.Business.Factories
+@using BookBuddy.Business.Services.AccountService
+@using BookBuddy.Business.Services.PageService
+@using BookBuddy.Business.Services.QuizResultService
+@using BookBuddy.Business.Services.QuizService
+@using BookBuddy.Business.Services.StateService
+@using BookBuddy.Models.QuizModels
+@using BookBuddy.Models.ResultModels
+@using BookBuddy.Models.ViewModels
+@using Blazored.LocalStorage
+
+@inject IQuizService QuizService
+@inject ProfileService ProfileService
+@inject IPageService PageService
+@inject IQuizFactory QuizFactory
+@inject IQuizResultService QuizResultService
+@inject IStateService StateService
+@inject ILocalStorageService localStorage
+
+<section class="quiz-page">
+    <div class="chapter-nav-component">
+        <ChapterNavComponent 
+            Model="Model" 
+            OnChapterSelected="HandleSelectedChapter" 
+            OnQuestionSelected="HandleSelectedQuestion"
+            OnSummarySelected="HandleSelectedSummary"
+            OnResultSelected="HandleSelectedResult" />
+        
+    </div>
+    <div class="quiz-component">
+        <QuizComponent 
+            Model="Model" 
+            OnModelChange="UpdateState" 
+            OnCompletedChapter="UpdateResult" 
+            OnStartedQuiz="HandleQuizStart" 
+            OnSelectedOption="HandleSelectedOption"
+            OnBtnSummaryClick="HandleSelectedSummary" />
+    </div>
+</section>
+
+@code {
+    [Parameter] public int QuizPageId { get; set; }
+    [Parameter] public string Language { get; set; } = null!;
+
+    public QuizModel Model { get; set; } = new();
+    private int profileId { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        var profile = await ProfileService.GetSelectedProfileAsync();
+        if (profile != null)
+        {
+            profileId = profile.Id;
+
+            var quiz = QuizService.GetQuizData(QuizPageId, Language);
+
+            var result = await QuizResultService.GetResultByQuizIdAsync(profileId, QuizPageId);
+            if (result != null)
+                Model = await QuizService.CreateQuizAsync(quiz, result);
+            else
+                Model = QuizService.CreateQuiz(quiz);
+        }
+    }
+
+    private async Task HandleQuizStart()
+    {
+
+        if(Model.CurrentChapter == Model.Chapters.FirstOrDefault())
+        {
+            if (Model.QuizResult != null)
+                return;
+
+            var result = await QuizResultService.CreateQuizResultAsync(Model.Id, profileId);
+            if (result != null)
+                Model.QuizResult = result;
+        }
+
+
+        if (Model.CurrentChapter != null)
+            Model = StateService.SetQuizStartState(Model);
+
+
+        StateHasChanged();
+    }
+
+    private void HandleSelectedChapter(int chapterId)
+    {
+        var chapter = Model.Chapters.FirstOrDefault(c => c.ChapterId == chapterId);
+        if (chapter == null)
+            return;
+
+        if (!QuizService.IsAvailableChapter(chapter, Model)) 
+            return;
+
+        Model = StateService.UpdateSelectedChapterState(chapter, Model);
+
+        StateHasChanged();
+    }
+
+    private async Task HandleSelectedOption(string selectedOption)
+    {
+        if (Model.CurrentQuestion == null || Model.CurrentChapter!.IsFinished || (Model.QuizResult != null && Model.QuizResult.ChapterResults.Any(x => x.QuestionResults.Any(x => x.QuestionId == Model.CurrentQuestion.QuestionId))))
+            return;
+
+        await QuizService.SaveToLocalStorageAsync(Model, selectedOption);
+
+        Model = StateService.UpdateSelectedOptionState(selectedOption, Model);
+
+        StateHasChanged();
+    }
+
+    private void HandleSelectedQuestion(int questionId)
+    {
+        var chapter = Model.Chapters.FirstOrDefault(c => c.Questions.Any(q => q.QuestionId == questionId));
+        if (chapter != null)
+        {
+            var question = chapter.Questions.FirstOrDefault(q => q.QuestionId == questionId);
+            if (question == null)
+                return;
+
+            Model = StateService.UpdateSelectedQuestionState(chapter, question, Model);
+        }
+
+        StateHasChanged();
+    }
+
+    private void HandleSelectedSummary(int chapterId)
+    {
+        var chapter = Model.Chapters.FirstOrDefault(x => x.ChapterId == chapterId);
+        if (chapter != null)
+        {
+            if (!StateService.IsFinishedChapter(chapter, Model))
+                return;
+
+            Model = StateService.UpdateSelectedSummaryState(chapter, Model);
+        }
+
+        StateHasChanged();
+    }
+
+    private async Task UpdateResult()
+    {
+        var chapterResult = await QuizResultService.SaveChapterResultAsync(Model.CurrentChapter!, Model.QuizResult!.Id);
+        if (chapterResult != null)
+            Model.QuizResult!.ChapterResults.Add(chapterResult);
+
+        await QuizService.RemoveLocalStorageQuizState(Model.QuizResult.Id);
+
+        Model = StateService.UpdateCompletedChapterState(Model);
+
+        if(QuizService.IsCompletedQuiz(Model))
+        {
+            var result = await QuizResultService.CompleteQuizAsync(Model.QuizResult!.Id);
+
+            if(result != null)
+            {
+                Model.IsCompleted = true;
+                Model.QuizResult = result;
+            }
+        }
+
+        StateHasChanged();
+    }
+
+    private void HandleSelectedResult()
+    {
+        Model = StateService.UpdateCompletedQuizState(Model);
+
+        StateHasChanged();
+    }
+
+    private void UpdateState()
+    {
+        StateHasChanged();
+    }
+}
