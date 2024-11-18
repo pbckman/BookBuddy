@@ -5,8 +5,10 @@
 @inject IStateService StateService
 
 <div class="card">
-    <img src="@Model.ImageUrl" alt="@Model.ImageAltText" />
-    <h3>@Model.Title</h3>
+    <div class="book-content">
+        <img src="@Model.ImageUrl" alt="@Model.ImageAltText" />
+        <h3>@Model.Title</h3>
+    </div>
     <ul class="chapter-list">
         
         @foreach (var chapter in Model.Chapters)

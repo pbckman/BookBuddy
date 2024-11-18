@@ -1,12 +1,19 @@
 ﻿.quiz-page {
     min-height: 100vh;
     padding-left: 50px;
+    padding: 1.5rem 0 0 1.5rem;
     display: grid;
     grid-template-columns: 1fr 2.5fr;
-    background-image: url(../images/quizbackground.svg);
+    // background-image: url(../images/quizbackground.svg);
+    // background-size: cover;
+    // background-repeat: no-repeat;
+    // background-position: center;
+    background-image: url('../images/background-img.webp');
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center;
+    background-attachment: fixed;
+    z-index: 2; 
 
     .card {
         background-color: white;
@@ -14,15 +21,20 @@
 
     .chapter-nav-component {
         max-width: 350px;
-
-        h3 {
-            font-size: 1.1rem;
-            margin-bottom: 20px;
-        }
-
-        img {
-            width: 60px;
-            margin-bottom: 20px;
+        .book-content {
+            display: flex;
+            margin-bottom: 1rem;
+            img {
+                width: 45px;
+                height: auto;
+            }
+            h3 {
+                flex: 1;
+                font-size: 1.1rem;
+                margin-left: .5rem;
+                font-weight: 500;
+                align-self: flex-end;
+            }
         }
 
         .chapter-list {
@@ -34,9 +46,19 @@
 
 
             .chapter-list-item {
-                margin-bottom: 8px;
-                font-size: 0.6rem;
+                // margin-bottom: 8px;
+                // font-size: 0.6rem;
+                // font-weight: 500;
+                margin-bottom: .625rem;
+                font-size: 0.8rem;
                 font-weight: 500;
+                padding: .5rem .75rem;
+                border-radius: .5rem;
+                // background-color: #aadae3;
+                background-color: #edf5f6;
+                border-color: #bed1d4;
+                color: #206b78;
+                transition: background-color 0.3s, color 0.3s;
 
 
                 &.active {
@@ -45,6 +67,7 @@
                 }
 
                 &.disabled {
+                    background-color: #fff;
                     border-color: #dee2e6;
                     color: #dee2e6;
                     cursor: default;
@@ -56,35 +79,57 @@
             }
 
             .question-list-item {
-                margin-bottom: 8px;
-                margin-left: 12px;
-                font-size: 0.6rem;
-
-
+                // margin-bottom: 8px;
+                // margin-left: 12px;
+                // font-size: 0.6rem;
+                margin-left: 1.25rem;
+                margin-bottom: .5rem;
+                font-size: 0.75rem;
+                padding: .4rem .625rem;
+                border-radius: .5rem;
+                background-color: #f1f8fe;
+                background-color: #eaf9ff;
+                background-color: #d1ecf1;
+                background-color: #daeef2;
+                color: #0c5460;
+                transition: background-color 0.3s;
+                
                 &.active {
                     border-color: #0c5460;
                     color: #0c5460;
                 }
-
+                
                 &.answered {
-                    background-image: url(../images/quizbackground.svg);
-                    background-repeat: no-repeat;
-                    background-position: center;
+                    // background-image: url(../images/quizbackground.svg);
+                    // background-repeat: no-repeat;
+                    // background-position: center;
                     background-size: cover;
                     color: #0c5460;
+                    background-color: #0c5460;
+                    background-color: #c5e2fe;
+                    background-color: #aadae3;
+                    color: #0c5460;
+                    // border-color: #0c5460;
                 }
 
                 &.correct {
-                    background-color: lightgreen;
+                    // background-color: lightgreen;
+                    background-color: #c8e6c9; /* Ljusgrön för rätt */
+                    color: #2e7d32;
                 }
 
                 &.incorrect {
-                    background-color: red;
+                    // background-color: red;
+                    background-color: #ffcdd2; /* Ljusröd för fel */
+                    background-color: #FED4C7; /* Ljusröd för fel */
+                    color: #c62828;
+                    color: #ff7e57;
                 }
 
                 &.disabled {
                     border-color: #dee2e6;
                     color: #dee2e6;
+                    color: #82b8c1;
                     cursor: default;
 
                     &:hover {
