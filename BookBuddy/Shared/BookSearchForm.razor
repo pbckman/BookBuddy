@@ -2,6 +2,7 @@
     [Parameter] [SupplyParameterFromQuery(Name = "query")] public string? Query { get; set; }
     [Parameter] public EventCallback<string> OnSearch { get; set; }
     [Parameter] public EventCallback<string> OnChange { get; set; }
+    [Parameter] public Dictionary<string, string>? Translations { get; set; }
 
     private async Task HandleSearch()
     {
@@ -18,21 +19,24 @@
     <div class="col-md-12">
         <form @onsubmit="HandleSearch" class="search-form d-flex">
             <div class="input-group search-box">
-                <input class="form-control search-input" id="findQuery" name="query" type="search" placeholder="Search..." aria-label="Find" @bind="@Query" @oninput="OnQueryChanged" >
-                <button class="input-group-text search-button" aria-label="Search">
-                    <i class="fas fa-search"></i>
+                <input 
+                    class="form-control search-input" 
+                    id="findQuery" 
+                    name="query" 
+                    type="search" 
+                    placeholder="@(Translations != null 
+                                    && Translations.ContainsKey("searchforbooks") 
+                                    ? Translations["searchforbooks"] 
+                                    : "Search for books")" 
+                    aria-label="Find" 
+                    @bind="@Query" 
+                    @oninput="OnQueryChanged" >
+                <button 
+                    class="input-group-text search-button" 
+                    aria-label="Search">
+                        <i class="fas fa-search"></i>
                 </button>
             </div>
         </form>
     </div>
 </div>
-
-
-@* <form asp-controller="BooksPage" asp-action="SearchWithFilter" class="d-flex" id="findForm" method="get">
-    <div class="input-group search-box">
-        <input class="form-control search-input" id="findQuery" name="query" type="search" placeholder="@Html.Translate("/books/searchforbooks")" aria-label="Find" value="@Query">
-        <button class="input-group-text search-button" aria-label="Search">
-            <i class="fas fa-search"></i>
-        </button>
-    </div>
-</form> *@

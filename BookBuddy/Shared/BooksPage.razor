@@ -9,7 +9,8 @@
     [Parameter] [SupplyParameterFromQuery(Name = "category")] public string? Category { get; set; }
     [Parameter] public List<BookPageModel>? Result { get; set; }
     [Parameter] public List<CategoryModel> Categories { get; set; } = new List<CategoryModel>();
-    [Parameter] public string Language { get; set; }
+    [Parameter] public string? Language { get; set; }
+    [Parameter] public Dictionary<string, string>? Translations { get; set; }
 
     private Uri CurrentUri;
     private string SelectedCategory
@@ -65,10 +66,9 @@
 
 <div class="container">
             
-    <BookSearchForm Query="@InternalQuery" OnSearch="HandleBookSearch" OnChange="ChangeSearchQuery" />
+    <BookSearchForm Query="@InternalQuery" OnSearch="HandleBookSearch" OnChange="ChangeSearchQuery" Translations="@Translations" />
 
     <BookCategoryFilter Category="@SelectedCategory" Categories="@Categories" OnCategorySelected="HandleCategorySelected" />
-
 
     @if (FilteredBooks?.Count() > 0)
     {
@@ -81,6 +81,6 @@
     }
     else
     {
-        <NoBookSearchResult Query="@InternalQuery" />
+        <NoBookSearchResult Query="@InternalQuery" Translations="@Translations" />
     }
 </div>

@@ -1,8 +1,11 @@
 .filter-container {
     .category-list {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(0, auto));
+        // display: grid;
+        // grid-template-columns: repeat(auto-fit, minmax(0, auto));
+        display: flex;
+        flex-wrap: wrap;
         gap: 1rem;
+        row-gap: .5rem;
         list-style: none;
         padding: 0;
         margin: 0;
@@ -37,7 +40,12 @@
                 }
 
                 .btn-span {
-                    font-weight: 500 ; 
+                    font-weight: 400 ; 
+                }
+                @media (max-width: 768px) {
+                    padding: 0.35rem .5rem;
+                    font-size: .75rem;
+                    
                 }
             }
         }

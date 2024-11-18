@@ -95,6 +95,8 @@ namespace BookBuddy.Controllers
             {
                 var fileName = "BooksPage.xml";
                 var translations = _translationFactory.GetTranslationsForView(fileName, "bookspage", CultureInfo.CurrentCulture.TwoLetterISOLanguageName);
+                ViewData["Translations"] = translations;
+                
                 var currentCulture = CultureInfo.CurrentCulture;
                 var siteSettings = _siteSettingsService.GetSiteSettings(currentPage.SiteSettingsPage);
 
@@ -102,7 +104,6 @@ namespace BookBuddy.Controllers
                 var bookPageModels = await _booksPageService.GetFilteredBookPages(query, currentPage, category, allUsedCategories);
                 var model = BookPageFactory.CreateBooksPageViewModel(currentPage, siteSettings, query, bookPageModels, allUsedCategories);
 
-                ViewData["Translations"] = translations;
                 return View("Index", model);
             }
             catch (Exception ex)

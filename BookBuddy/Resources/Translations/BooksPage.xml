@@ -6,14 +6,6 @@
 				<properties>
 					<nosearchresult>No book found for </nosearchresult>
                     <searchforbooks>Search for a book... </searchforbooks>
-					<title>BooksPage!</title>
-					<description>Sign in to your account using your registered email and password.</description>
-					<loginHeading>Login to your Account</loginHeading>
-					<emailPlaceholder>Enter email address</emailPlaceholder>
-					<passwordPlaceholder>Password</passwordPlaceholder>
-					<rememberMeLabel>Remember my password</rememberMeLabel>
-					<loginButton>Login</loginButton>
-					<errorMessage>Incorrect email or password</errorMessage>
 				</properties>
 			</bookspage>
 		</contenttypes>
@@ -24,14 +16,6 @@
 				<properties>
 					<nosearchresult>Inga böcker hittades för </nosearchresult>
                     <searchforbooks>Sök böcker... </searchforbooks>
-					<title>Böcker!</title>
-					<description>Logga in på ditt konto med din registrerade e-postadress och lösenord.</description>
-					<loginHeading>Logga in på ditt konto</loginHeading>
-					<emailPlaceholder>Fyll i e-postadress</emailPlaceholder>
-					<passwordPlaceholder>Lösenord</passwordPlaceholder>
-					<rememberMeLabel>Kom ihåg mitt lösenord</rememberMeLabel>
-					<loginButton>Logga in</loginButton>
-					<errorMessage>Felaktig e-post eller lösenord</errorMessage>
 				</properties>
 			</bookspage>
 		</contenttypes>

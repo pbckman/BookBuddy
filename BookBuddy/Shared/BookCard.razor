@@ -28,7 +28,7 @@
                         <h5 class="card-title">@result.Title</h5>
                         <p class="card-text plot-text">@result.Plot</p>
                         <p class="card-text authors">@result.Authors</p>
-                        @if (result.Categories.Count() > 0)
+                        @* @if (result.Categories.Count() > 0)
                         {
                             <ul>
                                 @foreach (var category in result.Categories)
@@ -38,7 +38,7 @@
                                     </li>
                                 }
                             </ul>
-                        }
+                        } *@
                     </div>
                 </div>
             </div>

@@ -10,16 +10,16 @@
 
     private async Task SelectCategory(string category)
     {
-        await OnCategorySelected.InvokeAsync(category);
+        if (Category == category)
+            Category = All;
+        else
+            Category = category;
+
+        await OnCategorySelected.InvokeAsync(Category);
     }
 }
 <div class="filter-container">
     <ul class="category-list">
-        <li class="category-list-item">
-            <button class="list-item-btn @(Category == All ? "active" : "")" @onclick="() => SelectCategory(All)">
-                <span class="btn-span">All</span>
-            </button>
-        </li>
         @foreach (var category in Categories)
         {
             <li class="category-list-item">

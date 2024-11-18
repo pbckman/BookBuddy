@@ -30,7 +30,7 @@
 
 .bookcard-btn .bookcard {
   width: 100%;
-  padding: 0.75rem;
+  padding: 0.6rem;
   display: flex;
   flex-direction: column; /* Gör kortet kolumn-baserat */
   justify-content: space-between;
@@ -66,7 +66,7 @@
   flex-direction: column;
 }
 .bookcard-btn .bookcard .content-div .card-body {
-  padding: 0.5rem 1rem;
+  padding: 0.5rem 1rem 0;
 }
 .bookcard-btn .bookcard .content-div .card-body .card-title {
   font-size: 1.2em;
@@ -86,12 +86,14 @@
   line-height: 1.5em; /* Justera linjehöjd om det behövs för att anpassa */
   height: 6em; /* Ställ in höjden för att matcha linjehöjden och antalet rader */
   font-size: clamp(0.75rem, 2vw, 0.8rem);
+  margin-bottom: 0.25rem;
 }
 .bookcard-btn .bookcard .content-div .card-body p {
   font-size: 0.8em;
 }
 .bookcard-btn .bookcard .content-div .card-body .authors {
   margin-top: auto;
+  font-weight: 500;
 }
 
 @media (max-width: 768px) {
@@ -100,9 +102,10 @@
   }
 }
 .filter-container .category-list {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(0, auto));
+  display: flex;
+  flex-wrap: wrap;
   gap: 1rem;
+  row-gap: 0.5rem;
   list-style: none;
   padding: 0;
   margin: 0;
@@ -134,7 +137,13 @@
   cursor: pointer;
 }
 .filter-container .category-list .category-list-item .list-item-btn .btn-span {
-  font-weight: 500;
+  font-weight: 400;
+}
+@media (max-width: 768px) {
+  .filter-container .category-list .category-list-item .list-item-btn {
+    padding: 0.35rem 0.5rem;
+    font-size: 0.75rem;
+  }
 }
 
 * {
