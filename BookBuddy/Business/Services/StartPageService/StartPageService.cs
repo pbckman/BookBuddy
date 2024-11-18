@@ -19,7 +19,6 @@ namespace BookBuddy.Business.Services.StartPageService
 
         public async Task<List<BookPageModel>> GetBooksAsync(StartPage currentPage)
         {
-            
             var searchResult = _booksPageService.Search(null!,currentPage.Language);
             var bookPages = searchResult.Items.Select(item => item).ToList();
             var bookPageModels = bookPages.Select(bookpage => BookPageFactory.CreateBookPageModel(bookpage, _urlResolver)).ToList();

@@ -10,7 +10,11 @@ namespace BookBuddy.Models.ViewModels
 
         public InfoSectionModel? InfoSectionModel { get; set; }
         public List<BookPageModel>? Books { get; set; }
-        
+
+        public string? SlideShowContent { get; set; }
+        public string? SlideShowTitle { get; set; }
+
+
     }
 
 

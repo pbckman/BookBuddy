@@ -46,7 +46,9 @@ namespace BookBuddy.Controllers
                 {
                     HeroSectionModel = heroSectionModel,
                     InfoSectionModel = infoSectionModel,
-                    Books = books
+                    Books = books, 
+                    SlideShowTitle = currentPage.SlideShowTitle,
+                    SlideShowContent = currentPage.SlideShowContent,
                 };
 
                 return View(model);
@@ -56,7 +58,10 @@ namespace BookBuddy.Controllers
                 var searchPage = _contentLoader.GetChildren<BooksPage>(currentPage.ContentLink).FirstOrDefault();
                 if (searchPage != null)
                 {
+                    Console.WriteLine("Ingen BooksPage hittades under currentPage");
                     return Redirect(_urlResolver.GetUrl(searchPage.ContentLink));
+                    Console.WriteLine($"Redirecting to: {_urlResolver.GetUrl(searchPage.ContentLink)}");
+
                 }
             }
             else
@@ -76,7 +81,9 @@ namespace BookBuddy.Controllers
                 {
                     HeroSectionModel = heroSectionModel,
                     InfoSectionModel = infoSectionModel,
-                    Books = books
+                    Books = books,
+                    SlideShowTitle = currentPage.SlideShowTitle,
+                    SlideShowContent = currentPage.SlideShowContent,
                 };
 
                 return View(model);

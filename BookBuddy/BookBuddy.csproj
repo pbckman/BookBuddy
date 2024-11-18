@@ -15,7 +15,7 @@
   
   <ItemGroup>
     <PackageReference Include="BootstrapBlazor" Version="8.10.4" />
-    <PackageReference Include="EPiServer.CMS" Version="12.29.0" />
+    <PackageReference Include="EPiServer.CMS" Version="12.31.2" />
     <PackageReference Include="EPiServer.Find.Cms" Version="16.3.0" />
     <PackageReference Include="HtmlAgilityPack" Version="1.11.70" />
     <PackageReference Include="Microsoft.AspNetCore.Components" Version="8.0.10" />
@@ -57,5 +57,9 @@
   
   <ItemGroup>
     <None Include="compilerconfig.json" />
+  </ItemGroup>
+  
+  <ItemGroup>
+    <Folder Include="Models\Components\" />
   </ItemGroup>
 </Project>

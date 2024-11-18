@@ -92,16 +92,13 @@ namespace BookBuddy
                 var response = context.HttpContext.Response;
                 var statusCode = response.StatusCode;
 
-                // H�mta den aktuella kulturen fr�n URL-segment eller anv�nd default "en" om inget segment finns
+              
                 var culture = context.HttpContext.Request.Path.Value?.Split('/').FirstOrDefault(s => s == "sv" || s == "en") ?? "en";
 
-                // Om ingen kultur hittas i URL:en, anv�nd standardkulturen (engelska)
                 if (string.IsNullOrEmpty(culture))
                 {
                     culture = "en";
                 }
-
-                // Bygg om URL:en med r�tt spr�ksegment och felkod
                 var redirectUrl = $"/{culture}/error?statusCode={statusCode}";
 
                 response.Redirect(redirectUrl);

@@ -60,6 +60,7 @@ namespace BookBuddy.Business.Services.AiService
                 {
                     bookContent = bookContent.Substring(0, 250000);
                 }
+               
                 var content = _openAiClient.CreateRequestContent(bookContent,
                     $"The response must be in {lang} and in JSON format and it should be deserializable to this model: " +
                     "public class MetadataDetails{public string Title { get; set; }public string Plot { get; set; }}" +
