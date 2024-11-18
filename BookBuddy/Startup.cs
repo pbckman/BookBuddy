@@ -23,6 +23,7 @@ using BookBuddy.Business.Services.TranslationService;
 using BookBuddy.Business.Services.ScheduledJobsService;
 using BookBuddy.Business.Services.CategoryService;
 using BookBuddy.Business.Services.SiteSettingsService;
+using Microsoft.Extensions.Logging.Abstractions;
 
 
 namespace BookBuddy
@@ -65,6 +66,7 @@ namespace BookBuddy
             services.AddScoped<IXmlSitemapService, XmlSitemapService>();
             services.AddSingleton<ErrorMessageService>();
             services.AddSingleton<AuthTranslationService>(new AuthTranslationService(Path.Combine(Directory.GetCurrentDirectory(), "Resources", "Translations", "Auth.xml")));
+            services.AddSingleton<ITranslationService>(provider => new TranslationService(Path.Combine(Directory.GetCurrentDirectory(), "Resources", "Translations"), provider.GetRequiredService<ILogger<TranslationService>>()));
             services.AddScoped<IBookService, BookService>();
             services.AddScoped<IBookContentService, GutenbergService>();
             services.AddScoped<IAiService, OpenAiService>();
@@ -77,6 +79,7 @@ namespace BookBuddy
             services.AddTransient<SiteSettingsService>();
             services.AddTransient<BookPageFactory>();
             services.AddTransient<CategorySelectionFactory>();
+            services.AddTransient<TranslationFactory>();
             services.AddHttpClient();
             services.AddServerSideBlazor();
 

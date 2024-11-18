@@ -1,6 +1,14 @@
 @model BooksPageViewModel
 
+@{
+    var translations = (Dictionary<string, string>)ViewData["Translations"];
+}
+
 <component type="typeof(BookBuddy.Shared.BooksPage)" render-mode="Server" param-Result="Model.Result" param-Query="Model.Query" param-Categories="Model.Categories" param-Language="Model.CurrentPage.Language.Name"/>
+
+<h1>@translations["title"]</h1>
+<p>@translations["nosearchresult"]</p>
+<p>@translations["searchforbooks"]</p>
 
 @* <div class="container">
     <div class="row mt-5">

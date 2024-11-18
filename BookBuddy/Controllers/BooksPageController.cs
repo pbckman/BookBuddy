@@ -20,8 +20,9 @@ namespace BookBuddy.Controllers
         private readonly ILogger<BooksPageController> _logger;
         private readonly ICategoryService _categoryService;
         private readonly SiteSettingsService _siteSettingsService;
+        private readonly TranslationFactory _translationFactory;
 
-        public BooksPageController(IContentLoader contentLoader, IBooksPageService booksPageService, UrlResolver urlResolver, ILogger<BooksPageController> logger, ICategoryService categoryService, SiteSettingsService siteSettingsService)
+        public BooksPageController(IContentLoader contentLoader, IBooksPageService booksPageService, UrlResolver urlResolver, ILogger<BooksPageController> logger, ICategoryService categoryService, SiteSettingsService siteSettingsService, TranslationFactory translationFactory)
         {
             _contentLoader = contentLoader;
             _booksPageService = booksPageService;
@@ -29,6 +30,7 @@ namespace BookBuddy.Controllers
             _logger = logger;
             _categoryService = categoryService;
             _siteSettingsService = siteSettingsService;
+            _translationFactory = translationFactory;
         }
 
         public IActionResult Index(BooksPage currentPage)
@@ -91,6 +93,8 @@ namespace BookBuddy.Controllers
         {
             try
             {
+                var fileName = "BooksPage.xml";
+                var translations = _translationFactory.GetTranslationsForView(fileName, "bookspage", CultureInfo.CurrentCulture.TwoLetterISOLanguageName);
                 var currentCulture = CultureInfo.CurrentCulture;
                 var siteSettings = _siteSettingsService.GetSiteSettings(currentPage.SiteSettingsPage);
 
@@ -98,6 +102,7 @@ namespace BookBuddy.Controllers
                 var bookPageModels = await _booksPageService.GetFilteredBookPages(query, currentPage, category, allUsedCategories);
                 var model = BookPageFactory.CreateBooksPageViewModel(currentPage, siteSettings, query, bookPageModels, allUsedCategories);
 
+                ViewData["Translations"] = translations;
                 return View("Index", model);
             }
             catch (Exception ex)
