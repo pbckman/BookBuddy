@@ -1,4 +1,5 @@
 ﻿using BookBuddy.Business.Factories;
+using BookBuddy.Business.Services.BooksPageService;
 using BookBuddy.Business.Services.StartPageService;
 using BookBuddy.Models.DataModels;
 using BookBuddy.Models.Pages;
@@ -55,14 +56,21 @@ namespace BookBuddy.Controllers
             }
             else if (User.Identity.IsAuthenticated)
             {
+                Console.WriteLine("User is authenticated.");
                 var searchPage = _contentLoader.GetChildren<BooksPage>(currentPage.ContentLink).FirstOrDefault();
                 if (searchPage != null)
                 {
-                    Console.WriteLine("Ingen BooksPage hittades under currentPage");
-                    return Redirect(_urlResolver.GetUrl(searchPage.ContentLink));
-                    Console.WriteLine($"Redirecting to: {_urlResolver.GetUrl(searchPage.ContentLink)}");
+                    //Console.WriteLine($"Redirecting to SearchPage: {_urlResolver.GetUrl(searchPage.ContentLink)}");
 
+                    //return Redirect(_urlResolver.GetUrl(searchPage.ContentLink));
+
+                    return Redirect("/books/");
                 }
+                Console.WriteLine("Ingen BooksPage hittades under currentPage.");
+
+                Console.WriteLine("User is NOT authenticated.");
+
+                return View(currentPage);
             }
             else
             {

@@ -87,8 +87,11 @@ namespace BookBuddy
             services.AddScoped<IBooksPageService, BooksPageService>();
             services.AddScoped<IScheduledJobsService, ScheduledJobsService>();
             services.AddScoped<ICategoryService, CategoryService>();
+            services.AddScoped<StartPageService>();
+            services.AddScoped<StartPageFactory>();
             services.AddTransient<SiteSettingsService>();
             services.AddTransient<BookPageFactory>();
+            services.AddScoped<TranslationFactory>();
             services.AddHttpClient();
             services.AddServerSideBlazor();
             services.AddBlazoredLocalStorage();
