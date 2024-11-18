@@ -9,5 +9,14 @@
 @using EPiServer.Find.Cms
 @using EPiServer.Find.UnifiedSearch
 @using BookBuddy.Models
+@using EPiServer.Web.Routing
+@using BookBuddy.Shared
+@using BookBuddy.Business.Services.BooksPageService
+@using BookBuddy.Business.Services.PageService
+@using EPiServer.Find
 
-@inject IJSRuntime JSRuntime;
+@inject IBooksPageService BooksPageService
+@inject IPageService PageService
+@inject NavigationManager NavigationManager
+@inject IUrlResolver UrlResolver
+@inject IJSRuntime JSRuntime

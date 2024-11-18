@@ -1,8 +1,5 @@
 ﻿@code {
     [Parameter]
-    public string? Query { get; set; }
-
-    [Parameter]
     public BookPageModel? result { get; set; }
 
     protected override void OnParametersSet()
@@ -14,8 +11,8 @@
         {
             System.Console.WriteLine($"Number of hits: {Result.Hits.Count()}");
         } *@
-        System.Console.WriteLine($"Current Culture: {System.Threading.Thread.CurrentThread.CurrentCulture}");
-        System.Console.WriteLine($"Current UI Culture: {System.Threading.Thread.CurrentThread.CurrentUICulture}");
+        @* System.Console.WriteLine($"Current Culture: {System.Threading.Thread.CurrentThread.CurrentCulture}");
+        System.Console.WriteLine($"Current UI Culture: {System.Threading.Thread.CurrentThread.CurrentUICulture}"); *@
     }
 }
 @if (result != null)
@@ -31,6 +28,17 @@
                         <h5 class="card-title">@result.Title</h5>
                         <p class="card-text plot-text">@result.Plot</p>
                         <p class="card-text authors">@result.Authors</p>
+                        @* @if (result.Categories.Count() > 0)
+                        {
+                            <ul>
+                                @foreach (var category in result.Categories)
+                                {
+                                    <li>
+                                        <span class="badge bg-secondary">@category.Text</span>
+                                    </li>
+                                }
+                            </ul>
+                        } *@
                     </div>
                 </div>
             </div>
