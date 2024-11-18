@@ -1,4 +1,4 @@
-﻿@charset "UTF-8";
+@charset "UTF-8";
 @import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
 @media (min-width: 1400px) {
   .container {
@@ -30,7 +30,7 @@
 
 .bookcard-btn .bookcard {
   width: 100%;
-  padding: 0.6rem;
+  padding: 0.6git rem;
   display: flex;
   flex-direction: column; /* Gör kortet kolumn-baserat */
   justify-content: space-between;
@@ -984,7 +984,8 @@ body {
   left: 0;
   width: 100%;
   height: 100%;
-  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+          backdrop-filter: blur(10px);
   background: rgba(0, 0, 0, 0.2);
   z-index: -1;
 }
@@ -1034,7 +1035,8 @@ body {
 .book-card .book-container .book-cover img {
   width: 100%;
   height: auto;
-  object-fit: cover;
+  -o-object-fit: cover;
+     object-fit: cover;
   max-width: 100%;
   border-radius: inherit;
 }
@@ -1140,9 +1142,6 @@ body {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(20rem, 1fr));
   row-gap: 2rem;
-  column-gap: 1.5rem;
-  margin-top: 4rem;
-}
   -moz-column-gap: 1.5rem;
        column-gap: 1.5rem;
   margin: 4rem auto 0;

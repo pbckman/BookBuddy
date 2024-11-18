@@ -1,10 +1,4 @@
-﻿@using BookBuddy.Business.Services.BooksPageService
-@using BookBuddy.Business.Services.PageService
-@using EPiServer.Find
-@inject IBooksPageService BooksPageService
-@inject IPageService PageService
-
-@code {
+﻿@code {
     [Parameter] [SupplyParameterFromQuery(Name = "query")] public string? Query { get; set; }
     [Parameter] [SupplyParameterFromQuery(Name = "category")] public string? Category { get; set; }
     [Parameter] public List<BookPageModel>? Result { get; set; }
