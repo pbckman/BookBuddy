@@ -19,35 +19,44 @@
 @inject IJSRuntime JSRuntime
 
 <section class="quiz-page">
-    <button aria-label="Navigation menu button" class="quiz-nav-open" @onclick="ToggleNav">
-        <span class="quiz-nav-toggler-icon">
-            <i class="fa-solid fa-bars"></i>
-        </span>
-    </button>
-    <div class="chapter-nav-component">
-        <ChapterNavComponent 
-            Model="Model" 
-            OnChapterSelected="HandleSelectedChapter" 
-            OnQuestionSelected="HandleSelectedQuestion"
-            OnSummarySelected="HandleSelectedSummary"
-            OnResultSelected="HandleSelectedResult" />
-
-        <button class="quiz-nav-close" @onclick="ToggleNav">
+    @if (isLoading)
+    {
+        <div class="spinner-container card">
+            <img src="images/BookLoader.gif" alt="Loading..." class="spinnger-gif">
+        </div>
+    }
+    else
+    {
+        <button aria-label="Navigation menu button" class="quiz-nav-open" @onclick="ToggleNav">
             <span class="quiz-nav-toggler-icon">
-                <i class="fa-solid fa-x"></i>
+                <i class="fa-solid fa-bars"></i>
             </span>
         </button>
-    </div>
-    <div class="quiz-component">
-        <QuizComponent 
-            Model="Model"
-            Language="@Language" 
-            OnModelChange="UpdateState" 
-            OnCompletedChapter="UpdateResult" 
-            OnStartedQuiz="HandleQuizStart" 
-            OnSelectedOption="HandleSelectedOption"
-            OnBtnSummaryClick="HandleSelectedSummary" />
-    </div>
+        <div class="chapter-nav-component">
+            <ChapterNavComponent 
+                Model="Model" 
+                OnChapterSelected="HandleSelectedChapter" 
+                OnQuestionSelected="HandleSelectedQuestion"
+                OnSummarySelected="HandleSelectedSummary"
+                OnResultSelected="HandleSelectedResult" />
+
+            <button class="quiz-nav-close" @onclick="ToggleNav">
+                <span class="quiz-nav-toggler-icon">
+                    <i class="fa-solid fa-x"></i>
+                </span>
+            </button>
+        </div>
+        <div class="quiz-component">
+            <QuizComponent 
+                Model="Model"
+                Language="@Language" 
+                OnModelChange="UpdateState" 
+                OnCompletedChapter="UpdateResult" 
+                OnStartedQuiz="HandleQuizStart" 
+                OnSelectedOption="HandleSelectedOption"
+                OnBtnSummaryClick="HandleSelectedSummary" />
+        </div>
+    }
 </section>
 
 <script>
@@ -65,6 +74,7 @@
 
     public QuizModel Model { get; set; } = new();
     private int profileId { get; set; }
+    private bool isLoading = true;
 
     protected override async Task OnInitializedAsync()
     {
@@ -81,6 +91,8 @@
             else
                 Model = QuizService.CreateQuiz(quiz);
         }
+        isLoading = false;
+        StateHasChanged();
     }
 
     private async Task ToggleNav()
