@@ -1,15 +1,39 @@
-﻿@using BookBuddy.Business.Services.StateService
+﻿@using BookBuddy.Business.Factories
+@using BookBuddy.Business.Services.StateService
 @using BookBuddy.Models.QuizModels
+@inject TranslationFactory TranslationFactory
 @inject IStateService StateService
 
-<h2>@Model.CurrentChapter!.ChapterTitle</h2>
-<div class="button-next-section">
-    <button class="btn-next @(IsChapterStartedOrFinished() ? "disabled" : "")" disabled="@(IsChapterStartedOrFinished()  ? true : false)" onclick="@(() => HandleBtnStartClick())">@Model.StartBtnText</button>
+<div class="chapter-intro-content">
+    <h2>@Model.CurrentChapter!.ChapterTitle</h2>
+    <p class="intro">@Translations["quizIntroduction"]</p>
+    <p class="ready">@Translations["quizCtaText"]</p>
+    <p class="explanation">@Translations["quizPointExplanation"]</p>
+    <p class="tips">@Translations["quizTips"]</p>
 </div>
+    <div class="button-next-section">
+        <button class="btn-next @(IsChapterStartedOrFinished() ? "disabled" : "")" disabled="@(IsChapterStartedOrFinished()  ? true : false)" onclick="@(() => HandleBtnStartClick())">@Model.StartBtnText</button>
+    </div>
+    @if (Model.QuizResult.ChapterResults.Any(c => c.ChapterId == Model.CurrentChapter.ChapterId))
+    {
+        <span class="done-badge">
+            <i class="fa-solid fa-check"></i>
+        </span>
+    }
 
 @code {
     [Parameter] public QuizModel Model { get; set; } = null!;
     [Parameter] public EventCallback OnStartedQuiz { get; set; }
+    [Parameter] public string Language { get; set; } = null!;
+
+    @* private TranslationFactory _translationFactory; *@
+    private Dictionary<string, string> Translations = new Dictionary<string, string>();
+
+    protected override void OnInitialized()
+    {
+        var fileName = "QuizChapterIntro.xml";
+        Translations = TranslationFactory.GetTranslationsForView(fileName, "quizchapterintro", Language);
+    }
 
     private async Task HandleBtnStartClick()
     {

@@ -5,7 +5,7 @@
 <div class="card">
     @if (Model.Display == Display.ChapterIntro)
     {
-        <ChapterIntro Model="@Model" OnStartedQuiz="HandleBtnStartClick" />
+        <ChapterIntro Model="@Model" Language="@Language" OnStartedQuiz="HandleBtnStartClick" />
     }
     else if (Model.Display == Display.Question)
     {
@@ -37,6 +37,7 @@
     [Parameter] public EventCallback OnStartedQuiz { get; set; }
     [Parameter] public EventCallback<string> OnSelectedOption { get; set; }
     [Parameter] public EventCallback<int> OnBtnSummaryClick { get; set; }
+    [Parameter] public string Language { get; set; } = null!;
 
     private async Task HandleBtnStartClick()
     {
