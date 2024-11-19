@@ -900,7 +900,7 @@ body {
 }
 .quiz-page .quiz-component .card {
   width: 80%;
-  max-width: 650px;
+  max-width: 800px;
   padding: 1rem;
   margin: auto auto;
 }
@@ -919,7 +919,7 @@ body {
 .quiz-page .quiz-component .card .done-badge {
   position: absolute;
   bottom: 1rem;
-  left: 1.5rem;
+  left: 2rem;
   font-size: xx-large;
   color: #2e7d32;
 }
@@ -928,6 +928,7 @@ body {
   width: 90%;
   margin: 0 auto;
   position: relative;
+  max-width: 650px;
 }
 .quiz-page .quiz-component .card .chapter-intro-content h2 {
   font-weight: 700;
@@ -947,16 +948,104 @@ body {
   font-size: 1.1rem;
 }
 .quiz-page .quiz-component .card .chapter-intro-content p.tips {
-  margin-top: 1.75rem;
+  margin: 1.75rem auto 0;
   font-style: italic;
   font-size: 0.9rem;
+  max-width: 280px;
 }
-@media (max-width: 425px) {
+.quiz-page .quiz-component .card .chapter-summary-content {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  position: relative;
+}
+.quiz-page .quiz-component .card .chapter-summary-content .quiz-img {
+  width: 50%;
+  max-width: 300px;
+  display: flex;
+  margin: 3rem auto 1rem;
+}
+.quiz-page .quiz-component .card .chapter-summary-content h2 {
+  font-size: 2.5rem;
+  margin-bottom: 1.5rem;
+  text-align: center;
+}
+.quiz-page .quiz-component .card .chapter-summary-content h3 {
+  color: #021f24;
+  display: flex;
+  justify-content: center;
+  font-weight: 600;
+  margin: 1rem auto;
+  font-size: 1rem;
+  max-width: 85%;
+  text-align: center;
+}
+.quiz-page .quiz-component .card .chapter-summary-content .percentage-score {
+  font-family: "Flavors", --font-poppins, cursive;
+  position: absolute;
+  top: 1.5rem;
+  left: 2rem;
+  font-size: 4rem;
+  rotate: -5deg;
+  color: #2e7d32;
+}
+.quiz-page .quiz-component .card .chapter-summary-content .percentage-score.red {
+  color: #ce6060;
+}
+.quiz-page .quiz-component .card .chapter-summary-content .progress {
+  height: 1rem;
+  width: 80%;
+  max-width: 400px;
+  margin-bottom: 2rem;
+}
+.quiz-page .quiz-component .card .chapter-summary-content .progress .progress-bar {
+  background-color: #2e7d32;
+}
+.quiz-page .quiz-component .card .chapter-summary-content .progress .progress-bar.red {
+  background-color: #ce6060;
+}
+.quiz-page .quiz-component .card .chapter-summary-content .question-summary-list {
+  list-style: none;
+  max-width: 90%;
+  margin: 0.5rem auto 1rem;
+}
+.quiz-page .quiz-component .card .chapter-summary-content .question-summary-list .question-result {
+  display: flex;
+}
+.quiz-page .quiz-component .card .chapter-summary-content .question-summary-list .question-result i {
+  font-size: 1.5rem;
+  margin-right: 1rem;
+  width: 1.5rem;
+  text-align: center;
+}
+.quiz-page .quiz-component .card .chapter-summary-content .question-summary-list .question-result i.True {
+  color: #2e7d32;
+}
+.quiz-page .quiz-component .card .chapter-summary-content .question-summary-list .question-result i.False {
+  color: #ce6060;
+}
+@media (max-width: 768px) {
   .quiz-page .quiz-component .card {
     width: 95%;
   }
   .quiz-page .quiz-component .card .h2 {
     font-size: 1.2rem;
+  }
+  .quiz-page .quiz-component .card .chapter-summary-content h2 {
+    font-size: 1.5rem;
+  }
+  .quiz-page .quiz-component .card .chapter-summary-content .question-summary-list {
+    padding: 0;
+  }
+  .quiz-page .quiz-component .card .chapter-summary-content .question-summary-list .question-result {
+    font-size: 0.9rem;
+  }
+  .quiz-page .quiz-component .card .chapter-summary-content .percentage-score {
+    top: 0.25rem;
+    left: 1rem;
+  }
+  .quiz-page .quiz-component .card .chapter-summary-content .quiz-img {
+    margin-top: 4rem;
   }
 }
 .quiz-page .quiz-component .button-previous-section .btn-previous {
@@ -1039,6 +1128,11 @@ body {
 }
 .quiz-page .quiz-component .progress .progress-bar {
   background-color: #2e7d32;
+}
+@media (max-width: 425px) {
+  .quiz-page .quiz-component {
+    padding: 0.5rem;
+  }
 }
 
 @media (max-width: 1020px) {

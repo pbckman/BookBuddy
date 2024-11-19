@@ -1,8 +1,4 @@
-﻿@using BookBuddy.Business.Factories
-@using BookBuddy.Business.Services.StateService
-@using BookBuddy.Models.QuizModels
-@inject TranslationFactory TranslationFactory
-@inject IStateService StateService
+﻿
 
 <div class="chapter-intro-content">
     <h2>@Model.CurrentChapter!.ChapterTitle</h2>
@@ -14,7 +10,7 @@
     <div class="button-next-section">
         <button class="btn-next @(IsChapterStartedOrFinished() ? "disabled" : "")" disabled="@(IsChapterStartedOrFinished()  ? true : false)" onclick="@(() => HandleBtnStartClick())">@Model.StartBtnText</button>
     </div>
-    @if (Model.QuizResult.ChapterResults.Any(c => c.ChapterId == Model.CurrentChapter.ChapterId))
+    @if (Model.QuizResult?.ChapterResults?.Any(c => c.ChapterId == Model.CurrentChapter?.ChapterId) == true)
     {
         <span class="done-badge">
             <i class="fa-solid fa-check"></i>
@@ -26,7 +22,6 @@
     [Parameter] public EventCallback OnStartedQuiz { get; set; }
     [Parameter] public string Language { get; set; } = null!;
 
-    @* private TranslationFactory _translationFactory; *@
     private Dictionary<string, string> Translations = new Dictionary<string, string>();
 
     protected override void OnInitialized()

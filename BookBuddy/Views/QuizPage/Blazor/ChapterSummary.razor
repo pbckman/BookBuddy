@@ -1,10 +1,60 @@
 ﻿@using BookBuddy.Business.Services.QuizService
 @using BookBuddy.Models.QuizModels
+@using BookBuddy.Models.ResultModels
 
 @inject IQuizService QuizService
 
-<h2>@Model.CurrentChapter!.ChapterTitle - @Model.CurrentChapter.ChapterSelectionSummary!.Title</h2>
+<div class="chapter-summary-content">
 
+    @if (Percentage >= 80)
+    {
+        <img src="images/quiz-success.webp" alt="@Translations["awesomeResultAltText"]" class="quiz-success-img quiz-img">
+        <h2>@Translations["awesomeResultText"]</h2>
+    }
+    else if (Percentage >= 40)
+    {
+        <img src="images/quiz-good.webp" alt="@Translations["goodResultAltText"]" class="quiz-medium-img quiz-img">
+        <h2>@Translations["goodResultText"]</h2>
+    }
+    else
+    {
+        <img src="images/quiz-bad.webp" alt="@Translations["badResultAltText"]" class="quiz-fail-img quiz-img">
+        <h2>@Translations["badResultText"]</h2>
+    }
+
+    <h3>@($"{Translations["summaryTitle"].Replace("[Chapter Name]", Model.CurrentChapter.ChapterTitle)}")</h3>
+
+    <ul class="question-summary-list">
+        @foreach (var question in Model.CurrentChapter.Questions)
+        {
+            var isCorrect = Model.QuizResult?.ChapterResults?
+                .FirstOrDefault(c => c.ChapterId == Model.CurrentChapter.ChapterId)?
+                .QuestionResults.FirstOrDefault(q => q.QuestionId == question.QuestionId)?.IsCorrect;
+
+            <li class="question-result">
+                @if (isCorrect.HasValue)
+                {
+                    var resultIcon = isCorrect == true ? "fa-check" : "fa-times";
+                    
+                    <i class="fa-solid @resultIcon @isCorrect"></i>
+                    <p>@Model.Chapters.FirstOrDefault(c => c.ChapterId == Model.CurrentChapter.ChapterId)?.Questions.FirstOrDefault(q => q.QuestionId == question.QuestionId)?.Question</p>
+                }
+            </li>
+        }
+    </ul>
+    @if (ChapterResult != null)
+    {
+        var displayPercentage = Percentage > 0 ? Percentage : 2;
+        var displaycolor = Percentage > 20 ? "green" : "red";
+
+        <p class="percentage-score @displaycolor">@($"{Percentage}%")</p>
+
+        <div class="progress" role="progressbar" aria-label="Percentage progress bar score" aria-valuenow="@Percentage" aria-valuemin="0" aria-valuemax="100">
+            <div class="progress-bar @displaycolor" style="width: @displayPercentage%"></div>
+        </div>
+    }
+
+</div>
 @if (Model.CurrentChapter != Model.Chapters.Last())
 {
     <div class="button-next-section">
@@ -22,7 +72,35 @@ else
 @code {
     [Parameter] public QuizModel Model { get; set; } = null!;
     [Parameter] public EventCallback OnModelChange { get; set; }
+    [Parameter] public string Language { get; set; } = null!;
 
+    private Dictionary<string, string> Translations = new Dictionary<string, string>();
+    private ChapterResultModel? ChapterResult { get; set; }
+    private double Percentage { get; set; }
+
+
+    protected override void OnInitialized()
+    {
+        CountPercentage();
+
+        var fileName = "QuizChapterSummary.xml";
+        Translations = TranslationFactory.GetTranslationsForView(fileName, "quizchaptersummary", Language);
+    }
+
+    private void CountPercentage()
+    {
+        ChapterResult = Model.QuizResult?.ChapterResults.FirstOrDefault(cr => cr.ChapterId == Model.CurrentChapter?.ChapterId);
+
+        if (ChapterResult != null && ChapterResult.QuestionResults.Count > 0)
+        {
+            Percentage = (double)ChapterResult.QuestionResults.Count(qr => qr.IsCorrect) / ChapterResult.QuestionResults.Count * 100;
+            return;
+        }
+        else
+        {
+            Percentage = 0;
+        }
+    }
 
     private async Task HandleBtnNextChapterClick()
     {
