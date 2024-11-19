@@ -15,7 +15,6 @@ namespace BookBuddy.Controllers
 
 
         [HttpGet]
-        [Route("{lang}/profile/userprofile")]
         public IActionResult UserProfile(string lang = "en")
         {
             ViewData["Title"] = _translationService.GetTranslation("userprofile", "title", lang);
@@ -28,7 +27,6 @@ namespace BookBuddy.Controllers
 
 
         [HttpPost]
-        [Route("{lang}/profile/userprofile")]
         public async Task<IActionResult> CreateProfile(ProfileViewModel model, string lang = "en")
         {
             var user = await _userManager.GetUserAsync(User);
@@ -38,11 +36,12 @@ namespace BookBuddy.Controllers
             }
             await _profileService.CreateProfileAsync(user.Id, model.FirstName, model.LastName, isMainProfile: false);
 
-            return RedirectToAction("UserProfile", "Profile");
+
+
+            return RedirectToAction("UpdateProfile", "Profile", new { lang });
         }
 
         [HttpPost]
-        [Route("/profile/selectprofile")]
         public IActionResult SelectProfile(int profileId)
         {
             var cookieOptions = new CookieOptions
@@ -59,7 +58,6 @@ namespace BookBuddy.Controllers
         }
 
         [HttpPost]
-        [Route("/profile/selectsubprofile")]
         public IActionResult SelectSubProfile(int profileId)
         {
             var cookieOptions = new CookieOptions
@@ -76,13 +74,16 @@ namespace BookBuddy.Controllers
         }
 
         [HttpGet]
-        [Route("{lang}/profile/updateprofile")]
         public async Task<IActionResult> UpdateProfile(string lang = "en")
         {
-            ViewData["Title"] = _translationService.GetTranslation("updateprofile", "title", lang);
-            ViewData["Description"] = _translationService.GetTranslation("updateprofile", "description", lang);
-            ViewData["FirstName"] = _translationService.GetTranslation("updateprofile", "firstname", lang);
-            ViewData["SaveButton"] = _translationService.GetTranslation("updateprofile", "saveButton", lang);
+            ViewData["TitleCreate"] = _translationService.GetTranslation("updateprofile", "titleCreate", lang);
+            ViewData["DescriptionCreate"] = _translationService.GetTranslation("updateprofile", "descriptionCreate", lang);
+            ViewData["FirstNameCreate"] = _translationService.GetTranslation("updateprofile", "firstNameCreate", lang);
+            ViewData["SaveButtonCreate"] = _translationService.GetTranslation("updateprofile", "saveButtonCreate", lang);
+            ViewData["TitleUpdate"] = _translationService.GetTranslation("updateprofile", "titleUpdate", lang);
+            ViewData["DescriptionUpdate"] = _translationService.GetTranslation("updateprofile", "descriptionUpdate", lang);
+            ViewData["FirstNameUpdate"] = _translationService.GetTranslation("updateprofile", "firstNameUpdate", lang);
+            ViewData["SaveButtonUpdate"] = _translationService.GetTranslation("updateprofile", "saveButtonUpdate", lang);
 
 
             var user = await _userManager.GetUserAsync(User);
@@ -98,31 +99,34 @@ namespace BookBuddy.Controllers
             {
                 return NotFound();
             }
-            var model = new ProfileViewModel
-            {
-                FirstName = profile.ProfileFirstName
 
-            };
-
-            return View(model);
+            return View();
         }
 
         [HttpPost]
-        [Route("{lang}/profile/updateprofile")]
         public async Task<IActionResult> UpdateProfile(ProfileViewModel model, string lang = "en")
         {
-            if (!ModelState.IsValid)
-            {
-                return RedirectToAction("UpdateProfile", "Profile");
-            }
-
             var user = await _userManager.GetUserAsync(User);
             if (user == null)
             {
                 return Unauthorized();
             }
 
-            var success = await _profileService.UpdateProfileAsync(user, model);
+            var profileIdString = Request.Cookies["SelectedSubProfileId"];
+            if (!int.TryParse(profileIdString, out var profileId))
+            {
+                return BadRequest("No selected profile.");
+            }
+
+            var profile = await _profileService.GetProfileByIdAsync(profileId);
+            if (profile == null)
+            {
+                return NotFound();
+            }
+
+
+
+            var success = await _profileService.UpdateSubProfileAsync(profileId.ToString(), model);
             if (!success)
             {
                 TempData["StatusMessage"] = "Could not update profile, please try again later.";
@@ -134,7 +138,6 @@ namespace BookBuddy.Controllers
         }
 
         [HttpGet]
-        [Route("{lang}/profile/details")]
         public async Task<IActionResult> Details(string lang = "en")
         {
             ViewData["Title"] = _translationService.GetTranslation("details", "title", lang);
@@ -165,25 +168,26 @@ namespace BookBuddy.Controllers
         }
 
         [HttpPost]
-        [Route("{lang}/profile/details")]
         public async Task<IActionResult> Details(UserProfileViewModel model, string lang = "en")
         {
             if (!ModelState.IsValid)
             {
-                return View(model);
+                TempData["ErrorMessage"] = "User updated successfully!";
+                return RedirectToAction("Details", "Profile");
             }
 
             var user = await _userManager.GetUserAsync(User);
             if (user == null)
             {
-                return Unauthorized();
+                TempData["ErrorMessage"] = "User updated successfully!";
+                return RedirectToAction("Details", "Profile");
             }
 
             var success = await _profileService.UpdateProfileAsync(user, model);
             if (!success)
             {
-                TempData["StatusMessage"] = "Could not update user, please try again later.";
-                return View(model);
+                TempData["ErrorMessage"] = "Could not update user, please try again later.";
+                return RedirectToAction("Details", "Profile");
             }
 
             TempData["StatusMessage"] = "User updated successfully!";
@@ -192,7 +196,6 @@ namespace BookBuddy.Controllers
 
 
         [HttpPost]
-        [Route("/profile/deleteprofile/{profileId}")]
         public async Task<IActionResult> DeleteProfile(int profileId)
         {
             var user = await _userManager.GetUserAsync(User);

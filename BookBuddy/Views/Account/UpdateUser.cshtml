@@ -4,8 +4,6 @@
 
 @{
     Layout = "~/Views/Shared/Layouts/AccountLayout.cshtml";
-    ViewData["Description"] = ViewData["Description"];
-
 
     var user = await _userManager.GetUserAsync(User);
     var userId = user?.Id;
@@ -20,7 +18,7 @@
     @if (selectedProfile == mainProfile)
     {
         <div class="text-center">
-            <h1>@ViewData["Title"]</h1>
+            <h3>@ViewData["Title"]</h3>
         </div>
 
         <form method="post" asp-action="UpdateUser" asp-controller="Account">
@@ -40,19 +38,19 @@
 
             
             <div class="form-group mb-3">
-                <label asp-for="CurrentPassword">@ViewData["CurrentPasswordPlaceholder"]</label>
+                <label asp-for="CurrentPassword">@ViewData["CurrentPasswordLabel"]</label>
                 <input asp-for="CurrentPassword" placeholder="@ViewData["CurrentPasswordPlaceholder"]" />
                 <span asp-validation-for="CurrentPassword"></span>
             </div>
 
             <div class="form-group mb-3">
-                <label asp-for="NewPassword">@ViewData["NewPasswordPlaceholder"]</label>
+                <label asp-for="NewPassword">@ViewData["NewPasswordLabel"]</label>
                 <input asp-for="NewPassword" placeholder="@ViewData["NewPasswordPlaceholder"]" />
                 <span asp-validation-for="NewPassword"></span>
             </div>
 
             <div class="form-group mb-3">
-                <label asp-for="ConfirmNewPassword">@ViewData["ConfirmNewPasswordPlaceholder"]</label>
+                <label asp-for="ConfirmNewPassword">@ViewData["ConfirmNewPasswordLabel"]</label>
                 <input asp-for="ConfirmNewPassword" placeholder="@ViewData["ConfirmNewPasswordPlaceholder"]" />
                 <span asp-validation-for="ConfirmNewPassword"></span>
             </div>

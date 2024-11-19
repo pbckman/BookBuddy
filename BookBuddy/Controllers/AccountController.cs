@@ -18,14 +18,16 @@ public class AccountController(UserManager<ApplicationUser> userManager, SignInM
 
 
     [HttpGet]
-    [Route("{lang}/account/updateuser")]
     public IActionResult UpdateUser(string lang = "en")
     {
         ViewData["Title"] = _translationService.GetTranslation("updateuser", "title", lang);
         ViewData["Description"] = _translationService.GetTranslation("updateuser", "description", lang);
         ViewData["CurrentPasswordPlaceholder"] = _translationService.GetTranslation("updateuser", "currentPasswordPlaceholder", lang);
+        ViewData["CurrentPasswordLabel"] = _translationService.GetTranslation("updateuser", "currentPasswordLabel", lang);
         ViewData["NewPasswordPlaceholder"] = _translationService.GetTranslation("updateuser", "newPasswordPlaceholder", lang);
+        ViewData["NewPasswordLabel"] = _translationService.GetTranslation("updateuser", "newPasswordLabel", lang);
         ViewData["ConfirmNewPasswordPlaceholder"] = _translationService.GetTranslation("updateuser", "confirmNewPasswordPlaceholder", lang);
+        ViewData["ConfirmNewPasswordLabel"] = _translationService.GetTranslation("updateuser", "confirmNewPasswordLabel", lang);
         ViewData["UpdateButton"] = _translationService.GetTranslation("updateuser", "updateButton", lang);
         ViewData["StatusMessage"] = "";
         ViewData["ErrorMessage"] = "";
@@ -36,7 +38,6 @@ public class AccountController(UserManager<ApplicationUser> userManager, SignInM
     }
 
     [HttpPost]
-    [Route("{lang}/account/updateuser")]
     public async Task<IActionResult> UpdateUser(UpdateUserViewModel model, string lang = "en")
     {
         if (!ModelState.IsValid)
@@ -47,10 +48,10 @@ public class AccountController(UserManager<ApplicationUser> userManager, SignInM
 
         var user = await _userManager.GetUserAsync(User);
 
-        if (user == null)
-        {
-            return Unauthorized();
-        }
+        //if (user == null)
+        //{
+        //    return Unauthorized();
+        //}
 
         var result = await _accountService.ChangePasswordAsync(user, model.CurrentPassword, model.NewPassword);
 

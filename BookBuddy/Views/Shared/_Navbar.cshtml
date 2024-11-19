@@ -9,27 +9,27 @@
     var selectedProfile = await ProfileService.GetSelectedProfileAsync(userId);
     var mainProfile = await ProfileService.GetMainProfileAsync(userId);
 
-    var currentCulture = CultureInfo.CurrentCulture.TwoLetterISOLanguageName; 
+    var currentCulture = CultureInfo.CurrentCulture.TwoLetterISOLanguageName;
 }
 
-    @if (Model.SiteSettings != null)
-    {
-        <div class="navbar-wrapper">
-            <div class="nav-logo text-primary">
-                @* <img class="nav-logo-img" src="@Url.ContentUrl(Model.SiteSettings.HeaderLogo)" alt="Company Logo" /> *@
-                @* <img class="nav-logo-img" src="~/images/Bookbuddy-logo.PNG" alt="Bookbuddy logo"> *@
-                <img class="nav-logo-img" src="~/images/BookBuddyLogo2.png" alt="Bookbuddy logo">
-                @* <h3>@Model.SiteSettings.HeaderTitle</h3> *@
-            </div>
+@if (Model.SiteSettings != null)
+{
+    <div class="navbar-wrapper">
+        <div class="nav-logo text-primary">
+            @* <img class="nav-logo-img" src="@Url.ContentUrl(Model.SiteSettings.HeaderLogo)" alt="Company Logo" /> *@
+            @* <img class="nav-logo-img" src="~/images/Bookbuddy-logo.PNG" alt="Bookbuddy logo"> *@
+            <img class="nav-logo-img" src="~/images/BookBuddyLogo2.png" alt="Bookbuddy logo">
+            @* <h3>@Model.SiteSettings.HeaderTitle</h3> *@
+        </div>
 
-            <div class="nav-items">
+        <div class="nav-items">
 
-                <div class="nav-links">
-                    @foreach (var link in Model.SiteSettings.HeaderLinks!)
-                     {
+            <div class="nav-links">
+                @foreach (var link in Model.SiteSettings.HeaderLinks!)
+                {
                     <a href="@link.Href" target="@link.Target">@link.Text</a>
-                     }
-                </div>
+                }
+            </div>
 
             @if (User.Identity.IsAuthenticated)
             {
@@ -61,11 +61,16 @@
                         </div>
                     </form>
                 }
-                
+
 
                 <form asp-action="SignOut" asp-controller="Auth" method="post">
                     <div class="nav-logout">
                         <button class="btn btn-danger" type="submit">
+                            <svg xmlns="http://www.w3.org/2000/svg" x-bind:width="size" x-bind:height="size" viewBox="0 0 24 24" fill="none" stroke="currentColor" x-bind:stroke-width="stroke" stroke-linecap="round" stroke-linejoin="round" width="24" height="24" stroke-width="2">
+                                <path d="M14 12v.01"></path>
+                                <path d="M3 21h18"></path>
+                                <path d="M6 21v-16a2 2 0 0 1 2 -2h8a2 2 0 0 1 2 2v16"></path>
+                            </svg>
                             Sign out
                         </button>
                     </div>
@@ -75,17 +80,23 @@
             {
 
                 <form action="@Url.Action("SignUp", "Auth", new { lang = currentCulture })" method="get">
-                        <button class="btn btn-warning" type="submit">
-                            Sign up
-                        </button>
+                    <button class="btn btn-warning" type="submit">
+                        <svg xmlns="http://www.w3.org/2000/svg" x-bind:width="size" x-bind:height="size" viewBox="0 0 24 24" fill="none" stroke="currentColor" x-bind:stroke-width="stroke" stroke-linecap="round" stroke-linejoin="round" width="24" height="24" stroke-width="2">
+                            <path d="M8 7a4 4 0 1 0 8 0a4 4 0 0 0 -8 0"></path>
+                            <path d="M16 19h6"></path>
+                            <path d="M19 16v6"></path>
+                            <path d="M6 21v-2a4 4 0 0 1 4 -4h4"></path>
+                        </svg>
+                        Sign up
+                    </button>
                 </form>
             }
 
-            </div>
-
         </div>
-    }
-    else
-    {
-        <p>Site settings not available</p>
-    }
+
+    </div>
+}
+else
+{
+    <p>Site settings not available</p>
+}

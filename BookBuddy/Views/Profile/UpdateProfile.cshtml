@@ -3,22 +3,21 @@
 
 @{
     Layout = "~/Views/Shared/Layouts/AccountLayout.cshtml";
-    ViewData["Description"] = ViewData["Description"];
 
     var user = await _userManager.GetUserAsync(User);
     var userId = user?.Id;
     var profiles = await ProfileService.GetSubProfilesAsync(userId);
-    var selectedProfile = await ProfileService.GetSelectedSubProfileAsync(userId);
+    var selectedSubProfile = await ProfileService.GetSelectedSubProfileAsync(userId);
 }
 
 
 <div>
-    <h3 class="text-center">@ViewData["Title"]</h3>
-    <p class="text-center mb-4">@ViewData["Description"]</p>
+    <h3 class="text-center">@ViewData["TitleUpdate"]</h3>
+    <p class="text-center mb-4">@ViewData["DescriptionUpdate"]</p>
     <div class="dropdown">
 
         <button class="btn btn-light dropdown-toggle d-flex align-items-center" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-            <span class="d-none d-lg-block">@selectedProfile.ProfileFirstName</span>
+            <span class="d-none d-lg-block">@selectedSubProfile.ProfileFirstName</span>
         </button>
 
         <ul class="dropdown-menu">
@@ -35,33 +34,35 @@
     </div>
 
     <form method="post" asp-action="UpdateProfile" asp-controller="Profile">
-        
+
         <div>
-            @ViewData["StatusMessage"]
+            @ViewData["StatusMessageUpdate"]
         </div>
         <div class="form-group mb-3">
-            <label asp-for="FirstName">@ViewData["FirstName"]</label>
-            <input asp-for="FirstName"/>
+            <label asp-for="FirstName">@ViewData["FirstNameUpdate"]</label>
+            <input asp-for="FirstName" />
             <span asp-validation-for="FirstName"></span>
         </div>
 
-        <button type="submit" class="btn btn-success w-100 mb-3">@ViewData["SaveButton"]</button>
+        <button type="submit" class="btn btn-success w-100 mb-3">@ViewData["SaveButtonUpdate"]</button>
 
     </form>
 
+    <h3 class="text-center">@ViewData["TitleCreate"]</h3>
+    <p class="text-center mb-4">@ViewData["DescriptionCreate"]</p>
 
-    @*     <form method="post" asp-action="CreateProfile" asp-controller="Profile">
-    @Html.AntiForgeryToken()
-    <div>
-    @ViewData["StatusMessage"]
-    </div>
-    <div class="form-group mb-3">
-    <label asp-for="Firstname">Name</label>
-    <input asp-for="Firstname" />
-    <span asp-validation-for="Firstname"></span>
-    </div>
+    <form method="post" asp-action="CreateProfile" asp-controller="Profile">
+        @Html.AntiForgeryToken()
+        <div>
+            @ViewData["StatusMessageCreate"]
+        </div>
+        <div class="form-group mb-3">
+            <label asp-for="FirstName">@ViewData["FirstNameCreate"]</label>
+            <input asp-for="FirstName" />
+            <span asp-validation-for="FirstName"></span>
+        </div>
 
-    <button type="submit" class="btn btn-success w-100 mb-3">@ViewData["SaveButton"]</button>
-    </form> *@
+        <button type="submit" class="btn btn-success w-100 mb-3">@ViewData["SaveButtonCreate"]</button>
+    </form>
 
 </div>

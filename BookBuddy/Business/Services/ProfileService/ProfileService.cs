@@ -3,6 +3,7 @@ using BookBuddy.Data.Entities;
 using BookBuddy.Models.ViewModels;
 using EPiServer.Cms.UI.AspNetIdentity;
 using Microsoft.EntityFrameworkCore;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace BookBuddy.Business.Services.AccountService
 {
@@ -53,6 +54,16 @@ namespace BookBuddy.Business.Services.AccountService
             return await _dataContext.Profiles.FirstOrDefaultAsync(profile => profile.UserId == userId && profile.IsMainProfile != true);
         }
 
+        public async Task<UserProfileEntity> GetSubsProfileAsync(string profileId)
+        {
+
+            var convertedId = Convert.ToInt32(profileId);
+
+            var profile = await _dataContext.Profiles.FirstOrDefaultAsync(profile => profile.Id == convertedId && profile.IsMainProfile != true);
+
+            return profile;
+        }
+
         public async Task<IEnumerable<UserProfileEntity>> GetSubProfilesAsync(string userId)
         {
 
@@ -91,13 +102,14 @@ namespace BookBuddy.Business.Services.AccountService
 
             }
 
-            return await GetMainProfileAsync(userId);
+            return await GetSubProfileAsync(userId);
         }
 
         public async Task<bool> UpdateProfileAsync(ApplicationUser user, UserProfileViewModel model)
         {
             var profile = await GetProfileAsync(user);
             if (profile == null) return false;
+
 
             profile.ProfileFirstName = model.Firstname;
             profile.ProfileLastName = model.Lastname;
@@ -107,9 +119,9 @@ namespace BookBuddy.Business.Services.AccountService
             return true;
         }
 
-        public async Task<bool> UpdateProfileAsync(ApplicationUser user, ProfileViewModel model)
+        public async Task<bool> UpdateSubProfileAsync(string profileId, ProfileViewModel model)
         {
-            var profile = await GetProfileAsync(user);
+            var profile = await GetSubsProfileAsync(profileId);
             if (profile == null) return false;
 
             profile.ProfileFirstName = model.FirstName;

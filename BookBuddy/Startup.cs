@@ -45,7 +45,7 @@ namespace BookBuddy
 
                 services.Configure<SchedulerOptions>(options => options.Enabled = false);
             }
-
+            services.AddControllersWithViews();
             services.AddScoped<AccountService>();
             services.AddScoped<ProfileService>();
             services
@@ -116,7 +116,9 @@ namespace BookBuddy
 
             app.UseEndpoints(endpoints =>
             {
-                endpoints.MapControllers();
+                endpoints.MapControllerRoute(
+                    name: "localized",
+                    pattern: "{lang=en}/{controller=StartPage}/{action=Index}/{id?}");
 
                 endpoints.MapContent();
 

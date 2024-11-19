@@ -26,16 +26,20 @@
 					<passwordPlaceholder>Enter your password</passwordPlaceholder>
 					<confirmPasswordPlaceholder>Confirm your password</confirmPasswordPlaceholder>
 					<signUpButton>Sign up</signUpButton>
-					<statusMessage>Something went wrong, please try again later.</statusMessage>
+					<statusMessage>User successfully created!</statusMessage>
+					<errorMessage>Something went wrong, please try again later.</errorMessage>
 				</properties>
 			</signup>
 			<updateuser>
 				<properties>
 					<title>Change password</title>
 					<description>Change your current password with confirmed new password.</description>
-					<currentPasswordPlaceholder>Enter your current password</currentPasswordPlaceholder>
-					<newPasswordPlaceholder>Enter your new password</newPasswordPlaceholder>
-					<confirmNewPasswordPlaceholder>Confirm your new password</confirmNewPasswordPlaceholder>
+					<currentPasswordLabel>Enter your current password</currentPasswordLabel>
+					<currentPasswordPlaceholder>Current password</currentPasswordPlaceholder>
+					<newPasswordLabel>Enter your new password</newPasswordLabel>
+					<newPasswordPlaceholder>New password</newPasswordPlaceholder>
+					<confirmNewPasswordLabel>Confirm your new password</confirmNewPasswordLabel>
+					<confirmNewPasswordPlaceholder>Confirm new password</confirmNewPasswordPlaceholder>
 					<updateButton>Update</updateButton>
 					<statusMessage>Password successfully updated</statusMessage>
 					<accessDenied>ACCESS DENIED</accessDenied>
@@ -45,18 +49,22 @@
 			</updateuser>
 			<userprofile>
 				<properties>
-				<title>Create profile</title>
-				<description>Create a profile with a name</description>
-				<firstname>Firstname</firstname>
-				<saveButton>Create profile</saveButton>
+					<title>Create profile</title>
+					<description>Create a profile with a name</description>
+					<firstname>Firstname</firstname>
+					<saveButton>Create profile</saveButton>
 				</properties>
 			</userprofile>
 			<updateprofile>
 				<properties>
-				<title>Update profile</title>
-				<description>Update profile with a new name</description>
-				<firstname>Firstname</firstname>
-				<saveButton>Save changes</saveButton>
+					<titleUpdate>Update profile</titleUpdate>
+					<titleCreate>Create Profile</titleCreate>
+					<descriptionUpdate>Update profile with a new name</descriptionUpdate>
+					<descriptionCreate>Create a new profile</descriptionCreate>
+					<firstNameUpdate>Update Profile</firstNameUpdate>
+					<firstNameCreate>Create Profile</firstNameCreate>
+					<saveButtonUpdate>Save changes</saveButtonUpdate>
+					<saveButtonCreate>Create profile</saveButtonCreate>
 				</properties>
 			</updateprofile>
 			<details>
@@ -96,36 +104,45 @@
 					<passwordPlaceholder>Fyll i ditt lösenord</passwordPlaceholder>
 					<confirmPasswordPlaceholder>Bekräfta ditt lösenord</confirmPasswordPlaceholder>
 					<signUpButton>Registrera dig</signUpButton>
-					<statusMessage>Något gick fel, försök igen senare.</statusMessage>
+					<statusMessage>Användare skapad!</statusMessage>
+					<errorMessage>Något gick fel, försök igen senare.</errorMessage>
 				</properties>
 			</signup>
 			<updateuser>
 				<properties>
 					<title>Ändra lösenord</title>
 					<description>Ändra ditt nuvarande lösenord med bekräftat nytt lösenord.</description>
-					<currentPasswordPlaceholder>Fyll i ditt nuvarande lösenord</currentPasswordPlaceholder>
-					<newPasswordPlaceholder>Fyll i ditt nya lösenord</newPasswordPlaceholder>
-					<confirmNewPasswordPlaceholder>Bekräfta ditt nya lösenord</confirmNewPasswordPlaceholder>
+					<currentPasswordLabel>Fyll i ditt nuvarande lösenord</currentPasswordLabel>
+					<currentPasswordPlaceholder>Nuvarande lösenord</currentPasswordPlaceholder>
+					<newPasswordLabel>Fyll i ditt nya lösenord</newPasswordLabel>
+					<newPasswordPlaceholder>Nytt lösenord</newPasswordPlaceholder>
+					<confirmNewPasswordLabel>Bekräfta ditt nya lösenord</confirmNewPasswordLabel>
+					<confirmNewPasswordPlaceholder>Bekräfta nya lösenordet</confirmNewPasswordPlaceholder>
 					<updateButton>Uppdatera</updateButton>
-					<statusMessage>Något gick fel, försök igen senare.</statusMessage>
+					<statusMessage>Lösenord uppdaterat!</statusMessage>
 					<accessDenied>SAKNAR BEHÖRIGHET</accessDenied>
 					<mainProfileNeeded>Huvudprofil behövs för att ändra lösenord.</mainProfileNeeded>
+					<errorMessage>Något gick fel, försök igen lite senare.</errorMessage>
 				</properties>
 			</updateuser>
 			<userprofile>
 				<properties>
-				<title>Skapa profil</title>
-				<description>Skapa ny profil genom att ange namn</description>
-				<firstname>Namn</firstname>
-				<saveButton>Skapa profil</saveButton>
+					<title>Skapa profil</title>
+					<description>Skapa ny profil genom att ange namn</description>
+					<firstname>Namn</firstname>
+					<saveButton>Skapa profil</saveButton>
 				</properties>
 			</userprofile>
 			<updateprofile>
 				<properties>
-				<title>Uppdatera profil</title>
-				<description>Uppdatera befintlig profil med nytt namn</description>
-				<firstname>Namn</firstname>
-				<saveButton>Spara ändring</saveButton>
+					<titleUpdate>Uppdatera Profil </titleUpdate>
+					<titleCreate>Skapa Profil</titleCreate>
+					<descriptionUpdate>Uppdatera profil med ett nytt namn</descriptionUpdate>
+					<descriptionCreate>Skapa en ny profil</descriptionCreate>
+					<firstNameUpdate>Uppdatera befintlig profil</firstNameUpdate>
+					<firstNameCreate>Skapa ny profil</firstNameCreate>
+					<saveButtonUpdate>Save changes</saveButtonUpdate>
+					<saveButtonCreate>Create profile</saveButtonCreate>
 				</properties>
 			</updateprofile>
 			<details>

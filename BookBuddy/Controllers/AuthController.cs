@@ -15,7 +15,7 @@ namespace BookBuddy.Controllers
         private readonly AccountService _accountService = accountService;
         private readonly AuthTranslationService _translationService = translationService;
 
-        [Route("{lang}/auth/signup")]
+        [HttpGet]
         public IActionResult SignUp(string lang = "en")
         {
             ViewData["Title"] = _translationService.GetTranslation("signup", "title", lang);
@@ -27,32 +27,34 @@ namespace BookBuddy.Controllers
             ViewData["ConfirmPasswordPlaceholder"] = _translationService.GetTranslation("signup", "confirmPasswordPlaceholder", lang);
             ViewData["SignUpButton"] = _translationService.GetTranslation("signup", "signUpButton", lang);
             ViewData["StatusMessage"] = "";
+            ViewData["ErrorMessage"] = "";
 
             return View();
         }
 
         [HttpPost]
-        [Route("{lang}/auth/signup")]
         public async Task<IActionResult> SignUp(SignUpViewModel model, string lang = "en")
         {
             if (!ModelState.IsValid)
             {
-                return View(model);
+                TempData["ErrorMessage"] = _translationService.GetTranslation("signup", "errorMessage", lang);
+                return RedirectToAction("SignUp", "Auth", new { lang });
             }
-                
+
             var (result, profile) = await _accountService.CreateUserAsync(model);
 
             if (result.Succeeded)
             {
+                TempData["StatusMessage"] = _translationService.GetTranslation("signup", "statusMessage", lang);
                 return RedirectToAction("SignIn", "Auth", new { lang });
             }
 
-            ViewData["StatusMessage"] = "Something went wrong, please try again later.";
-            return View(model);
+            TempData["ErrorMessage"] = _translationService.GetTranslation("signup", "errorMessage", lang);
+            return RedirectToAction("SignUp", "Auth", new { lang });
         }
 
 
-        [Route("{lang}/auth/signin")]
+        [HttpGet]
         public IActionResult SignIn(string lang = "en")
         {
             ViewData["Title"] = _translationService.GetTranslation("signin", "title", lang);
@@ -61,11 +63,11 @@ namespace BookBuddy.Controllers
             ViewData["PasswordPlaceholder"] = _translationService.GetTranslation("signin", "passwordPlaceholder", lang);
             ViewData["RememberMeLabel"] = _translationService.GetTranslation("signin", "rememberMeLabel", lang);
             ViewData["LoginButton"] = _translationService.GetTranslation("signin", "loginButton", lang);
+            ViewData["ErrorMessage"] = "";
             return View();
         }
 
         [HttpPost]
-        [Route("{lang}/auth/signin")]
         public async Task<IActionResult> SignIn(SignInViewModel model, string lang = "en")
         {
 
@@ -85,13 +87,11 @@ namespace BookBuddy.Controllers
                 }
             }
 
-            ViewData["StatusMessage"] = _translationService.GetTranslation("signin", "errorMessage", lang);
-
-            return View(model);
+            TempData["ErrorMessage"] = _translationService.GetTranslation("signin", "errorMessage", lang);
+            return RedirectToAction("SignIn", "Auth", new { lang });
         }
 
         [HttpPost]
-        [Route("/")]
         public async Task<IActionResult> SignOut()
         {
             await _signInManager.SignOutAsync();
