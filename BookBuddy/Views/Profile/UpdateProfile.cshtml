@@ -8,36 +8,93 @@
     var userId = user?.Id;
     var profiles = await ProfileService.GetSubProfilesAsync(userId);
     var selectedSubProfile = await ProfileService.GetSelectedSubProfileAsync(userId);
+    var mainProfile = await ProfileService.GetMainProfileAsync(userId);
 }
 
 
 <div>
+    <h3 class="text-center">@ViewData["Title"]</h3>
+    <p class="text-center mb-4">@ViewData["Description"]</p>
+
+    <form method="post" asp-action="CreateProfile" asp-controller="Profile">
+        @Html.AntiForgeryToken()
+        @if (TempData["StatusMessageCreate"] != null)
+        {
+            <div class="alert alert-success">
+                @TempData["StatusMessageCreate"]
+            </div>
+        }
+        else if (TempData["ErrorMessageCreate"] != null)
+        {
+            <div class="alert alert-danger">
+                @TempData["ErrorMessageCreate"]
+            </div>
+        }
+        <div class="form-group mb-3">
+            <label asp-for="FirstName">@ViewData["FirstNameCreate"]</label>
+            <input asp-for="FirstName" />
+            <span asp-validation-for="FirstName"></span>
+        </div>
+
+        <button type="submit" class="btn btn-success w-100 mb-3">@ViewData["SaveButtonCreate"]</button>
+    </form>
+
+
     <h3 class="text-center">@ViewData["TitleUpdate"]</h3>
     <p class="text-center mb-4">@ViewData["DescriptionUpdate"]</p>
+
+
     <div class="dropdown">
 
-        <button class="btn btn-light dropdown-toggle d-flex align-items-center" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+        @if (selectedSubProfile == null)
+        {
+            <button class="btn btn-light d-flex align-items-center" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+            <span class="d-none d-lg-block"></span>
+            </button>
+        }
+        else
+        {
+            <button class="btn btn-light dropdown-toggle d-flex align-items-center" type="button" data-bs-toggle="dropdown" aria-expanded="false">
             <span class="d-none d-lg-block">@selectedSubProfile.ProfileFirstName</span>
-        </button>
+            </button>
+        }
+        
 
         <ul class="dropdown-menu">
             @foreach (var profile in profiles)
             {
+                @if (profiles == null)
+                {
+                    <button class="dropdown-item">No profiles yet</button>
+                }
+                else
+                {
                 <li>
                     <form action="@Url.Action("SelectSubProfile", "Profile")" method="post">
                         <input type="hidden" name="profileId" value="@profile.Id" />
                         <button type="submit" class="dropdown-item">@profile.ProfileFirstName</button>
                     </form>
                 </li>
+                }
+
             }
         </ul>
     </div>
 
     <form method="post" asp-action="UpdateProfile" asp-controller="Profile">
 
-        <div>
-            @ViewData["StatusMessageUpdate"]
-        </div>
+        @if (TempData["StatusMessageUpdate"] != null)
+        {
+            <div class="alert alert-success">
+                @TempData["StatusMessageUpdate"]
+            </div>
+        }
+        else if (TempData["ErrorMessageUpdate"] != null)
+        {
+            <div class="alert alert-danger">
+                @TempData["ErrorMessageUpdate"]
+            </div>
+        }
         <div class="form-group mb-3">
             <label asp-for="FirstName">@ViewData["FirstNameUpdate"]</label>
             <input asp-for="FirstName" />
@@ -46,23 +103,6 @@
 
         <button type="submit" class="btn btn-success w-100 mb-3">@ViewData["SaveButtonUpdate"]</button>
 
-    </form>
-
-    <h3 class="text-center">@ViewData["TitleCreate"]</h3>
-    <p class="text-center mb-4">@ViewData["DescriptionCreate"]</p>
-
-    <form method="post" asp-action="CreateProfile" asp-controller="Profile">
-        @Html.AntiForgeryToken()
-        <div>
-            @ViewData["StatusMessageCreate"]
-        </div>
-        <div class="form-group mb-3">
-            <label asp-for="FirstName">@ViewData["FirstNameCreate"]</label>
-            <input asp-for="FirstName" />
-            <span asp-validation-for="FirstName"></span>
-        </div>
-
-        <button type="submit" class="btn btn-success w-100 mb-3">@ViewData["SaveButtonCreate"]</button>
     </form>
 
 </div>

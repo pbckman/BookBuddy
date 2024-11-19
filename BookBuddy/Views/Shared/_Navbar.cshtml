@@ -1,3 +1,4 @@
+
 @using System.Globalization
 @model IPageViewModel<SitePageData>
 @inject ProfileService ProfileService
@@ -35,7 +36,7 @@
             {
                 @if (selectedProfile.Id == mainProfile.Id)
                 {
-                    <form action="@Url.Action("Details", "Profile", new { lang = currentCulture })" method="get">
+                    <form method="get" asp-action="Details" asp-controller="Profile">
                         <div>
                             <button class="btn btn-secondary" type="submit">
                                 <svg xmlns="http://www.w3.org/2000/svg" x-bind:width="size" x-bind:height="size" viewBox="0 0 24 24" fill="none" stroke="currentColor" x-bind:stroke-width="stroke" stroke-linecap="round" stroke-linejoin="round" width="24" height="24" stroke-width="2">
@@ -49,7 +50,7 @@
                 }
                 else
                 {
-                    <form action="@Url.Action("UpdateProfile", "Profile", new { lang = currentCulture })" method="get">
+                    <form action="@Url.Action("UpdateSubProfile", "Profile", new { lang = currentCulture })" method="get">
                         <div>
                             <button class="btn btn-secondary" type="submit">
                                 <svg xmlns="http://www.w3.org/2000/svg" x-bind:width="size" x-bind:height="size" viewBox="0 0 24 24" fill="none" stroke="currentColor" x-bind:stroke-width="stroke" stroke-linecap="round" stroke-linejoin="round" width="24" height="24" stroke-width="2">

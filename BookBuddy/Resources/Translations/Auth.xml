@@ -45,6 +45,7 @@
 					<accessDenied>ACCESS DENIED</accessDenied>
 					<mainProfileNeeded>Main profile needed to change password.</mainProfileNeeded>
 					<errorMessage>Something went wrong, please try again later.</errorMessage>
+					<statusMessage>Password updated successfully!</statusMessage>
 				</properties>
 			</updateuser>
 			<userprofile>
@@ -57,16 +58,28 @@
 			</userprofile>
 			<updateprofile>
 				<properties>
+					<title>Create Profile</title>
+					<description>Create a new profile</description>
 					<titleUpdate>Update profile</titleUpdate>
-					<titleCreate>Create Profile</titleCreate>
 					<descriptionUpdate>Update profile with a new name</descriptionUpdate>
-					<descriptionCreate>Create a new profile</descriptionCreate>
 					<firstNameUpdate>Update Profile</firstNameUpdate>
 					<firstNameCreate>Create Profile</firstNameCreate>
 					<saveButtonUpdate>Save changes</saveButtonUpdate>
 					<saveButtonCreate>Create profile</saveButtonCreate>
 				</properties>
 			</updateprofile>
+			<subProfileDetails>
+				<properties>
+					<title>Update profile</title>
+					<description>Update profile with a new name</description>
+					<firstNameUpdate>Update profile</firstNameUpdate>
+					<saveButtonUpdate>Save changes</saveButtonUpdate>
+					<errorMessageUpdate>Could not update profile, try again later.</errorMessageUpdate>
+					<statusMessageUpdate>Profile updated!</statusMessageUpdate>
+					<errorMessageUpdateSub>Could not update profile, please try again later.</errorMessageUpdateSub>
+					<statusMessageUpdateSub>Profile updated successfully!</statusMessageUpdateSub>
+				</properties>
+			</subProfileDetails>
 			<details>
 				<properties>
 					<title>Update user</title>
@@ -74,6 +87,8 @@
 					<firstname>First Name</firstname>
 					<lastname>Last Name</lastname>
 					<saveButton>Save changes</saveButton>
+					<statusMessage>User updated successfully!</statusMessage>
+					<errorMessage>Could not update user, please try again later.</errorMessage>
 				</properties>
 			</details>
 		</contenttypes>
@@ -123,6 +138,7 @@
 					<accessDenied>SAKNAR BEHÖRIGHET</accessDenied>
 					<mainProfileNeeded>Huvudprofil behövs för att ändra lösenord.</mainProfileNeeded>
 					<errorMessage>Något gick fel, försök igen lite senare.</errorMessage>
+					<statusMessage>Lösenord ändrat!</statusMessage>
 				</properties>
 			</updateuser>
 			<userprofile>
@@ -135,16 +151,32 @@
 			</userprofile>
 			<updateprofile>
 				<properties>
-					<titleUpdate>Uppdatera Profil </titleUpdate>
-					<titleCreate>Skapa Profil</titleCreate>
+					<title>Skapa Profil</title>
+					<description>Skapa en ny profil</description>
+					<titleUpdate>Uppdatera Profil</titleUpdate>
 					<descriptionUpdate>Uppdatera profil med ett nytt namn</descriptionUpdate>
-					<descriptionCreate>Skapa en ny profil</descriptionCreate>
 					<firstNameUpdate>Uppdatera befintlig profil</firstNameUpdate>
 					<firstNameCreate>Skapa ny profil</firstNameCreate>
-					<saveButtonUpdate>Save changes</saveButtonUpdate>
-					<saveButtonCreate>Create profile</saveButtonCreate>
+					<saveButtonUpdate>Spara ändringar</saveButtonUpdate>
+					<saveButtonCreate>Skapa profil</saveButtonCreate>
+					<errorMessageUpdate>Gick inte att uppdatera profil, försök igen lite senare.</errorMessageUpdate>
+					<errorMessageCreate>Gick inte att skapa profil, försök igen lite senare.</errorMessageCreate>
+					<statusMessageUpdate>Profil uppdaterad!</statusMessageUpdate>
+					<statusMessageCreate>Profil skapad!</statusMessageCreate>
+					<errorMessageUpdateSub>Subsubsub</errorMessageUpdateSub>
+					<statusMessageUpdateSub>Subsubsub</statusMessageUpdateSub>
 				</properties>
 			</updateprofile>
+			<subProfileDetails>
+				<properties>
+					<title>Uppdatera Profil</title>
+					<description>Uppdatera profil med ett nytt namn</description>
+					<firstNameUpdate>Uppdatera befintlig profil</firstNameUpdate>
+					<saveButtonUpdate>Spara ändringar</saveButtonUpdate>
+					<errorMessageUpdateSub>Gick inte att uppdatera profil, försök igen lite senare.</errorMessageUpdateSub>
+					<statusMessageUpdateSub>Profil uppdaterad!</statusMessageUpdateSub>
+				</properties>
+			</subProfileDetails>
 			<details>
 				<properties>
 					<title>Uppdatera användare</title>
@@ -152,6 +184,8 @@
 					<firstname>Förnamn</firstname>
 					<lastname>Efternamn</lastname>
 					<saveButton>Spara ändringar</saveButton>
+					<statusMessage>Användare uppdaterad!</statusMessage>
+					<errorMessage>Något gick fel, försök igen lite senare.</errorMessage>
 				</properties>
 			</details>
 		</contenttypes>

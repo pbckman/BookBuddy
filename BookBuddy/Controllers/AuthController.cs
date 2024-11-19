@@ -97,6 +97,7 @@ namespace BookBuddy.Controllers
             await _signInManager.SignOutAsync();
 
             Response.Cookies.Delete("SelectedProfileId");
+            Response.Cookies.Delete("SelectedSubProfileId");
 
             return RedirectToAction("Index", "StartPage");
         }

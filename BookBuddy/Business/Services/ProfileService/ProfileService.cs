@@ -77,6 +77,13 @@ namespace BookBuddy.Business.Services.AccountService
             return await _dataContext.Profiles.FirstOrDefaultAsync(p => p.Id == profileId);
         }
 
+        public async Task<UserProfileEntity?> GetProfileByIdAsync(string profileId)
+        {
+            var convertedId = Convert.ToInt32(profileId);
+
+            return await _dataContext.Profiles.FirstOrDefaultAsync(p => p.Id == convertedId);
+        }
+
         public async Task<UserProfileEntity> GetSelectedProfileAsync(string userId)
         {
             if (_httpContextAccessor.HttpContext.Request.Cookies.TryGetValue("SelectedProfileId", out string profileIdValue))

@@ -31,52 +31,51 @@
         <div class="auth-right">
 
             <div class="auth-content">
+                    <div>
+                        <a href="/">
+                            <i>
+                                <svg class="custom-icon" xmlns="http://www.w3.org/2000/svg" x-bind:width="size" x-bind:height="size" viewBox="0 0 24 24" fill="none" stroke="currentColor" x-bind:stroke-width="stroke" stroke-linecap="round" stroke-linejoin="round" width="40" height="40" stroke-width="2">
+                                    <path d="M5 12l-2 0l9 -9l9 9l-2 0"></path>
+                                    <path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-7"></path>
+                                    <path d="M9 21v-6a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v6"></path>
+                                </svg>
+                            </i>
+                        </a>
+                    </div>
 
-                <div>
-                    <a href="/">
-                        <i>
-                            <svg xmlns="http://www.w3.org/2000/svg" x-bind:width="size" x-bind:height="size" viewBox="0 0 24 24" fill="none" stroke="currentColor" x-bind:stroke-width="stroke" stroke-linecap="round" stroke-linejoin="round" width="24" height="24" stroke-width="2">
-                                <path d="M5 12l-2 0l9 -9l9 9l-2 0"></path>
-                                <path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-7"></path>
-                                <path d="M9 21v-6a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v6"></path>
-                            </svg>
-                        </i>
-                    </a>
+                    @if (selectedProfile.Id == mainProfile.Id)
+                    {
+                        <ul class="nav nav-tabs" id="myTab" role="tablist">
+                            <li class="nav-item" role="presentation">
+                                <a class="nav-link @Html.IsActive("Profile", "Details")" href="@Url.Action("Details", "Profile", new { lang = currentCulture })" id="password-tab" role="tab" aria-controls="profile" aria-selected="false">User</a>
+                            </li>
+                            <li class="nav-item" role="presentation">
+                                <a class="nav-link @Html.IsActive("Account", "UpdateUser")" href="@Url.Action("UpdateUser", "Account", new { lang = currentCulture })" id="password-tab" role="tab" aria-controls="password" aria-selected="false">Password</a>
+                            </li>
+                            <li class="nav-item" role="presentation">
+                                <a class="nav-link @Html.IsActive("Profile", "UpdateProfile")" href="@Url.Action("UpdateProfile", "Profile", new { lang = currentCulture })" id="password-tab" role="tab" aria-controls="profile" aria-selected="false">Profiles</a>
+                            </li>
+                        </ul>
+                    }
+                    else
+                    {
+                        <ul class="nav nav-tabs" id="myTab" role="tablist">
+                            <li class="nav-item" role="presentation">
+                                <a class="nav-link @Html.IsActive("Profile", "UpdateSubProfile")" href="@Url.Action("UpdateSubProfile", "Profile", new { lang = currentCulture })" id="profile-tab" role="tab" aria-controls="profile-content" aria-selected="true">Profiles</a>
+                            </li>
+                            <li class="nav-item" role="presentation">
+                                <a class="nav-link disabled @Html.IsActive("Profile", "Details")" href="#" id="user-disabled-tab" role="tab" aria-controls="user-content" aria-selected="false" aria-disabled="true">User</a>
+                            </li>
+                            <li class="nav-item" role="presentation">
+                                <a class="nav-link disabled @Html.IsActive("Account", "UpdateUser")" href="#" id="password-disabled-tab" role="tab" aria-controls="password-content" aria-selected="false" aria-disabled="true">Password</a>
+                            </li>
+                        </ul>
+                    }
+                    <div class="form-container">
+                        @RenderBody()
+                    </div>
+
                 </div>
-
-                @if (selectedProfile.Id == mainProfile.Id)
-                {
-                    <ul class="nav nav-tabs" id="myTab" role="tablist">
-                        <li class="nav-item">
-                            <a class="nav-link @Html.IsActive("Profile", "Details")" href="@Url.Action("Details", "Profile", new { lang = currentCulture })" id="password-tab" role="tab" aria-controls="profile" aria-selected="false">User</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link @Html.IsActive("Account", "UpdateUser")" href="@Url.Action("UpdateUser", "Account", new { lang = currentCulture })" id="password-tab" role="tab" aria-controls="password" aria-selected="false">Password</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link @Html.IsActive("Profile", "UpdateProfile")" href="@Url.Action("UpdateProfile", "Profile", new { lang = currentCulture })" id="password-tab" role="tab" aria-controls="profile" aria-selected="false">Profiles</a>
-                        </li>
-                    </ul>
-                }
-                else
-                {
-                    <ul class="nav nav-tabs" id="myTab" role="tablist" aria-disabled="true" aria-describedby="Non mainprofile not allowed to access all nav-items">
-                        <li class="nav-item" role="presentation">
-                            <a class="nav-link @Html.IsActive("Profile", "UpdateProfile")" href="@Url.Action("UpdateProfile", "Profile", new { lang = currentCulture })" id="password-tab" role="tab" aria-controls="profile" aria-selected="false">Profiles</a>
-                        </li>
-                        <li class="nav-item" role="presentation" aria-disabled="true" aria-describedby="Non mainprofile not allowed to access settings for User">
-                            <a class="nav-link disabled @Html.IsActive("Profile", "Details")" href="@Url.Action("Details", "Profile", new { lang = currentCulture })" id="profile-tab" role="tab" aria-controls="profile" aria-selected="false" aria-disabled="true" aria-describedby="Non mainprofile not allowed to access settings for User">User</a>
-                        </li>
-                        <li class="nav-item" role="presentation" aria-disabled="true" aria-describedby="Non mainprofile not allowed to access page for passwordchange">
-                            <a class="nav-link disabled @Html.IsActive("Account", "UpdateUser")" href="@Url.Action("UpdateUser", "Account", new { lang = currentCulture })" id="password-tab" role="tab" aria-controls="password" aria-selected="false" aria-disabled="true" aria-describedby="Non mainprofile not allowed to access page for changing password">Password</a>
-                        </li>
-                    </ul>
-                }
-                <div class="form-container">
-                    @RenderBody()
-                </div>
-
-            </div>
         </div>
     </div>
 

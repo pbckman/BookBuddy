@@ -48,10 +48,10 @@ public class AccountController(UserManager<ApplicationUser> userManager, SignInM
 
         var user = await _userManager.GetUserAsync(User);
 
-        //if (user == null)
-        //{
-        //    return Unauthorized();
-        //}
+        if (user == null)
+        {
+            return Unauthorized();
+        }
 
         var result = await _accountService.ChangePasswordAsync(user, model.CurrentPassword, model.NewPassword);
 
@@ -60,7 +60,7 @@ public class AccountController(UserManager<ApplicationUser> userManager, SignInM
             TempData["ErrorMessage"] = _translationService.GetTranslation("updateuser", "errorMessage", lang);
             return RedirectToAction("UpdateUser", "Account");
         }
-        TempData["StatusMessage"] = "Password updated successfully!";
+        TempData["StatusMessage"] = _translationService.GetTranslation("updateuser", "statusMessage", lang);
         return RedirectToAction("UpdateUser", "Account");
     }
 

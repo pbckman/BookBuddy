@@ -29,7 +29,13 @@
             @TempData["StatusMessage"]
         </div>
     }
-    <form method="post" action="@Url.Action("Details", "Profile", new { lang = currentCulture })">
+    else if (TempData["ErrorMessage"] != null)
+    {
+        <div class="alert alert-danger">
+            @TempData["ErrorMessage"]
+        </div>
+    }
+    <form method="post" asp-action="Details" asp-controller="Profile">
 
         <div class="form-group">
             <label asp-for="Firstname">First Name</label>
@@ -41,11 +47,11 @@
         </div>
 
         <div class="form-group">
-            <label>Email</label>
-            <input asp-for="@user.Email" class="form-control" disabled />
+            <label for="Email">Email</label>
+            <input id="Email" asp-for="@user.Email" class="form-control" disabled />
         </div>
 
-        <button type="submit" class="btn btn-primary">Save Changes</button>
+        <button type="submit" class="btn btn-success w-100 mb-3">Save Changes</button>
     </form>
 
 </div>

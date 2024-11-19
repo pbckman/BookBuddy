@@ -4,6 +4,7 @@ using BookBuddy.Models.ViewModels;
 using EPiServer.Cms.UI.AspNetIdentity;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace BookBuddy.Controllers
 {
@@ -34,10 +35,16 @@ namespace BookBuddy.Controllers
             {
                 return Unauthorized();
             }
+
+            if (model == null || string.IsNullOrEmpty(model.FirstName))
+            {
+                TempData["ErrorMessageCreate"] = _translationService.GetTranslation("updateprofile", "errorMessageCreate", lang);
+                return RedirectToAction("UpdateProfile", "Profile", new { lang });
+            }
+
             await _profileService.CreateProfileAsync(user.Id, model.FirstName, model.LastName, isMainProfile: false);
 
-
-
+            TempData["StatusMessageCreate"] = _translationService.GetTranslation("updateprofile", "statusMessageCreate", lang);
             return RedirectToAction("UpdateProfile", "Profile", new { lang });
         }
 
@@ -76,15 +83,20 @@ namespace BookBuddy.Controllers
         [HttpGet]
         public async Task<IActionResult> UpdateProfile(string lang = "en")
         {
-            ViewData["TitleCreate"] = _translationService.GetTranslation("updateprofile", "titleCreate", lang);
-            ViewData["DescriptionCreate"] = _translationService.GetTranslation("updateprofile", "descriptionCreate", lang);
+            ViewData["Title"] = _translationService.GetTranslation("updateprofile", "title", lang);
+            ViewData["Description"] = _translationService.GetTranslation("updateprofile", "description", lang);
             ViewData["FirstNameCreate"] = _translationService.GetTranslation("updateprofile", "firstNameCreate", lang);
             ViewData["SaveButtonCreate"] = _translationService.GetTranslation("updateprofile", "saveButtonCreate", lang);
             ViewData["TitleUpdate"] = _translationService.GetTranslation("updateprofile", "titleUpdate", lang);
             ViewData["DescriptionUpdate"] = _translationService.GetTranslation("updateprofile", "descriptionUpdate", lang);
             ViewData["FirstNameUpdate"] = _translationService.GetTranslation("updateprofile", "firstNameUpdate", lang);
             ViewData["SaveButtonUpdate"] = _translationService.GetTranslation("updateprofile", "saveButtonUpdate", lang);
-
+            ViewData["ErrorMessageUpdate"] = "";
+            ViewData["ErrorMessageCreate"] = "";
+            ViewData["StatusMessageUpdate"] = "";
+            ViewData["StatusMessageCreate"] = "";
+            ViewData["StatusMessageUpdateSub"] = "";
+            ViewData["ErrorMessageUpdateSub"] = "";
 
             var user = await _userManager.GetUserAsync(User);
             if (user == null)
@@ -92,9 +104,7 @@ namespace BookBuddy.Controllers
                 return Unauthorized();
             }
 
-            var userId = user.Id;
-
-            var profile = await _profileService.GetSubProfileAsync(userId);
+            var profile = await _profileService.GetProfileAsync(user);
             if (profile == null)
             {
                 return NotFound();
@@ -112,6 +122,12 @@ namespace BookBuddy.Controllers
                 return Unauthorized();
             }
 
+            if (model == null || string.IsNullOrEmpty(model.FirstName))
+            {
+                TempData["ErrorMessageUpdate"] = _translationService.GetTranslation("updateprofile", "errorMessageUpdate", lang);
+                return RedirectToAction("UpdateProfile", "Profile");
+            }
+
             var profileIdString = Request.Cookies["SelectedSubProfileId"];
             if (!int.TryParse(profileIdString, out var profileId))
             {
@@ -124,17 +140,78 @@ namespace BookBuddy.Controllers
                 return NotFound();
             }
 
+            var success = await _profileService.UpdateSubProfileAsync(profileId.ToString(), model);
+            if (!success)
+            {
+                TempData["ErrorMessageUpdate"] = _translationService.GetTranslation("updateprofile", "errorMessageUpdate", lang);
+                return View(model);
+            }
 
+            TempData["StatusMessageUpdate"] = _translationService.GetTranslation("updateprofile", "statusMessageUpdate", lang);
+            return RedirectToAction("UpdateProfile", "Profile");
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> UpdateSubProfile(string lang = "en")
+        {
+            ViewData["Title"] = _translationService.GetTranslation("subProfileDetails", "title", lang);
+            ViewData["Description"] = _translationService.GetTranslation("subProfileDetails", "description", lang);
+            ViewData["FirstNameUpdate"] = _translationService.GetTranslation("subProfileDetails", "firstNameUpdate", lang);
+            ViewData["SaveButtonUpdate"] = _translationService.GetTranslation("subProfileDetails", "saveButtonUpdate", lang);
+            ViewData["StatusMessageUpdateSub"] = "";
+            ViewData["ErrorMessageUpdateSub"] = "";
+
+            var user = await _userManager.GetUserAsync(User);
+            if (user == null)
+            {
+                return Unauthorized();
+            }
+
+            var profile = await _profileService.GetProfileAsync(user);
+            if (profile == null)
+            {
+                return NotFound();
+            }
+
+            return View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> UpdateSubProfile(ProfileViewModel model, string lang = "en")
+        {
+            var user = await _userManager.GetUserAsync(User);
+            if (user == null)
+            {
+                return Unauthorized();
+            }
+
+            if (model == null || string.IsNullOrEmpty(model.FirstName))
+            {
+                TempData["ErrorMessageUpdateSub"] = _translationService.GetTranslation("subProfileDetails", "errorMessageUpdateSub", lang);
+                return RedirectToAction("UpdateSubProfile", "Profile");
+            }
+
+            var profileIdString = Request.Cookies["SelectedSubProfileId"];
+            if (!int.TryParse(profileIdString, out var profileId))
+            {
+                return BadRequest("No selected profile.");
+            }
+
+            var profile = await _profileService.GetProfileByIdAsync(profileId);
+            if (profile == null)
+            {
+                return NotFound();
+            }
 
             var success = await _profileService.UpdateSubProfileAsync(profileId.ToString(), model);
             if (!success)
             {
-                TempData["StatusMessage"] = "Could not update profile, please try again later.";
+                TempData["ErrorMessageUpdateSub"] = _translationService.GetTranslation("subProfileDetails", "errorMessageUpdateSub", lang);
                 return View(model);
             }
 
-            TempData["StatusMessage"] = "Profile updated successfully!";
-            return RedirectToAction("UpdateProfile", "Profile");
+            TempData["StatusMessageUpdateSub"] = _translationService.GetTranslation("subProfileDetails", "statusMessageUpdateSub", lang);
+            return RedirectToAction("UpdateSubProfile", "Profile");
         }
 
         [HttpGet]
@@ -172,25 +249,31 @@ namespace BookBuddy.Controllers
         {
             if (!ModelState.IsValid)
             {
-                TempData["ErrorMessage"] = "User updated successfully!";
+                TempData["ErrorMessage"] = _translationService.GetTranslation("details", "errorMessage", lang);
                 return RedirectToAction("Details", "Profile");
             }
 
             var user = await _userManager.GetUserAsync(User);
             if (user == null)
             {
-                TempData["ErrorMessage"] = "User updated successfully!";
+                TempData["ErrorMessage"] = _translationService.GetTranslation("details", "errorMessage", lang);
                 return RedirectToAction("Details", "Profile");
+            }
+
+            if (model == null || string.IsNullOrEmpty(model.Firstname) || string.IsNullOrEmpty(model.Lastname))
+            {
+                TempData["ErrorMessage"] = _translationService.GetTranslation("details", "errorMessage", lang);
+                return RedirectToAction("UpdateProfile", "Profile");
             }
 
             var success = await _profileService.UpdateProfileAsync(user, model);
             if (!success)
             {
-                TempData["ErrorMessage"] = "Could not update user, please try again later.";
+                TempData["ErrorMessage"] = _translationService.GetTranslation("details", "errorMessage", lang);
                 return RedirectToAction("Details", "Profile");
             }
 
-            TempData["StatusMessage"] = "User updated successfully!";
+            TempData["StatusMessage"] = _translationService.GetTranslation("details", "statusMessage", lang);
             return RedirectToAction("Details", "Profile");
         }
 
