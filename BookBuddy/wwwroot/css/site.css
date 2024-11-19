@@ -822,8 +822,9 @@ body {
 }
 .quiz-page .chapter-nav-component .chapter-list .chapter-list-item .chapter-result {
   flex-shrink: 0;
-  margin-left: 0.5rem;
-  font-weight: 500;
+  margin-left: 0.75rem;
+  font-weight: 400;
+  font-size: 0.75rem;
   align-self: flex-end;
 }
 .quiz-page .chapter-nav-component .chapter-list .question-list-item {
@@ -913,7 +914,7 @@ body {
   justify-content: center;
   font-size: 1.3rem;
   font-weight: 600;
-  margin-bottom: 1rem;
+  margin: 1.5rem 0;
 }
 .quiz-page .quiz-component .button-previous-section .btn-previous {
   border-radius: 50%;
@@ -963,6 +964,9 @@ body {
 .quiz-page .quiz-component .options-section .option-item:hover {
   border-color: #0c5460;
 }
+.quiz-page .quiz-component .options-section .option-item:hover.disabled {
+  border-color: #dee2e6;
+}
 .quiz-page .quiz-component .button-next-section {
   display: flex;
   justify-content: flex-end;
@@ -984,6 +988,14 @@ body {
 }
 .quiz-page .quiz-component .button-next-section .btn-next.disabled:hover {
   box-shadow: none;
+}
+.quiz-page .quiz-component .progress {
+  height: 2px;
+  width: 70%;
+  margin: 0 auto;
+}
+.quiz-page .quiz-component .progress .progress-bar {
+  background-color: #2e7d32;
 }
 
 @media (max-width: 1020px) {
