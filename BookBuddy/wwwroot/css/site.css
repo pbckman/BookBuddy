@@ -972,7 +972,7 @@ body {
 }
 .quiz-page .quiz-component .card .chapter-summary-content .quiz-img {
   width: 50%;
-  max-width: 300px;
+  max-width: 280px;
   display: flex;
   margin: 3rem auto 1rem;
 }
@@ -1059,15 +1059,91 @@ body {
     margin-top: 4rem;
   }
 }
+.quiz-page .quiz-component .card .book-summary-content {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  position: relative;
+}
+.quiz-page .quiz-component .card .book-summary-content .percentage-score {
+  font-family: "Flavors", --font-poppins, cursive;
+  position: absolute;
+  top: 1.5rem;
+  left: 2rem;
+  font-size: 4rem;
+  rotate: -5deg;
+  color: #0c5460;
+}
+.quiz-page .quiz-component .card .book-summary-content .percentage-score.green {
+  color: #2e7d32;
+}
+.quiz-page .quiz-component .card .book-summary-content .percentage-score.orange {
+  color: #FBA033;
+}
+.quiz-page .quiz-component .card .book-summary-content .quiz-img {
+  width: 50%;
+  max-width: 280px;
+  display: flex;
+  margin: 3rem auto 1rem;
+}
+.quiz-page .quiz-component .card .book-summary-content .img-title {
+  font-family: "Kirang Haerang", --font-poppins, system-ui;
+  font-weight: 400;
+  font-style: normal;
+  font-size: 3rem;
+  margin: 1rem auto 2rem;
+  text-align: center;
+  color: #0c5460;
+  color: #de800e;
+}
+.quiz-page .quiz-component .card .book-summary-content .img-title.green {
+  color: #2e7d32;
+}
+.quiz-page .quiz-component .card .book-summary-content .img-title.red {
+  color: #ce6060;
+}
+.quiz-page .quiz-component .card .book-summary-content .img-title.orange {
+  color: #FBA033;
+}
 .quiz-page .quiz-component .card .book-summary-content h2 {
-  font-size: 1.5rem;
+  font-size: 1.4rem;
   margin-bottom: 1.5rem;
   text-align: center;
 }
-.quiz-page .quiz-component .card .book-summary-content h3 {
+.quiz-page .quiz-component .card .book-summary-content .summary {
+  font-size: 1.1rem;
+  font-weight: 500;
+  margin: 0 auto;
+  width: 90%;
+  max-width: 550px;
+  margin-bottom: 1rem;
+}
+.quiz-page .quiz-component .card .book-summary-content .summary span.green {
+  color: #2e7d32;
+}
+.quiz-page .quiz-component .card .book-summary-content .summary span.orange {
+  color: #FBA033;
+}
+.quiz-page .quiz-component .card .book-summary-content .summary span.red {
+  color: #ce6060;
+}
+.quiz-page .quiz-component .card .book-summary-content .stats-text span {
+  color: #0c5460;
+}
+.quiz-page .quiz-component .card .book-summary-content .final-words {
+  text-align: center;
+  font-size: 1rem;
+  font-weight: 400;
+  width: 80%;
+  max-width: 420px;
+}
+.quiz-page .quiz-component .card .book-summary-content .final-words.tips-for {
+  margin: 1.5rem auto 0.5rem;
+}
+.quiz-page .quiz-component .card .book-summary-content .chapter-collapse-title {
   align-self: center;
 }
-.quiz-page .quiz-component .card .book-summary-content h3 button {
+.quiz-page .quiz-component .card .book-summary-content .chapter-collapse-title button {
   font-size: 2rem;
   margin-bottom: 1.5rem;
   text-align: center;
@@ -1080,8 +1156,19 @@ body {
   border: none;
   background: none;
 }
-.quiz-page .quiz-component .card .book-summary-content h3 button i {
+.quiz-page .quiz-component .card .book-summary-content .chapter-collapse-title button i {
   margin-left: 1rem;
+  transform: rotate(180deg);
+  transition: transform 0.3s;
+}
+.quiz-page .quiz-component .card .book-summary-content .chapter-collapse-title button:hover {
+  color: #247887;
+}
+.quiz-page .quiz-component .card .book-summary-content .chapter-collapse-title button:focus {
+  outline: none;
+}
+.quiz-page .quiz-component .card .book-summary-content .chapter-collapse-title button[aria-expanded=false] i {
+  transform: rotate(0deg);
 }
 .quiz-page .quiz-component .card .book-summary-content .chapters-wrapper {
   display: flex;
@@ -1101,7 +1188,6 @@ body {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  position: relative;
 }
 .quiz-page .quiz-component .card .book-summary-content .chapters-wrapper .result-chapter-container .chapter-stats .btn-toggle {
   background-color: transparent;
@@ -1123,32 +1209,36 @@ body {
   transform: rotate(180deg);
 }
 .quiz-page .quiz-component .card .book-summary-content .chapters-wrapper .result-chapter-container .chapter-stats .content-div {
-  flex-grow: 1;
-  margin: 0 1.5rem;
   display: flex;
   flex-direction: column;
   justify-content: center;
-  align-items: center;
+  align-items: flex-start;
+  flex-grow: 1;
+  flex-shrink: 1;
+  flex-basis: 0;
+  margin: 0 1.5rem;
+  max-width: calc(100% - 3rem);
+  overflow: hidden;
 }
 .quiz-page .quiz-component .card .book-summary-content .chapters-wrapper .result-chapter-container .chapter-stats .content-div h3 {
-  font-size: 1.1rem;
-  font-weight: 500;
+  font-size: 1.2rem;
+  font-weight: 600;
   margin: 0 0 0.5rem;
-  text-align: center;
+  text-align: left;
   text-overflow: ellipsis;
   overflow: hidden;
   white-space: nowrap;
-  width: 90%;
-  max-width: 500px;
+  max-width: 100%;
 }
 .quiz-page .quiz-component .card .book-summary-content .chapters-wrapper .result-chapter-container .chapter-stats .content-div .progress {
   height: 20px;
   background-color: #e0e0e0;
   border-radius: 10px;
   overflow: hidden;
-  width: 80%;
-  max-width: 480px;
+  width: 100%;
+  max-width: 490px;
   height: 10px;
+  margin: 0;
 }
 .quiz-page .quiz-component .card .book-summary-content .chapters-wrapper .result-chapter-container .chapter-stats .content-div .progress .progress-bar {
   height: 100%;
@@ -1197,6 +1287,38 @@ body {
 .quiz-page .quiz-component .card .book-summary-content .chapters-wrapper .result-chapter-container .collapse .card-body .question-summary-list .question-result p {
   margin: 0;
   font-size: 1rem;
+}
+@media (max-width: 768px) {
+  .quiz-page .quiz-component .card .book-summary-content .percentage-score {
+    font-size: 3rem;
+  }
+  .quiz-page .quiz-component .card .book-summary-content .quiz-img {
+    margin-top: 4rem;
+  }
+  .quiz-page .quiz-component .card .book-summary-content .img-title {
+    font-size: 2rem;
+  }
+  .quiz-page .quiz-component .card .book-summary-content h2 {
+    font-size: 1.2rem;
+  }
+  .quiz-page .quiz-component .card .book-summary-content .summary {
+    font-size: 1rem;
+  }
+  .quiz-page .quiz-component .card .book-summary-content .final-words {
+    font-size: 0.9rem;
+  }
+  .quiz-page .quiz-component .card .book-summary-content .chapter-collapse-title button {
+    font-size: 1.5rem;
+  }
+  .quiz-page .quiz-component .card .book-summary-content .chapters-wrapper {
+    max-width: 100%;
+  }
+  .quiz-page .quiz-component .card .book-summary-content .chapters-wrapper .result-chapter-container {
+    padding: 1rem;
+  }
+  .quiz-page .quiz-component .card .book-summary-content .chapters-wrapper .result-chapter-container .chapter-stats .content-div h3 {
+    font-size: 1rem;
+  }
 }
 .quiz-page .quiz-component .button-previous-section .btn-previous {
   border-radius: 50%;
@@ -1278,6 +1400,11 @@ body {
 }
 .quiz-page .quiz-component .progress .progress-bar {
   background-color: #2e7d32;
+}
+@media (max-width: 768px) {
+  .quiz-page .quiz-component {
+    padding: 4rem 0.5rem 0.5rem;
+  }
 }
 @media (max-width: 425px) {
   .quiz-page .quiz-component {

@@ -277,7 +277,7 @@
                 position: relative;
                 .quiz-img {
                     width: 50%;
-                    max-width: 300px;
+                    max-width: 280px;
                     display: flex;
                     margin: 3rem auto 1rem;
                 }
@@ -344,7 +344,6 @@
             }
             @media (max-width: 768px) {
                 width: 95%;
-                // margin-top: 4rem;
                 .h2 {
                     font-size: 1.2rem;
                 }
@@ -368,137 +367,107 @@
                     }
                 }
             }
-            // .book-summary-content {
-            //     h2 {
-            //         font-size: 2.5rem;
-            //         margin-bottom: 1.5rem;
-            //         text-align: center;
-            //     }
-            //     h3 {
-            //         color: #021f24;
-            //         display: flex;
-            //         justify-content: center;
-            //         font-weight: 600;
-            //         margin: 1rem auto;
-            //         font-size: 1rem;
-            //         max-width: 85%;
-            //         text-align: center;
-            //     }
-            //     .question-summary-list {
-            //         list-style: none;
-            //         // padding: 0 1rem;
-            //         max-width: 90%;
-            //         margin: .5rem auto 1rem;
-            //         .question-result {
-            //             display: flex;
-            //             i {
-            //                 font-size: 1.5rem;
-            //                 margin-right: 1rem;
-            //                 width: 1.5rem;
-            //                 text-align: center;
-            //                 &.True {
-            //                     color: #2e7d32;
-            //                 }
-            //                 &.False {
-            //                     color: #ce6060;
-            //                 }
-            //             }
-            //         }
-            //     }
-            // }
-            // .book-summary-content {
-            //     h2 {
-            //         font-size: 2.5rem;
-            //         margin-bottom: 1.5rem;
-            //         text-align: center;
-            //     }
-            //     .result-chapter-div {
-            //         padding: 1rem;
-            //         background-color: #f8f9fa;
-            //         border-radius: 0.5rem;
-            //         // box-shadow: 0 0 10px 10px rgba(0, 0, 0, 0.1);
-            //         margin-bottom: 1rem;
-            //         h3 {
-            //             color: #021f24;
-            //             display: flex;
-            //             justify-content: center;
-            //             font-weight: 600;
-            //             margin: 1rem auto;
-            //             font-size: 1.2rem;
-            //             max-width: 85%;
-            //             text-align: center;
-            //         }
-            //         .btn-toggle {
-            //             background-color: transparent;
-            //             border: none;
-            //             padding: 0;
-            //             cursor: pointer;
-            //             display: inline-flex;
-            //             align-items: center;
-            //             justify-content: center;
-            //             font-size: 1.5rem;
-            //             transition: transform 0.3s;
-                    
-            //             &:focus {
-            //                 outline: none;
-            //             }
-                    
-            //             i {
-            //                 transition: transform 0.3s;
-            //             }
-                    
-            //             &[aria-expanded="true"] i {
-            //                 transform: rotate(180deg); // Rotera pilen uppåt när sektionen är öppen
-            //             }
-            //         }
-            //         .collapse {
-            //             margin-top: 0.5rem;
-            //             .card-body {
-            //                 // padding: 1rem;
-            //                 // background-color: #f8f9fa;
-            //                 // border-radius: 0.5rem;
-            //                 // box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            //             }
-            //         }
-            //     }
-            //         .question-summary-list {
-            //             list-style: none;
-            //             max-width: 90%;
-            //             margin: 0.5rem auto 1rem;
-            //             padding: 0;
-                
-            //             .question-result {
-            //                 display: flex;
-            //                 align-items: center;
-            //                 margin-bottom: 0.75rem;
-            //                 font-size: 1rem;
-            //                 p {
-            //                     margin: 0;
-            //                     flex: 1;
-            //                 }
-            //                 i {
-            //                     font-size: 1.5rem;
-            //                     margin-right: 1rem;
-            //                     width: 1.5rem;
-            //                     text-align: center;
-            //                     &.fa-check {
-            //                         color: #2e7d32; // Grön för korrekt svar
-            //                     }
-            //                     &.fa-times {
-            //                         color: #ce6060; // Röd för felaktigt svar
-            //                     }
-            //                 }
-            //             }
-            //         }
-
-            // }
             .book-summary-content {
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                position: relative;
+                .percentage-score {
+                    font-family: "Flavors",--font-poppins, cursive;
+                    position: absolute;
+                    top: 1.5rem;
+                    left: 2rem;
+                    font-size: 4rem;
+                    rotate: -5deg;
+                    color: #0c5460;
+                    &.green {
+                        color: #2e7d32;
+                    }
+                    &.orange {
+                        color: #FBA033;
+                    }
+                }
+                .quiz-img {
+                    width: 50%;
+                    max-width: 280px;
+                    display: flex;
+                    margin: 3rem auto 1rem;
+                }
+                .img-title {
+                    font-family: "Kirang Haerang", --font-poppins, system-ui;
+                    font-weight: 400;
+                    font-style: normal;
+                    font-size: 3rem;
+                    margin: 1rem auto 2rem;
+                    text-align: center;
+                    color: #0c5460;
+                    color: #de800e;
+                    &.green {
+                        color: #2e7d32;
+                    }
+                    &.red {
+                        color: #ce6060;
+                    }
+                    &.orange {
+                        color: #FBA033;
+                    }
+                }
                 h2 {
-                    font-size: 1.5rem;
+                    font-size: 1.4rem;
                     margin-bottom: 1.5rem;
                     text-align: center;
                 }
-                h3 {
+                .summary {
+                    font-size: 1.1rem;
+                    font-weight: 500;
+                    margin: 0 auto;
+                    width: 90%;
+                    max-width: 550px;
+                    margin-bottom: 1rem;
+                    span {
+                        &.green {
+                            color: #2e7d32;
+                        }
+                        &.orange {
+                            color: #FBA033;
+                        }
+                        &.red {
+                            color: #ce6060;
+                        }
+                    }
+                }
+                .stats-text {
+                    span {
+                        color: #0c5460;
+                    }
+                }
+                // .best-chapter-text {
+                //     span {
+                //         &.best-chapter {
+                //             font-weight: 500;
+                //         }
+                //         &.green {
+                //             color: #2e7d32;
+                //         }
+                //         &.orange {
+                //             color: #FBA033;
+                //         }
+                //         &.red {
+                //             color: #ce6060;
+                //         }
+                //     }
+                // }
+                .final-words {
+                    text-align: center;
+                    font-size: 1rem;
+                    font-weight: 400;
+                    width: 80%;
+                    max-width: 420px;
+                    &.tips-for {
+                        margin: 1.5rem auto .5rem;
+                    }
+                }
+                .chapter-collapse-title {
                     align-self: center;
                     button {
                         font-size: 2rem;
@@ -514,6 +483,17 @@
                         background: none;
                         i {
                             margin-left: 1rem;
+                            transform: rotate(180deg);
+                            transition: transform 0.3s;
+                        }
+                        &:hover {
+                            color:#247887;
+                        }
+                        &:focus {
+                            outline: none;
+                        }    
+                        &[aria-expanded="false"] i {
+                            transform: rotate(0deg);
                         }
                     }
                 }
@@ -536,7 +516,8 @@
                             display: flex;
                             align-items: center;
                             justify-content: space-between;
-                            position: relative;
+                            // overflow: hidden;
+                            // position: relative;
                 
                             .btn-toggle {
                                 background-color: transparent;
@@ -562,23 +543,26 @@
                             }
                 
                             .content-div {
-                                flex-grow: 1;
-                                margin: 0 1.5rem;
                                 display: flex;
                                 flex-direction: column;
                                 justify-content: center;
-                                align-items: center;
-                
+                                align-items: flex-start;
+                                flex-grow: 1;
+                                flex-shrink: 1;
+                                flex-basis: 0;
+                                margin: 0 1.5rem;
+                                max-width: calc(100% - 3rem);
+                                overflow: hidden;
+                            
                                 h3 {
-                                    font-size: 1.1rem;
-                                    font-weight: 500;
+                                    font-size: 1.2rem;
+                                    font-weight: 600;
                                     margin: 0 0 0.5rem;
-                                    text-align: center;
+                                    text-align: left;
                                     text-overflow: ellipsis;
                                     overflow: hidden;
                                     white-space: nowrap;
-                                    width: 90%;
-                                    max-width: 500px;
+                                    max-width: 100%;
                                 }
                 
                                 .progress {
@@ -586,9 +570,10 @@
                                     background-color: #e0e0e0;
                                     border-radius: 10px;
                                     overflow: hidden;
-                                    width: 80%;
-                                    max-width: 480px;
+                                    width: 100%;
+                                    max-width: 490px;
                                     height: 10px;
+                                    margin: 0;
                 
                                     .progress-bar {
                                         height: 100%;
@@ -650,6 +635,44 @@
                                             margin: 0;
                                             font-size: 1rem;
                                         }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+                @media (max-width: 768px) {
+                    .percentage-score {
+                        font-size: 3rem;
+                    }
+                    .quiz-img {
+                        margin-top: 4rem;
+                    }
+                    .img-title {
+                        font-size: 2rem;
+                    }
+                    h2 {
+                        font-size: 1.2rem;
+                    }
+                    .summary {
+                        font-size: 1rem;
+                    }
+                    .final-words {
+                        font-size: 0.9rem;
+                    }
+                    .chapter-collapse-title {
+                        button {
+                            font-size: 1.5rem;
+                        }
+                    }
+                    .chapters-wrapper {
+                        max-width: 100%;
+                        .result-chapter-container {
+                            padding: 1rem;
+                            .chapter-stats {
+                                .content-div {
+                                    h3 {
+                                        font-size: 1rem;
                                     }
                                 }
                             }
@@ -760,6 +783,10 @@
             .progress-bar {
                 background-color: #2e7d32;
             }
+        }
+        @media (max-width: 768px) {
+            padding: 4rem .5rem .5rem;
+            
         }
         @media (max-width: 425px) {
             padding: .5rem;

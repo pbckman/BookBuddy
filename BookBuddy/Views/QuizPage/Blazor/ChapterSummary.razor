@@ -68,7 +68,6 @@ else
     </div>
 }
 
-
 @code {
     [Parameter] public QuizModel Model { get; set; } = null!;
     [Parameter] public EventCallback OnModelChange { get; set; }
@@ -85,6 +84,12 @@ else
 
         var fileName = "QuizChapterSummary.xml";
         Translations = TranslationFactory.GetTranslationsForView(fileName, "quizchaptersummary", Language);
+        StateHasChanged();
+    }
+
+    protected override void OnParametersSet()
+    {
+        CountPercentage();
     }
 
     private void CountPercentage()
