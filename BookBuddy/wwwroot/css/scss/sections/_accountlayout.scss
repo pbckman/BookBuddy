@@ -3,9 +3,29 @@
     background-color: #BDC8CB;
     color: white;
     padding: 5px;
-    margin-bottom: 20px;
+    margin-bottom: 10px;
 
     .custom-icon {
         color: white;
+    }
+}
+
+.active-profile {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 5px;
+    padding: 10px;
+    gap: 5px;
+
+    h5 {
+        margin-top: 7px;
+    }
+
+
+    img {
+        width: 45px;
+        height: 45px;
+        border-radius: 50%;
     }
 }

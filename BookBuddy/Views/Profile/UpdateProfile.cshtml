@@ -9,6 +9,7 @@
     var profiles = await ProfileService.GetSubProfilesAsync(userId);
     var selectedSubProfile = await ProfileService.GetSelectedSubProfileAsync(userId);
     var mainProfile = await ProfileService.GetMainProfileAsync(userId);
+    var selectedProfile = await ProfileService.GetSelectedProfileAsync(userId);
 }
 
 
@@ -20,15 +21,15 @@
         @Html.AntiForgeryToken()
         @if (TempData["StatusMessageCreate"] != null)
         {
-                <div class="alert alert-success">
+            <div class="alert alert-success">
                 @TempData["StatusMessageCreate"]
-                </div>
+            </div>
         }
         else if (TempData["ErrorMessageCreate"] != null)
         {
-                <div class="alert alert-danger">
+            <div class="alert alert-danger">
                 @TempData["ErrorMessageCreate"]
-                </div>
+            </div>
         }
         <div class="form-group mb-3">
             <label asp-for="FirstName">@ViewData["FirstNameCreate"]</label>
@@ -43,66 +44,65 @@
     <h3 class="text-center account-setting-title">@ViewData["TitleUpdate"]</h3>
     <p class="text-center mb-4">@ViewData["DescriptionUpdate"]</p>
 
-
-    <div class="dropdown">
-
-        @if (selectedSubProfile == null)
-        {
-                <button class="btn btn-light d-flex align-items-center" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                <span class="d-none d-lg-block"></span>
-                </button>
-        }
-        else
-        {
-                <button class="btn btn-light dropdown-toggle d-flex align-items-center" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                <span class="d-none d-lg-block">@selectedSubProfile.ProfileFirstName</span>
-                </button>
-        }
-
-
-        <ul class="dropdown-menu">
-            @foreach (var profile in profiles)
-            {
-                @if (profiles == null)
-                {
-                            <button class="dropdown-item">No profiles yet</button>
-                }
-                else
-                {
-                        <li>
-                            <form action="@Url.Action("SelectSubProfile", "Profile")" method="post">
-                                <input type="hidden" name="profileId" value="@profile.Id" />
-                                <button type="submit" class="dropdown-item">@profile.ProfileFirstName</button>
-                            </form>
-                        </li>
-                }
-
-            }
-        </ul>
-    </div>
-
-    <form method="post" asp-action="UpdateProfile" asp-controller="Profile">
-
-        @if (TempData["StatusMessageUpdate"] != null)
-        {
-                <div class="alert alert-success">
-                @TempData["StatusMessageUpdate"]
+    <div class="update-subprofile">
+        <div class="dropdown">
+            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
+                Select profile
+            </button>
+            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                <div>
+                    @foreach (var profile in profiles)
+                    {
+                        <form action="@Url.Action("SelectSubProfile", "Profile")" method="post">
+                            <input type="hidden" name="profileId" value="@profile.Id" />
+                            <button type="submit" class="dropdown-item">@profile.ProfileFirstName</button>
+                        </form>
+                    }
                 </div>
-        }
-        else if (TempData["ErrorMessageUpdate"] != null)
-        {
-                <div class="alert alert-danger">
-                @TempData["ErrorMessageUpdate"]
-                </div>
-        }
-        <div class="form-group mb-3">
-            <label asp-for="FirstName">@ViewData["FirstNameUpdate"]</label>
-            <input asp-for="FirstName" />
-            <span asp-validation-for="FirstName"></span>
+            </div>
         </div>
 
-        <button type="submit" class="btn btn-success w-100 mb-3">@ViewData["SaveButtonUpdate"]</button>
+        <div>
+            @if (selectedSubProfile == null || string.IsNullOrEmpty(selectedSubProfile.ProfileFirstName))
+            {
+                <p>Ingen vald profil</p>
+            }
+            else
+            {
+                <div class="active-profile">
+                    <img class="profile-image" src="~/images/avatars/@(selectedSubProfile.ProfileImage)" alt="ProfileImage" />
+                    <h5>@selectedSubProfile.ProfileFirstName</h5>
+                </div>
+            }
+        </div>
+        
+    </div>
+    
 
-    </form>
+</div>
+
+<form method="post" asp-action="UpdateProfile" asp-controller="Profile">
+
+    @if (TempData["StatusMessageUpdate"] != null)
+    {
+        <div class="alert alert-success">
+            @TempData["StatusMessageUpdate"]
+        </div>
+    }
+    else if (TempData["ErrorMessageUpdate"] != null)
+    {
+        <div class="alert alert-danger">
+            @TempData["ErrorMessageUpdate"]
+        </div>
+    }
+    <div class="form-group mb-3">
+        <label asp-for="FirstName">@ViewData["FirstNameUpdate"]</label>
+        <input asp-for="FirstName" />
+        <span asp-validation-for="FirstName"></span>
+    </div>
+
+    <button type="submit" class="btn btn-success w-100 mb-3">@ViewData["SaveButtonUpdate"]</button>
+
+</form>
 
 </div>

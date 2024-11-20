@@ -108,8 +108,7 @@ namespace BookBuddy.Business.Services.AccountService
                 }
 
             }
-
-            return await GetSubProfileAsync(userId);
+            return null;
         }
 
         public async Task<bool> UpdateProfileAsync(ApplicationUser user, UserProfileViewModel model)
@@ -134,6 +133,17 @@ namespace BookBuddy.Business.Services.AccountService
             profile.ProfileFirstName = model.FirstName;
 
             _dataContext.Profiles.Update(profile);
+            await _dataContext.SaveChangesAsync();
+            return true;
+        }
+
+        public async Task<bool> UpdateProfileImageAsync(ProfileImageViewModel model)
+        {
+            var profile = await GetProfileByIdAsync(model.ProfileId);
+            if (profile == null) return false;
+
+            profile.ProfileImage = model.SelectedAvatar;
+
             await _dataContext.SaveChangesAsync();
             return true;
         }

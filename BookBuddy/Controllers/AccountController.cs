@@ -48,11 +48,6 @@ public class AccountController(UserManager<ApplicationUser> userManager, SignInM
 
         var user = await _userManager.GetUserAsync(User);
 
-        if (user == null)
-        {
-            return Unauthorized();
-        }
-
         var result = await _accountService.ChangePasswordAsync(user, model.CurrentPassword, model.NewPassword);
 
         if (!result.Succeeded)

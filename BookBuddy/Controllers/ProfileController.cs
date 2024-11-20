@@ -167,11 +167,15 @@ namespace BookBuddy.Controllers
                 return Unauthorized();
             }
 
-            var profile = await _profileService.GetProfileAsync(user);
+            var userId = user.Id;
+
+            var profile = await _profileService.GetSelectedProfileAsync(userId);
             if (profile == null)
             {
                 return NotFound();
             }
+
+            ViewBag.ProfileId = profile.Id;
 
             return View();
         }
@@ -220,7 +224,7 @@ namespace BookBuddy.Controllers
             ViewData["Title"] = _translationService.GetTranslation("details", "title", lang);
             ViewData["Description"] = _translationService.GetTranslation("details", "description", lang);
             ViewData["FirstName"] = _translationService.GetTranslation("details", "firstname", lang);
-            ViewData["LastName"] = _translationService.GetTranslation("details", "firstname", lang);
+            ViewData["LastName"] = _translationService.GetTranslation("details", "lastname", lang);
             ViewData["SaveButton"] = _translationService.GetTranslation("details", "saveButton", lang);
             ViewData["StatusMessage"] = "";
 
@@ -275,6 +279,22 @@ namespace BookBuddy.Controllers
             TempData["StatusMessage"] = _translationService.GetTranslation("details", "statusMessage", lang);
             return RedirectToAction("Details", "Profile");
         }
+
+        [HttpPost]
+        public async Task<IActionResult> UpdateProfileImage(ProfileImageViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                var success = await _profileService.UpdateProfileImageAsync(model);
+                if (success)
+                {
+                    return RedirectToAction("UpdateSubProfile", "Profile");
+                }
+            }
+
+            return View("Error");
+        }
+
 
 
         [HttpPost]

@@ -26,7 +26,7 @@
                 @if (User.Identity.IsAuthenticated)
                 {
                     <button class="btn btn-light dropdown-toggle d-flex align-items-center" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                        <img class="profile-image" src="~/images/default-profile.jpg" alt="Company Logo" /> <span class="d-none d-lg-block">@selectedProfile?.ProfileFirstName</span>
+                        <img class="profile-image" src="~/images/avatars/@(selectedProfile?.ProfileImage ?? "default-profile.jpg")" alt="ProfileImage" /> <span class="d-none d-lg-block">@selectedProfile?.ProfileFirstName</span>
                     </button>
 
                     <ul class="dropdown-menu">
@@ -38,7 +38,9 @@
                                 <li>
                                     <form action="@Url.Action("SelectProfile", "Profile")" method="post">
                                         <input type="hidden" name="profileId" value="@profile.Id" />
-                                        <button type="submit" class="dropdown-item">@profile.ProfileFirstName</button>
+                                        <button class="btn btn-light d-flex align-items-center dropdown-item" type="submit">
+                                            <img class="profile-image" src="~/images/avatars/@(profile.ProfileImage ?? "default-profile.jpg")" alt="ProfileImage" /> <span class="d-none d-lg-block">@profile?.ProfileFirstName</span>
+                                        </button>
                                     </form>
                                 </li>
                             }

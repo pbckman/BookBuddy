@@ -635,10 +635,27 @@ img {
   background-color: #BDC8CB;
   color: white;
   padding: 5px;
-  margin-bottom: 20px;
+  margin-bottom: 10px;
 }
 .home-button .custom-icon {
   color: white;
+}
+
+.active-profile {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 5px;
+  padding: 10px;
+  gap: 5px;
+}
+.active-profile h5 {
+  margin-top: 7px;
+}
+.active-profile img {
+  width: 45px;
+  height: 45px;
+  border-radius: 50%;
 }
 
 .cookie-container {
@@ -864,4 +881,26 @@ img {
 
 .account-setting-title {
   margin-top: 20px;
+}
+
+.avatar-picker .avatar-option {
+  cursor: pointer;
+  border: 2px solid transparent;
+  transition: transform 0.2s ease, border-color 0.2s ease;
+}
+.avatar-picker .avatar-option:hover {
+  transform: scale(1.1);
+  border-color: blue;
+}
+.avatar-picker .avatar-img {
+  height: 50px;
+  width: 50px;
+  border-radius: 50%;
+  margin-right: 0.5rem;
+}
+
+.update-subprofile {
+  display: flex;
+  align-items: center;
+  gap: 20px;
 }

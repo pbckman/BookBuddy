@@ -43,18 +43,23 @@
                         </a>
                     </div>
 
+                    <div class="active-profile">
+                    <img class="profile-image" src="~/images/avatars/@(selectedProfile.ProfileImage ?? "default-profile.jpg")" alt="ProfileImage" />
+                    <h5>@selectedProfile.ProfileFirstName</h5>
+                    </div>
+
                     <div class="account-navigation">
                     @if (selectedProfile.Id == mainProfile.Id)
                     {
                         <ul class="nav nav-tabs" id="myTab" role="tablist">
                             <li class="nav-item" role="presentation">
-                                <a class="nav-link @Html.IsActive("Profile", "Details")" href="@Url.Action("Details", "Profile", new { lang = currentCulture })" id="password-tab" role="tab" aria-controls="profile" aria-selected="false">User</a>
+                                <a class="nav-link @Html.IsActive("Profile", "Details")" href="@Url.Action("Details", "Profile", new { lang = currentCulture })" id="password-tab" role="tab" aria-controls="profile">User</a>
                             </li>
                             <li class="nav-item" role="presentation">
-                                <a class="nav-link @Html.IsActive("Account", "UpdateUser")" href="@Url.Action("UpdateUser", "Account", new { lang = currentCulture })" id="password-tab" role="tab" aria-controls="password" aria-selected="false">Password</a>
+                                <a class="nav-link @Html.IsActive("Account", "UpdateUser")" href="@Url.Action("UpdateUser", "Account", new { lang = currentCulture })" id="password-tab" role="tab" aria-controls="password">Password</a>
                             </li>
                             <li class="nav-item" role="presentation">
-                                <a class="nav-link @Html.IsActive("Profile", "UpdateProfile")" href="@Url.Action("UpdateProfile", "Profile", new { lang = currentCulture })" id="password-tab" role="tab" aria-controls="profile" aria-selected="false">Profiles</a>
+                                <a class="nav-link @Html.IsActive("Profile", "UpdateProfile")" href="@Url.Action("UpdateProfile", "Profile", new { lang = currentCulture })" id="password-tab" role="tab" aria-controls="profile">Profiles</a>
                             </li>
                         </ul>
                     }
