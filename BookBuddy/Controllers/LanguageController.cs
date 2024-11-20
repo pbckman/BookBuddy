@@ -6,12 +6,13 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace BookBuddy.Controllers;
 
-public class LanguageController(IUrlResolver urlResolver, IContentLoader contentLoader, ILogger<LanguageController> logger) : Controller
+public class LanguageController(UrlResolver urlResolver, IContentLoader contentLoader, ILogger<LanguageController> logger) : Controller
 {
-    private readonly IUrlResolver _urlResolver = urlResolver;
+    private readonly UrlResolver _urlResolver = urlResolver;
     private readonly IContentLoader _contentLoader = contentLoader;
     private readonly ILogger<LanguageController> _logger = logger;
 
+    [HttpPost]
     public IActionResult ChangeLanguage(ContentReference contentReference, string language)
     {
         try

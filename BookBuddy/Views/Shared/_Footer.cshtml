@@ -1,4 +1,10 @@
-﻿@model IPageViewModel<SitePageData>
+﻿@using EPiServer.Web.Routing
+@model IPageViewModel<SitePageData>
+
+@{
+    var englishUrl = UrlResolver.Current.GetUrl(Model.CurrentPage.ContentLink, "en");
+    var swedishUrl = UrlResolver.Current.GetUrl(Model.CurrentPage.ContentLink, "sv");
+}
 
 
     @if (Model.SiteSettings != null)
@@ -29,7 +35,15 @@
 
             </div>
 
+        <a href="@englishUrl">English</a>
+        <a href="@swedishUrl">Svenska</a>
         <a href="/cookieinfopage">Cookie settings</a>
+        <a href="@Url.Action("ChangeLanguage", "Language", new { contentReference = Model.CurrentPage.ContentLink.ID, language = "en" })">
+            English
+        </a>
+        <a href="@Url.Action("ChangeLanguage", "Language", new { contentReference = Model.CurrentPage.ContentLink.ID, language = "sv" })">
+            Svenska
+        </a>
 
         </div>
         
@@ -38,3 +52,5 @@
     {
         <p>Footer settings not available</p>
     }
+
+
