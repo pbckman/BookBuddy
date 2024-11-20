@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<languages>
+    <language name="English" id="en">
+        <contenttypes>
+            <quizbooksummary>
+                <properties>
+                    <title>Quiz Summary!</title>
+                    <overallTitle>Overall Performance Summary</overallTitle>
+                    <summaryTitle>Summary for [Book Title]</summaryTitle>
+                    <pointsOverviewText>You completed the book with [correct answers] correct answers out of [total questions] total questions.</pointsOverviewText>
+                    <pointsPercentageText>You completed the book with [percentage]% correct answers ([correct answers] out of [total questions] total questions).</pointsPercentageText>
+                    <badResultText>Keep going, you can do it!</badResultText>
+                    <goodResultText>Great job, keep it up!</goodResultText>
+                    <awesomeResultText>Exceptional work, you're a quiz master!</awesomeResultText>
+                    <badResultAltText>Illustration representing a need for improvement</badResultAltText>
+                    <goodResultAltText>Illustration showing a good result with a thumbs up</goodResultAltText>
+                    <awesomeResultAltText>Illustration of a gold trophy representing excellent performance</awesomeResultAltText>
+                    <tipsForNextBooks>Get ready for more adventures and challenges in other books!</tipsForNextBooks>
+                    <keyLearnings>Key takeaways from this book include...</keyLearnings>
+                    <finalEncouragementText>You’ve done amazing work, keep exploring and learning!</finalEncouragementText>
+                    <restartQuizButtonText>Restart Quiz</restartQuizButtonText>
+                    <mainMenuButtonText>Go to Main Menu</mainMenuButtonText>
+                </properties>
+            </quizbooksummary>
+        </contenttypes>
+    </language>
+    
+    <language name="Svenska" id="sv">
+        <contenttypes>
+            <quizbooksummary>
+                <properties>
+                    <title>Sammanfattning av Quiz!</title>
+                    <overallTitle>Sammanfattning av din prestation</overallTitle>
+                    <summaryTitle>Sammanfattning för [Boktitel]</summaryTitle>
+                    <pointsOverviewText>Du har slutfört boken med [antal rätta svar] rätta svar av totalt [totala frågor] frågor.</pointsOverviewText>
+                    <pointsPercentageText>Du klarade boken med [percentage]% rätta svar ([antal rätta svar] av [totala frågor] frågor).</pointsPercentageText>
+                    <badResultText>Fortsätt kämpa, du klarar det!</badResultText>
+                    <goodResultText>Jättebra jobbat, fortsätt så!</goodResultText>
+                    <awesomeResultText>Otroligt arbete, du är en quizmästare!</awesomeResultText>
+                    <badResultAltText>Illustration som representerar behov av förbättring</badResultAltText>
+                    <goodResultAltText>Illustration som visar ett bra resultat med tummen upp</goodResultAltText>
+                    <awesomeResultAltText>Illustration av en guldpokal som representerar utmärkt prestation</awesomeResultAltText>
+                    <tipsForNextBooks>Förbered dig på fler äventyr och utmaningar i andra böcker!</tipsForNextBooks>
+                    <keyLearnings>Lärdomar från denna bok inkluderar...</keyLearnings>
+                    <finalEncouragementText>Du har gjort ett fantastiskt jobb, fortsätt utforska och lär dig mer!</finalEncouragementText>
+                    <restartQuizButtonText>Starta om Quiz</restartQuizButtonText>
+                    <mainMenuButtonText>Gå till huvudmenyn</mainMenuButtonText>
+                </properties>
+            </quizbooksummary>
+        </contenttypes>
+    </language>
+</languages>

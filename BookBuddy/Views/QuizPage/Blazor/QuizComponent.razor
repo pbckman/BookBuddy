@@ -24,7 +24,81 @@
     }
     else if(Model.Display == Display.QuizSummary)
     {
-        <h2>Quiz summary!</h2>
+        <div class="book-summary-content">
+            <h1>@Translations["title"]</h1>
+            <h2>@Translations["overallTitle"]</h2>
+
+            <p>
+                @Translations["pointsOverviewText"].Replace("[correct answers]", correctAnswers.ToString()).Replace("[total questions]", totalQuestions.ToString())
+            </p>
+
+            <h3>
+                <button class="btn-toggle" type="button" data-bs-toggle="collapse" data-bs-target="#chaptersWrapperCollapse" aria-expanded="true" aria-controls="chaptersWrapperCollapse">
+                    Quiz Summary
+                    <i class="fas fa-chevron-down"></i>
+                </button>
+            </h3>
+
+            <div class="collapse" id="chaptersWrapperCollapse">
+                <div class="chapters-wrapper">
+                    @if (Model.QuizResult?.ChapterResults != null && Model.Chapters != null)
+                    {
+                        foreach (var chapter in Model.QuizResult.ChapterResults)
+                        {
+                            CountChapterPercentage(chapter.ChapterId);
+                            var displayChapterPercentage = ChapterPercentage > 0 ? ChapterPercentage : 2;
+                            var displaycolor = ChapterPercentage > 20 ? "green" : "red";
+
+                            var chapterTitle = Model.Chapters.FirstOrDefault(c => c.ChapterId == chapter.ChapterId)?.ChapterTitle;
+                            var uniqueId = $"collapseChapter{chapter.ChapterId}";
+
+                            <div class="result-chapter-container">
+                            
+                                <div class="chapter-stats">
+                                    <button class="btn-toggle" type="button" data-bs-toggle="collapse" data-bs-target="#@uniqueId" aria-expanded="false" aria-controls="@uniqueId">
+                                        <i class="fas fa-chevron-down"></i>
+                                    </button>
+                                    
+                                    <div class="content-div">
+                                        <h3>@chapterTitle</h3>
+                                        <div class="progress" role="progressbar" aria-label="ChapterPercentage progress bar score" aria-valuenow="@ChapterPercentage" aria-valuemin="0" aria-valuemax="100">
+                                            <div class="progress-bar @displaycolor" style="width: @displayChapterPercentage%"></div>
+                                        </div>
+                                    </div>
+                                    <p class="chapter-percentage-score @displaycolor">@($"{ChapterPercentage}%")</p>
+                                </div>
+                                
+                                
+                                <div class="collapse" id="@uniqueId">
+                                    <div class="card-body pb-0">
+                                        <ul class="question-summary-list p-0 m-0 p">
+                                            @foreach (var question in chapter.QuestionResults)
+                                            {
+                                                var isCorrect = question.IsCorrect;
+                                                var resultIcon = isCorrect == true ? "fa-check" : "fa-times";
+                                                var questionText = Model.Chapters
+                                                    .FirstOrDefault(c => c.ChapterId == chapter.ChapterId)?
+                                                    .Questions.FirstOrDefault(q => q.QuestionId == question.QuestionId)?.Question;
+
+                                                <li style="display: flex; align-items: center; margin-bottom: 0.5rem;">
+                                                    @if (isCorrect != null)
+                                                    {
+                                                        <i style="font-size: 1.5rem; margin-right: 1rem; color: @(isCorrect == true ? "#2e7d32" : "#ce6060");" 
+                                                        class="fa-solid @resultIcon"></i>
+                                                        <p style="margin: 0; font-size: 1rem;">@questionText</p>
+                                                    }
+                                                </li>
+                                            }
+                                        </ul>
+                                    </div>
+                                </div>
+
+                            </div>
+                        }
+                    }
+                </div>
+            </div>
+        </div>
     }
 </div>
 
@@ -39,6 +113,39 @@
     [Parameter] public EventCallback<int> OnBtnSummaryClick { get; set; }
     [Parameter] public string Language { get; set; } = null!;
 
+    private Dictionary<string, string> Translations = new Dictionary<string, string>();
+    private ChapterResultModel? ChapterResult { get; set; }
+    private double ChapterPercentage { get; set; }
+    private double BookPercentage { get; set; }
+    private int correctAnswers { get; set; }
+    private int totalQuestions { get; set; }
+
+
+    protected override void OnInitialized()
+    {
+        var fileName = "QuizBookSummary.xml";
+        Translations = TranslationFactory.GetTranslationsForView(fileName, "quizbooksummary", Language);
+
+        correctAnswers = Model.QuizResult.ChapterResults
+        .Sum(chapter => chapter.QuestionResults.Count(q => q.IsCorrect == true));
+        totalQuestions = Model.QuizResult.ChapterResults
+        .Sum(chapter => chapter.QuestionResults.Count);
+    }
+
+    private void CountChapterPercentage(int selectedChapterId)
+    {
+        ChapterResult = Model.QuizResult?.ChapterResults.FirstOrDefault(cr => cr.ChapterId == selectedChapterId);
+
+        if (ChapterResult != null && ChapterResult.QuestionResults.Count > 0)
+        {
+            ChapterPercentage = (double)ChapterResult.QuestionResults.Count(qr => qr.IsCorrect) / ChapterResult.QuestionResults.Count * 100;
+            return;
+        }
+        else
+        {
+            ChapterPercentage = 0;
+        }
+    }
     private async Task HandleBtnStartClick()
     {
         if (OnStartedQuiz.HasDelegate)

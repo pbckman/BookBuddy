@@ -368,6 +368,296 @@
                     }
                 }
             }
+            // .book-summary-content {
+            //     h2 {
+            //         font-size: 2.5rem;
+            //         margin-bottom: 1.5rem;
+            //         text-align: center;
+            //     }
+            //     h3 {
+            //         color: #021f24;
+            //         display: flex;
+            //         justify-content: center;
+            //         font-weight: 600;
+            //         margin: 1rem auto;
+            //         font-size: 1rem;
+            //         max-width: 85%;
+            //         text-align: center;
+            //     }
+            //     .question-summary-list {
+            //         list-style: none;
+            //         // padding: 0 1rem;
+            //         max-width: 90%;
+            //         margin: .5rem auto 1rem;
+            //         .question-result {
+            //             display: flex;
+            //             i {
+            //                 font-size: 1.5rem;
+            //                 margin-right: 1rem;
+            //                 width: 1.5rem;
+            //                 text-align: center;
+            //                 &.True {
+            //                     color: #2e7d32;
+            //                 }
+            //                 &.False {
+            //                     color: #ce6060;
+            //                 }
+            //             }
+            //         }
+            //     }
+            // }
+            // .book-summary-content {
+            //     h2 {
+            //         font-size: 2.5rem;
+            //         margin-bottom: 1.5rem;
+            //         text-align: center;
+            //     }
+            //     .result-chapter-div {
+            //         padding: 1rem;
+            //         background-color: #f8f9fa;
+            //         border-radius: 0.5rem;
+            //         // box-shadow: 0 0 10px 10px rgba(0, 0, 0, 0.1);
+            //         margin-bottom: 1rem;
+            //         h3 {
+            //             color: #021f24;
+            //             display: flex;
+            //             justify-content: center;
+            //             font-weight: 600;
+            //             margin: 1rem auto;
+            //             font-size: 1.2rem;
+            //             max-width: 85%;
+            //             text-align: center;
+            //         }
+            //         .btn-toggle {
+            //             background-color: transparent;
+            //             border: none;
+            //             padding: 0;
+            //             cursor: pointer;
+            //             display: inline-flex;
+            //             align-items: center;
+            //             justify-content: center;
+            //             font-size: 1.5rem;
+            //             transition: transform 0.3s;
+                    
+            //             &:focus {
+            //                 outline: none;
+            //             }
+                    
+            //             i {
+            //                 transition: transform 0.3s;
+            //             }
+                    
+            //             &[aria-expanded="true"] i {
+            //                 transform: rotate(180deg); // Rotera pilen uppåt när sektionen är öppen
+            //             }
+            //         }
+            //         .collapse {
+            //             margin-top: 0.5rem;
+            //             .card-body {
+            //                 // padding: 1rem;
+            //                 // background-color: #f8f9fa;
+            //                 // border-radius: 0.5rem;
+            //                 // box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            //             }
+            //         }
+            //     }
+            //         .question-summary-list {
+            //             list-style: none;
+            //             max-width: 90%;
+            //             margin: 0.5rem auto 1rem;
+            //             padding: 0;
+                
+            //             .question-result {
+            //                 display: flex;
+            //                 align-items: center;
+            //                 margin-bottom: 0.75rem;
+            //                 font-size: 1rem;
+            //                 p {
+            //                     margin: 0;
+            //                     flex: 1;
+            //                 }
+            //                 i {
+            //                     font-size: 1.5rem;
+            //                     margin-right: 1rem;
+            //                     width: 1.5rem;
+            //                     text-align: center;
+            //                     &.fa-check {
+            //                         color: #2e7d32; // Grön för korrekt svar
+            //                     }
+            //                     &.fa-times {
+            //                         color: #ce6060; // Röd för felaktigt svar
+            //                     }
+            //                 }
+            //             }
+            //         }
+
+            // }
+            .book-summary-content {
+                h2 {
+                    font-size: 1.5rem;
+                    margin-bottom: 1.5rem;
+                    text-align: center;
+                }
+                h3 {
+                    align-self: center;
+                    button {
+                        font-size: 2rem;
+                        margin-bottom: 1.5rem;
+                        text-align: center;
+                        color: #0c5460;
+                        display: flex;
+                        justify-content: center;
+                        font-weight: 600;
+                        margin: 1.5rem 0;
+                        padding: 1rem 1.5rem;
+                        border: none;
+                        background: none;
+                        i {
+                            margin-left: 1rem;
+                        }
+                    }
+                }
+            
+                .chapters-wrapper {
+                    display: flex;
+                    flex-direction: column;
+                    gap: 1rem;
+                    max-width: 90%;
+                    margin: auto;
+                    margin-bottom: 1.5rem;
+                    .result-chapter-container {
+                        border: 1px solid #e0e0e0;
+                        border: 2px solid #f9f9f9;
+                        border-radius: 8px;
+                        // background-color: #f9f9f9;
+                        padding: 1rem 1.25rem;
+                
+                        .chapter-stats {
+                            display: flex;
+                            align-items: center;
+                            justify-content: space-between;
+                            position: relative;
+                
+                            .btn-toggle {
+                                background-color: transparent;
+                                border: none;
+                                padding: 0;
+                                cursor: pointer;
+                                font-size: 1.5rem;
+                                transition: transform 0.3s;
+                                flex-shrink: 0;
+                                color: #817e7e;
+                
+                                &:focus {
+                                    outline: none;
+                                }
+                
+                                i {
+                                    transition: transform 0.3s;
+                                }
+                
+                                &[aria-expanded="true"] i {
+                                    transform: rotate(180deg);
+                                }
+                            }
+                
+                            .content-div {
+                                flex-grow: 1;
+                                margin: 0 1.5rem;
+                                display: flex;
+                                flex-direction: column;
+                                justify-content: center;
+                                align-items: center;
+                
+                                h3 {
+                                    font-size: 1.1rem;
+                                    font-weight: 500;
+                                    margin: 0 0 0.5rem;
+                                    text-align: center;
+                                    text-overflow: ellipsis;
+                                    overflow: hidden;
+                                    white-space: nowrap;
+                                    width: 90%;
+                                    max-width: 500px;
+                                }
+                
+                                .progress {
+                                    height: 20px;
+                                    background-color: #e0e0e0;
+                                    border-radius: 10px;
+                                    overflow: hidden;
+                                    width: 80%;
+                                    max-width: 480px;
+                                    height: 10px;
+                
+                                    .progress-bar {
+                                        height: 100%;
+                                        &.green {
+                                            background-color: #2e7d32;
+                                        }
+                                        &.red {
+                                            background-color: #ce6060;
+                                        }
+                                    }
+                                }
+                            }
+                
+                            .chapter-percentage-score {
+                                // position: absolute;
+                                // right: 10px;
+                                // top: 50%;
+                                // transform: translateY(-50%);
+                                flex-shrink: 0;
+                                font-size: 1rem;
+                                font-weight: 600;
+                                text-align: right;
+                                font-family: "Flavors",--font-poppins, cursive;
+                                font-size: 2rem;
+                                margin: 0;
+                                &.green {
+                                    color: #2e7d32;
+                                }
+                                &.red {
+                                    color: #ce6060;
+                                }
+                            }
+                        }
+                
+                        
+                        .collapse {
+                            .card-body {
+                                .question-summary-list {
+                                    list-style: none;
+                                    padding: 0;
+                                    margin: 0;
+                
+                                    .question-result {
+                                        display: flex;
+                                        align-items: center;
+                                        margin-bottom: 0.5rem;
+                                        i {
+                                            font-size: 1.5rem;
+                                            margin-right: 1rem;
+                                            &.fa-check {
+                                                color: #2e7d32;
+                                            }
+                                            &.fa-times {
+                                                color: #ce6060;
+                                            }
+                                        }
+                
+                                        p {
+                                            margin: 0;
+                                            font-size: 1rem;
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            
+            }
         }
 
         .button-previous-section {
