@@ -31,7 +31,7 @@
         <div class="auth-right">
 
             <div class="auth-content">
-                    <div>
+                    <div class="home-button">
                         <a href="/">
                             <i>
                                 <svg class="custom-icon" xmlns="http://www.w3.org/2000/svg" x-bind:width="size" x-bind:height="size" viewBox="0 0 24 24" fill="none" stroke="currentColor" x-bind:stroke-width="stroke" stroke-linecap="round" stroke-linejoin="round" width="40" height="40" stroke-width="2">
@@ -43,6 +43,7 @@
                         </a>
                     </div>
 
+                    <div class="account-navigation">
                     @if (selectedProfile.Id == mainProfile.Id)
                     {
                         <ul class="nav nav-tabs" id="myTab" role="tablist">
@@ -71,6 +72,8 @@
                             </li>
                         </ul>
                     }
+                    </div>
+                    
                     <div class="form-container">
                         @RenderBody()
                     </div>

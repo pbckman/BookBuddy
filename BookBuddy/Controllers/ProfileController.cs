@@ -15,16 +15,16 @@ namespace BookBuddy.Controllers
         private readonly AuthTranslationService _translationService = translationService;
 
 
-        [HttpGet]
-        public IActionResult UserProfile(string lang = "en")
-        {
-            ViewData["Title"] = _translationService.GetTranslation("userprofile", "title", lang);
-            ViewData["Description"] = _translationService.GetTranslation("userprofile", "description", lang);
-            ViewData["FirstName"] = _translationService.GetTranslation("userprofile", "firstname", lang);
-            ViewData["SaveButton"] = _translationService.GetTranslation("userprofile", "saveButton", lang);
+        //[HttpGet]
+        //public IActionResult UserProfile(string lang = "en")
+        //{
+        //    ViewData["Title"] = _translationService.GetTranslation("userprofile", "title", lang);
+        //    ViewData["Description"] = _translationService.GetTranslation("userprofile", "description", lang);
+        //    ViewData["FirstName"] = _translationService.GetTranslation("userprofile", "firstname", lang);
+        //    ViewData["SaveButton"] = _translationService.GetTranslation("userprofile", "saveButton", lang);
 
-            return View();
-        }
+        //    return View();
+        //}
 
 
         [HttpPost]
@@ -221,7 +221,6 @@ namespace BookBuddy.Controllers
             ViewData["Description"] = _translationService.GetTranslation("details", "description", lang);
             ViewData["FirstName"] = _translationService.GetTranslation("details", "firstname", lang);
             ViewData["LastName"] = _translationService.GetTranslation("details", "firstname", lang);
-            ViewData["Email"] = _translationService.GetTranslation("details", "firstname", lang);
             ViewData["SaveButton"] = _translationService.GetTranslation("details", "saveButton", lang);
             ViewData["StatusMessage"] = "";
 
