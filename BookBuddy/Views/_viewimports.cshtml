@@ -9,7 +9,12 @@
 @using BookBuddy.Data.Entities
 @using Microsoft.AspNetCore.Identity
 @using EPiServer.Shell.Web.Mvc.Html
+@using EPiServer.Cms.Shell
+@using EPiServer.Core.Internal
+@using EPiServer.Web.Routing
 
+@inject ContentLoader _contentLoader
+@inject ContentLoader _contentLoader
 @inject SignInManager<ApplicationUser> _signInManager
 @inject UserManager<ApplicationUser> _userManager
 @inject IConfiguration _configuration

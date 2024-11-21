@@ -2,6 +2,7 @@
     padding: 1rem 2rem;
     position: sticky;
     background-color: transparent;
+    z-index: 100;
     .footer-wrapper {
         display: flex;
         justify-content: space-between;
@@ -26,5 +27,45 @@
                 margin: 0;
             }
         }    
+        .language-dropup {
+            .dropdown-menu {
+                min-width: 0;
+                padding: 0;
+                transform: translate3d(0px, -43.98px, 0px) !important;
+                overflow: hidden;
+                background-color: rgba(108, 117, 125, .1);
+                .list-item {
+                    .dropdown-item {
+                        padding: .3rem .75rem;
+                        &:hover {
+                            background-color: #e7f3fd ;
+                        }
+                    }
+                }
+            }
+            .btn {
+                background-color: rgba(108, 117, 125, .1);
+                border: none;
+                &.dropdown-toggle {
+                    &::after {
+                        display: none;
+                    }
+                }
+                &[aria-disabled="true"] {
+                    pointer-events: none !important;
+                    cursor: not-allowed;
+                }
+                &.True {
+                    &:hover {
+                        box-shadow: none;
+                        cursor: default;
+                    }
+                    svg {
+                        // opacity: 0.5;
+                        filter: grayscale(60%);
+                    }
+                }
+            }
         }
+    }
 }
