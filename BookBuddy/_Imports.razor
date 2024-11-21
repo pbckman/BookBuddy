@@ -14,7 +14,12 @@
 @using BookBuddy.Business.Services.BooksPageService
 @using BookBuddy.Business.Services.PageService
 @using EPiServer.Find
+@using BookBuddy.Business.Factories
+@using BookBuddy.Business.Services.StateService
+@using BookBuddy.Models.QuizModels
 
+@inject TranslationFactory TranslationFactory
+@inject IStateService StateService
 @inject IBooksPageService BooksPageService
 @inject IPageService PageService
 @inject NavigationManager NavigationManager

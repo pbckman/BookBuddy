@@ -5,7 +5,7 @@
 <div class="card">
     @if (Model.Display == Display.ChapterIntro)
     {
-        <ChapterIntro Model="@Model" OnStartedQuiz="HandleBtnStartClick" />
+        <ChapterIntro Model="@Model" Language="@Language" OnStartedQuiz="HandleBtnStartClick" />
     }
     else if (Model.Display == Display.Question)
     {
@@ -20,11 +20,122 @@
     
     else if (Model.Display == Display.ChapterSummary)
     {
-        <ChapterSummary Model="@Model" OnModelChange="UpdateModel" />
+        <ChapterSummary Model="@Model" Language="@Language" OnModelChange="UpdateModel" />
     }
     else if(Model.Display == Display.QuizSummary)
     {
-        <h2>Quiz summary!</h2>
+        <div class="book-summary-content">
+            @* <h1>@Translations["title"]</h1> *@
+            <p class="percentage-score @resultColor">@($"{BookPercentage}%")</p>
+
+                @if (BookPercentage >= 80)
+                {
+                    <img src="images/quiz-success.webp" alt="@Translations["awesomeResultAltText"]" class="quiz-success-img quiz-img">
+                    <h1 class="img-title @resultColor">@Translations["awesomeResultText"]</h1>
+                }
+                else if (BookPercentage >= 40)
+                {
+                    <img src="images/quiz-good.webp" alt="@Translations["goodResultAltText"]" class="quiz-medium-img quiz-img">
+                    <h1 class="img-title @resultColor">@Translations["goodResultText"]</h1>
+                }
+                else
+                {
+                    <img src="images/quiz-bad.webp" alt="@Translations["badResultAltText"]" class="quiz-fail-img quiz-img">
+                    <h1 class="img-title">@Translations["badResultText"]</h1>
+                }
+
+            <h2>@Translations["overallTitle"]</h2>
+
+            <p class="summary-intro summary">@Translations["bookSummaryIntro"]</p>
+            <p class="stats-text summary">
+                @Translations["staticTextStart"]
+                <span class="@resultColor" >@BookPercentage</span>%
+                @Translations["staticTextMiddle"]
+                <span class="@resultColor" >@correctAnswers</span>
+                @Translations["staticTextMiddleTwo"]
+                <span>@totalQuestions</span>
+                @Translations["staticTextEnd"]
+            </p>
+            @if (bestChapterTitle != ""  && totalQuestionsInBestChapter > 0)
+            {
+                <p class="best-chapter-text summary">
+                    <span class="best-chapter">@bestChapterTitle</span>
+                    @Translations["bestChapterStartText"]
+                    <span class="@resultColor">@bestScore</span>
+                    <span>/ @totalQuestionsInBestChapter</span>
+                    @Translations["bestChapterEndText"]
+                </p>
+            }
+            <p class="tips-for final-words summary">@Translations["tipsForNextBooks"]</p>
+            <p class="encouragement final-words summary">@Translations["finalEncouragementText"]</p>
+
+            <h3 class="chapter-collapse-title">
+                <button class="btn-toggle" type="button" data-bs-toggle="collapse" data-bs-target="#chaptersWrapperCollapse" aria-expanded="false" aria-controls="chaptersWrapperCollapse">
+                    @Translations["summaryTitle"]
+                    <i class="fas fa-chevron-down"></i>
+                </button>
+            </h3>
+
+            <div class="collapse" id="chaptersWrapperCollapse">
+                <div class="chapters-wrapper">
+                    @if (Model.QuizResult?.ChapterResults != null && Model.Chapters != null)
+                    {
+                        foreach (var chapter in Model.QuizResult.ChapterResults)
+                        {
+                            CountChapterPercentage(chapter.ChapterId);
+                            var displayChapterPercentage = ChapterPercentage > 0 ? ChapterPercentage : 2;
+                            var displaycolor = ChapterPercentage > 20 ? "green" : "red";
+
+                            var chapterTitle = Model.Chapters.FirstOrDefault(c => c.ChapterId == chapter.ChapterId)?.ChapterTitle;
+                            var uniqueId = $"collapseChapter{chapter.ChapterId}";
+
+                            <div class="result-chapter-container">
+                            
+                                <div class="chapter-stats">
+                                    <button class="btn-toggle" type="button" data-bs-toggle="collapse" data-bs-target="#@uniqueId" aria-expanded="false" aria-controls="@uniqueId">
+                                        <i class="fas fa-chevron-down"></i>
+                                    </button>
+                                    
+                                    <div class="content-div">
+                                        <h3>@chapterTitle</h3>
+                                        <div class="progress" role="progressbar" aria-label="ChapterPercentage progress bar score" aria-valuenow="@ChapterPercentage" aria-valuemin="0" aria-valuemax="100">
+                                            <div class="progress-bar @displaycolor" style="width: @displayChapterPercentage%"></div>
+                                        </div>
+                                    </div>
+                                    <p class="chapter-percentage-score @displaycolor">@($"{ChapterPercentage}%")</p>
+                                </div>
+                                
+                                
+                                <div class="collapse" id="@uniqueId">
+                                    <div class="card-body pb-0">
+                                        <ul class="question-summary-list p-0 m-0 p">
+                                            @foreach (var question in chapter.QuestionResults)
+                                            {
+                                                var isCorrect = question.IsCorrect;
+                                                var resultIcon = isCorrect == true ? "fa-check" : "fa-times";
+                                                var questionText = Model.Chapters
+                                                    .FirstOrDefault(c => c.ChapterId == chapter.ChapterId)?
+                                                    .Questions.FirstOrDefault(q => q.QuestionId == question.QuestionId)?.Question;
+
+                                                <li style="display: flex; align-items: center; margin-bottom: 0.5rem;">
+                                                    @if (isCorrect != null)
+                                                    {
+                                                        <i style="font-size: 1.5rem; margin-right: 1rem; color: @(isCorrect == true ? "#2e7d32" : "#ce6060");" 
+                                                        class="fa-solid @resultIcon"></i>
+                                                        <p style="margin: 0; font-size: 1rem;">@questionText</p>
+                                                    }
+                                                </li>
+                                            }
+                                        </ul>
+                                    </div>
+                                </div>
+
+                            </div>
+                        }
+                    }
+                </div>
+            </div>
+        </div>
     }
 </div>
 
@@ -37,6 +148,94 @@
     [Parameter] public EventCallback OnStartedQuiz { get; set; }
     [Parameter] public EventCallback<string> OnSelectedOption { get; set; }
     [Parameter] public EventCallback<int> OnBtnSummaryClick { get; set; }
+    [Parameter] public string Language { get; set; } = null!;
+
+    private Dictionary<string, string> Translations = new Dictionary<string, string>();
+    private ChapterResultModel? ChapterResult { get; set; }
+    private double ChapterPercentage { get; set; }
+    private int BookPercentage { get; set; }
+    private int correctAnswers { get; set; }
+    private int totalQuestions { get; set; }
+    private string resultColor { get; set; } = "";
+    private string bestChapterTitle = "";
+    private int bestScore = 0;
+    private int totalQuestionsInBestChapter = 0;
+
+
+    protected override void OnInitialized()
+    {
+        UpdateTranslations();
+        CountCorrectAnswers();
+        CountBookPercentage();
+        UpdateResultColor();
+        CountBestChapter();
+        StateHasChanged();
+    }
+
+    private void UpdateTranslations()
+    {
+        var fileName = "QuizBookSummary.xml";
+        Translations = TranslationFactory.GetTranslationsForView(fileName, "quizbooksummary", Language);
+    }
+    private void CountChapterPercentage(int selectedChapterId)
+    {
+        ChapterResult = Model.QuizResult?.ChapterResults.FirstOrDefault(cr => cr.ChapterId == selectedChapterId);
+
+        if (ChapterResult != null && ChapterResult.QuestionResults.Count > 0)
+        {
+            ChapterPercentage = (double)ChapterResult.QuestionResults.Count(qr => qr.IsCorrect) / ChapterResult.QuestionResults.Count * 100;
+            return;
+        }
+        else
+        {
+            ChapterPercentage = 0;
+        }
+    }
+    private void CountBookPercentage()
+    {
+        BookPercentage = totalQuestions > 0 
+            ? (int)((double)correctAnswers / totalQuestions * 100) 
+            : 0;
+    }
+    private void CountCorrectAnswers()
+    {
+        if (Model.QuizResult != null)
+        {
+            correctAnswers = Model.QuizResult.ChapterResults
+                .Sum(chapter => chapter.QuestionResults.Count(q => q.IsCorrect == true));
+                totalQuestions = Model.QuizResult.ChapterResults
+                .Sum(chapter => chapter.QuestionResults.Count);
+        }
+    }
+    private void UpdateResultColor()
+    {
+        if (BookPercentage >= 60)
+            resultColor = "green";
+        else if (BookPercentage > 20)
+            resultColor = "orange";
+        else
+            resultColor = "red";
+    }
+    private void CountBestChapter()
+    {
+        if (Model.QuizResult == null)
+            return;
+
+        foreach (var chapter in Model.QuizResult.ChapterResults)
+        {
+            var chapterCorrectAnswers = chapter.QuestionResults.Count(q => q.IsCorrect == true);
+            if (chapterCorrectAnswers > bestScore)
+            {
+                bestScore = chapterCorrectAnswers;
+                bestChapterTitle = Model.Chapters.FirstOrDefault(c => c.ChapterId == chapter.ChapterId)?.ChapterTitle;
+            }
+        }
+
+        var bestChapter = Model.Chapters.FirstOrDefault(c => c.ChapterTitle == bestChapterTitle);
+        if (bestChapter != null)
+            totalQuestionsInBestChapter = bestChapter.Questions.Count;
+
+    }
 
     private async Task HandleBtnStartClick()
     {
