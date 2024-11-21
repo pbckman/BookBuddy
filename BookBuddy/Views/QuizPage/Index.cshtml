@@ -1,0 +1,8 @@
+﻿@using BookBuddy.Views.QuizPage.Blazor
+@model QuizPageViewModel
+@{
+    Layout = "~/Views/Shared/Layouts/QuizLayout.cshtml";
+}
+
+
+<component param-QuizPageId="Model.CurrentPage.ContentLink.ID" param-Language="Model.CurrentPage.Language.Name" type="typeof(QuizPageComponent)" render-mode="Server" />

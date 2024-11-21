@@ -4,7 +4,10 @@ using System.ComponentModel.DataAnnotations;
 
 namespace BookBuddy.Models.Pages
 {
-    [ContentType(DisplayName = "Site Settings page", GUID = "834C413F-F661-4E64-B656-479E6D91D852", Description = "Settings for site-wide elements like header, footer, etc.")]
+    [ContentType(
+        DisplayName = "Site Settings page", 
+        GUID = "834C413F-F661-4E64-B656-479E6D91D852", 
+        Description = "Settings for site-wide elements like header, footer, etc.")]
     public class SiteSettingsPage : PageData
     {
         [CultureSpecific]
@@ -27,5 +30,18 @@ namespace BookBuddy.Models.Pages
         [CultureSpecific]
         [Display(Name = "Footer text", GroupName = Globals.GroupNames.Footer, Order = 40)]
         public virtual string FooterText { get; set; } = string.Empty;
+
+        [CultureSpecific]
+        [Display(Name = "Navbar Logo", GroupName = Globals.GroupNames.Navbar, Order =55)]
+        [UIHint(UIHint.Image)]
+        public virtual ContentReference? NavbarLogo { get; set; }
+
+        [CultureSpecific]
+        [Display(Name = "Navbar Logo Alt Text", GroupName = Globals.GroupNames.Navbar, Order = 60)]
+        public virtual string NavbarLogoAltText { get; set; } = string.Empty;
+
+        [CultureSpecific]
+        [Display(Name = "Navbar Links", GroupName = Globals.GroupNames.Navbar, Order = 65)]
+        public virtual IList<PageReference>? NavbarLinkList { get; set; }
     }
 }

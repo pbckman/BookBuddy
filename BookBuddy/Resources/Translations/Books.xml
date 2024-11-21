@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<languages>
+	<language name="English" id="en">
+		<books>
+			<nobookfound>No book found for </nobookfound>
+			<searchforbooks>Search for a book... </searchforbooks>
+		</books>
+	</language>
+	<language name="Svenska" id="sv">
+		<books>
+			<nobookfound>Inga böcker hittades för </nobookfound>
+			<searchforbooks>Sök böcker... </searchforbooks>
+		</books>
+	</language>
+</languages>

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<languages>
+    <language name="English" id="en">
+        <contenttypes>
+            <quizchapterintro>
+                <properties>
+                    <quizPreparationTitle>Quiz Preparation: Chapter [Chapter Name]</quizPreparationTitle>
+                    <quizIntroduction>Test your knowledge on this chapter by answering questions based on its content.</quizIntroduction>
+                    <quizIllustrationAltText>Illustration representing the quiz</quizIllustrationAltText>
+                    <quizCtaText>Ready to start?</quizCtaText>
+                    <quizPointExplanation>Each question gives you 1 point. Aim for the highest score!</quizPointExplanation>
+                    <beginQuizButtonText>Begin Quiz</beginQuizButtonText>
+                    <quizTips>Remember, you can revisit the chapter before starting if needed.</quizTips>
+                </properties>
+            </quizchapterintro>
+        </contenttypes>
+    </language>
+    <language name="Svenska" id="sv">
+        <contenttypes>
+            <quizchapterintro>
+                <properties>
+                    <quizPreparationTitle>Förberedelser för Quiz: Kapitel [Chapter Name]</quizPreparationTitle>
+                    <quizIntroduction>Testa dina kunskaper om detta kapitel genom att svara på frågor baserade på dess innehåll.</quizIntroduction>
+                    <quizIllustrationAltText>Illustration som representerar quizet</quizIllustrationAltText>
+                    <quizCtaText>Redo att börja?</quizCtaText>
+                    <quizPointExplanation>Varje fråga ger dig 1 poäng. Sikta på högsta poäng!</quizPointExplanation>
+                    <beginQuizButtonText>Starta Quiz</beginQuizButtonText>
+                    <quizTips>Kom ihåg att du kan läsa kapitlet igen innan du börjar om det behövs.</quizTips>
+                </properties>
+            </quizchapterintro>
+        </contenttypes>
+    </language>
+</languages>

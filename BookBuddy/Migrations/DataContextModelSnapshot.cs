@@ -22,6 +22,83 @@ namespace BookBuddy.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
+            modelBuilder.Entity("BookBuddy.Data.Entities.ChapterResultEntity", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("ChapterId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("QuizResultId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("QuizResultId");
+
+                    b.ToTable("ChapterResults");
+                });
+
+            modelBuilder.Entity("BookBuddy.Data.Entities.QuestionResultEntity", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("ChapterResultId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("CorrectAnswer")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("IsCorrect")
+                        .HasColumnType("bit");
+
+                    b.Property<int>("QuestionId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("SelectedOption")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ChapterResultId");
+
+                    b.ToTable("QuestionResults");
+                });
+
+            modelBuilder.Entity("BookBuddy.Data.Entities.QuizResultEntity", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<bool>("IsCompleted")
+                        .HasColumnType("bit");
+
+                    b.Property<int>("ProfileId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("QuizId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ProfileId");
+
+                    b.ToTable("QuizResults");
+                });
+
             modelBuilder.Entity("BookBuddy.Data.Entities.UserProfileEntity", b =>
                 {
                     b.Property<int>("Id")
@@ -255,6 +332,39 @@ namespace BookBuddy.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
+            modelBuilder.Entity("BookBuddy.Data.Entities.ChapterResultEntity", b =>
+                {
+                    b.HasOne("BookBuddy.Data.Entities.QuizResultEntity", "QuizResult")
+                        .WithMany("ChapterResults")
+                        .HasForeignKey("QuizResultId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("QuizResult");
+                });
+
+            modelBuilder.Entity("BookBuddy.Data.Entities.QuestionResultEntity", b =>
+                {
+                    b.HasOne("BookBuddy.Data.Entities.ChapterResultEntity", "ChapterResult")
+                        .WithMany("QuestionResults")
+                        .HasForeignKey("ChapterResultId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("ChapterResult");
+                });
+
+            modelBuilder.Entity("BookBuddy.Data.Entities.QuizResultEntity", b =>
+                {
+                    b.HasOne("BookBuddy.Data.Entities.UserProfileEntity", "Profile")
+                        .WithMany("QuizResults")
+                        .HasForeignKey("ProfileId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Profile");
+                });
+
             modelBuilder.Entity("BookBuddy.Data.Entities.UserProfileEntity", b =>
                 {
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", "User")
@@ -315,6 +425,21 @@ namespace BookBuddy.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("BookBuddy.Data.Entities.ChapterResultEntity", b =>
+                {
+                    b.Navigation("QuestionResults");
+                });
+
+            modelBuilder.Entity("BookBuddy.Data.Entities.QuizResultEntity", b =>
+                {
+                    b.Navigation("ChapterResults");
+                });
+
+            modelBuilder.Entity("BookBuddy.Data.Entities.UserProfileEntity", b =>
+                {
+                    b.Navigation("QuizResults");
                 });
 #pragma warning restore 612, 618
         }

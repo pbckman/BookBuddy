@@ -1,0 +1,32 @@
+﻿@code {
+    [Parameter]
+    public List<CategoryModel> Categories { get; set; } = new List<CategoryModel>();
+
+    [Parameter]
+    public EventCallback<string> OnCategorySelected { get; set; }
+    [Parameter]
+    public string Category { get; set; }
+    private string All = string.Empty;
+
+    private async Task SelectCategory(string category)
+    {
+        if (Category == category)
+            Category = All;
+        else
+            Category = category;
+
+        await OnCategorySelected.InvokeAsync(Category);
+    }
+}
+<div class="filter-container">
+    <ul class="category-list">
+        @foreach (var category in Categories)
+        {
+            <li class="category-list-item">
+                <button class="list-item-btn @(Category == category.Value ? "active" : "")" @onclick="() => SelectCategory(category.Value)">
+                    <span class="btn-span">@category.Text</span>
+                </button>
+            </li>
+        }
+    </ul>
+</div>

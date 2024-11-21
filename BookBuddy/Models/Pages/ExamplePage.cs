@@ -4,7 +4,8 @@ namespace BookBuddy.Models.Pages
 {
     [ContentType(
         GUID = "CF3E7300-3534-4D4B-A69F-3759CE7F9575",
-        GroupName = GroupNames.Specialized
+        GroupName = GroupNames.Specialized,
+        Description = "An example page"
         )]
     public class ExamplePage : SitePageData
     {

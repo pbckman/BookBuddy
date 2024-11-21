@@ -9,8 +9,14 @@ namespace BookBuddy
         public static class GroupNames
         {
             [Display(
-                Name = "MetaData",
+                Name = "Categories",
                 Order = 10
+            )]
+            public const string Categories = "Categories";
+
+            [Display(
+                Name = "MetaData",
+                Order = 15
             )]
             public const string MetaData = "MetaData";
 
@@ -31,6 +37,13 @@ namespace BookBuddy
                 Order = 40
             )]
             public const string Footer = "Footer";
+
+            [Display(
+                Name = "Navbar",
+                Order = 50
+            )]
+            public const string Navbar = "Navbar";
+        
         }
     }
 }

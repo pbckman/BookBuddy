@@ -2,6 +2,7 @@
 using BookBuddy.Business.Services.BookPageService;
 using BookBuddy.Business.Services.BookService;
 using BookBuddy.Business.Services.PageService;
+using BookBuddy.Business.Services.ScheduledJobsService;
 using BookBuddy.Models.Pages;
 using EPiServer.PlugIn;
 using EPiServer.Scheduler;
@@ -24,10 +25,11 @@ namespace BookBuddy.Business.ScheduledJobs
         private readonly IBookPageService _bookPageService;
         private bool _stopSignaled;
         private readonly IPageService _pageService;
+        private readonly IScheduledJobsService _scheduledJobsService;
 
 
         public HandleGenerateBook(IContentLoader contentLoader,
-            ISiteDefinitionRepository siteDefinitionRepository, IContentRepository contentRepository, IBookService bookService, IBookPageService bookPageService, IPageService pageService)
+            ISiteDefinitionRepository siteDefinitionRepository, IContentRepository contentRepository, IBookService bookService, IBookPageService bookPageService, IPageService pageService, IScheduledJobsService scheduledJobsService)
         {
             _contentLoader = contentLoader;
             _siteDefinitionRepository = siteDefinitionRepository;
@@ -36,16 +38,22 @@ namespace BookBuddy.Business.ScheduledJobs
             _bookPageService = bookPageService;
             IsStoppable = true;
             _pageService = pageService;
+            _scheduledJobsService = scheduledJobsService;
         }
         public override string Execute()
         {
+            string GetTimestampedMessage(string message) => $"[{DateTime.Now:yyyy-MM-dd HH:mm:ss}] {message}";
+
+            OnStatusChanged(GetTimestampedMessage("Job started: Generating book quiz..."));
+
             var cultureName = PublishBookEventHandler.CurrentCultureName;
+            OnStatusChanged(GetTimestampedMessage($"Current culture set to {cultureName}."));
 
             var availableBooksPage = _pageService.GetAvailableBooksPage(cultureName);
             if (availableBooksPage == null)
-            {
                 return "AvailableBooksPage could not be found";
-            }
+            else
+                OnStatusChanged(GetTimestampedMessage($"AvailableBooksPage found: {availableBooksPage.Name}"));
 
             if (_stopSignaled)
                 return "Job was stopped";
@@ -53,6 +61,8 @@ namespace BookBuddy.Business.ScheduledJobs
             var bookQuizModel = _bookService.GetBookQuizAsync(Convert.ToInt32(availableBooksPage.SelectedBook), cultureName).Result;
             if (bookQuizModel == null)
                 return "Failed to generate book quiz";
+            else
+                OnStatusChanged(GetTimestampedMessage($"Book quiz generated: {bookQuizModel.Metadata.Title}"));
 
             if (_stopSignaled)
                 return "Job was stopped";
@@ -61,6 +71,10 @@ namespace BookBuddy.Business.ScheduledJobs
             bool isCreated = _bookPageService.CreatePages(bookQuizModel, cultureName);
             if (!isCreated)
                 return "Failed to create book quiz pages";
+            else
+                OnStatusChanged(GetTimestampedMessage($"Book quiz pages created: {bookQuizModel.Metadata.Title}"));
+
+            _scheduledJobsService.TriggerIndexing();
 
             return $"The book {bookQuizModel.Metadata.Title} was generated";
         }

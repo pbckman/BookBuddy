@@ -1,0 +1,138 @@
+﻿@using BookBuddy.Business.Services.StateService
+@using BookBuddy.Models.QuizModels
+
+@inject IStateService StateService
+
+@{
+    var totalQuestions = Model.CurrentChapter?.Questions.Count ?? 1;
+    var answeredQuestions = Model.CurrentChapter?.Questions.Count(q => q.Options.Any(o => o.IsSelected)) ?? 0;
+    var progress = (answeredQuestions / (double)totalQuestions) * 100;
+}
+@if (!Model.QuizResult.ChapterResults.Any(c => c.ChapterId == Model.CurrentChapter.ChapterId)){
+    <div class="progress" role="progressbar" aria-label="Progress bar" aria-valuenow="@progress" aria-valuemin="0" aria-valuemax="100">
+    <div class="progress-bar" style="width: @progress%"></div>
+    </div>
+}
+<div class="button-previous-section">
+    <button class="btn-previous @(Model.CurrentQuestion!.QuestionNumber == 1 ? "hidden" : "")" onclick="@(() => HandleBtnPrevClick())"><i class="fa-solid fa-angle-left"></i></button>
+</div>
+<h2>@Model.CurrentQuestion.QuestionTitle</h2>
+<div class="question-section">
+    <h3>@Model.CurrentQuestion.Question</h3>
+</div>
+<div class="options-section">
+    @if (Model.CurrentQuestion.Options != null)
+    {
+        @foreach (var option in Model.CurrentQuestion.Options)
+        {
+            <div class="option-item @(IsOptionSelected(option) ? "active" : "") @(ValidateAnswered(option)) @(IsQuestionAnswered() ? "disabled" : "")" onclick="@(() => HandleSelectedOption(option.OptionValue))">
+                @option.OptionText
+            </div>
+        }
+    }
+
+</div>
+@if (Model.CurrentQuestion.QuestionNumber < 5)
+{
+    <div class="button-next-section">
+        <button class="btn-next" onclick="@(() => HandleBtnNextClick())">@Model.NextQuestionBtnText</button>
+    </div>
+}
+else if (Model.QuizResult != null && Model.QuizResult.ChapterResults.Any(x => x.ChapterId == Model.CurrentChapter!.ChapterId))
+{
+    <div class="button-next-section">
+        <button class="btn-next" onclick="@(() => HandleBtnSummaryClick())">@Model.CurrentChapter!.ChapterSelectionSummary!.Title</button>
+    </div>
+}
+else
+{
+    <div class="button-next-section">
+        <button class="btn-next @(Model.CurrentChapter!.Questions!.Any(x => x.IsAnswerd == false) ? "disabled" : "")" disabled="@(Model.CurrentChapter!.Questions!.Any(x => x.IsAnswerd == false) ? true : false)" onclick="@(() => HandleBtnFinishClick())">@(Model.SubmitBtnText)</button>
+    </div>
+}
+@code {
+    [Parameter] public QuizModel Model { get; set; } = null!;
+    [Parameter] public EventCallback OnModelChange { get; set; }
+    [Parameter] public EventCallback<string> OnOptionSelected { get; set; }
+    [Parameter] public EventCallback<int> OnBtnSummaryClick { get; set; }
+    [Parameter] public EventCallback OnCompletedChapter { get; set; }
+    
+
+    private async Task HandleBtnPrevClick()
+    {
+        if (Model.CurrentChapter != null && Model.CurrentQuestion != null)
+        {
+            Model.CurrentQuestion = Model.CurrentChapter.Questions[Model.CurrentQuestion.QuestionNumber - 2];
+
+            if (OnModelChange.HasDelegate)
+            {
+                await OnModelChange.InvokeAsync();
+            }
+        }
+    }
+
+    private async Task HandleSelectedOption(string selectedOption)
+    {
+        if (OnOptionSelected.HasDelegate)
+        {
+            await OnOptionSelected.InvokeAsync(selectedOption);
+        }
+
+    }
+
+    private bool IsOptionSelected(OptionModel option)
+    {
+        if (option.IsSelected && (Model.QuizResult == null || !Model.QuizResult.ChapterResults.Any(x => x.ChapterId == Model.CurrentChapter!.ChapterId)))
+            return true;
+
+        return false;
+    }
+
+    private string ValidateAnswered(OptionModel option)
+    {
+        return StateService.GetOptionState(option, Model);
+    }
+
+    private bool IsQuestionAnswered()
+    {
+        if (Model.QuizResult != null && Model.QuizResult.ChapterResults.Any(x => x.QuestionResults.Any(x => x.QuestionId == Model.CurrentQuestion!.QuestionId)))
+            return true;
+
+        return false;
+    }
+
+    private async Task HandleBtnNextClick()
+    {
+        if (Model.CurrentQuestion != null)
+        {
+
+            if (Model.CurrentChapter != null)
+            {
+                Model.CurrentQuestion = Model.CurrentChapter.Questions[Model.CurrentQuestion.QuestionNumber];
+
+                if (OnModelChange.HasDelegate)
+                {
+                    await OnModelChange.InvokeAsync();
+                }
+            }
+
+        }
+    }
+
+    private async Task HandleBtnSummaryClick()
+    {
+        if (OnBtnSummaryClick.HasDelegate)
+        {
+            await OnBtnSummaryClick.InvokeAsync(Model.CurrentChapter!.ChapterId);
+        }
+    }
+
+    private async Task HandleBtnFinishClick()
+    {
+        if (OnCompletedChapter.HasDelegate)
+        {
+            await OnCompletedChapter.InvokeAsync();
+        }
+    }
+
+}

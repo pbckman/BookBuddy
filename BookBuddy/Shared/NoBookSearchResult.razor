@@ -1,0 +1,9 @@
+﻿@code {
+    [Parameter] public string? Query { get; set; }
+    [Parameter] public Dictionary<string, string>? Translations { get; set; }
+}
+<div class="no-results">
+    <p>@($"{Translations?["nosearchresult"]} \"{Query}\"")</p>
+    @* <p>@($"{Html.Translate("/books/nobookfound")} \"{Query}\"")</p> *@
+    <img src="/images/NoBookFound.webp" loading="lazy" alt="image for no book found" class="no-result-img">
+</div>
