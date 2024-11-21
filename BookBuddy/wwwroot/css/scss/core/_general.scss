@@ -29,6 +29,8 @@ main {
     background-image: url('../images/background-img.webp');
     background-size: cover;
     background-repeat: no-repeat;
+    background-position: center;
+    background-attachment: fixed;
     z-index: 2; 
     .flying-boy {
         position: absolute;

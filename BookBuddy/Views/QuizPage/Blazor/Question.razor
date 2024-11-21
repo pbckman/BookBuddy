@@ -3,6 +3,16 @@
 
 @inject IStateService StateService
 
+@{
+    var totalQuestions = Model.CurrentChapter?.Questions.Count ?? 1;
+    var answeredQuestions = Model.CurrentChapter?.Questions.Count(q => q.Options.Any(o => o.IsSelected)) ?? 0;
+    var progress = (answeredQuestions / (double)totalQuestions) * 100;
+}
+@if (!Model.QuizResult.ChapterResults.Any(c => c.ChapterId == Model.CurrentChapter.ChapterId)){
+    <div class="progress" role="progressbar" aria-label="Progress bar" aria-valuenow="@progress" aria-valuemin="0" aria-valuemax="100">
+    <div class="progress-bar" style="width: @progress%"></div>
+    </div>
+}
 <div class="button-previous-section">
     <button class="btn-previous @(Model.CurrentQuestion!.QuestionNumber == 1 ? "hidden" : "")" onclick="@(() => HandleBtnPrevClick())"><i class="fa-solid fa-angle-left"></i></button>
 </div>
@@ -22,7 +32,6 @@
     }
 
 </div>
-
 @if (Model.CurrentQuestion.QuestionNumber < 5)
 {
     <div class="button-next-section">
