@@ -1,135 +1,49 @@
-﻿@using EPiServer.Cms.Shell
-@using EPiServer.Core.Internal
-@using EPiServer.Web.Routing
-
-@inject ContentLoader _contentLoader
+﻿
 @model IPageViewModel<SitePageData>
-
-    @* <component param-QuizPageId="Model.CurrentPage.ContentLink.ID" param-Language="Model.CurrentPage.Language.Name" type="typeof(QuizPageComponent)" render-mode="Server" /> *@
-
 @{
-
-    
-
-    
-
-    @* var englishUrl = UrlResolver.Current.GetUrl(Model.CurrentPage.ContentLink, "en"); *@
-    @* var swedishUrl = UrlResolver.Current.GetUrl(Model.CurrentPage.ContentLink, "sv"); *@
-
-    var contentReference = Model.CurrentPage.ContentLink;
-    //ENGLISH
-    var englanguage = "en";
-    var englishUrl = string.Empty;
-
-    var englishPage = _contentLoader.Get<PageData>(contentReference, new LanguageSelector(englanguage));
-    if (englishPage != null && englishPage.IsPublished())
-    {
-        englishUrl = UrlResolver.Current.GetUrl(contentReference, englanguage);
-    }
-    else
-    {
-        // Hantera om innehållet saknas i det angivna språket
-        englishUrl = null;
-    }
-    //SWEDISH
-    var swelanguage = "sv";
-    var swedishUrl = string.Empty;
-
-    var swedishPage = _contentLoader.Get<PageData>(contentReference, new LanguageSelector(swelanguage));
-    if (swedishPage != null && swedishPage.IsPublished())
-    {
-        swedishUrl = UrlResolver.Current.GetUrl(contentReference, swelanguage);
-    }
-    else
-    {
-        // Hantera om innehållet saknas i det angivna språket
-        swedishUrl = null;
-    }
 }
 
+@if (Model.SiteSettings != null)
+{
+    <div class="footer-wrapper">
 
-    @if (Model.SiteSettings != null)
-    {
-        <div class="footer-wrapper">
-
-            <div class="footer-copyright">
-                <p>@Model.SiteSettings.FooterText</p>
-            </div>
-            
-            <div class="footer-items">
-                @if (Model.SiteSettings.SocialLinks != null)
-                {
-                    @foreach (var item in Model.SiteSettings.SocialLinks.FilteredItems)
-                    {
-                        var socialLinkBlock = item.LoadContent() as BookBuddy.Models.Blocks.SocialLinkBlock;
-                        if (socialLinkBlock != null)
-                        {
-                            <a href="@socialLinkBlock.Url" target="_blank" rel="noopener noreferrer">
-                                @if (socialLinkBlock.Icon != null)
-                                {
-                                    <img src="@Url.ContentUrl(socialLinkBlock.Icon)" alt="@socialLinkBlock.PlatformName" class="social-link" />
-                                }
-                            </a>
-                        }
-                    }
-                }
-
-            </div>
-        @* <LanguageButton param-ContentReference="@Model.CurrentPage.ContentLink" render-mode="Server" /> *@
-
-        <component type="typeof(LanguageButton)" 
-           render-mode="Server" 
-           param-ContentReference="Model.CurrentPage.ContentLink"
-           param-CurrentLanguage="Model.CurrentPage.Language.Name" />
-
-        @* <div class="language-dropup btn-group dropup">
-            <button type="button" class="btn btn-secondary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-                <i class="fa-solid fa-globe"></i>
-            </button>
-            <ul class="dropdown-menu">
-                @if (!string.IsNullOrEmpty(englishUrl))
-                {
-                    <li class="list-item" >
-                        <a class="dropdown-item" href="@englishUrl">
-                            <svg width="32" height="32">
-                                <use xlink:href="/images/svg/flags-sprite.svg#english-flag"></use>
-                            </svg>
-                        </a>
-                    </li>
-                }
-                @if (!string.IsNullOrEmpty(swedishUrl))
-                {
-                    <li class="list-item" >
-                        <a class="dropdown-item" href="@swedishUrl">
-                            <svg width="32" height="32">
-                                <use xlink:href="/images/svg/flags-sprite.svg#swedish-flag"></use>
-                            </svg>
-                        </a>
-                    </li>
-                }
-            </ul>
-        </div> *@
-        <a href="/cookieinfopage">Cookie settings</a>
-        @* <a href="@Url.Action("ChangeLanguage", "Language", new { contentReference = Model.CurrentPage.ContentLink.ID, language = "sv" })">
-            Svenska
-        </a>
-        <a href="@Url.Action("ChangeLanguage", "Language", new { contentReference = Model.CurrentPage.ContentLink.ID, language = "en" })">
-            English
-        </a> *@
-        <a href="@swedishUrl">
-
-        </a>
-        <a href="@englishUrl">
-            
-        </a>
-
-
+        <div class="footer-copyright">
+            <p>@Model.SiteSettings.FooterText</p>
         </div>
         
-    }
-    else
-    {
-        <p>Footer settings not available</p>
-    }
+        <div class="footer-items">
+            @if (Model.SiteSettings.SocialLinks != null)
+            {
+                @foreach (var item in Model.SiteSettings.SocialLinks.FilteredItems)
+                {
+                    var socialLinkBlock = item.LoadContent() as BookBuddy.Models.Blocks.SocialLinkBlock;
+                    if (socialLinkBlock != null)
+                    {
+                        <a href="@socialLinkBlock.Url" target="_blank" rel="noopener noreferrer">
+                            @if (socialLinkBlock.Icon != null)
+                            {
+                                <img src="@Url.ContentUrl(socialLinkBlock.Icon)" alt="@socialLinkBlock.PlatformName" class="social-link" />
+                            }
+                        </a>
+                    }
+                }
+            }
+
+        </div>
+
+    <component type="typeof(LanguageButton)" 
+        render-mode="Server" 
+        param-ContentReference="Model.CurrentPage.ContentLink"
+        param-CurrentLanguage="Model.CurrentPage.Language.Name" />
+
+    <a href="/cookieinfopage">Cookie settings</a>
+
+    </div>
+    
+}
+else
+{
+    <p>Footer settings not available</p>
+}
 
 

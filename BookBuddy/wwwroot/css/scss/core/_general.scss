@@ -20,27 +20,42 @@ main {
     display: flex;
 }
 
+.flying-boy {
+    position: absolute;
+    top: 10%;
+    left: 10%;
+    max-width: 50%;
+    height: auto;
+    z-index: 2;
+    opacity: 0.5;
+}
 .main-content {
+    // position: relative;
+    // display: flex;
+    // flex-direction: column;
+    // flex: 1;
+    // background-image: url('../images/background-img.webp');
+    // background-size: cover;
+    // background-repeat: no-repeat;
+    // background-position: center;
+    // background-attachment: fixed;
+    // z-index: 2; 
+
     position: relative;
+    min-height: 100vh;
+    height: 100%;
+    // padding-left: 50px;
+    // padding: 1.5rem 0 0 1.5rem;
     display: flex;
     flex-direction: column;
     flex: 1;
-/*    background-image: url('../images/rm245-bb-17-a.jpg');*/
     background-image: url('../images/background-img.webp');
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center;
     background-attachment: fixed;
+    overflow: auto;
     z-index: 2; 
-    .flying-boy {
-        position: absolute;
-        top: 10%;
-        left: 10%;
-        max-width: 50%;
-        height: auto;
-        z-index: 2;
-        opacity: 0.5;
-    }
 }
 
 @media (min-width: 992px) {
