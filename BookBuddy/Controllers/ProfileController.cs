@@ -42,7 +42,7 @@ namespace BookBuddy.Controllers
                 return RedirectToAction("UpdateProfile", "Profile", new { lang });
             }
 
-            await _profileService.CreateProfileAsync(user.Id, model.FirstName, model.LastName, isMainProfile: false);
+            await _profileService.CreateSubProfileAsync(user.Id, model.FirstName, model.LastName, isMainProfile: false);
 
             TempData["StatusMessageCreate"] = _translationService.GetTranslation("updateprofile", "statusMessageCreate", lang);
             return RedirectToAction("UpdateProfile", "Profile", new { lang });
@@ -91,12 +91,16 @@ namespace BookBuddy.Controllers
             ViewData["DescriptionUpdate"] = _translationService.GetTranslation("updateprofile", "descriptionUpdate", lang);
             ViewData["FirstNameUpdate"] = _translationService.GetTranslation("updateprofile", "firstNameUpdate", lang);
             ViewData["SaveButtonUpdate"] = _translationService.GetTranslation("updateprofile", "saveButtonUpdate", lang);
+            ViewData["SelectProfile"] = _translationService.GetTranslation("updateprofile", "selectProfile", lang);
+            ViewData["SelectedProfile"] = _translationService.GetTranslation("updateprofile", "selectedProfile", lang);
+            ViewData["FirstNamePlaceholder"] = _translationService.GetTranslation("updateprofile", "firstNamePlaceholder", lang);
             ViewData["ErrorMessageUpdate"] = "";
             ViewData["ErrorMessageCreate"] = "";
             ViewData["StatusMessageUpdate"] = "";
             ViewData["StatusMessageCreate"] = "";
             ViewData["StatusMessageUpdateSub"] = "";
             ViewData["ErrorMessageUpdateSub"] = "";
+
 
             var user = await _userManager.GetUserAsync(User);
             if (user == null)
@@ -158,6 +162,7 @@ namespace BookBuddy.Controllers
             ViewData["Description"] = _translationService.GetTranslation("subProfileDetails", "description", lang);
             ViewData["FirstNameUpdate"] = _translationService.GetTranslation("subProfileDetails", "firstNameUpdate", lang);
             ViewData["SaveButtonUpdate"] = _translationService.GetTranslation("subProfileDetails", "saveButtonUpdate", lang);
+            ViewData["ChooseProfileImage"] = _translationService.GetTranslation("subProfileDetails", "chooseProfileImage", lang);
             ViewData["StatusMessageUpdateSub"] = "";
             ViewData["ErrorMessageUpdateSub"] = "";
 

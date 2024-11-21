@@ -19,7 +19,23 @@ namespace BookBuddy.Business.Services.AccountService
                 UserId = userId,
                 ProfileFirstName = firstName,
                 ProfileLastName = lastName,
-                IsMainProfile = isMainProfile
+                IsMainProfile = isMainProfile,
+            };
+
+            _dataContext.Profiles.Add(profile);
+            await _dataContext.SaveChangesAsync();
+            return profile;
+        }
+
+        public async Task<UserProfileEntity> CreateSubProfileAsync(string userId, string firstName, string lastName, bool isMainProfile = false)
+        {
+            var profile = new UserProfileEntity
+            {
+                UserId = userId,
+                ProfileFirstName = firstName,
+                ProfileLastName = lastName,
+                IsMainProfile = isMainProfile,
+                ProfileImage = "bunny.webp"
             };
 
             _dataContext.Profiles.Add(profile);

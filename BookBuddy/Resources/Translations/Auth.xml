@@ -64,8 +64,15 @@
 					<descriptionUpdate>Update profile with a new name</descriptionUpdate>
 					<firstNameUpdate>Update Profile</firstNameUpdate>
 					<firstNameCreate>Create Profile</firstNameCreate>
+					<firstNamePlaceholder>Enter a name</firstNamePlaceholder>
 					<saveButtonUpdate>Save changes</saveButtonUpdate>
-					<saveButtonCreate>Create profile</saveButtonCreate>
+					<saveButtonCreate>Create Profile</saveButtonCreate>
+					<errorMessageUpdate>Could not update profile, try again later.</errorMessageUpdate>
+					<errorMessageCreate>Could not create profile, try again later.</errorMessageCreate>
+					<statusMessageUpdate>Profile updated!</statusMessageUpdate>
+					<statusMessageCreate>Profile created!</statusMessageCreate>
+					<selectProfile>Select Profile</selectProfile>
+					<selectedProfile>No profile selected</selectedProfile>
 				</properties>
 			</updateprofile>
 			<subProfileDetails>
@@ -78,6 +85,7 @@
 					<statusMessageUpdate>Profile updated!</statusMessageUpdate>
 					<errorMessageUpdateSub>Could not update profile, please try again later.</errorMessageUpdateSub>
 					<statusMessageUpdateSub>Profile updated successfully!</statusMessageUpdateSub>
+					<chooseProfileImage>Choose your avatar</chooseProfileImage>
 				</properties>
 			</subProfileDetails>
 			<details>
@@ -155,16 +163,17 @@
 					<description>Skapa en ny profil</description>
 					<titleUpdate>Uppdatera Profil</titleUpdate>
 					<descriptionUpdate>Uppdatera profil med ett nytt namn</descriptionUpdate>
-					<firstNameUpdate>Uppdatera befintlig profil</firstNameUpdate>
+					<firstNameUpdate>Uppdatera namn på profil</firstNameUpdate>
 					<firstNameCreate>Skapa ny profil</firstNameCreate>
+					<firstNamePlaceholder>Ange namn</firstNamePlaceholder>
 					<saveButtonUpdate>Spara ändringar</saveButtonUpdate>
 					<saveButtonCreate>Skapa profil</saveButtonCreate>
 					<errorMessageUpdate>Gick inte att uppdatera profil, försök igen lite senare.</errorMessageUpdate>
 					<errorMessageCreate>Gick inte att skapa profil, försök igen lite senare.</errorMessageCreate>
 					<statusMessageUpdate>Profil uppdaterad!</statusMessageUpdate>
 					<statusMessageCreate>Profil skapad!</statusMessageCreate>
-					<errorMessageUpdateSub>Subsubsub</errorMessageUpdateSub>
-					<statusMessageUpdateSub>Subsubsub</statusMessageUpdateSub>
+					<selectProfile>Välj profil</selectProfile>
+					<selectedProfile>Ingen vald profil</selectedProfile>
 				</properties>
 			</updateprofile>
 			<subProfileDetails>
@@ -175,6 +184,7 @@
 					<saveButtonUpdate>Spara ändringar</saveButtonUpdate>
 					<errorMessageUpdateSub>Gick inte att uppdatera profil, försök igen lite senare.</errorMessageUpdateSub>
 					<statusMessageUpdateSub>Profil uppdaterad!</statusMessageUpdateSub>
+					<chooseProfileImage>Välj profilbild</chooseProfileImage>
 				</properties>
 			</subProfileDetails>
 			<details>
