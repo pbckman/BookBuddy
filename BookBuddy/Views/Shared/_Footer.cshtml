@@ -1,43 +1,46 @@
-﻿
-@model IPageViewModel<SitePageData>
+﻿@model IPageViewModel<SitePageData>
 @{
+    var cookieinfopageUrl = GetCookieInfoPageUrl();
 }
 
 @if (Model.SiteSettings != null)
 {
     <div class="footer-wrapper">
-
-        <div class="footer-copyright">
-            <p>@Model.SiteSettings.FooterText</p>
-        </div>
-        
-        <div class="footer-items">
-            @if (Model.SiteSettings.SocialLinks != null)
-            {
-                @foreach (var item in Model.SiteSettings.SocialLinks.FilteredItems)
+        <div class="link-wrapper-1">
+            
+            <div class="footer-items">
+                @if (Model.SiteSettings.SocialLinks != null)
                 {
-                    var socialLinkBlock = item.LoadContent() as BookBuddy.Models.Blocks.SocialLinkBlock;
-                    if (socialLinkBlock != null)
+                    @foreach (var item in Model.SiteSettings.SocialLinks.FilteredItems)
                     {
-                        <a href="@socialLinkBlock.Url" target="_blank" rel="noopener noreferrer">
-                            @if (socialLinkBlock.Icon != null)
-                            {
-                                <img src="@Url.ContentUrl(socialLinkBlock.Icon)" alt="@socialLinkBlock.PlatformName" class="social-link" />
-                            }
-                        </a>
+                        var socialLinkBlock = item.LoadContent() as BookBuddy.Models.Blocks.SocialLinkBlock;
+                        if (socialLinkBlock != null)
+                        {
+                            <a href="@socialLinkBlock.Url" target="_blank" rel="noopener noreferrer">
+                                @if (socialLinkBlock.Icon != null)
+                                {
+                                    <img src="@Url.ContentUrl(socialLinkBlock.Icon)" alt="@socialLinkBlock.PlatformName" class="social-link" />
+                                }
+                            </a>
+                        }
                     }
                 }
-            }
 
+            </div>
         </div>
 
-    <component type="typeof(LanguageButton)" 
-        render-mode="Server" 
-        param-ContentReference="Model.CurrentPage.ContentLink"
-        param-CurrentLanguage="Model.CurrentPage.Language.Name" />
+        <div class="link-wrapper-2">
+            @if (!string.IsNullOrEmpty(cookieinfopageUrl))
+            {
+                <a class="link" href="@cookieinfopageUrl">Cookie settings</a>
+            }
+            <component type="typeof(LanguageButton)" 
+                render-mode="Server" 
+                param-ContentReference="Model.CurrentPage.ContentLink"
+                param-CurrentLanguage="Model.CurrentPage.Language.Name" />
 
-    <a href="/cookieinfopage">Cookie settings</a>
 
+        </div>
     </div>
     
 }
@@ -46,4 +49,12 @@ else
     <p>Footer settings not available</p>
 }
 
-
+@functions {
+    public string GetCookieInfoPageUrl()
+    {
+        var startPageReference = ContentReference.StartPage;
+        var cookieinfopage = _contentLoader.GetChildren<CookieInfoPage>(startPageReference).FirstOrDefault();
+        var cookieinfopageUrl = cookieinfopage != null ? Url.ContentUrl(cookieinfopage.ContentLink) : null;
+        return cookieinfopageUrl ?? null!;
+    }
+}

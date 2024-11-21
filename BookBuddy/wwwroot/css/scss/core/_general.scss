@@ -22,12 +22,12 @@ main {
 
 .flying-boy {
     position: absolute;
-    top: 10%;
-    left: 10%;
-    max-width: 50%;
+    top: 5%;
+    left: 5%;
+    max-width: 30%;
     height: auto;
-    z-index: 2;
     opacity: 0.5;
+    z-index: -1;
 }
 .main-content {
     // position: relative;
@@ -61,17 +61,17 @@ main {
 @media (min-width: 992px) {
     .main-content {
         .flying-boy {
-            top: 5rem;
-            left: 5rem;
+            top: 7rem;
+            left: 7rem;
         }
     }
 }
 @media (min-width: 1200px) {
     .main-content {
         .flying-boy {
-            top: 10rem;
-            left: 10rem;
-            height: 20%;
+            top: 7rem;
+            left: 7rem;
+            height: 15%;
             width: auto;
         }
     }
