@@ -114,4 +114,20 @@ public class PageService : IPageService
         var quizPage = _contentLoader.Get<QuizPage>(new ContentReference(quizPageId), new LanguageSelector(lang));
         return quizPage ?? null!;
     }
+
+    public MyQuizzesPage GetMyQuizzesPage(string lang)
+    {
+        try
+        {
+            var startPage = GetStartPage(lang);
+            var myQuizzesPage = _contentLoader.GetChildren<MyQuizzesPage>(startPage.ContentLink, new LanguageSelector(lang)).FirstOrDefault();
+            return myQuizzesPage ?? null!;
+        }
+        catch (Exception ex)
+        {
+        }
+
+        return null!;
+    
+    }
 }

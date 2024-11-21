@@ -1,5 +1,96 @@
-﻿<h3>MyQuizzes</h3>
+﻿@using BookBuddy.Business.Factories
+
+@using BookBuddy.Business.Services.AccountService
+@using BookBuddy.Business.Services.QuizResultService
+@using BookBuddy.Business.Services.QuizService
+@using BookBuddy.Models.QuizModels
+@* @using System.Globalization *@
+@* @inject UrlResolver _urlResolver *@
+
+@inject ProfileService ProfileService
+@* @inject IPageService PageService *@
+@inject IQuizResultService QuizResultService
+@inject IQuizService QuizService
+@inject IPageService PageService
+
+@if(CurrentPage != null)
+{
+    <section class="my-quizzes">
+        <div class="container">
+            <div class="ongoing-quizzes">
+                <h2 class="header">@(CurrentPage.HeadingOnGoing.Length > 1 ? CurrentPage.HeadingOnGoing : "Ongoing")</h2>
+                @if(Quizzes == null)
+                {
+                    <p>Laddar...</p>
+                }
+                else if (Quizzes.Count(x => x.IsCompleted == false) == 0)
+                {
+                    <p>There are no ongoing quizzes.</p>
+                }
+                else
+                {
+                    @foreach (var quiz in Quizzes)
+                    {
+                        if (!quiz.IsCompleted)
+                        {
+                            <OngoingQuizCard Model="@quiz" />
+                        }
+                    }
+                }
+               
+            </div>
+            <div class="completed-quizzes">
+                <h2 class="header">@(CurrentPage.HeadingFinished.Length > 1 ? CurrentPage.HeadingFinished : "Completed")</h2>
+                @if (Quizzes == null)
+                {
+                    <p>Laddar...</p>
+                }
+                else if(Quizzes.Count(x => x.IsCompleted) == 0)
+                {
+                    <p>There are no completed quizzes.</p>
+                }
+                else
+                {
+                    @foreach (var quiz in Quizzes)
+                    {
+                        if (quiz.IsCompleted)
+                        {
+                            <CompletedQuizCard Model="@quiz" />
+                        }
+                    }
+                }
+                
+            </div>
+        </div>
+      
+    </section>
+}
+
+
+
 
 @code {
+    [Parameter] public string Language { get; set; } = null!;
+    public List<QuizCardModel>? Quizzes { get; set; }
+    public MyQuizzesPage? CurrentPage { get; set; }
 
+
+
+
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if(firstRender)
+        {
+            CurrentPage = PageService.GetMyQuizzesPage(Language);
+            var profile = await ProfileService.GetSelectedProfileAsync();
+            var results = await QuizResultService.GetResultsByProfileIdAsync(profile.Id);
+            if (results != null)
+            {
+                Quizzes = await QuizService.GetActiveQuizzesAsync(results, Language);
+            }
+
+            StateHasChanged();
+        }
+    }
 }

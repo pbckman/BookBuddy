@@ -1,5 +1,8 @@
 ﻿using BookBuddy.Business.Factories;
+using BookBuddy.Business.Services.AccountService;
 using BookBuddy.Business.Services.BooksPageService;
+using BookBuddy.Business.Services.QuizResultService;
+using BookBuddy.Business.Services.SiteSettingsService;
 using BookBuddy.Models.Pages;
 using BookBuddy.Models.ViewModels;
 using EPiServer.Web.Routing;
@@ -11,28 +14,24 @@ namespace BookBuddy.Controllers
  
     public class MyQuizzesPageController : PageControllerBase<MyQuizzesPage>
     {
-        private readonly IContentLoader _contentLoader;
+        private readonly SiteSettingsService _siteSettingsService;
         private readonly ILogger<MyQuizzesPageController> _logger;
 
-        public MyQuizzesPageController(IContentLoader contentLoader, ILogger<MyQuizzesPageController> logger)
+
+        public MyQuizzesPageController(SiteSettingsService siteSettingsService, ILogger<MyQuizzesPageController> logger)
         {
-            _contentLoader = contentLoader;
+            _siteSettingsService = siteSettingsService;
             _logger = logger;
+
         }
 
-        public IActionResult Index(MyQuizzesPage currentPage)
+        public async Task<IActionResult> Index(MyQuizzesPage currentPage)
         {
             try
             {
-                var siteSettingsReference = currentPage.SiteSettingsPage;
-
-                SiteSettingsPage siteSettings = null!;
-                if (siteSettingsReference != null)
-                {
-                    siteSettings = _contentLoader.Get<SiteSettingsPage>(siteSettingsReference);
-                }
+                var siteSettings = _siteSettingsService.GetSiteSettings(currentPage.SiteSettingsPage);
                 var model = new MyQuizzesPageViewModel(currentPage, siteSettings);
-                
+
                 return View(model);
             }
             catch (Exception ex)

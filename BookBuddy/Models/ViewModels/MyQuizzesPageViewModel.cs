@@ -6,5 +6,5 @@ namespace BookBuddy.Models.ViewModels;
 
 public class MyQuizzesPageViewModel(MyQuizzesPage currentPage, SiteSettingsPage siteSettings) : PageViewModel<MyQuizzesPage>(currentPage, siteSettings)
 {
-    
+
 }

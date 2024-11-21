@@ -1,5 +1,6 @@
 ﻿using BookBuddy.Models.QuizModels;
 using BookBuddy.Models.ResultModels;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace BookBuddy.Business.Services.QuizResultService
 {
@@ -9,5 +10,6 @@ namespace BookBuddy.Business.Services.QuizResultService
         Task<QuizResultModel> CreateQuizResultAsync(int quizId, int profileId);
         Task<ChapterResultModel> SaveChapterResultAsync(ChapterModel chapter, int quizResultId);
         Task<QuizResultModel> CompleteQuizAsync(int quizResultId);
+        Task<List<QuizResultModel>> GetResultsByProfileIdAsync(int profileId);
     }
 }
