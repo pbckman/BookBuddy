@@ -2,9 +2,10 @@
 @using System.Globalization
 @model IPageViewModel<SitePageData>
 @inject ProfileService ProfileService
+@inject AccountService AccountService
 
 @{
-    var user = await _userManager.GetUserAsync(User);
+    var user = await AccountService.GetCurrentFrontEndUser(User);
     var userId = user?.Id;
     var profiles = await ProfileService.GetAllProfilesAsync(userId);
     var selectedProfile = await ProfileService.GetSelectedProfileAsync(userId);
@@ -34,12 +35,12 @@
 
 
             <div class="nav-account">
-                @if (User.Identity.IsAuthenticated)
+                @if (user != null)
                 {
                     <div class="nav-account-item">
                         @if (selectedProfile.Id == mainProfile.Id)
                         {
-                            <form method="get" asp-action="Details" asp-controller="Profile">
+                            <form action="@Url.Action("Details", "Profile", new { lang = currentCulture })" method="get">
                                 <div>
                                     <button class="btn btn-secondary" type="submit">
                                         <svg xmlns="http://www.w3.org/2000/svg" x-bind:width="size" x-bind:height="size" viewBox="0 0 24 24" fill="none" stroke="currentColor" x-bind:stroke-width="stroke" stroke-linecap="round" stroke-linejoin="round" width="24" height="24" stroke-width="2">

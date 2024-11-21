@@ -5,6 +5,7 @@ using EPiServer.Cms.UI.AspNetIdentity;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using System.Globalization;
 
 namespace BookBuddy.Controllers;
 
@@ -16,33 +17,36 @@ public class AccountController(UserManager<ApplicationUser> userManager, SignInM
     private readonly AccountService _accountService = accountService;
     private readonly AuthTranslationService _translationService = translationService;
 
-
     [HttpGet]
-    public IActionResult UpdateUser(string lang = "en")
+    public IActionResult UpdateUser(string? lang)
     {
-        ViewData["Title"] = _translationService.GetTranslation("updateuser", "title", lang);
-        ViewData["Description"] = _translationService.GetTranslation("updateuser", "description", lang);
-        ViewData["CurrentPasswordPlaceholder"] = _translationService.GetTranslation("updateuser", "currentPasswordPlaceholder", lang);
-        ViewData["CurrentPasswordLabel"] = _translationService.GetTranslation("updateuser", "currentPasswordLabel", lang);
-        ViewData["NewPasswordPlaceholder"] = _translationService.GetTranslation("updateuser", "newPasswordPlaceholder", lang);
-        ViewData["NewPasswordLabel"] = _translationService.GetTranslation("updateuser", "newPasswordLabel", lang);
-        ViewData["ConfirmNewPasswordPlaceholder"] = _translationService.GetTranslation("updateuser", "confirmNewPasswordPlaceholder", lang);
-        ViewData["ConfirmNewPasswordLabel"] = _translationService.GetTranslation("updateuser", "confirmNewPasswordLabel", lang);
-        ViewData["UpdateButton"] = _translationService.GetTranslation("updateuser", "updateButton", lang);
+        var currentCulture = !string.IsNullOrEmpty(lang) ? lang : CultureInfo.CurrentCulture.TwoLetterISOLanguageName;
+
+        ViewData["Title"] = _translationService.GetTranslation("updateuser", "title", currentCulture);
+        ViewData["Description"] = _translationService.GetTranslation("updateuser", "description", currentCulture);
+        ViewData["CurrentPasswordPlaceholder"] = _translationService.GetTranslation("updateuser", "currentPasswordPlaceholder", currentCulture);
+        ViewData["CurrentPasswordLabel"] = _translationService.GetTranslation("updateuser", "currentPasswordLabel", currentCulture);
+        ViewData["NewPasswordPlaceholder"] = _translationService.GetTranslation("updateuser", "newPasswordPlaceholder", currentCulture);
+        ViewData["NewPasswordLabel"] = _translationService.GetTranslation("updateuser", "newPasswordLabel", currentCulture);
+        ViewData["ConfirmNewPasswordPlaceholder"] = _translationService.GetTranslation("updateuser", "confirmNewPasswordPlaceholder", currentCulture);
+        ViewData["ConfirmNewPasswordLabel"] = _translationService.GetTranslation("updateuser", "confirmNewPasswordLabel", currentCulture);
+        ViewData["UpdateButton"] = _translationService.GetTranslation("updateuser", "updateButton", currentCulture);
         ViewData["StatusMessage"] = "";
         ViewData["ErrorMessage"] = "";
-        ViewData["AccessTitle"] = _translationService.GetTranslation("updateuser", "accessDenied", lang);
-        ViewData["AccessMessage"] = _translationService.GetTranslation("updateuser", "mainProfileNeeded", lang);
+        ViewData["AccessTitle"] = _translationService.GetTranslation("updateuser", "accessDenied", currentCulture);
+        ViewData["AccessMessage"] = _translationService.GetTranslation("updateuser", "mainProfileNeeded", currentCulture);
 
         return View();
     }
 
     [HttpPost]
-    public async Task<IActionResult> UpdateUser(UpdateUserViewModel model, string lang = "en")
+    public async Task<IActionResult> UpdateUser(UpdateUserViewModel model, string lang)
     {
+        var currentCulture = !string.IsNullOrEmpty(lang) ? lang : CultureInfo.CurrentCulture.TwoLetterISOLanguageName;
+
         if (!ModelState.IsValid)
         {
-            TempData["ErrorMessage"] = _translationService.GetTranslation("updateuser", "errorMessage", lang);
+            TempData["ErrorMessage"] = _translationService.GetTranslation("updateuser", "errorMessage", currentCulture);
             return RedirectToAction("UpdateUser", "Account");
         }
 
@@ -52,10 +56,10 @@ public class AccountController(UserManager<ApplicationUser> userManager, SignInM
 
         if (!result.Succeeded)
         {
-            TempData["ErrorMessage"] = _translationService.GetTranslation("updateuser", "errorMessage", lang);
+            TempData["ErrorMessage"] = _translationService.GetTranslation("updateuser", "errorMessage", currentCulture);
             return RedirectToAction("UpdateUser", "Account");
         }
-        TempData["StatusMessage"] = _translationService.GetTranslation("updateuser", "statusMessage", lang);
+        TempData["StatusMessage"] = _translationService.GetTranslation("updateuser", "statusMessage", currentCulture);
         return RedirectToAction("UpdateUser", "Account");
     }
 

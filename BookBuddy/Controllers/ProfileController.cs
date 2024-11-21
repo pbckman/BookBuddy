@@ -4,6 +4,7 @@ using BookBuddy.Models.ViewModels;
 using EPiServer.Cms.UI.AspNetIdentity;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using System.Globalization;
 using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace BookBuddy.Controllers
@@ -14,22 +15,11 @@ namespace BookBuddy.Controllers
         private readonly ProfileService _profileService = profileService;
         private readonly AuthTranslationService _translationService = translationService;
 
-
-        //[HttpGet]
-        //public IActionResult UserProfile(string lang = "en")
-        //{
-        //    ViewData["Title"] = _translationService.GetTranslation("userprofile", "title", lang);
-        //    ViewData["Description"] = _translationService.GetTranslation("userprofile", "description", lang);
-        //    ViewData["FirstName"] = _translationService.GetTranslation("userprofile", "firstname", lang);
-        //    ViewData["SaveButton"] = _translationService.GetTranslation("userprofile", "saveButton", lang);
-
-        //    return View();
-        //}
-
-
         [HttpPost]
-        public async Task<IActionResult> CreateProfile(ProfileViewModel model, string lang = "en")
+        public async Task<IActionResult> CreateProfile(ProfileViewModel model)
         {
+            var currentCulture = CultureInfo.CurrentCulture.TwoLetterISOLanguageName;
+
             var user = await _userManager.GetUserAsync(User);
             if (user == null)
             {
@@ -38,14 +28,14 @@ namespace BookBuddy.Controllers
 
             if (model == null || string.IsNullOrEmpty(model.FirstName))
             {
-                TempData["ErrorMessageCreate"] = _translationService.GetTranslation("updateprofile", "errorMessageCreate", lang);
-                return RedirectToAction("UpdateProfile", "Profile", new { lang });
+                TempData["ErrorMessageCreate"] = _translationService.GetTranslation("updateprofile", "errorMessageCreate", currentCulture);
+                return RedirectToAction("UpdateProfile", "Profile", new { currentCulture });
             }
 
             await _profileService.CreateSubProfileAsync(user.Id, model.FirstName, model.LastName, isMainProfile: false);
 
-            TempData["StatusMessageCreate"] = _translationService.GetTranslation("updateprofile", "statusMessageCreate", lang);
-            return RedirectToAction("UpdateProfile", "Profile", new { lang });
+            TempData["StatusMessageCreate"] = _translationService.GetTranslation("updateprofile", "statusMessageCreate", currentCulture);
+            return RedirectToAction("UpdateProfile", "Profile", new { currentCulture });
         }
 
         [HttpPost]
@@ -81,19 +71,21 @@ namespace BookBuddy.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> UpdateProfile(string lang = "en")
+        public async Task<IActionResult> UpdateProfile(string lang)
         {
-            ViewData["Title"] = _translationService.GetTranslation("updateprofile", "title", lang);
-            ViewData["Description"] = _translationService.GetTranslation("updateprofile", "description", lang);
-            ViewData["FirstNameCreate"] = _translationService.GetTranslation("updateprofile", "firstNameCreate", lang);
-            ViewData["SaveButtonCreate"] = _translationService.GetTranslation("updateprofile", "saveButtonCreate", lang);
-            ViewData["TitleUpdate"] = _translationService.GetTranslation("updateprofile", "titleUpdate", lang);
-            ViewData["DescriptionUpdate"] = _translationService.GetTranslation("updateprofile", "descriptionUpdate", lang);
-            ViewData["FirstNameUpdate"] = _translationService.GetTranslation("updateprofile", "firstNameUpdate", lang);
-            ViewData["SaveButtonUpdate"] = _translationService.GetTranslation("updateprofile", "saveButtonUpdate", lang);
-            ViewData["SelectProfile"] = _translationService.GetTranslation("updateprofile", "selectProfile", lang);
-            ViewData["SelectedProfile"] = _translationService.GetTranslation("updateprofile", "selectedProfile", lang);
-            ViewData["FirstNamePlaceholder"] = _translationService.GetTranslation("updateprofile", "firstNamePlaceholder", lang);
+            var currentCulture = !string.IsNullOrEmpty(lang) ? lang : CultureInfo.CurrentCulture.TwoLetterISOLanguageName;
+
+            ViewData["Title"] = _translationService.GetTranslation("updateprofile", "title", currentCulture);
+            ViewData["Description"] = _translationService.GetTranslation("updateprofile", "description", currentCulture);
+            ViewData["FirstNameCreate"] = _translationService.GetTranslation("updateprofile", "firstNameCreate", currentCulture);
+            ViewData["SaveButtonCreate"] = _translationService.GetTranslation("updateprofile", "saveButtonCreate", currentCulture);
+            ViewData["TitleUpdate"] = _translationService.GetTranslation("updateprofile", "titleUpdate", currentCulture);
+            ViewData["DescriptionUpdate"] = _translationService.GetTranslation("updateprofile", "descriptionUpdate", currentCulture);
+            ViewData["FirstNameUpdate"] = _translationService.GetTranslation("updateprofile", "firstNameUpdate", currentCulture);
+            ViewData["SaveButtonUpdate"] = _translationService.GetTranslation("updateprofile", "saveButtonUpdate", currentCulture);
+            ViewData["SelectProfile"] = _translationService.GetTranslation("updateprofile", "selectProfile", currentCulture);
+            ViewData["SelectedProfile"] = _translationService.GetTranslation("updateprofile", "selectedProfile", currentCulture);
+            ViewData["FirstNamePlaceholder"] = _translationService.GetTranslation("updateprofile", "firstNamePlaceholder", currentCulture);
             ViewData["ErrorMessageUpdate"] = "";
             ViewData["ErrorMessageCreate"] = "";
             ViewData["StatusMessageUpdate"] = "";
@@ -118,8 +110,10 @@ namespace BookBuddy.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> UpdateProfile(ProfileViewModel model, string lang = "en")
+        public async Task<IActionResult> UpdateProfile(ProfileViewModel model, string lang)
         {
+            var currentCulture = !string.IsNullOrEmpty(lang) ? lang : CultureInfo.CurrentCulture.TwoLetterISOLanguageName;
+
             var user = await _userManager.GetUserAsync(User);
             if (user == null)
             {
@@ -128,7 +122,7 @@ namespace BookBuddy.Controllers
 
             if (model == null || string.IsNullOrEmpty(model.FirstName))
             {
-                TempData["ErrorMessageUpdate"] = _translationService.GetTranslation("updateprofile", "errorMessageUpdate", lang);
+                TempData["ErrorMessageUpdate"] = _translationService.GetTranslation("updateprofile", "errorMessageUpdate", currentCulture);
                 return RedirectToAction("UpdateProfile", "Profile");
             }
 
@@ -147,22 +141,24 @@ namespace BookBuddy.Controllers
             var success = await _profileService.UpdateSubProfileAsync(profileId.ToString(), model);
             if (!success)
             {
-                TempData["ErrorMessageUpdate"] = _translationService.GetTranslation("updateprofile", "errorMessageUpdate", lang);
+                TempData["ErrorMessageUpdate"] = _translationService.GetTranslation("updateprofile", "errorMessageUpdate", currentCulture);
                 return View(model);
             }
 
-            TempData["StatusMessageUpdate"] = _translationService.GetTranslation("updateprofile", "statusMessageUpdate", lang);
+            TempData["StatusMessageUpdate"] = _translationService.GetTranslation("updateprofile", "statusMessageUpdate", currentCulture);
             return RedirectToAction("UpdateProfile", "Profile");
         }
 
         [HttpGet]
-        public async Task<IActionResult> UpdateSubProfile(string lang = "en")
+        public async Task<IActionResult> UpdateSubProfile(string lang)
         {
-            ViewData["Title"] = _translationService.GetTranslation("subProfileDetails", "title", lang);
-            ViewData["Description"] = _translationService.GetTranslation("subProfileDetails", "description", lang);
-            ViewData["FirstNameUpdate"] = _translationService.GetTranslation("subProfileDetails", "firstNameUpdate", lang);
-            ViewData["SaveButtonUpdate"] = _translationService.GetTranslation("subProfileDetails", "saveButtonUpdate", lang);
-            ViewData["ChooseProfileImage"] = _translationService.GetTranslation("subProfileDetails", "chooseProfileImage", lang);
+            var currentCulture = !string.IsNullOrEmpty(lang) ? lang : CultureInfo.CurrentCulture.TwoLetterISOLanguageName;
+
+            ViewData["Title"] = _translationService.GetTranslation("subProfileDetails", "title", currentCulture);
+            ViewData["Description"] = _translationService.GetTranslation("subProfileDetails", "description", currentCulture);
+            ViewData["FirstNameUpdate"] = _translationService.GetTranslation("subProfileDetails", "firstNameUpdate", currentCulture);
+            ViewData["SaveButtonUpdate"] = _translationService.GetTranslation("subProfileDetails", "saveButtonUpdate", currentCulture);
+            ViewData["ChooseProfileImage"] = _translationService.GetTranslation("subProfileDetails", "chooseProfileImage", currentCulture);
             ViewData["StatusMessageUpdateSub"] = "";
             ViewData["ErrorMessageUpdateSub"] = "";
 
@@ -186,8 +182,10 @@ namespace BookBuddy.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> UpdateSubProfile(ProfileViewModel model, string lang = "en")
+        public async Task<IActionResult> UpdateSubProfile(ProfileViewModel model, string lang)
         {
+            var currentCulture = !string.IsNullOrEmpty(lang) ? lang : CultureInfo.CurrentCulture.TwoLetterISOLanguageName;
+
             var user = await _userManager.GetUserAsync(User);
             if (user == null)
             {
@@ -196,7 +194,7 @@ namespace BookBuddy.Controllers
 
             if (model == null || string.IsNullOrEmpty(model.FirstName))
             {
-                TempData["ErrorMessageUpdateSub"] = _translationService.GetTranslation("subProfileDetails", "errorMessageUpdateSub", lang);
+                TempData["ErrorMessageUpdateSub"] = _translationService.GetTranslation("subProfileDetails", "errorMessageUpdateSub", currentCulture);
                 return RedirectToAction("UpdateSubProfile", "Profile");
             }
 
@@ -215,22 +213,24 @@ namespace BookBuddy.Controllers
             var success = await _profileService.UpdateSubProfileAsync(profileId.ToString(), model);
             if (!success)
             {
-                TempData["ErrorMessageUpdateSub"] = _translationService.GetTranslation("subProfileDetails", "errorMessageUpdateSub", lang);
+                TempData["ErrorMessageUpdateSub"] = _translationService.GetTranslation("subProfileDetails", "errorMessageUpdateSub", currentCulture);
                 return View(model);
             }
 
-            TempData["StatusMessageUpdateSub"] = _translationService.GetTranslation("subProfileDetails", "statusMessageUpdateSub", lang);
+            TempData["StatusMessageUpdateSub"] = _translationService.GetTranslation("subProfileDetails", "statusMessageUpdateSub", currentCulture);
             return RedirectToAction("UpdateSubProfile", "Profile");
         }
 
         [HttpGet]
-        public async Task<IActionResult> Details(string lang = "en")
+        public async Task<IActionResult> Details(string lang)
         {
-            ViewData["Title"] = _translationService.GetTranslation("details", "title", lang);
-            ViewData["Description"] = _translationService.GetTranslation("details", "description", lang);
-            ViewData["FirstName"] = _translationService.GetTranslation("details", "firstname", lang);
-            ViewData["LastName"] = _translationService.GetTranslation("details", "lastname", lang);
-            ViewData["SaveButton"] = _translationService.GetTranslation("details", "saveButton", lang);
+            var currentCulture = !string.IsNullOrEmpty(lang) ? lang : CultureInfo.CurrentCulture.TwoLetterISOLanguageName;
+
+            ViewData["Title"] = _translationService.GetTranslation("details", "title", currentCulture);
+            ViewData["Description"] = _translationService.GetTranslation("details", "description", currentCulture);
+            ViewData["FirstName"] = _translationService.GetTranslation("details", "firstname", currentCulture);
+            ViewData["LastName"] = _translationService.GetTranslation("details", "lastname", currentCulture);
+            ViewData["SaveButton"] = _translationService.GetTranslation("details", "saveButton", currentCulture);
             ViewData["StatusMessage"] = "";
 
             var user = await _userManager.GetUserAsync(User);
@@ -253,35 +253,37 @@ namespace BookBuddy.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Details(UserProfileViewModel model, string lang = "en")
+        public async Task<IActionResult> Details(UserProfileViewModel model, string lang)
         {
+            var currentCulture = !string.IsNullOrEmpty(lang) ? lang : CultureInfo.CurrentCulture.TwoLetterISOLanguageName;
+
             if (!ModelState.IsValid)
             {
-                TempData["ErrorMessage"] = _translationService.GetTranslation("details", "errorMessage", lang);
+                TempData["ErrorMessage"] = _translationService.GetTranslation("details", "errorMessage", currentCulture);
                 return RedirectToAction("Details", "Profile");
             }
 
             var user = await _userManager.GetUserAsync(User);
             if (user == null)
             {
-                TempData["ErrorMessage"] = _translationService.GetTranslation("details", "errorMessage", lang);
+                TempData["ErrorMessage"] = _translationService.GetTranslation("details", "errorMessage", currentCulture);
                 return RedirectToAction("Details", "Profile");
             }
 
             if (model == null || string.IsNullOrEmpty(model.Firstname) || string.IsNullOrEmpty(model.Lastname))
             {
-                TempData["ErrorMessage"] = _translationService.GetTranslation("details", "errorMessage", lang);
+                TempData["ErrorMessage"] = _translationService.GetTranslation("details", "errorMessage", currentCulture);
                 return RedirectToAction("UpdateProfile", "Profile");
             }
 
             var success = await _profileService.UpdateProfileAsync(user, model);
             if (!success)
             {
-                TempData["ErrorMessage"] = _translationService.GetTranslation("details", "errorMessage", lang);
+                TempData["ErrorMessage"] = _translationService.GetTranslation("details", "errorMessage", currentCulture);
                 return RedirectToAction("Details", "Profile");
             }
 
-            TempData["StatusMessage"] = _translationService.GetTranslation("details", "statusMessage", lang);
+            TempData["StatusMessage"] = _translationService.GetTranslation("details", "statusMessage", currentCulture);
             return RedirectToAction("Details", "Profile");
         }
 

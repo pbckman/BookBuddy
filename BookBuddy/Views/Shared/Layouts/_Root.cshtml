@@ -1,13 +1,17 @@
 ﻿@using BookBuddy.Models.Pages
 @using BookBuddy.Models.ViewModels
 @using EPiServer.Web.Mvc.Html
+@using System.Globalization
 
 @model IPageViewModel<SitePageData>
 
+@{
+    var currentCulture = CultureInfo.CurrentCulture.TwoLetterISOLanguageName;
+}
 
 <!DOCTYPE html>
 
-<html lang="@Model.CurrentPage.Language">
+<html lang="@currentCulture">
 <head>
     <meta name="viewport" content="width=device-width" />
     <meta title="@Model.CurrentPage.MetaTitle" />

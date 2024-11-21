@@ -1,10 +1,11 @@
 @using System.Globalization
 @model IPageViewModel<SitePageData>
 @inject ProfileService ProfileService
+@inject AccountService AccountService
 @inject UserManager<ApplicationUser> _userManager
 
 @{
-    var user = await _userManager.GetUserAsync(User);
+    var user = await AccountService.GetCurrentFrontEndUser(User);
     var userId = user?.Id;
     var profiles = await ProfileService.GetAllProfilesAsync(userId);
     var selectedProfile = await ProfileService.GetSelectedProfileAsync(userId);
@@ -23,7 +24,7 @@
         </button>
 
             <div class="dropdown">
-                @if (User.Identity.IsAuthenticated)
+                @if (user != null)
                 {
                     <button class="btn btn-light dropdown-toggle d-flex align-items-center" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                         <img class="profile-image" src="~/images/avatars/@(selectedProfile?.ProfileImage ?? "default-profile.jpg")" alt="ProfileImage" /> <span class="d-none d-lg-block">@selectedProfile?.ProfileFirstName</span>
