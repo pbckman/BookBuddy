@@ -16,98 +16,98 @@
 
 @if (Model.SiteSettings != null)
 {
-    <div class="navbar-wrapper">
-        <div class="nav-logo text-primary">
+        <div class="navbar-wrapper">
+            <div class="nav-logo text-primary">
             @* <img class="nav-logo-img" src="@Url.ContentUrl(Model.SiteSettings.HeaderLogo)" alt="Company Logo" /> *@
             @* <img class="nav-logo-img" src="~/images/Bookbuddy-logo.PNG" alt="Bookbuddy logo"> *@
-            <img class="nav-logo-img" src="~/images/BookBuddyLogo2.png" alt="Bookbuddy logo">
+                <img class="nav-logo-img" src="~/images/BookBuddyLogo2.png" alt="Bookbuddy logo">
             @* <h3>@Model.SiteSettings.HeaderTitle</h3> *@
-        </div>
-
-        <div class="nav-items">
-
-            <div class="nav-links">
-                @foreach (var link in Model.SiteSettings.HeaderLinks!)
-                {
-                    <a href="@link.Href" target="@link.Target">@link.Text</a>
-                }
             </div>
 
+            <div class="nav-items">
 
-            <div class="nav-account">
+                <div class="nav-links">
+                @foreach (var link in Model.SiteSettings.HeaderLinks!)
+                {
+                            <a href="@link.Href" target="@link.Target">@link.Text</a>
+                }
+                </div>
+
+
+                <div class="nav-account">
                 @if (user != null)
                 {
-                    <div class="nav-account-item">
+                            <div class="nav-account-item">
                         @if (selectedProfile.Id == mainProfile.Id)
                         {
-                            <form action="@Url.Action("Details", "Profile", new { lang = currentCulture })" method="get">
-                                <div>
-                                    <button class="btn btn-secondary" type="submit">
-                                        <svg xmlns="http://www.w3.org/2000/svg" x-bind:width="size" x-bind:height="size" viewBox="0 0 24 24" fill="none" stroke="currentColor" x-bind:stroke-width="stroke" stroke-linecap="round" stroke-linejoin="round" width="24" height="24" stroke-width="2">
-                                            <path d="M10.325 4.317c.426 -1.756 2.924 -1.756 3.35 0a1.724 1.724 0 0 0 2.573 1.066c1.543 -.94 3.31 .826 2.37 2.37a1.724 1.724 0 0 0 1.065 2.572c1.756 .426 1.756 2.924 0 3.35a1.724 1.724 0 0 0 -1.066 2.573c.94 1.543 -.826 3.31 -2.37 2.37a1.724 1.724 0 0 0 -2.572 1.065c-.426 1.756 -2.924 1.756 -3.35 0a1.724 1.724 0 0 0 -2.573 -1.066c-1.543 .94 -3.31 -.826 -2.37 -2.37a1.724 1.724 0 0 0 -1.065 -2.572c-1.756 -.426 -1.756 -2.924 0 -3.35a1.724 1.724 0 0 0 1.066 -2.573c-.94 -1.543 .826 -3.31 2.37 -2.37c1 .608 2.296 .07 2.572 -1.065z"></path>
-                                            <path d="M9 12a3 3 0 1 0 6 0a3 3 0 0 0 -6 0"></path>
-                                        </svg>
-                                        Settings
-                                    </button>
-                                </div>
-                            </form>
+                                        <form action="@Url.Action("Details", "Profile", new { lang = currentCulture })" method="get">
+                                            <div>
+                                                <button class="btn btn-secondary" type="submit">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" x-bind:width="size" x-bind:height="size" viewBox="0 0 24 24" fill="none" stroke="currentColor" x-bind:stroke-width="stroke" stroke-linecap="round" stroke-linejoin="round" width="24" height="24" stroke-width="2">
+                                                        <path d="M10.325 4.317c.426 -1.756 2.924 -1.756 3.35 0a1.724 1.724 0 0 0 2.573 1.066c1.543 -.94 3.31 .826 2.37 2.37a1.724 1.724 0 0 0 1.065 2.572c1.756 .426 1.756 2.924 0 3.35a1.724 1.724 0 0 0 -1.066 2.573c.94 1.543 -.826 3.31 -2.37 2.37a1.724 1.724 0 0 0 -2.572 1.065c-.426 1.756 -2.924 1.756 -3.35 0a1.724 1.724 0 0 0 -2.573 -1.066c-1.543 .94 -3.31 -.826 -2.37 -2.37a1.724 1.724 0 0 0 -1.065 -2.572c-1.756 -.426 -1.756 -2.924 0 -3.35a1.724 1.724 0 0 0 1.066 -2.573c-.94 -1.543 .826 -3.31 2.37 -2.37c1 .608 2.296 .07 2.572 -1.065z"></path>
+                                                        <path d="M9 12a3 3 0 1 0 6 0a3 3 0 0 0 -6 0"></path>
+                                                    </svg>
+                                                    Settings
+                                                </button>
+                                            </div>
+                                        </form>
                         }
                         else
                         {
-                            <form action="@Url.Action("UpdateSubProfile", "Profile", new { lang = currentCulture })" method="get">
-                                <div>
-                                    <button class="btn btn-secondary" type="submit">
-                                        <svg xmlns="http://www.w3.org/2000/svg" x-bind:width="size" x-bind:height="size" viewBox="0 0 24 24" fill="none" stroke="currentColor" x-bind:stroke-width="stroke" stroke-linecap="round" stroke-linejoin="round" width="24" height="24" stroke-width="2">
-                                            <path d="M10.325 4.317c.426 -1.756 2.924 -1.756 3.35 0a1.724 1.724 0 0 0 2.573 1.066c1.543 -.94 3.31 .826 2.37 2.37a1.724 1.724 0 0 0 1.065 2.572c1.756 .426 1.756 2.924 0 3.35a1.724 1.724 0 0 0 -1.066 2.573c.94 1.543 -.826 3.31 -2.37 2.37a1.724 1.724 0 0 0 -2.572 1.065c-.426 1.756 -2.924 1.756 -3.35 0a1.724 1.724 0 0 0 -2.573 -1.066c-1.543 .94 -3.31 -.826 -2.37 -2.37a1.724 1.724 0 0 0 -1.065 -2.572c-1.756 -.426 -1.756 -2.924 0 -3.35a1.724 1.724 0 0 0 1.066 -2.573c-.94 -1.543 .826 -3.31 2.37 -2.37c1 .608 2.296 .07 2.572 -1.065z"></path>
-                                            <path d="M9 12a3 3 0 1 0 6 0a3 3 0 0 0 -6 0"></path>
-                                        </svg>
-                                        Settings
-                                    </button>
-                                </div>
-                            </form>
+                                        <form action="@Url.Action("UpdateSubProfile", "Profile", new { lang = currentCulture })" method="get">
+                                            <div>
+                                                <button class="btn btn-secondary" type="submit">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" x-bind:width="size" x-bind:height="size" viewBox="0 0 24 24" fill="none" stroke="currentColor" x-bind:stroke-width="stroke" stroke-linecap="round" stroke-linejoin="round" width="24" height="24" stroke-width="2">
+                                                        <path d="M10.325 4.317c.426 -1.756 2.924 -1.756 3.35 0a1.724 1.724 0 0 0 2.573 1.066c1.543 -.94 3.31 .826 2.37 2.37a1.724 1.724 0 0 0 1.065 2.572c1.756 .426 1.756 2.924 0 3.35a1.724 1.724 0 0 0 -1.066 2.573c.94 1.543 -.826 3.31 -2.37 2.37a1.724 1.724 0 0 0 -2.572 1.065c-.426 1.756 -2.924 1.756 -3.35 0a1.724 1.724 0 0 0 -2.573 -1.066c-1.543 .94 -3.31 -.826 -2.37 -2.37a1.724 1.724 0 0 0 -1.065 -2.572c-1.756 -.426 -1.756 -2.924 0 -3.35a1.724 1.724 0 0 0 1.066 -2.573c-.94 -1.543 .826 -3.31 2.37 -2.37c1 .608 2.296 .07 2.572 -1.065z"></path>
+                                                        <path d="M9 12a3 3 0 1 0 6 0a3 3 0 0 0 -6 0"></path>
+                                                    </svg>
+                                                    Settings
+                                                </button>
+                                            </div>
+                                        </form>
                         }
-                    </div>
-
-
-                    <div class="nav-account-item">
-                        <form asp-action="SignOut" asp-controller="Auth" method="post">
-                            <div class="nav-logout">
-                                <button class="btn btn-danger" type="submit">
-                                    <svg xmlns="http://www.w3.org/2000/svg" x-bind:width="size" x-bind:height="size" viewBox="0 0 24 24" fill="none" stroke="currentColor" x-bind:stroke-width="stroke" stroke-linecap="round" stroke-linejoin="round" width="24" height="24" stroke-width="2">
-                                        <path d="M14 12v.01"></path>
-                                        <path d="M3 21h18"></path>
-                                        <path d="M6 21v-16a2 2 0 0 1 2 -2h8a2 2 0 0 1 2 2v16"></path>
-                                    </svg>
-                                    Sign out
-                                </button>
                             </div>
-                        </form>
-                    </div>
-                    
+
+
+                            <div class="nav-account-item">
+                                <form asp-action="SignOut" asp-controller="Auth" method="post">
+                                    <div class="nav-logout">
+                                        <button class="btn btn-danger" type="submit">
+                                            <svg xmlns="http://www.w3.org/2000/svg" x-bind:width="size" x-bind:height="size" viewBox="0 0 24 24" fill="none" stroke="currentColor" x-bind:stroke-width="stroke" stroke-linecap="round" stroke-linejoin="round" width="24" height="24" stroke-width="2">
+                                                <path d="M14 12v.01"></path>
+                                                <path d="M3 21h18"></path>
+                                                <path d="M6 21v-16a2 2 0 0 1 2 -2h8a2 2 0 0 1 2 2v16"></path>
+                                            </svg>
+                                            Sign out
+                                        </button>
+                                    </div>
+                                </form>
+                            </div>
+
                 }
                 else
                 {
 
-                    <form action="@Url.Action("SignUp", "Auth", new { lang = currentCulture })" method="get">
-                        <button class="btn btn-warning" type="submit">
-                            <svg xmlns="http://www.w3.org/2000/svg" x-bind:width="size" x-bind:height="size" viewBox="0 0 24 24" fill="none" stroke="currentColor" x-bind:stroke-width="stroke" stroke-linecap="round" stroke-linejoin="round" width="24" height="24" stroke-width="2">
-                                <path d="M8 7a4 4 0 1 0 8 0a4 4 0 0 0 -8 0"></path>
-                                <path d="M16 19h6"></path>
-                                <path d="M19 16v6"></path>
-                                <path d="M6 21v-2a4 4 0 0 1 4 -4h4"></path>
-                            </svg>
-                            Sign up
-                        </button>
-                    </form>
+                            <form action="@Url.Action("SignUp", "Auth", new { lang = currentCulture })" method="get">
+                                <button class="btn btn-warning" type="submit">
+                                    <svg xmlns="http://www.w3.org/2000/svg" x-bind:width="size" x-bind:height="size" viewBox="0 0 24 24" fill="none" stroke="currentColor" x-bind:stroke-width="stroke" stroke-linecap="round" stroke-linejoin="round" width="24" height="24" stroke-width="2">
+                                        <path d="M8 7a4 4 0 1 0 8 0a4 4 0 0 0 -8 0"></path>
+                                        <path d="M16 19h6"></path>
+                                        <path d="M19 16v6"></path>
+                                        <path d="M6 21v-2a4 4 0 0 1 4 -4h4"></path>
+                                    </svg>
+                                    Sign up
+                                </button>
+                            </form>
                 }
+                </div>
+
+
             </div>
-            
 
         </div>
-
-    </div>
 }
 else
 {
-    <p>Site settings not available</p>
+        <p>Site settings not available</p>
 }

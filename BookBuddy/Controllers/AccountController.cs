@@ -50,7 +50,7 @@ public class AccountController(UserManager<ApplicationUser> userManager, SignInM
             return RedirectToAction("UpdateUser", "Account");
         }
 
-        var user = await _userManager.GetUserAsync(User);
+        var user = await _accountService.GetCurrentFrontEndUser(User);
 
         var result = await _accountService.ChangePasswordAsync(user, model.CurrentPassword, model.NewPassword);
 

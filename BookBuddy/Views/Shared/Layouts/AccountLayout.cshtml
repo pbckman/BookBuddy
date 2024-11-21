@@ -1,11 +1,12 @@
 ﻿@using System.Globalization
 
 @inject ProfileService ProfileService
+@inject AccountService AccountService
 
 @{
     var currentCulture = CultureInfo.CurrentCulture.TwoLetterISOLanguageName;
 
-    var user = await _userManager.GetUserAsync(User);
+    var user = await AccountService.GetCurrentFrontEndUser(User);
     var userId = user?.Id;
     var profiles = await ProfileService.GetAllProfilesAsync(userId);
     var selectedProfile = await ProfileService.GetSelectedProfileAsync(userId);
@@ -78,8 +79,8 @@
                         </ul>
                     }
                     </div>
-                    
-                    <div class="form-container">
+
+                <div class="form-container">
                         @RenderBody()
                     </div>
 
