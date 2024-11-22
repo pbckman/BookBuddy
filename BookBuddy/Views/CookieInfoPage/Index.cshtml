@@ -1,5 +1,7 @@
-﻿@{
-    Layout = "~/Views/Shared/Layouts/CookieLayout.cshtml";
+﻿@model CookieInformationPageViewModel
+
+@{
+    @* Layout = "~/Views/Shared/Layouts/CookieLayout.cshtml"; *@
     ViewBag.Title = "Cookie Policy";
 
    
@@ -9,9 +11,9 @@
 
 }
 
-<div class="container-sm startpage-wrapper">
-    <h1>@(userLang == "sv-SE" ? "Cookie Policy" : "Cookie Policy")</h1>
-    <h2>@(userLang == "sv-SE" ? "Denna sida innehåller information om hur vi använder cookies." : "This page contains information about how we use cookies.")</h2>
+<div class="container startpage-wrapper cookie-page">
+    <h1 class="cookie-title">@(userLang == "sv-SE" ? "Cookie Policy" : "Cookie Policy")</h1>
+    <h2 class="cookie-info">@(userLang == "sv-SE" ? "Denna sida innehåller information om hur vi använder cookies." : "This page contains information about how we use cookies.")</h2>
     <div id="CookieDeclaration"></div>
 </div>
 

@@ -17,7 +17,14 @@
 @using BookBuddy.Business.Factories
 @using BookBuddy.Business.Services.StateService
 @using BookBuddy.Models.QuizModels
+@using EPiServer.Cms.Shell
+@using EPiServer.Core.Internal
+@using BookBuddy.Business.Services.LanguageService
 
+@inject ILanguageService LanguageService
+@inject IUrlResolver UrlResolver
+@inject ContentLoader _contentLoader
+@inject ContentLoader _contentLoader
 @inject TranslationFactory TranslationFactory
 @inject IStateService StateService
 @inject IBooksPageService BooksPageService
