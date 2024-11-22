@@ -1,0 +1,102 @@
+// .ongoing-quiz-card {
+//     background-color: white;
+//     animation: fadeIn 0.3s ease-in-out;
+//     display: flex;
+//     flex-direction: row;
+//     gap: 30px;
+//     padding: 7px;
+//     z-index: 2;
+//     border-radius: 12px;
+//     margin-bottom: 10px;
+//     border: 0.5px solid gray;
+
+//     .card-image-section {
+//         img {
+//             width: 50px;
+//             object-fit: cover;
+//         }
+//     }
+
+//     .card-content-section {
+//         color: black;
+
+//         h3 {
+//             font-size: 0.8rem;
+//             font-weight: bold;
+//         }
+//     }
+// }
+
+    .ongoing-quiz-card {
+        width: 100%;
+        padding: 0.6rem;
+        display: flex;
+        flex-direction: column; /* Gör kortet kolumn-baserat */
+        justify-content: space-between;
+        aspect-ratio: 8/4;
+        margin: 0 auto;
+        max-width: 480px;
+        @media (max-width: 480px) {
+            aspect-ratio: 7/4;
+        }
+        // &:hover {
+        //     background-color: #F3F3F3;
+        //     transform: scale(1.05);
+        //     transition: transform 0.3s ease-in-out;
+        //     cursor: pointer;
+        // }
+    
+        .bookcard-content {
+            display: flex;
+            height: 100%; /* Se till att innehållsbehållaren fyller kortets höjd */
+        }
+    
+        .image-div {
+            height: auto; /* Låt bilden ta upp det utrymme den behöver */
+            flex-shrink: 0; /* Förhindra att bild-div krymper */
+            img {
+                max-height: 100%;
+            }
+        }
+    
+        .content-div {
+            flex-grow: 1; /* Gör att content-div tar upp återstående plats */
+            display: flex;
+            flex-direction: column;
+            .card-body {
+                padding: .5rem 1rem 0;
+                .card-title {
+                    font-size: 1.2em;
+                    @media (max-width: 480px) {
+                        font-size: 1rem;
+                    }
+                }
+                .plot-text {
+                    max-height: 100px; /* Begränsa höjden för att passa antalet rader */
+                    overflow: hidden;
+                    text-overflow: ellipsis;
+                    display: -webkit-box;
+                    -webkit-line-clamp: 4; /* Begränsa antalet synliga rader */
+                    -webkit-box-orient: vertical;
+                    line-height: 1.5em; /* Justera linjehöjd om det behövs för att anpassa */
+                    height: calc(1.5em * 4); /* Ställ in höjden för att matcha linjehöjden och antalet rader */
+                    font-size: clamp(.75rem, 2vw, .8rem);
+                    margin-bottom: .25rem;
+                }
+                p {
+                    font-size: .8em;
+                }
+                .authors {
+                    margin-top: auto;
+                    font-weight: 500;
+                }
+            }
+        }
+    }
+
+
+@media (max-width: 768px) {
+    .content-div {
+        font-size: 0.9em; 
+    }
+}

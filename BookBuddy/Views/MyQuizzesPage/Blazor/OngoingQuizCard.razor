@@ -1,10 +1,25 @@
 ﻿@using BookBuddy.Models.QuizModels
-<div class="quiz-card">
+
+@* <div class="quiz-card">
     <div class="card-image-section">
         <img src="@Model.ImageUrl" alt="@Model.ImageAltText" />
     </div>
     <div class="card-content-section">
         <h3>@Model.Title</h3>
+    </div>
+</div> *@
+
+<div class="card bookcard ongoing-quiz-card">
+    <div class="bookcard-content">
+        <div class="image-div">
+            <img src="@Model.ImageUrl" loading="lazy" class="img-fluid" alt="@Model.ImageAltText">
+        </div>
+        <div class="content-div">
+            <div class="card-body d-flex flex-column h-100">
+                <h5 class="card-title">@Model.Title</h5>
+                <p class="card-text">@Model.IsCompleted</p>
+            </div>
+        </div>
     </div>
 </div>
 

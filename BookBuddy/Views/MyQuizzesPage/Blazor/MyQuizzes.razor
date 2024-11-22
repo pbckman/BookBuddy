@@ -14,24 +14,28 @@
     <section class="my-quizzes">
         <div class="container position-relative">
             
-            <div class="overall-summary">
+            @* <div class="overall-summary">
                 <div class="overall-overlay card"></div>
                 <div><p>Antal pågående quiz: @(AmountOfOngoing)st</p></div>
                 <div><p>Antal quiz avklarade: @(AmountOfCompleted)st</p></div>
                 <div><p>Procent korrekta svar: @(ProcentageCorrectAnswers)%</p></div>
-            </div>
+            </div> *@
             <div class="detail-summary">
-                <div class="detail-overlay card"></div>
+                @* <div class="detail-overlay card"></div> *@
                 <div class="quizzes-section">
 
                     <div class="button-group">
-                        <button class="toggle-btn @(showOngoing ? "active" : "")" @onclick="ShowOngoing">@(CurrentPage.HeadingOnGoing.Length > 0 ? CurrentPage.HeadingOnGoing : "Ongoing") @(AmountOfOngoing) <i class="fa-solid fa-circle"></i></button>
-                        <button class="toggle-btn @(showCompleted ? "active" : "")" @onclick="ShowCompleted">@(CurrentPage.HeadingFinished.Length > 0 ? CurrentPage.HeadingFinished : "Completed") @(AmountOfCompleted) <i class="fa-solid fa-circle"></i></button>
+                        <button class="toggle-btn @(showOngoing ? "active" : "")" @onclick="ShowOngoing">@(CurrentPage.HeadingOnGoing.Length > 0 ? CurrentPage.HeadingOnGoing : "Ongoing") @(AmountOfOngoing) 
+                            @* <i class="fa-solid fa-circle"></i> *@
+                        </button>
+                        <button class="toggle-btn @(showCompleted ? "active" : "")" @onclick="ShowCompleted">@(CurrentPage.HeadingFinished.Length > 0 ? CurrentPage.HeadingFinished : "Completed") @(AmountOfCompleted) 
+                            @* <i class="fa-solid fa-circle"></i> *@
+                        </button>
                     </div>
                     <div class="quiz-content">
                         @if (showOngoing)
                         {
-                            <div class="ongoing-quizzes">
+                            <div class="book-card-wrapper">
                                 @if (Quizzes == null)
                                 {
                                     <p>Laddar...</p>
@@ -54,7 +58,7 @@
                         }
                         else if (showCompleted)
                         {
-                            <div class="completed-quizzes">
+                            <div class="book-card-wrapper">
                                 @if (Quizzes == null)
                                 {
                                     <p>Laddar...</p>
@@ -79,7 +83,16 @@
                 </div>
 
                 <div class="summary-section">
+
                     <h3>Summary</h3>
+
+                    <div class="overall-summary">
+
+                        @* <div class="overall-overlay card"></div> *@
+                        <div><p>Antal pågående quiz: @(AmountOfOngoing)st</p></div>
+                        <div><p>Antal quiz avklarade: @(AmountOfCompleted)st</p></div>
+                        <div><p>Procent korrekta svar: @(ProcentageCorrectAnswers)%</p></div>
+                    </div>
                 </div>
             </div>
             
