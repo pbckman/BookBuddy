@@ -27,7 +27,7 @@
                 @if (user != null)
                 {
                     <button class="btn btn-light dropdown-toggle d-flex align-items-center" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                        <img class="profile-image" src="~/images/avatars/@(selectedProfile?.ProfileImage ?? "default-profile.jpg")" alt="ProfileImage" /> <span class="d-none d-lg-block">@selectedProfile?.ProfileFirstName</span>
+                        <img class="profile-image" src="~/images/avatars/@(selectedProfile?.ProfileImage ?? "default-profile.webp")" loading="lazy" alt="ProfileImage" /> <span class="d-none d-lg-block">@selectedProfile?.ProfileFirstName</span>
                     </button>
 
                     <ul class="dropdown-menu">
