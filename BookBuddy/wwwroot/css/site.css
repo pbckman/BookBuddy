@@ -2,7 +2,19 @@
 @import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
 @media (min-width: 1400px) {
   .container {
+    width: 70%;
+  }
+}
+@media (min-width: 768px) {
+  .container {
     width: 90%;
+    max-width: 740px;
+  }
+}
+@media (min-width: 1024px) {
+  .container {
+    width: 90%;
+    max-width: 1400px;
   }
 }
 .card {
@@ -168,40 +180,43 @@ main {
   display: flex;
 }
 
+.flying-boy {
+  position: absolute;
+  top: 5%;
+  left: 5%;
+  max-width: 30%;
+  height: auto;
+  opacity: 0.5;
+  z-index: -1;
+}
+
 .main-content {
   position: relative;
+  min-height: 100vh;
+  height: 100%;
   display: flex;
   flex-direction: column;
   flex: 1;
-  /*    background-image: url('../images/rm245-bb-17-a.jpg');*/
   background-image: url("../images/background-img.webp");
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center;
   background-attachment: fixed;
+  overflow: auto;
   z-index: 2;
-}
-.main-content .flying-boy {
-  position: absolute;
-  top: 10%;
-  left: 10%;
-  max-width: 50%;
-  height: auto;
-  z-index: 2;
-  opacity: 0.5;
 }
 
 @media (min-width: 992px) {
   .main-content .flying-boy {
-    top: 5rem;
-    left: 5rem;
+    top: 7rem;
+    left: 7rem;
   }
 }
 @media (min-width: 1200px) {
   .main-content .flying-boy {
-    top: 10rem;
-    left: 10rem;
-    height: 20%;
+    top: 7rem;
+    left: 7rem;
+    height: 15%;
     width: auto;
   }
 }
@@ -241,6 +256,7 @@ a {
 .cookie-consent-button .cookie-btn:hover {
   background-color: gainsboro;
   transform: scale(1.1);
+  color: rgb(165, 124, 42);
 }
 .cookie-consent-button .cookie-btn:focus {
   outline: none;
@@ -341,29 +357,103 @@ body {
   padding: 1rem 2rem;
   position: sticky;
   background-color: transparent;
+  background-color: rgba(108, 117, 125, 0.1);
+  z-index: 100;
+  margin-top: 7rem;
+  display: flex;
+  align-items: center;
 }
 .footer .footer-wrapper {
   display: flex;
+  flex: 1;
+  align-items: center;
   justify-content: space-between;
+  margin: 0 4rem;
 }
-.footer .footer-wrapper .footer-items {
+.footer .footer-wrapper .link-wrapper-1 .footer-items {
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 20px;
+  gap: 0.8rem;
 }
-.footer .footer-wrapper .footer-items img {
+.footer .footer-wrapper .link-wrapper-1 .footer-items a:hover {
+  cursor: pointer;
+  filter: grayscale(80%);
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.3);
+}
+.footer .footer-wrapper .link-wrapper-1 .footer-items a img {
   height: 20px;
   width: auto;
+  margin: 0.5rem;
 }
-.footer .footer-wrapper .footer-copyright {
+.footer .footer-wrapper .link-wrapper-1 .footer-copyright {
   display: flex;
   justify-content: center;
   align-items: center;
   font-size: 12px;
 }
-.footer .footer-wrapper .footer-copyright p {
+.footer .footer-wrapper .link-wrapper-1 .footer-copyright p {
   margin: 0;
+}
+.footer .footer-wrapper .link-wrapper-2 {
+  display: flex;
+  gap: 2rem;
+}
+.footer .footer-wrapper .link-wrapper-2 .link {
+  display: flex;
+  text-align: center;
+  align-items: center;
+  justify-content: center;
+  color: black;
+}
+.footer .footer-wrapper .link-wrapper-2 .link:hover {
+  color: #3EBFAC;
+}
+.footer .footer-wrapper .link-wrapper-2 .language-dropup .dropdown-menu {
+  min-width: 0;
+  padding: 0;
+  transform: translate3d(0px, -43.98px, 0px) !important;
+  overflow: hidden;
+  background-color: rgba(108, 117, 125, 0.1);
+}
+.footer .footer-wrapper .link-wrapper-2 .language-dropup .dropdown-menu .list-item .dropdown-item {
+  padding: 0.3rem 0.75rem;
+}
+.footer .footer-wrapper .link-wrapper-2 .language-dropup .dropdown-menu .list-item .dropdown-item:hover {
+  background-color: #e7f3fd;
+}
+.footer .footer-wrapper .link-wrapper-2 .language-dropup .btn {
+  background-color: rgba(108, 117, 125, 0.1);
+  background-color: transparent;
+  border: none;
+}
+.footer .footer-wrapper .link-wrapper-2 .language-dropup .btn.dropdown-toggle::after {
+  display: none;
+}
+.footer .footer-wrapper .link-wrapper-2 .language-dropup .btn[aria-disabled=true] {
+  pointer-events: none !important;
+  cursor: not-allowed;
+}
+.footer .footer-wrapper .link-wrapper-2 .language-dropup .btn.True:hover {
+  box-shadow: none;
+  cursor: default;
+}
+.footer .footer-wrapper .link-wrapper-2 .language-dropup .btn.True svg {
+  filter: grayscale(60%);
+}
+@media (max-width: 768px) {
+  .footer .footer-wrapper {
+    flex-direction: column;
+    gap: 2rem;
+    margin: 1rem 2rem;
+  }
+  .footer .footer-wrapper .link-wrapper-1 .footer-items {
+    gap: 1rem;
+  }
+  .footer .footer-wrapper .link-wrapper-2 .link {
+    flex-direction: column;
+    gap: 1rem;
+  }
 }
 
 .offcanvas.offcanvas-start {
@@ -1732,163 +1822,19 @@ body {
   }
 }
 
-.my-quizzes {
-  color: white;
+.cookie-page {
+  width: -moz-fit-content;
+  width: fit-content;
+  max-width: 80%;
+  margin-bottom: 10rem;
 }
-.my-quizzes .container {
-  display: flex;
-  flex-direction: column;
-  gap: 1px;
-  margin-top: 10vh;
-  padding: 0;
-  width: 100%;
+.cookie-page .cookie-title {
+  font-size: 2.75rem;
+  margin-bottom: 1.5rem;
+  color: #007acc;
+  font-weight: 600;
 }
-.my-quizzes .container .overall-summary {
-  position: relative; /* Ensure overlay is positioned relative to this div */
-  padding: 10px 0; /* Add padding to create space around the content */
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
-  justify-content: space-evenly;
-  width: 100%;
-  margin-left: 6px;
-}
-.my-quizzes .container .overall-summary div {
-  margin: 0;
-  padding: 0;
-  display: flex;
-  justify-content: center;
-  z-index: 2;
-}
-.my-quizzes .container .overall-summary div p {
-  font-size: 1.3rem;
-  font-weight: bold;
-  margin: 0;
-  padding: 0;
-}
-.my-quizzes .container .overall-summary .overall-overlay {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(0, 0, 0, 0.05); /* Adjust the color and opacity as needed */
-  z-index: 1;
-  border-radius: 12px;
-}
-.my-quizzes .container .detail-summary {
-  position: relative; /* Ensure overlay is positioned relative to this div */
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  grid-template-areas: "quizzes summary";
-  justify-content: space-evenly;
-  padding: 30px 0;
-  width: 100%;
-}
-.my-quizzes .container .detail-summary .detail-overlay {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(0, 0, 0, 0.05); /* Adjust the color and opacity as needed */
-  z-index: 1;
-  border-radius: 12px;
-}
-.my-quizzes .container .detail-summary .quizzes-section {
-  grid-area: quizzes;
-  width: 80%;
-  margin-left: auto;
-  margin-right: auto;
-  padding: 20px; /* Add padding to create space around the content */
-  z-index: 2;
-}
-.my-quizzes .container .detail-summary .quizzes-section .button-group {
-  display: flex;
-  justify-content: center;
-  margin-bottom: 20px;
-  gap: 10px;
-}
-.my-quizzes .container .detail-summary .quizzes-section .button-group .toggle-btn {
-  z-index: 2;
-  background-color: #f8f9fa;
-  border: 1px solid #ced4da;
-  border: none;
-  border-radius: 0.25rem;
-  padding: 0.5rem 1rem;
-  color: #495057;
-  transition: all 0.3s ease;
-  white-space: nowrap;
-  position: relative;
-}
-.my-quizzes .container .detail-summary .quizzes-section .button-group .toggle-btn i {
-  position: absolute;
-  right: 10px;
-  z-index: 1;
-}
-.my-quizzes .container .detail-summary .quizzes-section .button-group .toggle-btn:hover {
-  background-color: #e2e6ea;
-  background-color: #cdebea;
-  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.3);
-  cursor: pointer;
-}
-.my-quizzes .container .detail-summary .quizzes-section .button-group .toggle-btn.active {
-  background-color: #76C0BD;
-  color: #fff;
-}
-.my-quizzes .container .detail-summary .quizzes-section .button-group .toggle-btn.active:hover {
-  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.3);
-  cursor: pointer;
-}
-.my-quizzes .container .detail-summary .quizzes-section .button-group .toggle-btn .btn-span {
-  font-weight: 400;
-}
-@media (max-width: 768px) {
-  .my-quizzes .container .detail-summary .quizzes-section .button-group .toggle-btn {
-    padding: 0.35rem 0.5rem;
-    font-size: 0.75rem;
-  }
-}
-.my-quizzes .container .detail-summary .quizzes-section .quiz-content {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(20rem, 1fr));
-}
-.my-quizzes .container .detail-summary .quizzes-section .quiz-content .quiz-card {
-  background-color: white;
-  animation: fadeIn 0.3s ease-in-out;
-  display: flex;
-  flex-direction: row;
-  gap: 30px;
-  padding: 7px;
-  z-index: 2;
-  border-radius: 12px;
-  margin-bottom: 10px;
-  border: 0.5px solid gray;
-}
-.my-quizzes .container .detail-summary .quizzes-section .quiz-content .quiz-card .card-image-section img {
-  width: 50px;
-  object-fit: cover;
-}
-.my-quizzes .container .detail-summary .quizzes-section .quiz-content .quiz-card .card-content-section {
-  color: black;
-}
-.my-quizzes .container .detail-summary .quizzes-section .quiz-content .quiz-card .card-content-section h3 {
-  font-size: 0.8rem;
-  font-weight: bold;
-}
-.my-quizzes .container .detail-summary .summary-section {
-  grid-area: summary;
-  z-index: 2;
-  width: 80%;
-  margin-left: auto;
-  margin-right: auto;
-  padding: 20px; /* Add padding to create space around the content */
-  border: 1px solid white;
-}
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
+.cookie-page .cookie-info {
+  font-size: 1.5rem;
+  padding-bottom: 2rem;
 }

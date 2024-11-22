@@ -1,0 +1,85 @@
+﻿
+
+<div class="language-dropup btn-group dropup">
+    <button type="button" class="btn btn-secondary dropdown-toggle @isDisabled" data-bs-toggle="dropdown" aria-expanded="false" aria-disabled="@isDisabled">
+        <svg width="32" height="32">
+            <use href="images/svg/flags-sprite.svg#@(CurrentLanguage)-flag"></use>
+        </svg>
+    </button>
+    <ul class="dropdown-menu">
+        @foreach (var languageUrl in FilteredLanguageUrls)
+        {
+            @if (!string.IsNullOrEmpty(languageUrl.Url) && !string.IsNullOrEmpty(languageUrl.Language))
+            {
+                <li class="list-item">
+                    <a class="dropdown-item" href="@languageUrl.Url">
+                        <svg width="32" height="32">
+                            <use href="images/svg/flags-sprite.svg#@(languageUrl.Language)-flag"></use>
+                        </svg>
+                    </a>
+                </li>
+            }
+        }
+    </ul>
+</div>
+
+@code {
+    [Parameter] public ContentReference ContentReference { get; set; } = null!;
+    [Parameter] public string CurrentLanguage { get; set; } = null!;
+    private List<string> EnabledLanguages { get; set; } = new List<string>();
+    private List<LanguageModel> LanguageUrls { get; set; } = new List<LanguageModel>();
+    private List<LanguageModel> FilteredLanguageUrls { get; set; } = new List<LanguageModel>();
+    private bool isDisabled = false;
+
+    protected override void OnInitialized()
+    {
+        base.OnInitialized();
+        GetEnabledLanguages();
+        GenerateLanguageUrls();
+        FilterLanguages();
+        DisableLanguageBtn();
+    }
+
+    private void GetEnabledLanguages()
+    {
+        EnabledLanguages = LanguageService.GetEnabledLanguages();
+    }
+
+    private void GenerateLanguageUrls()
+    {
+        @if (EnabledLanguages.Count == 0)
+        {
+            return;
+        }
+
+        foreach (var language in EnabledLanguages)
+        {
+            var page = _contentLoader.Get<PageData>(ContentReference, new LanguageSelector(language));
+            if (page != null && page.IsPublished())
+            {
+                LanguageUrls.Add(new LanguageModel
+                {
+                    Language = language,
+                    Url = UrlResolver.GetUrl(ContentReference, language)
+                });
+            }
+        }
+    }
+
+    private void FilterLanguages()
+    {
+        if (LanguageUrls.Count == 0)
+        {
+            return;
+        }
+
+        FilteredLanguageUrls = LanguageUrls.Where(x => x.Language != CurrentLanguage).ToList();
+    }
+    private void DisableLanguageBtn()
+    {
+        if (FilteredLanguageUrls.Count == 0)
+        {
+            isDisabled = true;
+        }
+    }
+}
