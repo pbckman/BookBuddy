@@ -29,6 +29,7 @@ using Blazored.LocalStorage;
 using BookBuddy.Business.Services.CategoryService;
 using BookBuddy.Business.Services.SiteSettingsService;
 using Microsoft.Extensions.Logging.Abstractions;
+using BookBuddy.Business.Services.LanguageService;
 using Microsoft.AspNetCore.Mvc.ViewFeatures;
 
 
@@ -87,6 +88,7 @@ namespace BookBuddy
             services.AddScoped<IBooksPageService, BooksPageService>();
             services.AddScoped<IScheduledJobsService, ScheduledJobsService>();
             services.AddScoped<ICategoryService, CategoryService>();
+            services.AddScoped<ILanguageService, LanguageService>();
             services.AddTransient<SiteSettingsService>();
             services.AddTransient<BookPageFactory>();
             services.AddTransient<CategorySelectionFactory>();

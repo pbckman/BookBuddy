@@ -1,0 +1,53 @@
+﻿
+
+
+
+
+
+@code {
+    @* public IPageViewModel<SitePageData>? Model { get; set; }   *@
+    @* [Parameter] public IPageViewModel<SitePageData>? Model { get; set; } *@
+    @* public PageData? Model { get; set; } *@
+    @* public SiteSettingsPage? SiteSettings { get; set; } *@
+    public string? Language { get; set; }
+
+
+    private string? englishUrl;
+    private string? swedishUrl;
+
+    protected override void OnInitialized()
+    {
+        base.OnInitialized();
+
+
+        @* //ENGLISH
+        var englanguage = "en";
+        englishUrl = string.Empty;
+
+        var englishPage = _contentLoader.Get<PageData>(contentReference, new LanguageSelector(englanguage));
+        if (englishPage != null && englishPage.IsPublished())
+        {
+            englishUrl = UrlResolver.GetUrl(contentReference, englanguage);
+        }
+        else
+        {
+            // Hantera om innehållet saknas i det angivna språket
+            englishUrl = null;
+        }
+        //SWEDISH
+        var swelanguage = "sv";
+        swedishUrl = string.Empty;
+
+        var swedishPage = _contentLoader.Get<PageData>(contentReference, new LanguageSelector(swelanguage));
+        if (swedishPage != null && swedishPage.IsPublished())
+        {
+            swedishUrl = UrlResolver.GetUrl(contentReference, swelanguage);
+        }
+        else
+        {
+            // Hantera om innehållet saknas i det angivna språket
+            swedishUrl = null;
+        } *@
+    }
+
+}
