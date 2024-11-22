@@ -12,6 +12,8 @@ namespace BookBuddy.Models.Pages
         typeof(ErrorPage),
         typeof(XmlSitemap),
         typeof(BooksPage),
+        typeof(MyQuizzesPage)
+        typeof(BooksPage),
         typeof(AvailableBooksPage),
         typeof(ExamplePage),
         typeof(CookieInfoPage),
