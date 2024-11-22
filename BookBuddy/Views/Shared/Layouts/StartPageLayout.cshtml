@@ -1,12 +1,14 @@
-﻿@inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
+﻿@using System.Globalization
+@inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
 
 @{
+    var currentLang = CultureInfo.CurrentCulture.TwoLetterISOLanguageName;
     var userLang = HttpContextAccessor.HttpContext.Request.Query["language"].FirstOrDefault() ??
-                   (HttpContextAccessor.HttpContext.Request.Path.Value.Contains("/sv/") ? "sv-SE" : "en-GB");
+                   (HttpContextAccessor.HttpContext.Request.Path.Value.Contains("/sv") ? "sv-SE" : "en-GB");
 }
 
 <!DOCTYPE html>
-<html lang="sv">
+<html lang="@currentLang">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -22,10 +24,9 @@
      
         @await Html.PartialAsync("~/Views/Shared/Partials/cookiepartial.cshtml")
     </div>
-
+    <script src="~/js/carousel.js"></script>
     <script src="~/js/cookieConsent.js" defer></script>
     <script src="https://cdn.cookietractor.com/cookietractor.js" data-lang="@userLang" data-id="8c1cad13-6fe3-4f93-8ef4-1b81e0cca58d" defer></script>
-    <script src="_framework/blazor.server.js" defer></script>
-    <script src="/js/carousel.js" defer></script>
+    <script src="_framework/blazor.server.js"></script>
 </body>
 </html>

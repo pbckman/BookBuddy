@@ -3,17 +3,17 @@
     [Parameter]
     public BookPageModel? Book { get; set; }
 
+   
 }
 
 
  @if(Book != null){
-<div class="carousel-card bg-white p-4 ">
-        <div class="carousel-card-img">
-            <img src="@Book.ImageUrl" alt="@Book.Title" class="book-image">
-        </div>
-    
-    <h5 class="mt-3">@Book.Title</h5>
-    <p>Author: @Book.Authors</p>
+    <div class=" carousel-card card bg-white ">
+        <img src="@Book.ImageUrl" alt="@Book.Title" class="card-img-top">
+    <div class="card-body">
+        <h5 class="mt-3">@Book.Title</h5>
+        <p>Author: @Book.Authors</p>
+    </div>    
 </div>
 }
 else

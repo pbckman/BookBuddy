@@ -1,5 +1,12 @@
-﻿@model IPageViewModel<SitePageData>
+﻿
+@model IPageViewModel<SitePageData>
 
+@{
+    var culture = System.Threading.Thread.CurrentThread.CurrentUICulture.TwoLetterISOLanguageName;
+
+    string cookieLink = culture == "sv" ? "/sv/cookie-info-sida" : "/cookieinfopage";
+  
+}
 
     @if (Model.SiteSettings != null)
     {
@@ -29,7 +36,7 @@
 
             </div>
 
-        <a href="/cookieinfopage">Cookie settings</a>
+        <a href="@cookieLink">Cookie settings</a>
 
         </div>
         

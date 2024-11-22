@@ -39,21 +39,5 @@ namespace BookBuddy.Business.Factories
 
         }
 
-
-        //public InfoSectionModel Create(InfoSectionModel model)
-        //{
-        //    return new InfoSectionModel
-        //    {
-        //        Title = model.Title,
-        //        BulletPoints = new List<string>
-        //    {
-        //        //model.BulletPoints1,
-        //        //model.BulletPoint2,
-        //        //model.BulletPoint3,
-        //        //model.BulletPoint4
-        //    },
-        //        FooterInfo = model.FooterInfo
-        //    };
-        //}
     }
 }

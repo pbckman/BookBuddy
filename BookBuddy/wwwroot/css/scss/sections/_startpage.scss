@@ -5,6 +5,7 @@
     font-display: swap;
 
     .hero-section {
+        margin-top: 2rem;
         display: flex;
         flex-direction: column;
         align-items: center;
@@ -112,9 +113,7 @@
     }
 }
 
-
 .carousel-wrapper-container {
-    width: 100%;
     margin: 0 auto;
     overflow: hidden;
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
@@ -123,13 +122,6 @@
     position: relative;
     margin-bottom: 25px;
 
-    .carousel-p {
-
-        @media(max-width: 576px) {
-            font-size: 0.8rem;
-        }
-    }
-
     .carousel-text {
         color: #ffffff;
         padding: 10px;
@@ -137,66 +129,88 @@
     }
 
     .carousel-wrapper {
-        position: relative;
+        width: 100%;
         overflow: hidden;
+        position: relative;
+
+        .carousel-content {
+            display: flex;
+            gap: 1rem;
+            will-change: transform;
 
 
-        &::before,
-        &::after {
-            content: '';
-            position: absolute;
-            top: 0;
-            width: 60px;
-            height: 100%;
-            z-index: 2;
-            pointer-events: none;
-        }
 
-        &::before {
-            left: 0;
-            background: linear-gradient(to right, rgba(255, 255, 255, 1), rgba(255, 255, 255, 0));
-        }
-
-        &::after {
-            right: 0;
-            background: linear-gradient(to left, rgba(255, 255, 255, 1), rgba(255, 255, 255, 0));
-        }
-
-        .carousel-card {
-            height: 450px;
-            min-width: 270px;
-            margin-right: 20px;
-            text-align: center;
-            border-radius: 8px;
-            color: #333;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-            transition: transform 1s linear;
-            align-content: center;
-
-            @media(max-width: 768px) {
-                height: 400px;
-                min-width: 200px;
-                margin-right: 15px;
-            }
-
-            @media(max-width: 576px) {
-                height: 370px;
-                min-width: 150px;
-                margin-right: 10px;
-            }
-
-            .book-image {
+            .carousel-card {
+                min-width: 270px;
+                height: 500px;
+                border: 1px solid #ddd;
                 border-radius: 8px;
-                height: 250px;
-                width: fit-content;
-                padding-bottom: 10px;
+                overflow: hidden;
+                box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+                margin: 15px auto;
+                display: flex;
+                flex-direction: column;
+                /* &:nth-child(1) {
+                    background: #7958ff;
+                }
+
+                &:nth-child(2) {
+                    background: #5d34f2;
+                }
+
+                &:nth-child(3) {
+                    background: #4300da;
+                }*/
 
                 @media(max-width: 768px) {
-                    height: 200px;
+                    min-width: 200px;
                 }
 
+
                 @media(max-width: 576px) {
-                    height: 150px;
+                    min-width: 200px;
+                }
+
+                .card-body {
+                    padding: 20px;
+                    text-align: center;
+
+                    .card h5 {
+                        font-size: 1rem;
+                        margin-bottom: 8px;
+
+                        @media(max-width: 768px) {
+                            font-size: 0.7rem;
+                        }
+
+                        @media(max-width: 576px) {
+                            font-size: 0.5rem;
+                        }
+                    }
+
+                    .card p {
+                        font-size: 0.9rem;
+                        color: #666;
+                        margin-bottom: 5px;
+
+                        @media(max-width: 768px) {
+                            font-size: 0.5rem;
+                        }
+
+                        @media(max-width: 576px) {
+                            font-size: 0.3rem;
+                        }
+                    }
+                }
+
+                .card-img-top {
+                    width: 100%;
+                    height: 300px;
+                    object-fit: cover;
+
+                    @media(max-width: 768px) {
+                        height: 200px;
+                    }
                 }
             }
         }
@@ -204,15 +218,7 @@
 }
 
 
-@keyframes scroll {
-    0% {
-        transform: translateX(0);
-    }
 
-    100% {
-        transform: translateX(calc(-50%));
-    }
-}
 
 
 

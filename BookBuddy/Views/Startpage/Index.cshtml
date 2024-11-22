@@ -8,7 +8,8 @@
     ViewData["Title"] = "Start";
 
     var currentPage = Model.CurrentPage;
-    var books = _startPageService.GetBooksAsync(currentPage).Result; 
+    var books = _startPageService.GetBooksAsync(currentPage).Result;
+
 }
 
 @* <div class="container-sm startpage-wrapper">
@@ -62,3 +63,5 @@ else
 {
     <p>Carousel is not available</p>
 }
+
+<script src="/js/carousel.js"></script>

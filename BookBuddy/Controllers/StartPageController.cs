@@ -60,17 +60,15 @@ namespace BookBuddy.Controllers
                 var searchPage = _contentLoader.GetChildren<BooksPage>(currentPage.ContentLink).FirstOrDefault();
                 if (searchPage != null)
                 {
-                    //Console.WriteLine($"Redirecting to SearchPage: {_urlResolver.GetUrl(searchPage.ContentLink)}");
+                    Console.WriteLine($"Redirecting to SearchPage: {_urlResolver.GetUrl(searchPage.ContentLink)}");
 
-                    //return Redirect(_urlResolver.GetUrl(searchPage.ContentLink));
+                    return Redirect(_urlResolver.GetUrl(searchPage.ContentLink));
 
-                    return Redirect("/books/");
                 }
-                Console.WriteLine("Ingen BooksPage hittades under currentPage.");
-
-                Console.WriteLine("User is NOT authenticated.");
-
-                return View(currentPage);
+                else
+                {
+                    return View(currentPage);
+                }
             }
             else
             {

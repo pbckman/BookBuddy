@@ -1,13 +1,11 @@
 using BookBuddy.Business.Clients;
 using BookBuddy.Business.Factories;
-using BookBuddy.Business.Services;
 using BookBuddy.Business.Services.AiService;
 using BookBuddy.Business.Services.BookContentService;
 using BookBuddy.Business.Services.BookPageService;
 using BookBuddy.Business.Services.BookService;
 using BookBuddy.Business.Services.AccountService;
 using BookBuddy.Business.Services.BooksPageService;
-using BookBuddy.Business.Services.Interfaces;
 using BookBuddy.Business.Services.PageService;
 using BookBuddy.Data.Contexts;
 using EPiServer.Cms.Shell;
@@ -30,6 +28,11 @@ using BookBuddy.Business.Services.CategoryService;
 using BookBuddy.Business.Services.SiteSettingsService;
 using Microsoft.Extensions.Logging.Abstractions;
 using BookBuddy.Business.Services.StartPageService;
+using BookBuddy.Business.Services.ErrorMessageService;
+using BookBuddy.Business.Services.SiteMapService;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using BookBuddy.Business.Services.Middleware;
+using Microsoft.AspNetCore.Identity;
 
 
 namespace BookBuddy
@@ -97,6 +100,54 @@ namespace BookBuddy
             services.AddBlazoredLocalStorage();
 
 
+            services.AddAuthentication(options =>
+            {
+                options.DefaultScheme = "PolicyScheme"; 
+                        })
+            .AddPolicyScheme("PolicyScheme", "Policy Scheme", options =>
+            {
+                options.ForwardDefaultSelector = context =>
+                {
+
+                    if (context.Request.Path.StartsWithSegments("/cms"))
+                    {
+                        return "CmsIdentityScheme"; 
+                    }
+                    else
+                    {
+                        return "PublicIdentityScheme";  
+                    }
+                };
+            })
+            .AddCookie("CmsIdentityScheme", options =>
+            {
+                options.LoginPath = "/cms/auth/signin";
+                options.AccessDeniedPath = "/cms/account/accessdenied";
+            })
+            .AddCookie("PublicIdentityScheme", options =>
+            {
+                options.LoginPath = "/auth/signin";
+                options.AccessDeniedPath = "/account/accessdenied";
+
+                options.Events = new CookieAuthenticationEvents
+                {
+                    OnRedirectToLogin = context =>
+                    {
+                        if (!context.Request.Path.StartsWithSegments("/auth/signin"))
+                        {
+                            var lang = context.Request.Query["lang"].FirstOrDefault() ??
+                                       (context.Request.Path.ToString().Contains("/sv/") ? "sv" : "en");
+
+                            // Dynamiskt sätta inloggnings-URL:n
+                            var loginUrl = $"/{lang}/auth/signin";
+                            context.Response.Redirect(loginUrl);
+                        }
+                        return Task.CompletedTask;
+                    }
+                };
+            });
+
+
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -127,13 +178,13 @@ namespace BookBuddy
             });
 
 
-
-
             app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseRouting();
             app.UseAuthentication();
+            app.UseMiddleware<ApprovalMiddleware>();
             app.UseAuthorization();
+            
 
             app.UseEndpoints(endpoints =>
             {

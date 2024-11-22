@@ -1,19 +1,24 @@
 ﻿using BookBuddy.Business.Services.AccountService;
 using BookBuddy.Business.Services.TranslationService;
+using BookBuddy.Models.Pages;
 using BookBuddy.Models.ViewModels;
 using EPiServer.Cms.UI.AspNetIdentity;
+using EPiServer.Web.Routing;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 
 
 namespace BookBuddy.Controllers
 {
-    public class AuthController(UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager, AccountService accountService, AuthTranslationService translationService) : Controller
+    public class AuthController(UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager, AccountService accountService, AuthTranslationService translationService, IContentLoader contentLoader, UrlResolver urlResolver) : Controller
     {
         private readonly UserManager<ApplicationUser> _userManager = userManager;
         private readonly SignInManager<ApplicationUser> _signInManager = signInManager;
         private readonly AccountService _accountService = accountService;
         private readonly AuthTranslationService _translationService = translationService;
+        private readonly IContentLoader _contentLoader = contentLoader;
+        private readonly UrlResolver _urlResolver = urlResolver;
 
         [Route("{lang}/auth/signup")]
         public IActionResult SignUp(string lang = "en")
@@ -39,7 +44,7 @@ namespace BookBuddy.Controllers
             {
                 return View(model);
             }
-                
+
             var (result, profile) = await _accountService.CreateUserAsync(model);
 
             if (result.Succeeded)
@@ -71,18 +76,72 @@ namespace BookBuddy.Controllers
 
             if (ModelState.IsValid)
             {
-                var user = await _userManager.FindByEmailAsync(model.Email);
 
+                var user = await _userManager.FindByEmailAsync(model.Email);
                 if (user != null)
                 {
                     var result = await _signInManager.PasswordSignInAsync(user, model.Password, model.RememberMe, false);
-
                     if (result.Succeeded)
                     {
-                        await _signInManager.RefreshSignInAsync(user);
-                        return RedirectToAction("Index", "StartPage");
+                        // Kontrollera om användaren har rollen "WebAdmin"
+                        if (await _userManager.IsInRoleAsync(user, "WebAdmin"))
+                        {
+                            // Om användaren är en "WebAdmin", omdirigera till startsidan för admins
+                            return RedirectToAction("AdminDashboard", "Admin");
+                        }
+                        else
+                        {
+
+                            var booksPage = _contentLoader.GetChildren<BooksPage>(ContentReference.StartPage).FirstOrDefault();
+                            if (booksPage != null)
+                            {
+                                var booksPageUrl = _urlResolver.GetUrl(booksPage.ContentLink);
+                                return Redirect(booksPageUrl);
+                            }
+                            else
+                            {
+                                return View("Error");
+                            }
+                        }
                     }
+
+
                 }
+
+                //if (user != null)
+                //{
+                //    var result = await _signInManager.PasswordSignInAsync(user, model.Password, model.RememberMe, false);
+
+                //    if (result.Succeeded)
+                //    {
+                //        await _signInManager.RefreshSignInAsync(user);
+                //        //return RedirectToAction("Index", "StartPage");
+
+                //        if (User.Identity.IsAuthenticated)
+                //        {
+                //            Console.WriteLine("User is authenticated after signing in.");
+
+                //            var booksPage = _contentLoader.GetChildren<BooksPage>(ContentReference.StartPage).FirstOrDefault();
+                //            if (booksPage != null)
+                //            {
+                //                var booksPageUrl = _urlResolver.GetUrl(booksPage.ContentLink);
+                //                Console.WriteLine($"Redirecting to BooksPage URL: {booksPageUrl}");
+                //                return Redirect(booksPageUrl);
+                //            }
+                //            else
+                //            {
+                //                Console.WriteLine("BooksPage not found.");
+                //                return View("Error");
+                //            }
+                //        }
+                //        else
+                //        {
+                //            Console.WriteLine("User is not authenticated after signing in.");
+                //            return View("Error");
+                //        }
+
+                //    }
+                //}
             }
 
             ViewData["StatusMessage"] = _translationService.GetTranslation("signin", "errorMessage", lang);

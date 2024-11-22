@@ -4,8 +4,8 @@
 
    
     var userLang = Context.Request.Path.Value.Contains("/sv/") ? "sv-SE" : "en-GB";
-    ViewData["LoadCookieScript"] = false; // Inaktivera cookietractor.js
-    ViewData["CookieLanguage"] = userLang; // Ange språk dynamiskt här
+    ViewData["LoadCookieScript"] = false; 
+    ViewData["CookieLanguage"] = userLang; 
 
 }
 

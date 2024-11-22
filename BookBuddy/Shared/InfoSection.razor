@@ -3,35 +3,46 @@
 @code {
     [Parameter]
     public InfoSectionModel? InfoSectionModel{ get; set; }
+
+    private bool isLoaded = false;
+
+    protected override async Task OnInitializedAsync()
+    {
+        await Task.Delay(2000);
+        isLoaded = true;
+    }
 }
 
 
-<div class="learning-section container">
-    <div class="container">
-        <div class="info-row">
 
-            <div class="col-md-6">
-                <h2>@InfoSectionModel?.InfoTitle</h2>
-            </div>
+    <div class="learning-section container">
+        <div class="container">
+            <div class="info-row">
 
-            <div class="col-md-8">
-                <h5>@InfoSectionModel?.InfoFooter</h5>
-                @if (InfoSectionModel?.BulletPoints != null)
-                {
-                    <ul class="benefits-list">
-                        @foreach (var bullet in InfoSectionModel.BulletPoints)
-                        {
-                            <li>
-                                <i class="fa-solid fa-check"></i> <p>@bullet.Text</p>
-                            </li>
-                        }
-                    </ul>
-                }
-                else
-                {
-                    <p>No bullet points available.</p>
-                }
+                <div class="col-md-6">
+                    <h2>@InfoSectionModel?.InfoTitle</h2>
+                </div>
+
+                <div class="col-md-8">
+                    <h5>@InfoSectionModel?.InfoFooter</h5>
+                    @if (InfoSectionModel?.BulletPoints != null)
+                    {
+                        <ul class="benefits-list">
+                            @foreach (var bullet in InfoSectionModel.BulletPoints)
+                            {
+                                <li>
+                                    <i class="fa-solid fa-check"></i> <p>@bullet.Text</p>
+                                </li>
+                            }
+                        </ul>
+                    }
+                    else
+                    {
+                        <p>No bullet points available.</p>
+                    }
+                </div>
             </div>
         </div>
     </div>
-</div>
+
+

@@ -1,35 +1,38 @@
-﻿
-window.startContinuousScroll = function () {
-    const carouselContent = document.querySelector('.carousel-content');
+﻿window.startCarouselAnimation = function () {
+    console.log('Starting carousel animation...');
+    const carouselContent = document.querySelector('#bookCarousel');
+
+
     if (!carouselContent) {
-        console.error("Carousel content not found.");
+        console.error('Element with id #bookCarousel not found');
         return;
     }
 
-    const cardElements = document.querySelectorAll('.carousel-card');
-    if (cardElements.length === 0) {
-        console.error("Carousel cards not found.");
-        return;
+
+    const cards = Array.from(carouselContent.children);
+    cards.forEach(card => {
+        const clone = card.cloneNode(true);
+        carouselContent.appendChild(clone);
+    });
+
+    let startPosition = 0;
+    const totalWidth = carouselContent.scrollWidth / 2; 
+
+    function moveCarousel() {
+ 
+        startPosition -= 1; 
+
+       
+        carouselContent.style.transform = `translateX(${startPosition}px)`;
+
+        if (Math.abs(startPosition) >= totalWidth) {
+            startPosition = 0; 
+        }
+
+        requestAnimationFrame(moveCarousel);
     }
 
-    let originalContent = carouselContent.innerHTML;
-    const cardWidth = cardElements[0].offsetWidth + 20;
-    let scrollPosition = 0;
-    const scrollSpeed = 1;
-
-    function startScrolling() {
-        setInterval(() => {
-            scrollPosition += scrollSpeed;
-
-
-            if (scrollPosition >= carouselContent.scrollWidth / 6) {
-
-                carouselContent.innerHTML += originalContent;
-            }
-
-            carouselContent.style.transform = `translateX(-${scrollPosition}px)`;
-        }, 20); 
-    }
-
-    startScrolling();
+    moveCarousel();
 };
+
+
