@@ -19,8 +19,6 @@
 @inject IStateService StateService
 @inject ILocalStorageService localStorage
 @inject IJSRuntime JSRuntime
-@inject AuthenticationStateProvider AuthenticationStateProvider
-@inject AccountService AccountService
 
 <section class="quiz-page">
     @if (isLoading)
@@ -79,13 +77,11 @@
     public QuizModel Model { get; set; } = new();
     private int profileId { get; set; }
     private bool isLoading = true;
-    private ClaimsPrincipal? User;
 
     protected override async Task OnInitializedAsync()
     {
-        var user = await AccountService.GetCurrentFrontEndUser(User);
-        var userId = user?.Id;
-        var profile = await ProfileService.GetSelectedProfileAsync(userId);
+
+        var profile = await ProfileService.GetSelectedProfileAsync();
         if (profile != null)
         {
             profileId = profile.Id;
