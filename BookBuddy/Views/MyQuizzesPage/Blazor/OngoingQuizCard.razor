@@ -1,9 +1,11 @@
 ﻿@using BookBuddy.Models.QuizModels
-<div class="quiz-card card">
-    <div class="image-section">
+<div class="quiz-card">
+    <div class="card-image-section">
         <img src="@Model.ImageUrl" alt="@Model.ImageAltText" />
     </div>
-    <h3>@Model.Title</h3>
+    <div class="card-content-section">
+        <h3>@Model.Title</h3>
+    </div>
 </div>
 
 

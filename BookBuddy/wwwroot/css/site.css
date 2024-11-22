@@ -1731,44 +1731,159 @@ body {
     font-size: 1rem;
   }
 }
-}
 
+.my-quizzes {
+  color: white;
+}
 .my-quizzes .container {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  margin-top: 10vh;
+  padding: 0;
+  width: 100%;
+}
+.my-quizzes .container .overall-summary {
+  position: relative; /* Ensure overlay is positioned relative to this div */
+  padding: 10px 0; /* Add padding to create space around the content */
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  justify-content: space-evenly;
+  width: 100%;
+  margin-left: 6px;
+}
+.my-quizzes .container .overall-summary div {
+  margin: 0;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  z-index: 2;
+}
+.my-quizzes .container .overall-summary div p {
+  font-size: 1.3rem;
+  font-weight: bold;
+  margin: 0;
+  padding: 0;
+}
+.my-quizzes .container .overall-summary .overall-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.05); /* Adjust the color and opacity as needed */
+  z-index: 1;
+  border-radius: 12px;
+}
+.my-quizzes .container .detail-summary {
+  position: relative; /* Ensure overlay is positioned relative to this div */
   display: grid;
   grid-template-columns: 1fr 1fr;
-  grid-template-areas: "ongoing completed";
+  grid-template-areas: "quizzes summary";
+  justify-content: space-evenly;
+  padding: 30px 0;
+  width: 100%;
 }
-.my-quizzes .container p {
-  animation: fadeIn 0.8s ease-in-out;
+.my-quizzes .container .detail-summary .detail-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.05); /* Adjust the color and opacity as needed */
+  z-index: 1;
+  border-radius: 12px;
 }
-.my-quizzes .container .ongoing-quizzes {
-  width: 70%;
-  max-width: 450px;
+.my-quizzes .container .detail-summary .quizzes-section {
+  grid-area: quizzes;
+  width: 80%;
   margin-left: auto;
   margin-right: auto;
-  grid-area: ongoing;
+  padding: 20px; /* Add padding to create space around the content */
+  z-index: 2;
 }
-.my-quizzes .container .completed-quizzes {
-  width: 70%;
-  max-width: 450px;
-  margin-left: auto;
-  margin-right: auto;
-  grid-area: completed;
+.my-quizzes .container .detail-summary .quizzes-section .button-group {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20px;
+  gap: 10px;
 }
-.my-quizzes .container .quiz-card {
+.my-quizzes .container .detail-summary .quizzes-section .button-group .toggle-btn {
+  z-index: 2;
+  background-color: #f8f9fa;
+  border: 1px solid #ced4da;
+  border: none;
+  border-radius: 0.25rem;
+  padding: 0.5rem 1rem;
+  color: #495057;
+  transition: all 0.3s ease;
+  white-space: nowrap;
+  position: relative;
+}
+.my-quizzes .container .detail-summary .quizzes-section .button-group .toggle-btn i {
+  position: absolute;
+  right: 10px;
+  z-index: 1;
+}
+.my-quizzes .container .detail-summary .quizzes-section .button-group .toggle-btn:hover {
+  background-color: #e2e6ea;
+  background-color: #cdebea;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.3);
+  cursor: pointer;
+}
+.my-quizzes .container .detail-summary .quizzes-section .button-group .toggle-btn.active {
+  background-color: #76C0BD;
+  color: #fff;
+}
+.my-quizzes .container .detail-summary .quizzes-section .button-group .toggle-btn.active:hover {
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.3);
+  cursor: pointer;
+}
+.my-quizzes .container .detail-summary .quizzes-section .button-group .toggle-btn .btn-span {
+  font-weight: 400;
+}
+@media (max-width: 768px) {
+  .my-quizzes .container .detail-summary .quizzes-section .button-group .toggle-btn {
+    padding: 0.35rem 0.5rem;
+    font-size: 0.75rem;
+  }
+}
+.my-quizzes .container .detail-summary .quizzes-section .quiz-content {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(20rem, 1fr));
+}
+.my-quizzes .container .detail-summary .quizzes-section .quiz-content .quiz-card {
   background-color: white;
-  animation: fadeIn 0.8s ease-in-out;
+  animation: fadeIn 0.3s ease-in-out;
+  display: flex;
+  flex-direction: row;
+  gap: 30px;
+  padding: 7px;
+  z-index: 2;
+  border-radius: 12px;
+  margin-bottom: 10px;
+  border: 0.5px solid gray;
 }
-.my-quizzes .container .quiz-card h3 {
+.my-quizzes .container .detail-summary .quizzes-section .quiz-content .quiz-card .card-image-section img {
+  width: 50px;
+  object-fit: cover;
+}
+.my-quizzes .container .detail-summary .quizzes-section .quiz-content .quiz-card .card-content-section {
+  color: black;
+}
+.my-quizzes .container .detail-summary .quizzes-section .quiz-content .quiz-card .card-content-section h3 {
   font-size: 0.8rem;
   font-weight: bold;
 }
-.my-quizzes .container .header {
-  margin-left: 10px;
-  padding-left: 0;
-  animation: fadeIn 0.8s ease-in-out;
+.my-quizzes .container .detail-summary .summary-section {
+  grid-area: summary;
+  z-index: 2;
+  width: 80%;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 20px; /* Add padding to create space around the content */
+  border: 1px solid white;
 }
-
 @keyframes fadeIn {
   from {
     opacity: 0;

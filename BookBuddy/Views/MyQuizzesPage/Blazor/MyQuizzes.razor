@@ -1,86 +1,105 @@
-﻿@using BookBuddy.Business.Factories
-
+﻿@page "/my-quizzes"
+@using BookBuddy.Business.Factories
 @using BookBuddy.Business.Services.AccountService
 @using BookBuddy.Business.Services.QuizResultService
 @using BookBuddy.Business.Services.QuizService
 @using BookBuddy.Models.QuizModels
-@* @using System.Globalization *@
-@* @inject UrlResolver _urlResolver *@
-
 @inject ProfileService ProfileService
-@* @inject IPageService PageService *@
 @inject IQuizResultService QuizResultService
 @inject IQuizService QuizService
 @inject IPageService PageService
 
-@if(CurrentPage != null)
+@if (CurrentPage != null)
 {
     <section class="my-quizzes">
-        <div class="container">
-            <div class="ongoing-quizzes">
-                <h2 class="header">@(CurrentPage.HeadingOnGoing.Length > 1 ? CurrentPage.HeadingOnGoing : "Ongoing")</h2>
-                @if(Quizzes == null)
-                {
-                    <p>Laddar...</p>
-                }
-                else if (Quizzes.Count(x => x.IsCompleted == false) == 0)
-                {
-                    <p>There are no ongoing quizzes.</p>
-                }
-                else
-                {
-                    @foreach (var quiz in Quizzes)
-                    {
-                        if (!quiz.IsCompleted)
-                        {
-                            <OngoingQuizCard Model="@quiz" />
-                        }
-                    }
-                }
-               
+        <div class="container position-relative">
+            
+            <div class="overall-summary">
+                <div class="overall-overlay card"></div>
+                <div><p>Antal pågående quiz: @(AmountOfOngoing)st</p></div>
+                <div><p>Antal quiz avklarade: @(AmountOfCompleted)st</p></div>
+                <div><p>Procent korrekta svar: @(ProcentageCorrectAnswers)%</p></div>
             </div>
-            <div class="completed-quizzes">
-                <h2 class="header">@(CurrentPage.HeadingFinished.Length > 1 ? CurrentPage.HeadingFinished : "Completed")</h2>
-                @if (Quizzes == null)
-                {
-                    <p>Laddar...</p>
-                }
-                else if(Quizzes.Count(x => x.IsCompleted) == 0)
-                {
-                    <p>There are no completed quizzes.</p>
-                }
-                else
-                {
-                    @foreach (var quiz in Quizzes)
-                    {
-                        if (quiz.IsCompleted)
+            <div class="detail-summary">
+                <div class="detail-overlay card"></div>
+                <div class="quizzes-section">
+
+                    <div class="button-group">
+                        <button class="toggle-btn @(showOngoing ? "active" : "")" @onclick="ShowOngoing">@(CurrentPage.HeadingOnGoing.Length > 0 ? CurrentPage.HeadingOnGoing : "Ongoing") @(AmountOfOngoing) <i class="fa-solid fa-circle"></i></button>
+                        <button class="toggle-btn @(showCompleted ? "active" : "")" @onclick="ShowCompleted">@(CurrentPage.HeadingFinished.Length > 0 ? CurrentPage.HeadingFinished : "Completed") @(AmountOfCompleted) <i class="fa-solid fa-circle"></i></button>
+                    </div>
+                    <div class="quiz-content">
+                        @if (showOngoing)
                         {
-                            <CompletedQuizCard Model="@quiz" />
+                            <div class="ongoing-quizzes">
+                                @if (Quizzes == null)
+                                {
+                                    <p>Laddar...</p>
+                                }
+                                else if (Quizzes.Count(x => x.IsCompleted == false) == 0)
+                                {
+                                    <p>There are no ongoing quizzes.</p>
+                                }
+                                else
+                                {
+                                    @foreach (var quiz in Quizzes)
+                                    {
+                                        if (!quiz.IsCompleted)
+                                        {
+                                            <OngoingQuizCard Model="@quiz" />
+                                        }
+                                    }
+                                }
+                            </div>
                         }
-                    }
-                }
-                
+                        else if (showCompleted)
+                        {
+                            <div class="completed-quizzes">
+                                @if (Quizzes == null)
+                                {
+                                    <p>Laddar...</p>
+                                }
+                                else if (Quizzes.Count(x => x.IsCompleted) == 0)
+                                {
+                                    <p>There are no completed quizzes.</p>
+                                }
+                                else
+                                {
+                                    @foreach (var quiz in Quizzes)
+                                    {
+                                        if (quiz.IsCompleted)
+                                        {
+                                            <CompletedQuizCard Model="@quiz" />
+                                        }
+                                    }
+                                }
+                            </div>
+                        }
+                    </div>
+                </div>
+
+                <div class="summary-section">
+                    <h3>Summary</h3>
+                </div>
             </div>
+            
         </div>
-      
     </section>
 }
-
-
-
 
 @code {
     [Parameter] public string Language { get; set; } = null!;
     public List<QuizCardModel>? Quizzes { get; set; }
     public MyQuizzesPage? CurrentPage { get; set; }
-
-
-
-
+    private bool showOngoing = true;
+    private bool showCompleted = false;
+    private int AmountOfOngoing { get; set; }
+    private int AmountOfCompleted { get; set; }
+    private int ProcentageCorrectAnswers { get; set; }
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
-        if(firstRender)
+        if (firstRender)
         {
             CurrentPage = PageService.GetMyQuizzesPage(Language);
             var profile = await ProfileService.GetSelectedProfileAsync();
@@ -88,9 +107,33 @@
             if (results != null)
             {
                 Quizzes = await QuizService.GetActiveQuizzesAsync(results, Language);
+                AmountOfOngoing = Quizzes.Count(x => x.IsCompleted == false);
+                AmountOfCompleted = Quizzes.Count(x => x.IsCompleted);
+                // ProcentageCorrectAnswers = QuizResultService.GetProcentageCorrectAnswers(Language);
+
+                var filteredResults = results.Where(result => Quizzes.Any(quiz => quiz.QuizId == result.QuizId)).ToList();
+
+                // if (filteredResults.Count > 0)
+                // {
+                //     ProcentageCorrectAnswers = 
+                // }
             }
+
+            ShowOngoing();
 
             StateHasChanged();
         }
+    }
+
+    private void ShowOngoing()
+    {
+        showOngoing = true;
+        showCompleted = false;
+    }
+
+    private void ShowCompleted()
+    {
+        showOngoing = false;
+        showCompleted = true;
     }
 }
