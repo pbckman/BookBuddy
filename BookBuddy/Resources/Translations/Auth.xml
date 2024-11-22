@@ -99,6 +99,25 @@
 					<errorMessage>Could not update user, please try again later.</errorMessage>
 				</properties>
 			</details>
+			<accountlayout>
+				<properties>
+					<user>User</user>
+					<password>Password</password>
+					<profiles>Profiles</profiles>
+				</properties>
+			</accountlayout>
+			<navbar>
+				<properties>
+					<settings>Settings</settings>
+					<signup>Sign Up</signup>
+					<signout>Sign Out</signout>
+				</properties>
+			</navbar>
+			<header>
+				<properties>
+					<signin>Sign In</signin>
+				</properties>
+			</header>
 		</contenttypes>
 	</language>
 	<language name="Svenska" id="sv">
@@ -198,6 +217,25 @@
 					<errorMessage>Något gick fel, försök igen lite senare.</errorMessage>
 				</properties>
 			</details>
+			<accountlayout>
+				<properties>
+					<user>Användare</user>
+					<password>Lösenord</password>
+					<profiles>Profiler</profiles>
+				</properties>
+			</accountlayout>
+			<navbar>
+				<properties>
+					<settings>Inställningar</settings>
+					<signup>Skapa konto</signup>
+					<signout>Logga ut</signout>
+				</properties>
+			</navbar>
+			<header>
+				<properties>
+					<signin>Logga in</signin>
+				</properties>
+			</header>
 		</contenttypes>
 	</language>
 </languages>

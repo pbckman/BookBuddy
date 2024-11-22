@@ -3,9 +3,11 @@
 
 @inject ProfileService ProfileService
 @inject AccountService AccountService
+@inject AuthTranslationService AuthTranslationService
 
 @{
-    var currentCulture = CultureInfo.CurrentCulture.TwoLetterISOLanguageName;
+    var currentPath = Context.Request.Path.Value;
+    var currentLanguage = currentPath.Split('/').Skip(1).FirstOrDefault();
 
     var user = await AccountService.GetCurrentFrontEndUser(User);
     var userId = user?.Id;
@@ -15,7 +17,7 @@
 }
 
 <!DOCTYPE html>
-<html lang="@currentCulture">
+<html lang="@currentLanguage">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -32,66 +34,75 @@
 
         <div class="auth-right">
 
-            <div class="auth-content">
-                <div class="home-button">
-                    <a href="/">
-                        <i>
-                            <svg class="custom-icon" xmlns="http://www.w3.org/2000/svg" x-bind:width="size" x-bind:height="size" viewBox="0 0 24 24" fill="none" stroke="currentColor" x-bind:stroke-width="stroke" stroke-linecap="round" stroke-linejoin="round" width="40" height="40" stroke-width="2">
-                                <path d="M5 12l-2 0l9 -9l9 9l-2 0"></path>
-                                <path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-7"></path>
-                                <path d="M9 21v-6a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v6"></path>
-                            </svg>
-                        </i>
-                    </a>
-                </div>
+            <div class="account-layout">
+                <div class="auth-content">
+                    <div class="home-button">
+                        <a href="/@(currentLanguage == "en" ? "" : currentLanguage)">
+                            <i>
+                                <svg class="custom-icon" xmlns="http://www.w3.org/2000/svg" x-bind:width="size" x-bind:height="size" viewBox="0 0 24 24" fill="none" stroke="currentColor" x-bind:stroke-width="stroke" stroke-linecap="round" stroke-linejoin="round" width="40" height="40" stroke-width="2">
+                                    <path d="M5 12l-2 0l9 -9l9 9l-2 0"></path>
+                                    <path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-7"></path>
+                                    <path d="M9 21v-6a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v6"></path>
+                                </svg>
+                            </i>
+                        </a>
+                    </div>
 
-                <div class="active-profile">
-                    <img class="profile-image" src="~/images/avatars/@(selectedProfile.ProfileImage ?? "default-profile.jpg")" alt="ProfileImage" />
-                    <h5>@selectedProfile.ProfileFirstName</h5>
-                </div>
+                    <div class="active-profile">
+                        <img class="profile-image" src="~/images/avatars/@(selectedProfile.ProfileImage ?? "default-profile.jpg")" alt="ProfileImage" />
+                        <h5>@selectedProfile.ProfileFirstName</h5>
+                    </div>
 
-                <div class="account-navigation">
-                    @if (selectedProfile.Id == mainProfile.Id)
-                    {
-                        <ul class="nav nav-tabs" id="myTab" role="tablist">
-                            <li class="nav-item" role="presentation">
-                                <a class="nav-link @Html.IsActive("Profile", "Details")" href="@Url.Action("Details", "Profile", new { lang = currentCulture })" id="password-tab" role="tab" aria-controls="profile">
-                                    User
-                                </a>
-                            </li>
-                            <li class="nav-item" role="presentation">
-                                <a class="nav-link @Html.IsActive("Account", "UpdateUser")" href="@Url.Action("UpdateUser", "Account", new { lang = currentCulture })" id="password-tab" role="tab" aria-controls="password">
-                                    Password
-                                </a>
-                            </li>
-                            <li class="nav-item" role="presentation">
-                                <a class="nav-link @Html.IsActive("Profile", "UpdateProfile")" href="@Url.Action("UpdateProfile", "Profile", new { lang = currentCulture })" id="password-tab" role="tab" aria-controls="profile">
-                                    Profiles
-                                </a>
-                            </li>
-                        </ul>
-                    }
-                    else
-                    {
-                        <ul class="nav nav-tabs" id="myTab" role="tablist">
-                            <li class="nav-item" role="presentation">
-                                <a class="nav-link @Html.IsActive("Profile", "UpdateSubProfile")" href="@Url.Action("UpdateSubProfile", "Profile", new { lang = currentCulture })" id="profile-tab" role="tab" aria-controls="profile-content" aria-selected="true">Profiles</a>
-                            </li>
-                            <li class="nav-item" role="presentation">
-                                <a class="nav-link disabled @Html.IsActive("Profile", "Details")" href="#" id="user-disabled-tab" role="tab" aria-controls="user-content" aria-selected="false" aria-disabled="true">User</a>
-                            </li>
-                            <li class="nav-item" role="presentation">
-                                <a class="nav-link disabled @Html.IsActive("Account", "UpdateUser")" href="#" id="password-disabled-tab" role="tab" aria-controls="password-content" aria-selected="false" aria-disabled="true">Password</a>
-                            </li>
-                        </ul>
-                    }
-                </div>
+                    <div class="account-navigation">
+                        @if (selectedProfile.Id == mainProfile.Id)
+                        {
+                            <ul class="nav nav-tabs" id="myTab" role="tablist">
+                                <li class="nav-item" role="presentation">
+                                    <a class="nav-link @Html.IsActive("Profile", "Details")" href="@Url.Action("Details", "Profile", new { lang = currentLanguage })" id="password-tab" role="tab" aria-controls="profile">
+                                        @AuthTranslationService.GetTranslation("accountlayout", "user", currentLanguage)
+                                    </a>
+                                </li>
+                                <li class="nav-item" role="presentation">
+                                    <a class="nav-link @Html.IsActive("Account", "UpdateUser")" href="@Url.Action("UpdateUser", "Account", new { lang = currentLanguage })" id="password-tab" role="tab" aria-controls="password">
+                                        @AuthTranslationService.GetTranslation("accountlayout", "password", currentLanguage)
+                                    </a>
+                                </li>
+                                <li class="nav-item" role="presentation">
+                                    <a class="nav-link @Html.IsActive("Profile", "UpdateProfile")" href="@Url.Action("UpdateProfile", "Profile", new { lang = currentLanguage })" id="password-tab" role="tab" aria-controls="profile">
+                                        @AuthTranslationService.GetTranslation("accountlayout", "profiles", currentLanguage)
+                                    </a>
+                                </li>
+                            </ul>
+                        }
+                        else
+                        {
+                            <ul class="nav nav-tabs" id="myTab" role="tablist">
+                                <li class="nav-item" role="presentation">
+                                    <a class="nav-link @Html.IsActive("Profile", "UpdateSubProfile")" href="@Url.Action("UpdateSubProfile", "Profile", new { lang = currentLanguage })" id="profile-tab" role="tab" aria-controls="profile-content" aria-selected="true">
+                                        @AuthTranslationService.GetTranslation("accountlayout", "profiles", currentLanguage)
+                                    </a>
+                                </li>
+                                <li class="nav-item" role="presentation">
+                                    <a class="nav-link disabled @Html.IsActive("Profile", "Details")" href="#" id="user-disabled-tab" role="tab" aria-controls="user-content" aria-selected="false" aria-disabled="true">
+                                        @AuthTranslationService.GetTranslation("accountlayout", "user", currentLanguage)
+                                    </a>
+                                </li>
+                                <li class="nav-item" role="presentation">
+                                    <a class="nav-link disabled @Html.IsActive("Account", "UpdateUser")" href="#" id="password-disabled-tab" role="tab" aria-controls="password-content" aria-selected="false" aria-disabled="true">
+                                        @AuthTranslationService.GetTranslation("accountlayout", "password", currentLanguage)
+                                    </a>
+                                </li>
+                            </ul>
+                        }
+                    </div>
 
-                <div class="form-container">
-                    @RenderBody()
-                </div>
+                    <div class="form-container">
+                        @RenderBody()
+                    </div>
 
+                </div>
             </div>
+            
         </div>
     </div>
 

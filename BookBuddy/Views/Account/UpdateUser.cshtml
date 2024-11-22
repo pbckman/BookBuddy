@@ -1,11 +1,12 @@
 ﻿@using System.Globalization
 @model UpdateUserViewModel
 @inject ProfileService ProfileService
+@inject AccountService AccountService
 
 @{
     Layout = "~/Views/Shared/Layouts/AccountLayout.cshtml";
 
-    var user = await _userManager.GetUserAsync(User);
+    var user = await AccountService.GetCurrentFrontEndUser(User); 
     var userId = user?.Id;
     var profiles = await ProfileService.GetAllProfilesAsync(userId);
     var selectedProfile = await ProfileService.GetSelectedProfileAsync(userId);
@@ -17,12 +18,11 @@
 
     @if (selectedProfile == mainProfile)
     {
-        <div class="text-center account-setting-title">
+        <div class="text-center account-setting-title password-title">
             <h3>@ViewData["Title"]</h3>
         </div>
 
         <form method="post" asp-action="UpdateUser" asp-controller="Account">
-            @Html.AntiForgeryToken()
             @if (TempData["StatusMessage"] != null)
             {
                 <div class="alert alert-success">
