@@ -6,8 +6,11 @@ using BookBuddy.Data.Entities;
 using BookBuddy.Models.Pages;
 using BookBuddy.Models.QuizModels;
 using BookBuddy.Models.ResultModels;
+using BookBuddy.Views.BooksPage.Blazor;
 using BootstrapBlazor.Components;
+using Castle.DynamicProxy.Generators.Emitters.SimpleAST;
 using EPiServer.Find;
+using EPiServer.Find.Cms;
 using Microsoft.EntityFrameworkCore;
 
 namespace BookBuddy.Business.Services.QuizService
@@ -19,14 +22,16 @@ namespace BookBuddy.Business.Services.QuizService
         private readonly QuizResultFactory _resultFactory;
         private readonly IPageService _pageService;
         private readonly ILocalStorageService _localStorageService;
+        private readonly IContentLoader _contentLoader;
 
-        public QuizService(DataContext dbContext, IQuizFactory quizFactory, QuizResultFactory resultFactory, IPageService pageService, ILocalStorageService localStorageService)
+        public QuizService(DataContext dbContext, IQuizFactory quizFactory, QuizResultFactory resultFactory, IPageService pageService, ILocalStorageService localStorageService, IContentLoader contentLoader)
         {
             _dbContext = dbContext;
             _quizFactory = quizFactory;
             _resultFactory = resultFactory;
             _pageService = pageService;
             _localStorageService = localStorageService;
+            _contentLoader = contentLoader;
         }
 
         public async Task<QuizModel> CreateQuizAsync(QuizModel quiz, QuizResultModel result)
@@ -186,6 +191,42 @@ namespace BookBuddy.Business.Services.QuizService
             {
                 await _localStorageService.RemoveItemAsync($"QuizState - {quizResultId}");
             }
+        }
+
+        public async Task<List<QuizCardModel>> GetActiveQuizzesAsync(List<QuizResultModel> results, string lang)
+        {
+            try
+            {
+                List<QuizCardModel> quizCards = [];
+                var bookPages = _pageService.GetBookPages(lang);
+                if (bookPages == null)
+                    return new List<QuizCardModel>();
+                
+                var activeBooks =  bookPages.Where(bookPage => results.Any(x => x.QuizId == _contentLoader.GetChildren<QuizPage>(bookPage.ContentLink, new LanguageSelector(lang)).FirstOrDefault()!.ContentLink.ID)).ToList();
+                
+                var activeQuizzes = activeBooks.Select(book => _contentLoader.GetChildren<QuizPage>(book.ContentLink, new LanguageSelector(lang)).FirstOrDefault()).ToList();
+
+                for (int i = 0; i < activeQuizzes.Count(); i++)
+                {
+                    quizCards.Add(new QuizCardModel
+                    {
+                        QuizId = activeQuizzes[i]!.ContentLink.ID,
+                        BookId = activeBooks[i]!.ContentLink.ID,
+                        Title = activeBooks[i].Title,
+                        ImageUrl = activeBooks[i].ImageUrl,
+                        ImageAltText = activeBooks[i].ImageAltText,
+                        IsCompleted = results.First(x => x.QuizId == activeQuizzes[i]!.ContentLink.ID).IsCompleted
+                    });
+                }
+
+                return quizCards;
+            }
+            catch (Exception ex)
+            {
+            }
+
+            return new List<QuizCardModel>();
+                                  
         }
     }
 }

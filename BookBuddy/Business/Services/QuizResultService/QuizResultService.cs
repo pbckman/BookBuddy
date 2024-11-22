@@ -104,6 +104,25 @@ namespace BookBuddy.Business.Services.QuizResultService
             return null!;
            
         }
+
+      
+
+        public async Task<List<QuizResultModel>> GetResultsByProfileIdAsync(int profileId)
+        {
+            try
+            {
+                var results = await _dbContext.QuizResults.Include(QuizResult => QuizResult.ChapterResults)
+                                                          .ThenInclude(chapterResult => chapterResult.QuestionResults)
+                                                          .Where(QuizResult => QuizResult.ProfileId == profileId)
+                                                          .Select(QuizResult => _resultFactory.Create(QuizResult))
+                                                          .ToListAsync();
+                if (results != null)
+                    return results;
+            }
+            catch (Exception ex) {}
+
+            return null!;
+        }
     }
 
 }

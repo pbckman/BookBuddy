@@ -1,5 +1,6 @@
 ﻿using BookBuddy.Models.Pages;
 using BookBuddy.Models.Pages.Containers;
+using EPiServer.Find;
 
 namespace BookBuddy.Business.Services.PageService
 {
@@ -11,5 +12,6 @@ namespace BookBuddy.Business.Services.PageService
         BooksPage GetBooksPage(string currentCulture);
 
         QuizPage GetQuizPageById(int quizPageId, string lang);
+        MyQuizzesPage GetMyQuizzesPage(string lang);
     }
 }

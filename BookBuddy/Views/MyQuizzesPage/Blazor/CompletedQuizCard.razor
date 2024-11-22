@@ -1,0 +1,14 @@
+﻿@using BookBuddy.Models.QuizModels
+<div class="quiz-card">
+    <div class="card-image-section">
+        <img src="@Model.ImageUrl" alt="@Model.ImageAltText" />
+    </div>
+    <div class="card-content-section">
+        <h3>@Model.Title</h3>
+    </div>
+    
+</div>
+
+@code {
+    [Parameter] public QuizCardModel Model { get; set; } = null!;
+}
