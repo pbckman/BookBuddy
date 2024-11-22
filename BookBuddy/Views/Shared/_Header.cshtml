@@ -1,14 +1,16 @@
 @using System.Globalization
 @model IPageViewModel<SitePageData>
 @inject ProfileService ProfileService
+@inject AccountService AccountService
 @inject UserManager<ApplicationUser> _userManager
+@inject AuthTranslationService AuthTranslationService
 
 @{
-    var user = await _userManager.GetUserAsync(User);
+    var user = await AccountService.GetCurrentFrontEndUser(User);
     var userId = user?.Id;
     var profiles = await ProfileService.GetAllProfilesAsync(userId);
-    var selectedProfile = await ProfileService.GetSelectedProfileAsync();
-    var mainProfile = await ProfileService.GetMainProfileAsync();
+    var selectedProfile = await ProfileService.GetSelectedProfileAsync(userId);
+    var mainProfile = await ProfileService.GetMainProfileAsync(userId);
     var currentCulture = CultureInfo.CurrentCulture.TwoLetterISOLanguageName;
 }
 
@@ -23,10 +25,10 @@
         </button>
 
             <div class="dropdown">
-                @if (User.Identity.IsAuthenticated)
+                @if (user != null)
                 {
                     <button class="btn btn-light dropdown-toggle d-flex align-items-center" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                        <img class="profile-image" src="~/images/default-profile.webp" loading="lazy" alt="Company Logo" /> <span class="d-none d-lg-block">@selectedProfile?.ProfileFirstName</span>
+                        <img class="profile-image" src="~/images/avatars/@(selectedProfile?.ProfileImage ?? "default-profile.webp")" loading="lazy" alt="ProfileImage" /> <span class="d-none d-lg-block">@selectedProfile?.ProfileFirstName</span>
                     </button>
 
                     <ul class="dropdown-menu">
@@ -38,7 +40,9 @@
                                 <li>
                                     <form action="@Url.Action("SelectProfile", "Profile")" method="post">
                                         <input type="hidden" name="profileId" value="@profile.Id" />
-                                        <button type="submit" class="dropdown-item">@profile.ProfileFirstName</button>
+                                        <button class="btn btn-light d-flex align-items-center dropdown-item" type="submit">
+                                            <img class="profile-image" src="~/images/avatars/@(profile.ProfileImage ?? "default-profile.jpg")" alt="ProfileImage" /> <span class="d-none d-lg-block">@profile?.ProfileFirstName</span>
+                                        </button>
                                     </form>
                                 </li>
                             }
@@ -50,7 +54,9 @@
                     <form action="@Url.Action("SignIn", "Auth", new { lang = currentCulture })">
                         @Html.AntiForgeryToken()
                         <button class="btn btn-light header-signin d-flex align-items-center" type="submit" aria-expanded="false">
-                            <img class="profile-image" src="~/images/default-profile.webp" loading="lazy" alt="Company Logo" /> <span class="d-none d-lg-block">Sign in</span>
+                            <img class="profile-image" src="~/images/default-profile.webp" loading="lazy" alt="Company Logo" /> <span class="d-none d-lg-block">
+                                @AuthTranslationService.GetTranslation("header", "signin", currentCulture)
+                                </span>
                         </button>
                     </form>
                     

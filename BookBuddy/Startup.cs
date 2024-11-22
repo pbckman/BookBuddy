@@ -30,6 +30,7 @@ using BookBuddy.Business.Services.CategoryService;
 using BookBuddy.Business.Services.SiteSettingsService;
 using Microsoft.Extensions.Logging.Abstractions;
 using BookBuddy.Business.Services.LanguageService;
+using Microsoft.AspNetCore.Mvc.ViewFeatures;
 
 
 namespace BookBuddy
@@ -54,7 +55,7 @@ namespace BookBuddy
 
                 services.Configure<SchedulerOptions>(options => options.Enabled = false);
             }
-
+            services.AddControllersWithViews();
             services.AddScoped<AccountService>();
             services.AddScoped<ProfileService>();
             services
@@ -104,7 +105,7 @@ namespace BookBuddy
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
-             }
+            }
 
 
             app.UseStatusCodePages(async context =>
@@ -126,7 +127,7 @@ namespace BookBuddy
 
                 response.Redirect(redirectUrl);
                 await Task.Yield();
-               
+
             });
 
 
@@ -140,7 +141,9 @@ namespace BookBuddy
 
             app.UseEndpoints(endpoints =>
             {
-                endpoints.MapControllers();
+                endpoints.MapControllerRoute(
+                    name: "localized",
+                    pattern: "{lang=en}/{controller=StartPage}/{action=Index}/{id?}");
 
                 endpoints.MapContent();
 

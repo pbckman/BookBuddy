@@ -8,6 +8,7 @@ namespace BookBuddy.Controllers
     {
         public readonly IContentLoader _contentLoader;
 
+
         public StartPageController(IContentLoader contentLoader)
         {
             _contentLoader = contentLoader;

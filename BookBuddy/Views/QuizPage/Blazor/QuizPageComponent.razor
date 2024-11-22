@@ -8,6 +8,8 @@
 @using BookBuddy.Models.ResultModels
 @using BookBuddy.Models.ViewModels
 @using Blazored.LocalStorage
+@using Microsoft.AspNetCore.Components.Authorization
+@using System.Security.Claims
 
 @inject IQuizService QuizService
 @inject ProfileService ProfileService
@@ -78,6 +80,7 @@
 
     protected override async Task OnInitializedAsync()
     {
+
         var profile = await ProfileService.GetSelectedProfileAsync();
         if (profile != null)
         {

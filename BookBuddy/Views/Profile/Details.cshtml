@@ -1,0 +1,59 @@
+﻿@using System.Globalization
+
+@model UserProfileViewModel
+@inject ProfileService ProfileService
+@inject UserManager<ApplicationUser> _userManager
+
+@{
+    Layout = "~/Views/Shared/Layouts/AccountLayout.cshtml";
+
+    var user = await _userManager.GetUserAsync(User);
+    var userId = user?.Id;
+    var profiles = await ProfileService.GetAllProfilesAsync(userId);
+    var selectedProfile = await ProfileService.GetSelectedProfileAsync(userId);
+    var mainProfile = await ProfileService.GetMainProfileAsync(userId);
+
+    var currentCulture = CultureInfo.CurrentCulture.TwoLetterISOLanguageName;
+}
+
+
+<div>
+
+    <h3 class="text-center account-setting-title">@ViewData["Title"]</h3>
+    <p class="text-center mb-4">@ViewData["Description"]</p>
+
+
+    @if (TempData["StatusMessage"] != null)
+    {
+        <div class="alert alert-success">
+            @TempData["StatusMessage"]
+        </div>
+    }
+    else if (TempData["ErrorMessage"] != null)
+    {
+        <div class="alert alert-danger">
+            @TempData["ErrorMessage"]
+        </div>
+    }
+    <form method="post" asp-action="Details" asp-controller="Profile">
+
+        <div class="form-group">
+            <label asp-for="Firstname">@ViewData["FirstName"]</label>
+            <input asp-for="Firstname" class="form-control" />
+        </div>
+        <div class="form-group">
+            <label asp-for="Lastname">@ViewData["LastName"]</label>
+            <input asp-for="Lastname" class="form-control" />
+        </div>
+
+        <div class="form-group">
+            <label for="Email">Email</label>
+            <input id="Email" asp-for="@user.Email" class="form-control" disabled />
+        </div>
+
+        <button type="submit" class="btn btn-success w-100 mb-3">Save Changes</button>
+    </form>
+
+</div>
+
+

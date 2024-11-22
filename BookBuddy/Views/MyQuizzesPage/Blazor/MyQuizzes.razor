@@ -4,10 +4,14 @@
 @using BookBuddy.Business.Services.QuizResultService
 @using BookBuddy.Business.Services.QuizService
 @using BookBuddy.Models.QuizModels
+@using System.Security.Claims
+@using Microsoft.AspNetCore.Components.Authorization
 @inject ProfileService ProfileService
 @inject IQuizResultService QuizResultService
 @inject IQuizService QuizService
 @inject IPageService PageService
+@inject AuthenticationStateProvider AuthenticationStateProvider
+@inject AccountService AccountService
 
 @if (CurrentPage != null)
 {
@@ -109,13 +113,16 @@
     private int AmountOfOngoing { get; set; }
     private int AmountOfCompleted { get; set; }
     private int ProcentageCorrectAnswers { get; set; }
+    private ClaimsPrincipal? User;
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
         if (firstRender)
         {
             CurrentPage = PageService.GetMyQuizzesPage(Language);
-            var profile = await ProfileService.GetSelectedProfileAsync();
+            var user = await AccountService.GetCurrentFrontEndUser(User);
+            var userId = user?.Id;
+            var profile = await ProfileService.GetSelectedProfileAsync(userId);
             var results = await QuizResultService.GetResultsByProfileIdAsync(profile.Id);
             if (results != null)
             {

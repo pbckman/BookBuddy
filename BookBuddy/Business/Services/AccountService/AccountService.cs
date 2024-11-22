@@ -3,6 +3,7 @@ using BookBuddy.Models.ViewModels;
 using EPiServer.Cms.UI.AspNetIdentity;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using System.Security.Claims;
 
 
 namespace BookBuddy.Business.Services.AccountService;
@@ -38,5 +39,31 @@ public class AccountService(UserManager<ApplicationUser> userManager, ProfileSer
     public async Task<IdentityResult> ChangePasswordAsync(ApplicationUser user, string? currentPassword, string? newPassword)
     {
         return await _userManager.ChangePasswordAsync(user, currentPassword!, newPassword!);
+    }
+
+    public async Task<List<ApplicationUser>> GetFrontEndUsersAsync()
+    {
+        var users = await _userManager.Users
+            .Where(u => !u.IsApproved)
+            .ToListAsync();
+
+        return users;
+    }
+
+    public async Task<ApplicationUser> GetCurrentFrontEndUser(ClaimsPrincipal userPrincipal)
+    {
+        var frontEndUsers = await GetFrontEndUsersAsync();
+
+        foreach (var frontEndUser in frontEndUsers)
+        {
+            var userFromPrincipal = await _userManager.GetUserAsync(userPrincipal);
+
+            if (userFromPrincipal != null && userFromPrincipal.Id == frontEndUser.Id)
+            {
+                return frontEndUser;
+            }
+        }
+
+        return null;
     }
 }
