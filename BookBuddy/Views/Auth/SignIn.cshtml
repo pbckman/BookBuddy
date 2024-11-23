@@ -3,8 +3,6 @@
 
 @{
     Layout = "~/Views/Shared/Layouts/AuthLayout.cshtml";
-    ViewData["Title"] = ViewData["Title"];
-    ViewData["Description"] = ViewData["Description"];
 }
 
 
@@ -16,9 +14,12 @@
         <form asp-action="SignIn" asp-controller="Auth" method="post">
             @Html.AntiForgeryToken()
 
-            <div>
-                @ViewData["StatusMessage"]
-            </div>
+            @if (TempData["ErrorMessage"] != null)
+            {
+                <div class="alert alert-danger">
+                    @TempData["ErrorMessage"]
+                </div>
+            }
 
             <div class="form-group mb-3">
                 <label asp-for="Email">@ViewData["EmailPlaceholder"]</label>

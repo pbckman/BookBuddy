@@ -1,4 +1,5 @@
 ﻿using BookBuddy.Data.Entities;
+using BookBuddy.Models.QuizModels;
 using BookBuddy.Models.ResultModels;
 
 namespace BookBuddy.Business.Factories
@@ -30,6 +31,7 @@ namespace BookBuddy.Business.Factories
                 Id = result.Id,
                 ProfileId = result.ProfileId,
                 QuizId = result.QuizId,
+                IsCompleted = result.IsCompleted,
                 ChapterResults = result.ChapterResults.Select(x => new ChapterResultModel
                 {
                     ChapterId = x.ChapterId,
@@ -46,5 +48,7 @@ namespace BookBuddy.Business.Factories
 
             return resultModel;
         }
+
+
     }
 }

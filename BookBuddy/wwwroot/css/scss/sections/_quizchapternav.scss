@@ -1,0 +1,178 @@
+.quiz-page {
+    min-height: 100vh;
+    display: grid;
+    grid-template-columns: 1fr 2.5fr;
+    gap: 20px; /* Lagt till mellanrum mellan sektionerna */
+    background-color: #f7f9fc; /* Ljus bakgrund för bättre kontrast */
+    padding: 20px;
+
+    .card {
+        background-color: #ffffff;
+        border-radius: 12px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Modern skugga */
+        padding: 20px;
+        overflow: hidden;
+    }
+
+    .chapter-nav-component {
+        max-width: 350px;
+        background-color: #e9f5fc; /* Ljusblå bakgrund */
+        border-radius: 12px;
+        padding: 15px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+
+        h3 {
+            font-size: 1.3rem;
+            margin-bottom: 15px;
+            font-weight: 600;
+            color: #333;
+        }
+
+        img {
+            width: 60px;
+            margin-bottom: 15px;
+            border-radius: 8px; /* Rundar hörn */
+        }
+
+        .chapter-list {
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+
+            .chapter-list-item {
+                margin-bottom: 10px;
+                font-size: 0.8rem;
+                font-weight: 500;
+                padding: 8px 12px;
+                border-radius: 8px;
+                transition: background-color 0.3s, color 0.3s;
+
+                &.active {
+                    background-color: #007bff;
+                    color: #fff;
+                }
+
+                &:hover:not(.disabled) {
+                    background-color: #d0eaff;
+                    cursor: pointer;
+                }
+
+                &.disabled {
+                    background-color: #f1f1f1;
+                    color: #aaa;
+                    cursor: default;
+                }
+            }
+
+            .question-list-item {
+                margin-left: 20px;
+                margin-bottom: 8px;
+                font-size: 0.75rem;
+                padding: 6px 10px;
+                border-radius: 8px;
+                background-color: #f1f8fe;
+                transition: background-color 0.3s;
+
+                &.active {
+                    background-color: #4caf50; /* Grön för aktiv */
+                    color: #fff;
+                }
+
+                &:hover:not(.disabled) {
+                    background-color: #bce0fa;
+                    cursor: pointer;
+                }
+
+                &.disabled {
+                    background-color: #f1f1f1;
+                    color: #aaa;
+                    cursor: default;
+                }
+
+                &.correct {
+                    background-color: #c8e6c9; /* Ljusgrön för rätt */
+                    color: #2e7d32;
+                }
+
+                &.incorrect {
+                    background-color: #ffcdd2; /* Ljusröd för fel */
+                    color: #c62828;
+                }
+            }
+        }
+    }
+
+    .quiz-component {
+        background-color: #ffffff;
+        border-radius: 12px;
+        padding: 25px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        max-width: 800px;
+        margin: 0 auto;
+
+        h2 {
+            text-align: center;
+            font-size: 1.5rem;
+            color: #333;
+            margin-bottom: 20px;
+        }
+
+        .options-section {
+            margin-top: 20px;
+
+            .option-item {
+                cursor: pointer;
+                padding: 10px 15px;
+                border-radius: 8px;
+                border: 2px solid #e0e0e0;
+                transition: background-color 0.3s, border-color 0.3s;
+                margin-bottom: 12px;
+
+                &.active {
+                    background-color: #bbdefb; /* Ljusblå för vald */
+                    border-color: #1976d2;
+                }
+
+                &.correct {
+                    background-color: #c8e6c9; /* Ljusgrön för rätt */
+                    border-color: #2e7d32;
+                }
+
+                &.incorrect {
+                    background-color: #ffcdd2; /* Ljusröd för fel */
+                    border-color: #c62828;
+                }
+
+                &:hover:not(.disabled) {
+                    background-color: #e3f2fd;
+                }
+            }
+        }
+
+        .button-next-section {
+            display: flex;
+            justify-content: flex-end;
+            margin-top: 20px;
+
+            .btn-next {
+                padding: 10px 20px;
+                background-color: #007bff;
+                color: #fff;
+                border-radius: 8px;
+                cursor: pointer;
+                border: none;
+                font-weight: 600;
+                transition: background-color 0.3s;
+
+                &:hover:not(.disabled) {
+                    background-color: #0056b3;
+                }
+
+                &.disabled {
+                    background-color: #cfd8dc;
+                    cursor: not-allowed;
+                }
+            }
+        }
+    }
+}

@@ -1,18 +1,16 @@
 ﻿@using System.Globalization
 @model UpdateUserViewModel
 @inject ProfileService ProfileService
+@inject AccountService AccountService
 
 @{
-    Layout = "~/Views/Shared/Layouts/AuthLayout.cshtml";
-    ViewData["Title"] = ViewData["Title"];
-    ViewData["Description"] = ViewData["Description"];
+    Layout = "~/Views/Shared/Layouts/AccountLayout.cshtml";
 
-
-    var user = await _userManager.GetUserAsync(User);
+    var user = await AccountService.GetCurrentFrontEndUser(User); 
     var userId = user?.Id;
     var profiles = await ProfileService.GetAllProfilesAsync(userId);
-    var selectedProfile = await ProfileService.GetSelectedProfileAsync();
-    var mainProfile = await ProfileService.GetMainProfileAsync();
+    var selectedProfile = await ProfileService.GetSelectedProfileAsync(userId);
+    var mainProfile = await ProfileService.GetMainProfileAsync(userId);
 }
 
 
@@ -20,29 +18,39 @@
 
     @if (selectedProfile == mainProfile)
     {
-        <div class="text-center">
-            <h1>@ViewData["Title"]</h1>
+        <div class="text-center account-setting-title password-title">
+            <h3>@ViewData["Title"]</h3>
         </div>
 
         <form method="post" asp-action="UpdateUser" asp-controller="Account">
-            @Html.AntiForgeryToken()
-            <div>
-                @ViewData["StatusMessage"]
-            </div>
+            @if (TempData["StatusMessage"] != null)
+            {
+                <div class="alert alert-success">
+                    @TempData["StatusMessage"]
+                </div>
+            }
+            else if (TempData["ErrorMessage"] != null)
+            {
+                <div class="alert alert-danger">
+                    @TempData["ErrorMessage"]
+                </div>
+            }
+
+            
             <div class="form-group mb-3">
-                <label asp-for="CurrentPassword">@ViewData["CurrentPasswordPlaceholder"]</label>
+                <label asp-for="CurrentPassword">@ViewData["CurrentPasswordLabel"]</label>
                 <input asp-for="CurrentPassword" placeholder="@ViewData["CurrentPasswordPlaceholder"]" />
                 <span asp-validation-for="CurrentPassword"></span>
             </div>
 
             <div class="form-group mb-3">
-                <label asp-for="NewPassword">@ViewData["NewPasswordPlaceholder"]</label>
+                <label asp-for="NewPassword">@ViewData["NewPasswordLabel"]</label>
                 <input asp-for="NewPassword" placeholder="@ViewData["NewPasswordPlaceholder"]" />
                 <span asp-validation-for="NewPassword"></span>
             </div>
 
             <div class="form-group mb-3">
-                <label asp-for="ConfirmNewPassword">@ViewData["ConfirmNewPasswordPlaceholder"]</label>
+                <label asp-for="ConfirmNewPassword">@ViewData["ConfirmNewPasswordLabel"]</label>
                 <input asp-for="ConfirmNewPassword" placeholder="@ViewData["ConfirmNewPasswordPlaceholder"]" />
                 <span asp-validation-for="ConfirmNewPassword"></span>
             </div>

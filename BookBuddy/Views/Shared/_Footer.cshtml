@@ -1,6 +1,13 @@
 ﻿
 @model IPageViewModel<SitePageData>
+@{
+    var cookieinfopageUrl = GetCookieInfoPageUrl();
+}
 
+@if (Model.SiteSettings != null)
+{
+    <div class="footer-wrapper">
+        <div class="link-wrapper-1">
 @{
     var culture = System.Threading.Thread.CurrentThread.CurrentUICulture.TwoLetterISOLanguageName;
 
@@ -35,13 +42,35 @@
                 }
 
             </div>
+        </div>
 
-        <a href="@cookieLink">Cookie settings</a>
+        <div class="link-wrapper-2">
+            @if (!string.IsNullOrEmpty(cookieinfopageUrl))
+            {
+                <a class="link" href="@cookieinfopageUrl">Cookie settings</a>
+            }
+            <component type="typeof(LanguageButton)" 
+                render-mode="Server" 
+                param-ContentReference="Model.CurrentPage.ContentLink"
+                param-CurrentLanguage="Model.CurrentPage.Language.Name" />
+
+        <a href="/cookieinfopage">Cookie settings</a>
 
         </div>
-        
-    }
-    else
+    </div>
+    
+}
+else
+{
+    <p>Footer settings not available</p>
+}
+
+@functions {
+    public string GetCookieInfoPageUrl()
     {
-        <p>Footer settings not available</p>
+        var startPageReference = ContentReference.StartPage;
+        var cookieinfopage = _contentLoader.GetChildren<CookieInfoPage>(startPageReference).FirstOrDefault();
+        var cookieinfopageUrl = cookieinfopage != null ? Url.ContentUrl(cookieinfopage.ContentLink) : null;
+        return cookieinfopageUrl ?? null!;
     }
+}

@@ -108,6 +108,13 @@ namespace BookBuddy.Controllers
                 var bookPageModels = await _booksPageService.GetFilteredBookPages(query, currentPage, category, allUsedCategories);
                 var model = BookPageFactory.CreateBooksPageViewModel(currentPage, siteSettings, query, bookPageModels, allUsedCategories);
 
+                string url = string.Empty;
+                if (model.CurrentPage?.ContentLink != null)
+                {
+                    url = Url.Action("ChangeLanguage", "Language", new { contentReference = model.CurrentPage.ContentLink.ID, language = "en" });
+                    System.Diagnostics.Debug.WriteLine("URL: " + url);
+                }
+
                 return View("Index", model);
             }
             catch (Exception ex)

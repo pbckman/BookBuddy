@@ -27,6 +27,8 @@ using Blazored.LocalStorage;
 using BookBuddy.Business.Services.CategoryService;
 using BookBuddy.Business.Services.SiteSettingsService;
 using Microsoft.Extensions.Logging.Abstractions;
+using BookBuddy.Business.Services.LanguageService;
+using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using BookBuddy.Business.Services.StartPageService;
 using BookBuddy.Business.Services.ErrorMessageService;
 using BookBuddy.Business.Services.SiteMapService;
@@ -57,7 +59,7 @@ namespace BookBuddy
 
                 services.Configure<SchedulerOptions>(options => options.Enabled = false);
             }
-
+            services.AddControllersWithViews();
             services.AddScoped<AccountService>();
             services.AddScoped<ProfileService>();
             services
@@ -90,8 +92,6 @@ namespace BookBuddy
             services.AddScoped<IBooksPageService, BooksPageService>();
             services.AddScoped<IScheduledJobsService, ScheduledJobsService>();
             services.AddScoped<ICategoryService, CategoryService>();
-            services.AddScoped<StartPageService>();
-            services.AddScoped<StartPageFactory>();
             services.AddTransient<SiteSettingsService>();
             services.AddTransient<BookPageFactory>();
             services.AddScoped<TranslationFactory>();
@@ -138,7 +138,7 @@ namespace BookBuddy
                             var lang = context.Request.Query["lang"].FirstOrDefault() ??
                                        (context.Request.Path.ToString().Contains("/sv/") ? "sv" : "en");
 
-                            // Dynamiskt sätta inloggnings-URL:n
+                            // Dynamiskt sÃ¤tta inloggnings-URL:n
                             var loginUrl = $"/{lang}/auth/signin";
                             context.Response.Redirect(loginUrl);
                         }
@@ -155,7 +155,7 @@ namespace BookBuddy
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
-             }
+            }
 
 
             app.UseStatusCodePages(async context =>
@@ -174,7 +174,7 @@ namespace BookBuddy
 
                 response.Redirect(redirectUrl);
                 await Task.Yield();
-               
+
             });
 
 
@@ -188,7 +188,9 @@ namespace BookBuddy
 
             app.UseEndpoints(endpoints =>
             {
-                endpoints.MapControllers();
+                endpoints.MapControllerRoute(
+                    name: "localized",
+                    pattern: "{lang=en}/{controller=StartPage}/{action=Index}/{id?}");
 
                 endpoints.MapContent();
 

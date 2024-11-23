@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<languages>
+    <language name="English" id="en">
+        <contenttypes>
+            <quizchaptersummary>
+                <properties>
+                    <title>Your score!</title>
+                    <summaryTitle>Summary for [Chapter Name]</summaryTitle>
+                    <pointsOverviewText>You completed the chapter with [correct answers] out of [total questions] correct.</pointsOverviewText>
+                    <badResultText>Ooh no, keep trying!</badResultText>
+                    <goodResultText>Good job!</goodResultText>
+                    <awesomeResultText>AMAZING, you rock!</awesomeResultText>
+                    <badResultAltText>Illustration representing a need for improvement</badResultAltText>
+                    <goodResultAltText>Illustration showing a good result with a thumbs up</goodResultAltText>
+                    <awesomeResultAltText>Illustration of a gold star representing excellent performance</awesomeResultAltText>
+                    <tipsForNextChapter>Get ready for new challenges in the next chapter. You'll explore...</tipsForNextChapter>
+                    <keyTakeaways>Key takeaways from this chapter include...</keyTakeaways>
+                    <nextChapterButtonText>Next Chapter</nextChapterButtonText>
+                    <retryChapterButtonText>Retry Chapter</retryChapterButtonText>
+                    <encouragementText>Remember, learning is a journey. Take your time and enjoy it!</encouragementText>
+                </properties>
+            </quizchaptersummary>
+        </contenttypes>
+    </language>
+    
+    <language name="Svenska" id="sv">
+        <contenttypes>
+            <quizchaptersummary>
+                <properties>
+                    <title>Ditt resultat!</title>
+                    <summaryTitle>Sammanfattning för [Chapter Name]</summaryTitle>
+                    <pointsOverviewText>Du har slutfört kapitlet med [antal rätta svar] av [totala frågor] rätt.</pointsOverviewText>
+                    <badResultText>Attans, fortsätt kämpa!</badResultText>
+                    <goodResultText>Sådär ja, bra jobbat!</goodResultText>
+                    <awesomeResultText>WOW, du är grym!</awesomeResultText>
+                    <badResultAltText>Illustration som representerar behov av förbättring</badResultAltText>
+                    <goodResultAltText>Illustration som visar ett bra resultat med tummen upp</goodResultAltText>
+                    <awesomeResultAltText>Illustration av en guldstjärna som representerar utmärkt prestation</awesomeResultAltText>
+                    <tipsForNextChapter>Förbered dig på nya utmaningar i nästa kapitel. Du kommer att utforska...</tipsForNextChapter>
+                    <keyTakeaways>Lärdomar från detta kapitel inkluderar...</keyTakeaways>
+                    <nextChapterButtonText>Nästa kapitel</nextChapterButtonText>
+                    <retryChapterButtonText>Repetera kapitel</retryChapterButtonText>
+                    <encouragementText>Kom ihåg, lärande är en resa. Ta dig tid och njut av den!</encouragementText>
+                </properties>
+            </quizchaptersummary>
+        </contenttypes>
+    </language>
+</languages>

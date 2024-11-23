@@ -8,6 +8,8 @@
 @using BookBuddy.Models.ResultModels
 @using BookBuddy.Models.ViewModels
 @using Blazored.LocalStorage
+@using Microsoft.AspNetCore.Components.Authorization
+@using System.Security.Claims
 
 @inject IQuizService QuizService
 @inject ProfileService ProfileService
@@ -16,27 +18,59 @@
 @inject IQuizResultService QuizResultService
 @inject IStateService StateService
 @inject ILocalStorageService localStorage
+@inject IJSRuntime JSRuntime
+@inject AuthenticationStateProvider AuthenticationStateProvider
+@inject AccountService AccountService
 
 <section class="quiz-page">
-    <div class="chapter-nav-component">
-        <ChapterNavComponent 
-            Model="Model" 
-            OnChapterSelected="HandleSelectedChapter" 
-            OnQuestionSelected="HandleSelectedQuestion"
-            OnSummarySelected="HandleSelectedSummary"
-            OnResultSelected="HandleSelectedResult" />
-        
-    </div>
-    <div class="quiz-component">
-        <QuizComponent 
-            Model="Model" 
-            OnModelChange="UpdateState" 
-            OnCompletedChapter="UpdateResult" 
-            OnStartedQuiz="HandleQuizStart" 
-            OnSelectedOption="HandleSelectedOption"
-            OnBtnSummaryClick="HandleSelectedSummary" />
-    </div>
+    @if (isLoading)
+    {
+        <div class="spinner-container card">
+            <img src="images/BookLoader.gif" alt="Loading..." class="spinnger-gif">
+        </div>
+    }
+    else
+    {
+        <button aria-label="Navigation menu button" class="quiz-nav-open" @onclick="ToggleNav">
+            <span class="quiz-nav-toggler-icon">
+                <i class="fa-solid fa-bars"></i>
+            </span>
+        </button>
+        <div class="chapter-nav-component">
+            <ChapterNavComponent 
+                Model="Model" 
+                OnChapterSelected="HandleSelectedChapter" 
+                OnQuestionSelected="HandleSelectedQuestion"
+                OnSummarySelected="HandleSelectedSummary"
+                OnResultSelected="HandleSelectedResult" />
+
+            <button class="quiz-nav-close" @onclick="ToggleNav">
+                <span class="quiz-nav-toggler-icon">
+                    <i class="fa-solid fa-x"></i>
+                </span>
+            </button>
+        </div>
+        <div class="quiz-component">
+            <QuizComponent 
+                Model="Model"
+                Language="@Language" 
+                OnModelChange="UpdateState" 
+                OnCompletedChapter="UpdateResult" 
+                OnStartedQuiz="HandleQuizStart" 
+                OnSelectedOption="HandleSelectedOption"
+                OnBtnSummaryClick="HandleSelectedSummary" />
+        </div>
+    }
 </section>
+
+<script>
+    function ToggleNav() {
+        const chapterNav = document.querySelector('.chapter-nav-component');
+        chapterNav.classList.toggle('visible');
+        const navOpenBtn = document.querySelector('.quiz-nav-open');
+        navOpenBtn.classList.toggle('hidden');
+    }
+</script>
 
 @code {
     [Parameter] public int QuizPageId { get; set; }
@@ -44,10 +78,14 @@
 
     public QuizModel Model { get; set; } = new();
     private int profileId { get; set; }
+    private bool isLoading = true;
+    private ClaimsPrincipal? User;
 
     protected override async Task OnInitializedAsync()
     {
-        var profile = await ProfileService.GetSelectedProfileAsync();
+        var user = await AccountService.GetCurrentFrontEndUser(User);
+        var userId = user?.Id;
+        var profile = await ProfileService.GetSelectedProfileAsync(userId);
         if (profile != null)
         {
             profileId = profile.Id;
@@ -60,6 +98,13 @@
             else
                 Model = QuizService.CreateQuiz(quiz);
         }
+        isLoading = false;
+        StateHasChanged();
+    }
+
+    private async Task ToggleNav()
+    {
+        await JSRuntime.InvokeVoidAsync("ToggleNav");
     }
 
     private async Task HandleQuizStart()
