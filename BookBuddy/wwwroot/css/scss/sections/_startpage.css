@@ -100,6 +100,37 @@
   margin-right: 0.5rem;
 }
 
+.loading-page {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-color: transparent;
+  border-radius: 8px;
+  text-align: center;
+}
+.loading-page .spinner {
+  width: 50px;
+  height: 50px;
+  border: 5px solid #ddd;
+  border-top: 5px solid #4facfe;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
 .carousel-wrapper-container {
   margin: 0 auto;
   overflow: hidden;
@@ -126,7 +157,7 @@
 }
 .carousel-wrapper-container .carousel-wrapper .carousel-content .carousel-card {
   min-width: 270px;
-  height: 500px;
+  height: auto;
   border: 1px solid #ddd;
   border-radius: 8px;
   overflow: hidden;
@@ -149,43 +180,44 @@
 @media (max-width: 768px) {
   .carousel-wrapper-container .carousel-wrapper .carousel-content .carousel-card {
     min-width: 200px;
+    height: 450px;
   }
 }
 @media (max-width: 576px) {
   .carousel-wrapper-container .carousel-wrapper .carousel-content .carousel-card {
     min-width: 200px;
+    height: 400px;
   }
 }
 .carousel-wrapper-container .carousel-wrapper .carousel-content .carousel-card .card-body {
-  padding: 20px;
   text-align: center;
 }
-.carousel-wrapper-container .carousel-wrapper .carousel-content .carousel-card .card-body .card h5 {
+.carousel-wrapper-container .carousel-wrapper .carousel-content .carousel-card .card-body carousel-card-h6 {
   font-size: 1rem;
   margin-bottom: 8px;
 }
 @media (max-width: 768px) {
-  .carousel-wrapper-container .carousel-wrapper .carousel-content .carousel-card .card-body .card h5 {
+  .carousel-wrapper-container .carousel-wrapper .carousel-content .carousel-card .card-body carousel-card-h6 {
     font-size: 0.7rem;
   }
 }
 @media (max-width: 576px) {
-  .carousel-wrapper-container .carousel-wrapper .carousel-content .carousel-card .card-body .card h5 {
+  .carousel-wrapper-container .carousel-wrapper .carousel-content .carousel-card .card-body carousel-card-h6 {
     font-size: 0.5rem;
   }
 }
-.carousel-wrapper-container .carousel-wrapper .carousel-content .carousel-card .card-body .card p {
+.carousel-wrapper-container .carousel-wrapper .carousel-content .carousel-card .card-body .carousel-card-p {
   font-size: 0.9rem;
   color: #666;
   margin-bottom: 5px;
 }
 @media (max-width: 768px) {
-  .carousel-wrapper-container .carousel-wrapper .carousel-content .carousel-card .card-body .card p {
+  .carousel-wrapper-container .carousel-wrapper .carousel-content .carousel-card .card-body .carousel-card-p {
     font-size: 0.5rem;
   }
 }
 @media (max-width: 576px) {
-  .carousel-wrapper-container .carousel-wrapper .carousel-content .carousel-card .card-body .card p {
+  .carousel-wrapper-container .carousel-wrapper .carousel-content .carousel-card .card-body .carousel-card-p {
     font-size: 0.3rem;
   }
 }

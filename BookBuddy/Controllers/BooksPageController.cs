@@ -14,7 +14,6 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace BookBuddy.Controllers
 {
-    //[Authorize(AuthenticationSchemes = "PublicIdentityScheme")]
     
     public class BooksPageController : PageControllerBase<BooksPage>
     {

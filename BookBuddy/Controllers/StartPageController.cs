@@ -16,7 +16,7 @@ namespace BookBuddy.Controllers
         private readonly StartPageFactory _startPageFactory;
         private readonly UrlResolver _urlResolver;
 
-        public StartPageController(IContentLoader contentLoader)
+        public StartPageController(StartPageService startPageService, IContentLoader contentLoader, StartPageFactory startPageFactory, UrlResolver urlResolver)
         {
             _startPageService = startPageService;
             _contentLoader = contentLoader;
@@ -95,7 +95,6 @@ namespace BookBuddy.Controllers
                 return View(model);
             }
 
-            return null!;
         }
 
 

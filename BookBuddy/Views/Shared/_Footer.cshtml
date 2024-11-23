@@ -4,19 +4,9 @@
     var cookieinfopageUrl = GetCookieInfoPageUrl();
 }
 
-@if (Model.SiteSettings != null)
-{
-    <div class="footer-wrapper">
-        <div class="link-wrapper-1">
-@{
-    var culture = System.Threading.Thread.CurrentThread.CurrentUICulture.TwoLetterISOLanguageName;
 
-    string cookieLink = culture == "sv" ? "/sv/cookie-info-sida" : "/cookieinfopage";
-  
-}
-
-    @if (Model.SiteSettings != null)
-    {
+ @if (Model.SiteSettings != null)
+ {
         <div class="footer-wrapper">
 
             <div class="footer-copyright">
@@ -54,10 +44,8 @@
                 param-ContentReference="Model.CurrentPage.ContentLink"
                 param-CurrentLanguage="Model.CurrentPage.Language.Name" />
 
-        <a href="/cookieinfopage">Cookie settings</a>
 
         </div>
-    </div>
     
 }
 else
@@ -66,11 +54,12 @@ else
 }
 
 @functions {
+
     public string GetCookieInfoPageUrl()
-    {
-        var startPageReference = ContentReference.StartPage;
-        var cookieinfopage = _contentLoader.GetChildren<CookieInfoPage>(startPageReference).FirstOrDefault();
-        var cookieinfopageUrl = cookieinfopage != null ? Url.ContentUrl(cookieinfopage.ContentLink) : null;
-        return cookieinfopageUrl ?? null!;
-    }
+        {
+            var startPageReference = ContentReference.StartPage;
+            var cookieinfopage = _contentLoader.GetChildren<CookieInfoPage>(startPageReference).FirstOrDefault();
+            var cookieinfopageUrl = cookieinfopage != null ? Url.ContentUrl(cookieinfopage.ContentLink) : null;
+            return cookieinfopageUrl ?? null!;
+        }
 }

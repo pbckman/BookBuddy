@@ -3,8 +3,7 @@
 @model StartPageViewModel
 @inject StartPageService _startPageService
 
-<div class="container-sm startpage-wrapper">
-    <img class="flying-boy" src="~/images/Flying_boy.webp" alt="">
+
 @{
     Layout = "~/Views/Shared/Layouts/StartPageLayout.cshtml";
     ViewData["Title"] = "Start";
@@ -29,11 +28,9 @@
 </div> *@
  
 
-
-
 @if (Model.HeroSectionModel != null)
 {
-     <component type="typeof(HeroSection)" render-mode="ServerPrerendered"
+     <component type="typeof(HeroSection)" render-mode="Server"
                param-HeroSectionModel="Model.HeroSectionModel" />
 
 }
@@ -45,7 +42,7 @@ else
 
 @if (Model.InfoSectionModel != null)
 {
-    <component type="typeof(InfoSection)" render-mode="ServerPrerendered"
+    <component type="typeof(InfoSection)" render-mode="Server"
                param-InfoSectionModel="Model.InfoSectionModel" />
 
 }
@@ -56,7 +53,7 @@ else
 
 @if (Model.Books != null)
 {
-    <component type="typeof(Carousel)" render-mode="ServerPrerendered"
+    <component type="typeof(Carousel)" render-mode="Server"
                param-books="Model.Books"
                param-SlideShowTitle="Model.SlideShowTitle"
                param-SlideShowContent="Model.SlideShowContent" />

@@ -28,9 +28,18 @@
 
         return $"/{lang}/auth/signin";
     }
-   
-}
 
+    private bool isLoaded = false;
+
+    protected override async Task OnInitializedAsync()
+    {
+        await Task.Delay(2000);
+        isLoaded = true;
+    }
+
+}
+@if (isLoaded)
+{
     <div class="hero-section container">
         <h1>@HeroSectionModel!.Title</h1>
         <p>@HeroSectionModel.Description</p>
@@ -39,4 +48,10 @@
             <a href="@GetSignInUrl()" class="btn btn-secondary">@HeroSectionModel.ButtonSignIn</a>
         </div>
     </div>
+}
+else
+{
+   // <div class="loading-page">Loading....</div>
+}
+
 

@@ -21,9 +21,21 @@
     public StartPage? currentPage { get; set; }
 
 
+    private bool isLoaded = false;
+
+    protected override async Task OnInitializedAsync()
+    {
+        await Task.Delay(2000);
+        isLoaded = true;
+
+        StateHasChanged();
+    }
+
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
-        if (firstRender)
+        System.Console.WriteLine($"OnAfterRenderAsync called. firstRender: {firstRender}, isLoaded: {isLoaded}");
+
+        if (isLoaded)
         {
             try
             {
@@ -39,26 +51,33 @@
 
 }
 
-
-<div class="carousel-wrapper-container container">
-    <h2 class="text-center carousel-text">@SlideShowTitle</h2>
-    <p class="text-center carousel-text carousel-p">@SlideShowContent</p>
-    <div class="carousel-wrapper position-relative overflow-hidden">
-        <div id="bookCarousel" class="carousel-content d-flex">
-            @if (Books != null && Books.Count > 0)
-            {
-                foreach (var book in Books)
+@if (isLoaded)
+{
+    <div class="carousel-wrapper-container container">
+        <h2 class="text-center carousel-text">@SlideShowTitle</h2>
+        <p class="text-center carousel-text carousel-p">@SlideShowContent</p>
+        <div class="carousel-wrapper position-relative overflow-hidden">
+            <div id="bookCarousel" class="carousel-content d-flex">
+                @if (Books != null && Books.Count > 0)
                 {
-                    <CarouselBookCard Book="book"/>
+                    foreach (var book in Books)
+                    {
+                        <CarouselBookCard Book="book" />
+                    }
                 }
-            }
-            else
-            {
-                <p>No profiles available to display.</p>
-            }
+                else
+                {
+                    <p>No profiles available to display.</p>
+                }
+            </div>
         </div>
     </div>
-</div>
+}
+else
+{
+   //<div></div>
+}
+
 
 
 

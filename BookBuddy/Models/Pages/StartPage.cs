@@ -20,10 +20,8 @@ namespace BookBuddy.Models.Pages
         typeof(AvailableBooksPage),
         typeof(ExamplePage),
         typeof(CookieInfoPage),
-        typeof(SiteSettingsPage)
-
+        typeof(SiteSettingsPage),
         typeof(BooksPage),
-        typeof(SlideShowPage),
     ])]
 
     public class StartPage : SitePageData

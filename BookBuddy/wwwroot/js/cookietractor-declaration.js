@@ -7,7 +7,7 @@ document.addEventListener("DOMContentLoaded", function () {
         var userLang = new URLSearchParams(window.location.search).get('language') ||
             (window.location.pathname.includes('/sv/') ? 'sv' : 'en');
         var langAttribute = userLang === 'sv' ? "sv-SE" : "en-GB";
-        var dataId = "8c1cad13-6fe3-4f93-8ef4-1b81e0cca58d";
+        var dataId = "e470af12-ff81-4cd2-b3df-79f942173b8a";
 
         if (!document.getElementById('cookie-consent-script')) {
             var consentScript = document.createElement('script');
@@ -20,7 +20,6 @@ document.addEventListener("DOMContentLoaded", function () {
             consentScript.onload = function () {
                 console.log("CookieTractor script loaded successfully!");
 
-                // Ladda deklarationsskriptet efter cookietractor.js har laddats
                 if (window.cookieTractor) {
                     var declarationScript = document.createElement('script');
                     declarationScript.src = "https://cdn.cookietractor.com/cookietractor-declaration.js";
@@ -32,7 +31,6 @@ document.addEventListener("DOMContentLoaded", function () {
                     declarationScript.onload = function () {
                         console.log("Cookie Declaration script loaded successfully!");
 
-                        // Kontrollera om cookieTractor finns
                         if (window.cookieTractor) {
                             console.log("cookieTractor is available for cookie declaration.");
                         } else {

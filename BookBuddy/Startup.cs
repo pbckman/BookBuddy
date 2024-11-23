@@ -33,7 +33,6 @@ using BookBuddy.Business.Services.StartPageService;
 using BookBuddy.Business.Services.ErrorMessageService;
 using BookBuddy.Business.Services.SiteMapService;
 using Microsoft.AspNetCore.Authentication.Cookies;
-using BookBuddy.Business.Services.Middleware;
 using Microsoft.AspNetCore.Identity;
 
 
@@ -93,60 +92,14 @@ namespace BookBuddy
             services.AddScoped<IScheduledJobsService, ScheduledJobsService>();
             services.AddScoped<ICategoryService, CategoryService>();
             services.AddTransient<SiteSettingsService>();
+            services.AddTransient<StartPageService>();
+            services.AddTransient<StartPageFactory>(); 
             services.AddTransient<BookPageFactory>();
             services.AddScoped<TranslationFactory>();
+            services.AddTransient<ILanguageService, LanguageService>();
             services.AddHttpClient();
             services.AddServerSideBlazor();
             services.AddBlazoredLocalStorage();
-
-
-            services.AddAuthentication(options =>
-            {
-                options.DefaultScheme = "PolicyScheme"; 
-                        })
-            .AddPolicyScheme("PolicyScheme", "Policy Scheme", options =>
-            {
-                options.ForwardDefaultSelector = context =>
-                {
-
-                    if (context.Request.Path.StartsWithSegments("/cms"))
-                    {
-                        return "CmsIdentityScheme"; 
-                    }
-                    else
-                    {
-                        return "PublicIdentityScheme";  
-                    }
-                };
-            })
-            .AddCookie("CmsIdentityScheme", options =>
-            {
-                options.LoginPath = "/cms/auth/signin";
-                options.AccessDeniedPath = "/cms/account/accessdenied";
-            })
-            .AddCookie("PublicIdentityScheme", options =>
-            {
-                options.LoginPath = "/auth/signin";
-                options.AccessDeniedPath = "/account/accessdenied";
-
-                options.Events = new CookieAuthenticationEvents
-                {
-                    OnRedirectToLogin = context =>
-                    {
-                        if (!context.Request.Path.StartsWithSegments("/auth/signin"))
-                        {
-                            var lang = context.Request.Query["lang"].FirstOrDefault() ??
-                                       (context.Request.Path.ToString().Contains("/sv/") ? "sv" : "en");
-
-                            // Dynamiskt sätta inloggnings-URL:n
-                            var loginUrl = $"/{lang}/auth/signin";
-                            context.Response.Redirect(loginUrl);
-                        }
-                        return Task.CompletedTask;
-                    }
-                };
-            });
-
 
         }
 
@@ -181,16 +134,17 @@ namespace BookBuddy
             app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseRouting();
+           
             app.UseAuthentication();
-            app.UseMiddleware<ApprovalMiddleware>();
             app.UseAuthorization();
             
 
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(
-                    name: "localized",
-                    pattern: "{lang=en}/{controller=StartPage}/{action=Index}/{id?}");
+
+                name: "localized",
+                pattern: "{lang=en}/{controller=StartPage}/{action=Index}/{id?}");
 
                 endpoints.MapContent();
 

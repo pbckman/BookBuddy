@@ -35,12 +35,6 @@ namespace BookBuddy.Business.Services.StartPageService
                 .ToList();
 
             return bookPageModel;
-            //var searchResult = _booksPageService.SearchAsync(null!,currentPage.Language);
-            //var bookPages = searchResult.Items.Select(item => item).ToList();
-            //var bookPageModels = bookPages.Select(bookpage => BookPageFactory.CreateBookPageModel(bookpage, _urlResolver, null)).ToList();
-
-
-            //return bookPageModels;
 
         }
     }

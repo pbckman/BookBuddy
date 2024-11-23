@@ -14,7 +14,8 @@
 }
 
 
-
+@if (isLoaded)
+{
     <div class="learning-section container">
         <div class="container">
             <div class="info-row">
@@ -44,5 +45,12 @@
             </div>
         </div>
     </div>
+}
+else
+{
+    <div class="loading-page">
+        <div class="spinner"></div>
+    </div>
+}
 
 
