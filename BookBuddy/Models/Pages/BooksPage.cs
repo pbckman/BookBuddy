@@ -13,6 +13,7 @@ namespace BookBuddy.Models.Pages;
        Include =
            [
             typeof(AvailableBooksPage),
+            typeof(AchievementsPage),
             typeof(BookPage)
             ]
    )]

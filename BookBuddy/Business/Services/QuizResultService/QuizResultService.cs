@@ -1,4 +1,5 @@
 ﻿using BookBuddy.Business.Factories;
+using BookBuddy.Business.Services.PageService;
 using BookBuddy.Data.Contexts;
 using BookBuddy.Data.Entities;
 using BookBuddy.Models.QuizModels;
@@ -11,11 +12,13 @@ namespace BookBuddy.Business.Services.QuizResultService
     {
         private readonly DataContext _dbContext;
         private readonly QuizResultFactory _resultFactory;
+        private readonly IPageService _pageService;
 
-        public QuizResultService(DataContext dbContext, QuizResultFactory resultFactory)
+        public QuizResultService(DataContext dbContext, QuizResultFactory resultFactory, IPageService pageService)
         {
             _dbContext = dbContext;
             _resultFactory = resultFactory;
+            _pageService = pageService;
         }
 
         public async Task<QuizResultModel> GetResultByQuizIdAsync(int profileId, int quizId)
@@ -102,10 +105,7 @@ namespace BookBuddy.Business.Services.QuizResultService
             }
 
             return null!;
-           
         }
-
-      
 
         public async Task<List<QuizResultModel>> GetResultsByProfileIdAsync(int profileId)
         {
@@ -120,6 +120,33 @@ namespace BookBuddy.Business.Services.QuizResultService
                     return results;
             }
             catch (Exception ex) {}
+
+            return null!;
+        }
+
+        public async Task<List<QuizResultModel>> GetResultsAsync(int profileId, string lang)
+        {
+            try
+            {
+                var quizPages = _pageService.GetQuizPages(lang);
+                if (quizPages == null)
+                    return null!;
+
+                var quizIds = quizPages.Select(quiz => quiz.ContentLink.ID).ToList();
+
+                var results = (await _dbContext.QuizResults.Include(x => x.Profile)
+                                                    .Include(x => x.ChapterResults)
+                                                    .ThenInclude(x => x.QuestionResults)
+                                                    .Where(x => x.ProfileId == profileId && quizIds.Contains(x.QuizId))
+                                                    .ToListAsync()).Select(_resultFactory.Create).ToList();
+
+                if (results != null)
+                    return results;
+            }
+            catch (Exception)
+            {
+            }
+
 
             return null!;
         }

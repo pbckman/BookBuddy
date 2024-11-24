@@ -1,9 +1,11 @@
 ﻿@using BookBuddy.Business.Factories
 @using BookBuddy.Business.Services.AccountService
+@using BookBuddy.Business.Services.AchievementService
 @using BookBuddy.Business.Services.PageService
 @using BookBuddy.Business.Services.QuizResultService
 @using BookBuddy.Business.Services.QuizService
 @using BookBuddy.Business.Services.StateService
+@using BookBuddy.Models.AchievementModels
 @using BookBuddy.Models.QuizModels
 @using BookBuddy.Models.ResultModels
 @using BookBuddy.Models.ViewModels
@@ -19,6 +21,8 @@
 @inject IStateService StateService
 @inject ILocalStorageService localStorage
 @inject IJSRuntime JSRuntime
+@inject IAchievementService AchievementsService
+
 
 <section class="quiz-page">
     @if (isLoading)
@@ -84,6 +88,7 @@
         var profile = await ProfileService.GetSelectedProfileAsync();
         if (profile != null)
         {
+ 
             profileId = profile.Id;
 
             var quiz = QuizService.GetQuizData(QuizPageId, Language);
@@ -181,9 +186,13 @@
 
     private async Task UpdateResult()
     {
+        var achievements = await AchievementsService.GetAchievementsAsync(profileId, Language);
+
         var chapterResult = await QuizResultService.SaveChapterResultAsync(Model.CurrentChapter!, Model.QuizResult!.Id);
         if (chapterResult != null)
             Model.QuizResult!.ChapterResults.Add(chapterResult);
+
+        var updatedAchievements = await CheckForNewAchievements(achievements);
 
         await QuizService.RemoveLocalStorageQuizState(Model.QuizResult.Id);
 
@@ -193,6 +202,8 @@
         {
             var result = await QuizResultService.CompleteQuizAsync(Model.QuizResult!.Id);
 
+            await CheckForNewAchievements(updatedAchievements);
+            
             if(result != null)
             {
                 Model.IsCompleted = true;
@@ -213,5 +224,18 @@
     private void UpdateState()
     {
         StateHasChanged();
+    }
+
+    private async Task<List<Achievement>> CheckForNewAchievements(List<Achievement> previousAchievementState)
+    {
+        var updatedAchievements = await AchievementsService.GetAchievementsAsync(profileId, Language);
+        if (updatedAchievements.Count > previousAchievementState.Count)
+        {
+            var newAchievements = updatedAchievements.Where(achievement => !previousAchievementState.Any(prevAchievement => prevAchievement.Name == achievement.Name));
+
+            // Make your magic med newAchievements, Markus
+        }
+
+        return updatedAchievements;
     }
 }

@@ -52,6 +52,7 @@
   </ItemGroup>
   
   <ItemGroup>
+    <None Remove="Resources\Translations\AchievementProperties.xml" />
     <None Remove="Resources\Translations\Auth.xml" />
     <None Remove="Resources\Translations\Error.xml" />
   </ItemGroup>
