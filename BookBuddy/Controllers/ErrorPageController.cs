@@ -1,4 +1,4 @@
-﻿using BookBuddy.Business.Services;
+﻿using BookBuddy.Business.Services.ErrorMessageService;
 using BookBuddy.Models.Pages;
 using BookBuddy.Models.ViewModels;
 using Microsoft.AspNetCore.Authorization;

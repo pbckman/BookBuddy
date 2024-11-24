@@ -10,7 +10,7 @@
 
     
 }
-
+/*
 
 
 .responsive-img {
@@ -24,5 +24,17 @@
     @media (max-width: 767px) {
         max-width: 100px;
     }
-}
+}*/
 
+.responsive-img {
+    max-width: 100%;
+    height: auto;
+
+    @media (min-width: 768px) {
+        max-width: 250px;
+    }
+
+    @media (max-width: 767px) {
+        max-width: 100px;
+    }
+}

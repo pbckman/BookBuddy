@@ -8,10 +8,13 @@ using BookBuddy.Business.Services.SiteSettingsService;
 using BookBuddy.Models.Pages;
 using BookBuddy.Models.ViewModels;
 using EPiServer.Web.Routing;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+
 
 namespace BookBuddy.Controllers
 {
+    
     public class BooksPageController : PageControllerBase<BooksPage>
     {
         private readonly IContentLoader _contentLoader;
@@ -33,7 +36,7 @@ namespace BookBuddy.Controllers
             _translationFactory = translationFactory;
         }
 
-        public IActionResult Index(BooksPage currentPage)
+        public IActionResult Index(BooksPage currentPage, ContentReference content)
         {
             try
             {
