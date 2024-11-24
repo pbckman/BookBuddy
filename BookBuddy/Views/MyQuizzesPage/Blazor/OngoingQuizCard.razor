@@ -1,4 +1,5 @@
-﻿@using BookBuddy.Models.QuizModels
+﻿@using BookBuddy.Models.MyQuizzesModels
+@using BookBuddy.Models.QuizModels
 @using BookBuddy.Models.ResultModels
 
 @* <div class="quiz-card">
@@ -10,7 +11,7 @@
     </div>
 </div> *@
 
-<div class="card bookcard ongoing-quiz-card">
+@* <div class="card bookcard ongoing-quiz-card">
     <div class="bookcard-content">
         <div class="image-div">
             <img src="@Model.ImageUrl" loading="lazy" class="img-fluid" alt="@Model.ImageAltText">
@@ -28,13 +29,33 @@
             <div class="progress-bar" style="width: @progress%"></div>
         </div>
     </div>
+</div> *@
+<div class="card bookcard ongoing-quiz-card">
+    <div class="bookcard-content">
+        <div class="image-div">
+            <img src="@MyQuiz.ImageUrl" loading="lazy" class="img-fluid" alt="@MyQuiz.ImageAltText">
+        </div>
+        <div class="content-div">
+            <div class="card-body h-100">
+                <a href="@MyQuiz.PageUrl" class="btn btn-primary btn-sm">Continue</a>
+                <h5 class="card-title">@MyQuiz.Title</h5>
+                <p class="chapters-progress">@AnsweredChapters of @TotalChapters chapters completed</p>
+            </div>
+        </div>
+    </div>
+    <div class="progress-wrapper">
+        <div class="progress" role="progressbar" aria-label="Progress bar" aria-valuenow="@progress" aria-valuemin="0" aria-valuemax="100">
+            <div class="progress-bar" style="width: @progress%"></div>
+        </div>
+    </div>
 </div>
 
 
 @code {
-    [Parameter] public QuizCardModel Model { get; set; } = null!;
+    @* [Parameter] public QuizCardModel Model { get; set; } = null!;
     [Parameter] public QuizResultModel? Result { get; set; } = null!;
-    [Parameter] public QuizModel? QuizModel { get; set; } = null!;
+    [Parameter] public QuizModel? QuizModel { get; set; } = null!; *@
+    [Parameter] public MyQuizzesModel? MyQuiz { get; set; } = null!;
     [Parameter] public string Language { get; set; } = null!;
     public int progress { get; set; }
     public int TotalChapters { get; set; }
@@ -49,11 +70,12 @@
 
     private void CountProgress()
     {
-        @* var totalQuestions = QuizModel?.Chapters.SelectMany(c => c.Questions).Count() ?? 1;
-        var answeredQuestions = Result?.ChapterResults.SelectMany(cr => cr.QuestionResults).Count() ?? 0; *@
-        TotalChapters = QuizModel?.Chapters.Count() ?? 1;
-        AnsweredChapters = Result?.ChapterResults.Count() ?? 0;
-        progress = (int)((double)AnsweredChapters / TotalChapters * 100);
+        if (MyQuiz != null)
+        {
+            AnsweredChapters = MyQuiz?.QuizResult?.ChapterResults?.Count() ?? 0;
+            TotalChapters = MyQuiz?.TotalChapters ?? 0;
+            progress = (int)((double)AnsweredChapters / TotalChapters * 100);
+        }
     }
 
 }

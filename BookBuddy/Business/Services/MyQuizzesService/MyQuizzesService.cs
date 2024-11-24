@@ -37,57 +37,62 @@ public class MyQuizzesService : IMyQuizzesService
         _myQuizzesFactory = myQuizzesFactory;
     }
 
-    public async Task<List<MyQuizzesModel>>? GetMyQuizzesAsync(int ProfileId, string Language)
+    public async Task<List<MyQuizzesModel>> GetMyQuizzesAsync(int ProfileId, string Language)
     {
         try
         {
             var results = await _quizResultService.GetResultsByProfileIdAsync(ProfileId);
             var quizzes = await _quizService.GetActiveQuizzesAsync(results, Language);
-            var FilteredResults = results.Where(r => quizzes.Any(q => q.QuizId == r.QuizId)).ToList();
+            var FilteredResults = results.Where(r => r != null && quizzes.Any(q => q.QuizId == r.QuizId)).ToList();
             var myQuizzesList = new List<MyQuizzesModel>();
 
             if (FilteredResults.Count == 0)
             {
-                return null!;
+                return new List<MyQuizzesModel>();
             }
             
             foreach (var result in FilteredResults)
             {
-                var quizData = await GetMyQuizzesDataAzync(result.QuizId, Language, ProfileId, result);
-                if (quizData != null)
+                if (result != null)
                 {
-                    myQuizzesList.Add(quizData);
+                    var quizData = await GetMyQuizzesDataAzync(result.QuizId, Language, ProfileId, result);
+                    if (quizData != null)
+                    {
+                        myQuizzesList.Add(quizData);
+                    }
                 }
             }
 
-            return myQuizzesList;    
+            return myQuizzesList ?? new List<MyQuizzesModel>();    
         }
         catch (Exception ex)
         {
-            _logger.LogError(ex, "Error getting MyQuizzes data");
+            _logger.LogError("ERROR :  MyQuizzesService.GetMyQuizzesAsync() : {0}", ex.Message);
         }
-        return null!;
+        return new List<MyQuizzesModel>();
     }
 
 
-    public async Task<MyQuizzesModel>? GetMyQuizzesDataAzync(int quizPageId, string lang, int profileId, QuizResultModel result)
+    public async Task<MyQuizzesModel> GetMyQuizzesDataAzync(int quizPageId, string lang, int profileId, QuizResultModel result)
     {
         try
         {
-            var currentQuizPage = _pageService.GetQuizPageById(quizPageId, lang);
+            var currentQuizPage = await Task.Run(() => _pageService.GetQuizPageById(quizPageId, lang));
             if (currentQuizPage == null)
-                return null!;
+            {
+                _logger.LogError("ERROR :  MyQuizzesService.GetMyQuizzesDataAzync() : QuizPage not found");
+                return new MyQuizzesModel();
+            }
 
 
             var quiz = _myQuizzesFactory.Create(currentQuizPage, result);
-            // return new MyQuizzesModel();
-            return quiz ?? null!;    
+            return quiz ?? new MyQuizzesModel();    
             
         }
         catch (Exception ex)
         {
-            _logger.LogError(ex, "Error getting MyQuizzes data");
+            _logger.LogError("ERROR :  MyQuizzesService.GetMyQuizzesDataAzync() : {0}", ex.Message);
         }
-        return null!;
+        return new MyQuizzesModel();
     }
 }
