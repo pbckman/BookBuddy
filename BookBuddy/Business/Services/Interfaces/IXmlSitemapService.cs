@@ -1,6 +1,6 @@
 ﻿using BookBuddy.Models.Pages;
 
-namespace BookBuddy.Business.Services.SiteMapService
+namespace BookBuddy.Business.Services.Interfaces
 {
     public interface IXmlSitemapService
     {
