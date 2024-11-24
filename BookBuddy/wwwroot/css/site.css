@@ -1712,7 +1712,8 @@ body {
 .book-card .book-container .book-cover img {
   width: 100%;
   height: auto;
-  object-fit: cover;
+  -o-object-fit: cover;
+     object-fit: cover;
   max-width: 100%;
   border-radius: inherit;
 }
