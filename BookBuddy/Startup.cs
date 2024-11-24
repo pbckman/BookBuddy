@@ -1,13 +1,11 @@
 using BookBuddy.Business.Clients;
 using BookBuddy.Business.Factories;
-using BookBuddy.Business.Services;
 using BookBuddy.Business.Services.AiService;
 using BookBuddy.Business.Services.BookContentService;
 using BookBuddy.Business.Services.BookPageService;
 using BookBuddy.Business.Services.BookService;
 using BookBuddy.Business.Services.AccountService;
 using BookBuddy.Business.Services.BooksPageService;
-using BookBuddy.Business.Services.Interfaces;
 using BookBuddy.Business.Services.PageService;
 using BookBuddy.Data.Contexts;
 using EPiServer.Cms.Shell;
@@ -31,6 +29,11 @@ using BookBuddy.Business.Services.SiteSettingsService;
 using Microsoft.Extensions.Logging.Abstractions;
 using BookBuddy.Business.Services.LanguageService;
 using Microsoft.AspNetCore.Mvc.ViewFeatures;
+using BookBuddy.Business.Services.StartPageService;
+using BookBuddy.Business.Services.ErrorMessageService;
+using BookBuddy.Business.Services.SiteMapService;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Identity;
 using BookBuddy.Business.Services.AchievementService;
 using BookBuddy.Models.Blocks;
 using BookBuddy.Models.Validations;
@@ -94,15 +97,15 @@ namespace BookBuddy
             services.AddScoped<IBooksPageService, BooksPageService>();
             services.AddScoped<IScheduledJobsService, ScheduledJobsService>();
             services.AddScoped<ICategoryService, CategoryService>();
-            services.AddScoped<ILanguageService, LanguageService>();
             services.AddTransient<SiteSettingsService>();
+            services.AddTransient<StartPageService>();
+            services.AddTransient<StartPageFactory>(); 
             services.AddTransient<BookPageFactory>();
-            services.AddTransient<CategorySelectionFactory>();
-            services.AddTransient<TranslationFactory>();
+            services.AddScoped<TranslationFactory>();
+            services.AddTransient<ILanguageService, LanguageService>();
             services.AddHttpClient();
             services.AddServerSideBlazor();
             services.AddBlazoredLocalStorage();
-
 
         }
 
@@ -119,16 +122,13 @@ namespace BookBuddy
                 var response = context.HttpContext.Response;
                 var statusCode = response.StatusCode;
 
-                // H�mta den aktuella kulturen fr�n URL-segment eller anv�nd default "en" om inget segment finns
+              
                 var culture = context.HttpContext.Request.Path.Value?.Split('/').FirstOrDefault(s => s == "sv" || s == "en") ?? "en";
 
-                // Om ingen kultur hittas i URL:en, anv�nd standardkulturen (engelska)
                 if (string.IsNullOrEmpty(culture))
                 {
                     culture = "en";
                 }
-
-                // Bygg om URL:en med r�tt spr�ksegment och felkod
                 var redirectUrl = $"/{culture}/error?statusCode={statusCode}";
 
                 response.Redirect(redirectUrl);
@@ -137,19 +137,20 @@ namespace BookBuddy
             });
 
 
-
-
             app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseRouting();
+           
             app.UseAuthentication();
             app.UseAuthorization();
+            
 
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(
-                    name: "localized",
-                    pattern: "{lang=en}/{controller=StartPage}/{action=Index}/{id?}");
+
+                name: "localized",
+                pattern: "{lang=en}/{controller=StartPage}/{action=Index}/{id?}");
 
                 endpoints.MapContent();
 

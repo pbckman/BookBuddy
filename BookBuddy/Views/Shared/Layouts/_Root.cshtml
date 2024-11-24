@@ -2,12 +2,16 @@
 @using BookBuddy.Models.ViewModels
 @using EPiServer.Web.Mvc.Html
 @using System.Globalization
-
-@model IPageViewModel<SitePageData>
+@inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
 
 @{
     var currentCulture = CultureInfo.CurrentCulture.TwoLetterISOLanguageName;
+    var userLang = HttpContextAccessor.HttpContext.Request.Query["language"].FirstOrDefault() ??
+                   (HttpContextAccessor.HttpContext.Request.Path.Value.Contains("/sv") ? "sv-SE" : "en-GB");
 }
+
+@model IPageViewModel<SitePageData>
+
 
 <!DOCTYPE html>
 
@@ -24,6 +28,9 @@
     <link rel="stylesheet" href="~/css/site.css">
     <base href="~/" />
     <title>BookBuddy | @Model.CurrentPage.MetaTitle</title>
+    <link rel="stylesheet, preconnect" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="~/css/site.min.css">
+    <title>BookBuddy</title>
 </head>
 <body>
     <div class="page">
@@ -40,7 +47,7 @@
 
                 <main>
                     @RenderBody()
-                <component type="typeof(CookieButton)" render-mode="Server" />
+                    @await Html.PartialAsync("~/Views/Shared/Partials/cookiepartial.cshtml", Model)
                 </main>
 
                 <div class="footer">
@@ -48,11 +55,11 @@
                 </div>
             </div>
     </div>
-    <script src="~/_framework/blazor.server.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="~/js/cookietractor-declaration.js" defer></script>
     <script src="~/js/cookieConsent.js" defer></script>
+    <script src="~/js/cookietractor-declaration.js" defer></script>
+    <script src="_framework/blazor.server.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.cookietractor.com/cookietractor.js" data-lang="@userLang" data-id="e470af12-ff81-4cd2-b3df-79f942173b8a" defer></script>
 </body>
 </html>
 
-  

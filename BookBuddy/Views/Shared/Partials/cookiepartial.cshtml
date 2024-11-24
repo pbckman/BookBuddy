@@ -1,0 +1,22 @@
+﻿
+<div class="cookie-consent-button position-fixed">
+    <button onclick="openCookieSettings()" type="button" class="btn rounded-circle d-flex justify-content-center align-items-center cookie-btn" aria-label="Cookie Settings">
+        <i class="fas fa-cookie-bite me-2"></i>
+    </button>
+</div>
+
+
+<script>
+  
+    function openCookieSettings() {
+        if (window.cookieTractor && typeof window.cookieTractor.openConsentSettings === "function") {
+            window.cookieTractor.openConsentSettings();
+        } else {
+            console.warn("cookieTractor is not available or openConsentSettings function is missing.");
+        }
+    }
+
+</script>
+
+
+
