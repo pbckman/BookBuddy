@@ -1,4 +1,4 @@
-﻿using BookBuddy.Business.Services.SiteMapService;
+﻿using BookBuddy.Business.Services.Interfaces;
 using BookBuddy.Models.Pages;
 using BookBuddy.Models.ViewModels;
 using Microsoft.AspNetCore.Mvc;
