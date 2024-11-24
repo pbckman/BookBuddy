@@ -1,6 +1,4 @@
-﻿
-
-@code {
+﻿@code {
     [Parameter] [SupplyParameterFromQuery(Name = "query")] public string? Query { get; set; }
     [Parameter] [SupplyParameterFromQuery(Name = "category")] public string? Category { get; set; }
     [Parameter] public List<BookPageModel>? Result { get; set; }
