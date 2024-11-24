@@ -228,5 +228,15 @@ namespace BookBuddy.Business.Services.QuizService
             return new List<QuizCardModel>();
                                   
         }
+
+        public async Task<int> GetQuizPageId(int bookId, string lang)
+        {
+            var bookPage = await Task.Run(() => _contentLoader.Get<BookPage>(new ContentReference(bookId), new LanguageSelector(lang)));
+            if (bookPage == null)
+                return 0;
+
+            var quizPage = await Task.Run(() => _contentLoader.GetChildren<QuizPage>(bookPage.ContentLink, new LanguageSelector(lang)).FirstOrDefault());
+            return quizPage != null ? quizPage.ContentLink.ID : 0;
+        }
     }
 }

@@ -1,4 +1,5 @@
 ﻿@using BookBuddy.Models.QuizModels
+@using BookBuddy.Models.ResultModels
 @* <div class="quiz-card">
     <div class="card-image-section">
         <img src="@Model.ImageUrl" alt="@Model.ImageAltText" />
@@ -15,14 +16,68 @@
             <img src="@Model.ImageUrl" loading="lazy" class="img-fluid" alt="@Model.ImageAltText">
         </div>
         <div class="content-div">
-            <div class="card-body d-flex flex-column h-100">
+            <div class="card-body h-100">
+                <a href="@BookQuizUrl" class="btn btn-primary btn-sm">Continue</a>
                 <h5 class="card-title">@Model.Title</h5>
-                <p class="card-text">@Model.IsCompleted</p>
+                @* <p class="chapters-progress">Score: @CorrectQuestions / @TotalQuestions correct questions</p> *@
+                <p>@Model.BookId</p>
+                <p>@Model.QuizId</p>
+                <p>@Model.ImageUrl</p>
+                <p>@Model.IsCompleted</p>
             </div>
+        </div>
+    </div>
+    <div class="progress-wrapper">
+        <div class="progress" role="progressbar" aria-label="Progress bar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100">
+            <div class="progress-bar" style="width: 100%"></div>
         </div>
     </div>
 </div>
 
 @code {
     [Parameter] public QuizCardModel Model { get; set; } = null!;
+    [Parameter] public QuizResultModel? Result { get; set; } = null!;
+    [Parameter] public QuizModel? QuizModel { get; set; } = null!;
+    [Parameter] public string Language { get; set; } = null!;
+    public int progress { get; set; }
+    public int TotalQuestions { get; set; }
+    public int CorrectQuestions { get; set; }
+    public string BookQuizUrl { get; set; }
+
+
+    protected override void OnInitialized()
+    {
+        CountProgress();
+        GetBookQuizUrlByBookId();
+        StateHasChanged();
+    }
+
+    private void CountProgress()
+    {
+        TotalQuestions = QuizModel?.Chapters.SelectMany(c => c.Questions).Count() ?? 1;
+        CorrectQuestions = Result?.ChapterResults.SelectMany(cr => cr.QuestionResults).Count(q => q.IsCorrect) ?? 0;
+        progress = (int)((double)CorrectQuestions / TotalQuestions * 100);
+    }
+    private void GetBookQuizUrlByBookId()
+    {
+        if (Model.BookId <= 0 || string.IsNullOrEmpty(Language))
+        {
+            return;
+        }
+
+        var bookPageReference = new ContentReference(Model.BookId);
+        var matchingBookPage = _contentLoader.Get<BookPage>(bookPageReference, new LanguageSelector(Language));
+
+        if (matchingBookPage == null)
+        {
+            return;
+        }
+
+        var quizPages = _contentLoader.GetChildren<QuizPage>(matchingBookPage.ContentLink, new LanguageSelector(Language));
+        var quizPage = quizPages.FirstOrDefault();
+        if (quizPage != null)
+        {
+            BookQuizUrl = UrlResolver.GetUrl(quizPage.ContentLink);
+        }
+    }
 }
