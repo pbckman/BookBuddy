@@ -31,8 +31,6 @@ using BookBuddy.Business.Services.SiteSettingsService;
 using Microsoft.Extensions.Logging.Abstractions;
 using BookBuddy.Business.Services.LanguageService;
 using Microsoft.AspNetCore.Mvc.ViewFeatures;
-using BookBuddy.Business.Services.ErrorMessageService;
-using BookBuddy.Business.Services.SiteMapService;
 using BookBuddy.Business.Services.AchievementService;
 using BookBuddy.Models.Blocks;
 using BookBuddy.Models.Validations;
