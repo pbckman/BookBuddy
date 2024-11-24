@@ -1,12 +1,17 @@
-﻿@model IPageViewModel<SitePageData>
+﻿
+@model IPageViewModel<SitePageData>
 @{
     var cookieinfopageUrl = GetCookieInfoPageUrl();
 }
 
-@if (Model.SiteSettings != null)
-{
-    <div class="footer-wrapper">
-        <div class="link-wrapper-1">
+
+ @if (Model.SiteSettings != null)
+ {
+        <div class="footer-wrapper">
+
+            <div class="footer-copyright">
+                <p>@Model.SiteSettings.FooterText</p>
+            </div>
             
             <div class="footer-items">
                 @if (Model.SiteSettings.SocialLinks != null)
@@ -41,7 +46,6 @@
 
 
         </div>
-    </div>
     
 }
 else
@@ -50,11 +54,12 @@ else
 }
 
 @functions {
+
     public string GetCookieInfoPageUrl()
-    {
-        var startPageReference = ContentReference.StartPage;
-        var cookieinfopage = _contentLoader.GetChildren<CookieInfoPage>(startPageReference).FirstOrDefault();
-        var cookieinfopageUrl = cookieinfopage != null ? Url.ContentUrl(cookieinfopage.ContentLink) : null;
-        return cookieinfopageUrl ?? null!;
-    }
+        {
+            var startPageReference = ContentReference.StartPage;
+            var cookieinfopage = _contentLoader.GetChildren<CookieInfoPage>(startPageReference).FirstOrDefault();
+            var cookieinfopageUrl = cookieinfopage != null ? Url.ContentUrl(cookieinfopage.ContentLink) : null;
+            return cookieinfopageUrl ?? null!;
+        }
 }
