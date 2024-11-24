@@ -130,4 +130,50 @@ public class PageService : IPageService
         return null!;
     
     }
+
+    public AchievementsPage GetAchievementsPage(string lang)
+    {
+        var booksPage = GetBooksPage(lang);
+        if (booksPage == null)
+        {
+            return null!;
+        }
+        var achievementsPage = _contentRepository.GetChildren<AchievementsPage>(booksPage.ContentLink, new LanguageSelector(lang)).FirstOrDefault();
+
+        return achievementsPage ?? null!;
+    }
+
+    public List<QuizPage> GetQuizPages(string lang)
+    {
+        try
+        {
+            var booksPage = GetBooksPage(lang);
+            if (booksPage == null)
+            {
+                return null!;
+            }
+            var bookPages = _contentLoader.GetChildren<BookPage>(booksPage.ContentLink, new LanguageSelector(lang)).ToList();
+            if (bookPages == null)
+            {
+                return null!;
+            }
+            var quizPages = new List<QuizPage>();
+            foreach (var bookPage in bookPages)
+            {
+                var quizPage = _contentRepository.GetChildren<QuizPage>(bookPage.ContentLink, new LanguageSelector(lang)).FirstOrDefault();
+                if (quizPage != null)
+                {
+                    quizPages.Add(quizPage);
+                }
+            }
+
+            return quizPages;
+        }
+        catch (Exception)
+        {
+        }
+
+        return null!;
+
+    }
 }
