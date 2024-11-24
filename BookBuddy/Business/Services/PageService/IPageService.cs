@@ -13,5 +13,7 @@ namespace BookBuddy.Business.Services.PageService
 
         QuizPage GetQuizPageById(int quizPageId, string lang);
         MyQuizzesPage GetMyQuizzesPage(string lang);
+        AchievementsPage GetAchievementsPage(string lang);
+        List<QuizPage> GetQuizPages(string lang);
     }
 }

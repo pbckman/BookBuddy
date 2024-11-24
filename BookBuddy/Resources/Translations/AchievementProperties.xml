@@ -1,0 +1,71 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<languages>
+	<language name="English" id="en">
+		<contenttypes>
+			<achievementspage>
+				<properties>
+					<achievements>
+						<caption>Achievements</caption>
+					</achievements>
+				</properties>
+			</achievementspage>
+			<achievementblock>
+				<properties>
+					<title>
+						<caption>Title</caption>
+					</title>
+					<numberofbooks>
+						<caption>Number of books</caption>
+					</numberofbooks>
+					<numberofchapters>
+						<caption>Number of chapters</caption>
+					</numberofchapters>
+					<percentage>
+						<caption>Percent correct answers</caption>
+					</percentage>
+					<image>
+						<caption>Image</caption>
+					</image>
+					<imagealttext>
+						<caption>Image alt text</caption>
+					</imagealttext>
+				</properties>
+			</achievementblock>
+
+		</contenttypes>
+	</language>
+	<language name="Svenska" id="sv">
+		<contenttypes>
+			<achievementspage>
+				<properties>
+					<achievements>
+						<caption>Prestationer</caption>
+					</achievements>
+				</properties>
+			</achievementspage>
+			<achievementblock>
+				<properties>
+					<title>
+						<caption>Titel</caption>
+					</title>
+					<numberofbooks>
+						<caption>Antal böcker</caption>
+					</numberofbooks>
+					<numberofchapters>
+						<caption>Antal kapitel</caption>
+					</numberofchapters>
+					<percentage>
+						<caption>Procent korrekta svar</caption>
+					</percentage>
+					<image>
+						<caption>Bild</caption>
+					</image>
+					<imagealttext>
+						<caption>Alternativ bildtext</caption>
+					</imagealttext>
+				</properties>
+			</achievementblock>
+
+		</contenttypes>
+	</language>
+</languages>
