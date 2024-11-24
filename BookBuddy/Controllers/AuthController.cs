@@ -1,9 +1,7 @@
 ﻿using BookBuddy.Business.Services.AccountService;
 using BookBuddy.Business.Services.TranslationService;
-using BookBuddy.Models.Pages;
 using BookBuddy.Models.ViewModels;
 using EPiServer.Cms.UI.AspNetIdentity;
-using EPiServer.Web.Routing;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System.Globalization;
@@ -111,7 +109,7 @@ namespace BookBuddy.Controllers
                 }
             }
 
-
+            
 
             TempData["ErrorMessage"] = _translationService.GetTranslation("signin", "errorMessage", currentCulture);
             return RedirectToAction("SignIn", "Auth", new { currentCulture });
