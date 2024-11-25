@@ -36,6 +36,7 @@ using BookBuddy.Models.Blocks;
 using BookBuddy.Models.Validations;
 using EPiServer.Validation;
 using BookBuddy.Business.Services.MyQuizzesService;
+using BookBuddy.Business.Services.AuthorizedService;
 
 
 namespace BookBuddy
@@ -97,6 +98,7 @@ namespace BookBuddy
             services.AddScoped<ICategoryService, CategoryService>();
             services.AddScoped<IMyQuizzesService, MyQuizzesService>();
             services.AddScoped<ILanguageService, LanguageService>();
+            services.AddScoped<IAuthorizedService, AuthorizedService>();
             services.AddTransient<SiteSettingsService>();
             services.AddTransient<BookPageFactory>();
             services.AddTransient<CategorySelectionFactory>();
