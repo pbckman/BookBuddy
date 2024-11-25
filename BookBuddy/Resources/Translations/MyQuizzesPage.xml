@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<languages>
+	<language name="English" id="en">
+		<contenttypes>
+			<myquizzespage>
+				<properties>
+					<ongoing>Ongoing</ongoing>
+					<completed>Completed</completed>
+					<loading>Loading...</loading>
+					<noongoingquizzes>There are no ongoing quizzes.</noongoingquizzes>
+					<nocompletedquizzes>There are no completed quizzes.</nocompletedquizzes>
+					<noquizzes>There are no quizzes to show.</noquizzes>
+					<completedchapters>Completed chapters</completedchapters>
+					<correctanswers>Correct answers</correctanswers>
+					<totalansweredquestions>Total answered questions</totalansweredquestions>
+					<chapterswithfullscore>Chapters with full score</chapterswithfullscore>
+					<totalscore>Total score</totalscore>
+					<bestanswerstreak>Best answer streak</bestanswerstreak>
+					<achievements>Achievements!</achievements>
+					<notachievedyet>Not achieved yet</notachievedyet>
+				</properties>
+			</myquizzespage>
+		</contenttypes>
+	</language>
+	<language name="Svenska" id="sv">
+		<contenttypes>
+			<myquizzespage>
+				<properties>
+					<ongoing>Pågående</ongoing>
+					<completed>Avslutade</completed>
+					<loading>Laddar...</loading>
+					<noongoingquizzes>Det finns inga pågående quiz.</noongoingquizzes>
+					<nocompletedquizzes>Det finns inga avslutade quiz.</nocompletedquizzes>
+					<noquizzes>Det finns inga quiz att visa.</noquizzes>
+					<completedchapters>Avslutade kapitel</completedchapters>
+					<correctanswers>Rätta svar</correctanswers>
+					<totalansweredquestions>Totalt besvarade frågor</totalansweredquestions>
+					<chapterswithfullscore>Kapitel med full pott</chapterswithfullscore>
+					<totalscore>Totalt resultat</totalscore>
+					<bestanswerstreak>Bästa svarsstreak</bestanswerstreak>
+					<achievements>Prestationer!</achievements>
+					<notachievedyet>Ej uppnådda</notachievedyet>
+				</properties>
+			</myquizzespage>
+		</contenttypes>
+	</language>
+</languages>

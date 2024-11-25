@@ -1,5 +1,18 @@
 ﻿.my-quizzes {
     color: white;
+    .spinner-container {
+        &.card {
+            background-color: white;
+            padding: 0;
+            overflow: hidden;
+            width: 50%;
+            max-width: 300px;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+    }
 
     .container {
         display: flex;
