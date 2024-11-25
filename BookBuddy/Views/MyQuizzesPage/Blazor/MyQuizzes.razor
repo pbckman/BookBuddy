@@ -1,24 +1,5 @@
 ﻿@page "/my-quizzes"
-@using BookBuddy.Business.Factories
-@using BookBuddy.Business.Services.AccountService
-@using BookBuddy.Business.Services.AchievementService
-@using BookBuddy.Business.Services.MyQuizzesService
-@using BookBuddy.Business.Services.QuizResultService
-@using BookBuddy.Business.Services.QuizService
-@using BookBuddy.Models.AchievementModels
-@using BookBuddy.Models.MyQuizzesModels
-@using BookBuddy.Models.QuizModels
-@using System.Security.Claims
-@using BookBuddy.Models.ResultModels
-@using Microsoft.AspNetCore.Components.Authorization
-@inject ProfileService ProfileService
-@inject IQuizResultService QuizResultService
-@inject IQuizService QuizService
-@inject IPageService PageService
-@inject AuthenticationStateProvider AuthenticationStateProvider
-@inject AccountService AccountService
-@inject IMyQuizzesService MyQuizzesService
-@inject IAchievementService AchievementService
+
 
 @if (CurrentPage != null)
 {
@@ -108,20 +89,34 @@
                             Kaptiel med full pott -DONE
                             *@
                             <div class="card score-card">
-                                <p class="score-text" >Completed chapters: </p>
+                                <p class="score-text" >Completed chapters </p>
                                 <span class="score-value">@TotalCompletedChapters</span>
+                                <img src="/images/scorecard1.png" alt="">
                             </div>
                             <div class="card score-card">
-                                <p class="score-text" >Correct<br> answers: </p>
+                                <p class="score-text" >Correct answers </p>
                                 <span class="score-value">@TotalCorrectAnswers</span>
+                                <img src="/images/scorecard2.png" alt="">
                             </div>
                             <div class="card score-card">
-                                <p class="score-text" >Chapters with <br> full score: </p>
+                                <p class="score-text" >Totalt answered questions </p>
+                                <span class="score-value">@TotaltAnsweredQuestions</span>
+                                <img src="/images/scorecard5.png" alt="">
+                            </div>
+                            <div class="card score-card">
+                                <p class="score-text" >Chapters with full score </p>
                                 <span class="score-value">@ChaptersWithFullScore</span>
+                                <img src="/images/scorecard3.png" alt="">
                             </div>
                             <div class="card score-card">
-                                <p class="score-text" >Totalt<br> score: </p>
+                                <p class="score-text" >Totalt score </p>
                                 <span class="score-value">@ProcentageCorrectAnswers %</span>
+                                <img src="/images/scorecard4.png" alt="">
+                            </div>
+                            <div class="card score-card">
+                                <p class="score-text" >Best answered streak</p>
+                                <span class="score-value">@BestCorrectAnswerStreak</span>
+                                <img src="/images/scorecard6.png" alt="">
                             </div>
                     </div>
 
@@ -208,6 +203,9 @@
             </div>
             
         </div>
+        <button></button>
+        <button @onclick="TriggerAchievementsPopup">Show Achievements</button>
+        @* <AchievementPopup @ref="popup" Achievements="FinishedAchievements" /> *@
     </section>
 }
 
@@ -220,11 +218,14 @@
     private int AmountOfCompleted { get; set; }
     private int TotalCompletedChapters { get; set; }
     private int TotalCorrectAnswers { get; set; }
+    private int TotaltAnsweredQuestions { get; set; }
     private int ChaptersWithFullScore { get; set; }
     private int ProcentageCorrectAnswers { get; set; }
+    private int BestCorrectAnswerStreak { get; set; }
     private List<MyQuizzesModel> MyQuizzesList { get; set; } = new List<MyQuizzesModel>();
     private List<Achievement> FinishedAchievements { get; set; } = new List<Achievement>();
     private List<Achievement> NotFinishedAchievements { get; set; } = new List<Achievement>();
+    private AchievementPopup? popup { get; set; }
     
 
     protected override async Task OnInitializedAsync()
@@ -238,10 +239,13 @@
         CountTotalCorrectAnswers();
         CountChaptersWithFullScore();
         CountPercentageCorrectAnswers();
+        CountTotaltAnsweredQuestions();
+        CountBestCorrectAnswerStreak();
         await GetFinishedAchievements();
         await GetNotFinishedAchievements();
 
         ShowOngoing();
+        @* TriggerAchievementsPopup(); *@
     }
 
     private async Task GetMyQuizzesAsync()
@@ -288,6 +292,41 @@
         var totalWrongAnswers = MyQuizzesList.Sum(quiz => quiz.TotalWrongAnswers);
         ProcentageCorrectAnswers = (int)((double)TotalCorrectAnswers / (TotalCorrectAnswers + totalWrongAnswers) * 100);
     }
+    private void CountTotaltAnsweredQuestions()
+    {
+        TotaltAnsweredQuestions = TotalCorrectAnswers + MyQuizzesList.Sum(quiz => quiz.TotalWrongAnswers);
+    }
+    private void CountBestCorrectAnswerStreak()
+    {
+        BestCorrectAnswerStreak = 0;
+        int currentStreak = 0;
+
+        foreach (var quiz in MyQuizzesList)
+        {
+            if (quiz.QuizResult?.ChapterResults == null)
+                continue;
+
+            foreach (var chapter in quiz.QuizResult.ChapterResults)
+            {
+                foreach (var question in chapter.QuestionResults)
+                {
+                    if (question.IsCorrect)
+                    {
+                        currentStreak++;
+                        if (currentStreak > BestCorrectAnswerStreak)
+                        {
+                            BestCorrectAnswerStreak = currentStreak;
+                        }
+                    }
+                    else
+                    {
+                        currentStreak = 0;
+                    }
+                }
+            }
+        }
+    }
+
     private async Task GetFinishedAchievements()
     {
         var profile = await ProfileService.GetSelectedProfileAsync();
@@ -297,6 +336,13 @@
     {
         var profile = await ProfileService.GetSelectedProfileAsync();
         NotFinishedAchievements = await AchievementService.GetUnFinishedAchievementsAsync(profile.Id, Language);
+    }
+    private void TriggerAchievementsPopup()
+    {
+        if (FinishedAchievements.Any())
+        {
+            @* popup?.ShowAchievementsAsync(); *@
+        }
     }
 
     private void ShowOngoing()

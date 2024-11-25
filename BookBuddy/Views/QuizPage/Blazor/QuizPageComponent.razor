@@ -10,6 +10,7 @@
 @using BookBuddy.Models.ResultModels
 @using BookBuddy.Models.ViewModels
 @using Blazored.LocalStorage
+@using BookBuddy.Views.MyQuizzesPage.Blazor
 @using Microsoft.AspNetCore.Components.Authorization
 @using System.Security.Claims
 
@@ -63,7 +64,9 @@
                 OnBtnSummaryClick="HandleSelectedSummary" />
         </div>
     }
-</section>
+    <button @onclick="TriggerAchievementsPopup">Show Achievements</button>
+    <AchievementPopup @ref="popup" TestAchievements="TestAchievements" />
+</section> 
 
 <script>
     function ToggleNav() {
@@ -79,8 +82,11 @@
     [Parameter] public string Language { get; set; } = null!;
 
     public QuizModel Model { get; set; } = new();
+    private List<Achievement>? NewAchievements { get; set; }
+    private AchievementPopup? popup { get; set; }
     private int profileId { get; set; }
     private bool isLoading = true;
+    private List<Achievement> TestAchievements { get; set; } = new List<Achievement> { new Achievement { Name = "Test Achievement!!", ImageUrl = "/contentassets/f866e73dd15c4aeaa8a8feab3aedda4c/achievementpricethird.webp", ImageAltText = "Test" } };
 
     protected override async Task OnInitializedAsync()
     {
@@ -231,11 +237,34 @@
         var updatedAchievements = await AchievementsService.GetAchievementsAsync(profileId, Language);
         if (updatedAchievements.Count > previousAchievementState.Count)
         {
-            var newAchievements = updatedAchievements.Where(achievement => !previousAchievementState.Any(prevAchievement => prevAchievement.Name == achievement.Name));
-
+            NewAchievements = updatedAchievements
+                .Where(achievement => !previousAchievementState
+                .Any(prevAchievement => prevAchievement.Name == achievement.Name))
+                .ToList();
+            @foreach (var achievement in NewAchievements)
+            {
+                System.Diagnostics.Debug.WriteLine($"New Achievement: {achievement.Name}");
+            }
+            await TriggerAchievementsPopup();
+            
             // Make your magic med newAchievements, Markus
         }
 
         return updatedAchievements;
+    }
+    private async Task TriggerAchievementsPopup()
+    {
+        if (NewAchievements.Any())
+        {
+            System.Diagnostics.Debug.WriteLine($"Triggering Popup with {NewAchievements.Count} Achievements");
+            @foreach (var achievement in NewAchievements)
+            {
+                System.Diagnostics.Debug.WriteLine($"New Achievement: {achievement.Name}");
+            }
+            if (popup != null)
+            {
+                await popup.ShowAchievementsAsync(NewAchievements);
+            }
+        }
     }
 }
