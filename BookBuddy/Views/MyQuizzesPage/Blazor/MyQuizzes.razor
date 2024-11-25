@@ -1,9 +1,11 @@
 ﻿@page "/my-quizzes"
 @using BookBuddy.Business.Factories
 @using BookBuddy.Business.Services.AccountService
+@using BookBuddy.Business.Services.AchievementService
 @using BookBuddy.Business.Services.MyQuizzesService
 @using BookBuddy.Business.Services.QuizResultService
 @using BookBuddy.Business.Services.QuizService
+@using BookBuddy.Models.AchievementModels
 @using BookBuddy.Models.MyQuizzesModels
 @using BookBuddy.Models.QuizModels
 @using System.Security.Claims
@@ -16,6 +18,7 @@
 @inject AuthenticationStateProvider AuthenticationStateProvider
 @inject AccountService AccountService
 @inject IMyQuizzesService MyQuizzesService
+@inject IAchievementService AchievementService
 
 @if (CurrentPage != null)
 {
@@ -134,7 +137,16 @@
 
                         <div class="achievement-group">
                             <h3 class="achievement-status-title">Achievements!</h3>
-                            <div class="images-wrapper">
+                            @foreach (var achievement in FinishedAchievements)
+                            {
+                                <div class="images-wrapper">
+                                    <div class="achievement-box">
+                                        <img class="achievement-img" src="@UrlResolver.GetUrl(achievement.ImageUrl)" alt="@achievement.ImageAltText">
+                                        <h4 class="img-title">@achievement.Name</h4>
+                                    </div>
+                                </div>
+                            }
+                            @* <div class="images-wrapper">
                                 <div class="achievement-box">
                                     <img class="achievement-img" src="images/achievement7.webp" alt="">
                                     <h4 class="img-title">3 quizzes done</h4>
@@ -151,11 +163,20 @@
                                     <img class="achievement-img" src="images/achievement10.webp" alt="">
                                     <h4 class="img-title">3 quizzes done</h4>
                                 </div>
-                            </div>
+                            </div> *@
                         </div>
                         <div class="achievement-group">
                             <h3 class="achievement-status-title">Not achieved jet</h3>
-                            <div class="images-wrapper">
+                            @foreach (var achievement in NotFinishedAchievements)
+                            {
+                                <div class="images-wrapper">
+                                    <div class="achievement-box disabled">
+                                        <img class="achievement-img" src="@UrlResolver.GetUrl(achievement.ImageUrl)" alt="@achievement.ImageAltText">
+                                        <h4 class="img-title">@achievement.Name</h4>
+                                    </div>
+                                </div>
+                            }
+                            @* <div class="images-wrapper">
                                 <div class="achievement-box disabled">
                                     <img class="achievement-img" src="images/achievement11.webp" alt="">
                                     <h4 class="img-title">3 quizzes done</h4>
@@ -180,7 +201,7 @@
                                     <img class="achievement-img" src="images/achievement16.webp" alt="">
                                     <h4 class="img-title">3 quizzes done</h4>
                                 </div>
-                            </div>
+                            </div> *@
                         </div>
                     </div>
                 </div>
@@ -202,6 +223,8 @@
     private int ChaptersWithFullScore { get; set; }
     private int ProcentageCorrectAnswers { get; set; }
     private List<MyQuizzesModel> MyQuizzesList { get; set; } = new List<MyQuizzesModel>();
+    private List<Achievement> FinishedAchievements { get; set; } = new List<Achievement>();
+    private List<Achievement> NotFinishedAchievements { get; set; } = new List<Achievement>();
     
 
     protected override async Task OnInitializedAsync()
@@ -215,6 +238,8 @@
         CountTotalCorrectAnswers();
         CountChaptersWithFullScore();
         CountPercentageCorrectAnswers();
+        await GetFinishedAchievements();
+        await GetNotFinishedAchievements();
 
         ShowOngoing();
     }
@@ -262,6 +287,16 @@
     {
         var totalWrongAnswers = MyQuizzesList.Sum(quiz => quiz.TotalWrongAnswers);
         ProcentageCorrectAnswers = (int)((double)TotalCorrectAnswers / (TotalCorrectAnswers + totalWrongAnswers) * 100);
+    }
+    private async Task GetFinishedAchievements()
+    {
+        var profile = await ProfileService.GetSelectedProfileAsync();
+        FinishedAchievements = await AchievementService.GetAchievementsAsync(profile.Id, Language);
+    }
+    private async Task GetNotFinishedAchievements()
+    {
+        var profile = await ProfileService.GetSelectedProfileAsync();
+        NotFinishedAchievements = await AchievementService.GetUnFinishedAchievementsAsync(profile.Id, Language);
     }
 
     private void ShowOngoing()
