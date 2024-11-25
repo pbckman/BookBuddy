@@ -64,8 +64,8 @@
                 OnBtnSummaryClick="HandleSelectedSummary" />
         </div>
     }
-    <button @onclick="TriggerAchievementsPopup">Show Achievements</button>
-    <AchievementPopup @ref="popup" TestAchievements="TestAchievements" />
+    @* <button @onclick="TriggerAchievementsPopup">Show Achievements</button>
+    <AchievementPopup @ref="popup" TestAchievements="TestAchievements" /> *@
 </section> 
 
 <script>
@@ -246,8 +246,6 @@
                 System.Diagnostics.Debug.WriteLine($"New Achievement: {achievement.Name}");
             }
             await TriggerAchievementsPopup();
-            
-            // Make your magic med newAchievements, Markus
         }
 
         return updatedAchievements;
@@ -256,11 +254,6 @@
     {
         if (NewAchievements.Any())
         {
-            System.Diagnostics.Debug.WriteLine($"Triggering Popup with {NewAchievements.Count} Achievements");
-            @foreach (var achievement in NewAchievements)
-            {
-                System.Diagnostics.Debug.WriteLine($"New Achievement: {achievement.Name}");
-            }
             if (popup != null)
             {
                 await popup.ShowAchievementsAsync(NewAchievements);

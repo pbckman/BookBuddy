@@ -81,13 +81,6 @@
                     -------------------------------
                      *@
                     <div class="summary-content summary-card">
-                            @*
-                            Slutförda quiz
-                            Slutförda kapitel 
-                            Procent korrekta svar - DONE
-                            Korrekt besvarade frågor -DONE
-                            Kaptiel med full pott -DONE
-                            *@
                             <div class="card score-card">
                                 <p class="score-text" >Completed chapters </p>
                                 <span class="score-value">@TotalCompletedChapters</span>
@@ -114,16 +107,11 @@
                                 <img src="/images/scorecard4.png" alt="">
                             </div>
                             <div class="card score-card">
-                                <p class="score-text" >Best answered streak</p>
+                                <p class="score-text" >Best answer streak</p>
                                 <span class="score-value">@BestCorrectAnswerStreak</span>
                                 <img src="/images/scorecard6.png" alt="">
                             </div>
                     </div>
-
-
-                    @* <div class="achievement-heading">
-                        <h2>Your Achievements</h2>
-                    </div> *@
                     @* 
                     --------- ACHIEVEMENTS ---------
                     --------------------------------
@@ -141,24 +129,6 @@
                                             </div>
                                     }
                                 </div>
-                            @* <div class="images-wrapper">
-                                <div class="achievement-box">
-                                    <img class="achievement-img" src="images/achievement7.webp" alt="">
-                                    <h4 class="img-title">3 quizzes done</h4>
-                                </div>
-                                <div class="achievement-box">
-                                    <img class="achievement-img" src="images/achievement8.webp" alt="">
-                                    <h4 class="img-title">3 quizzes done</h4>
-                                </div>
-                                <div class="achievement-box">
-                                    <img class="achievement-img" src="images/achievement9.webp" alt="">
-                                    <h4 class="img-title">3 quizzes done</h4>
-                                </div>
-                                <div class="achievement-box">
-                                    <img class="achievement-img" src="images/achievement10.webp" alt="">
-                                    <h4 class="img-title">3 quizzes done</h4>
-                                </div>
-                            </div> *@
                         </div>
                         <div class="achievement-group">
                             <h3 class="achievement-status-title">Not achieved jet</h3>
@@ -171,32 +141,6 @@
                                             </div>
                                     }
                                 </div>
-                            @* <div class="images-wrapper">
-                                <div class="achievement-box disabled">
-                                    <img class="achievement-img" src="images/achievement11.webp" alt="">
-                                    <h4 class="img-title">3 quizzes done</h4>
-                                </div>
-                                <div class="achievement-box disabled">
-                                    <img class="achievement-img" src="images/achievement12.webp" alt="">
-                                    <h4 class="img-title">3 quizzes done</h4>
-                                </div>
-                                <div class="achievement-box disabled">
-                                    <img class="achievement-img" src="images/achievement13.webp" alt="">
-                                    <h4 class="img-title">3 quizzes done</h4>
-                                </div>
-                                <div class="achievement-box disabled">
-                                    <img class="achievement-img" src="images/achievement14.webp" alt="">
-                                    <h4 class="img-title">3 quizzes done</h4>
-                                </div>
-                                <div class="achievement-box disabled">
-                                    <img class="achievement-img" src="images/achievement15.webp" alt="">
-                                    <h4 class="img-title">3 quizzes done</h4>
-                                </div>
-                                <div class="achievement-box disabled">
-                                    <img class="achievement-img" src="images/achievement16.webp" alt="">
-                                    <h4 class="img-title">3 quizzes done</h4>
-                                </div>
-                            </div> *@
                         </div>
                     </div>
                 </div>
@@ -204,8 +148,10 @@
             
         </div>
         <button></button>
+        @* 
         <button @onclick="TriggerAchievementsPopup">Show Achievements</button>
-        @* <AchievementPopup @ref="popup" Achievements="FinishedAchievements" /> *@
+        <AchievementPopup @ref="popup" Achievements="FinishedAchievements" /> 
+        *@
     </section>
 }
 
@@ -245,7 +191,6 @@
         await GetNotFinishedAchievements();
 
         ShowOngoing();
-        @* TriggerAchievementsPopup(); *@
     }
 
     private async Task GetMyQuizzesAsync()
@@ -341,7 +286,7 @@
     {
         if (FinishedAchievements.Any())
         {
-            @* popup?.ShowAchievementsAsync(); *@
+            @* popup?.ShowAchievementsAsync(FinishedAchievements); *@
         }
     }
 
