@@ -108,19 +108,19 @@
                             Kaptiel med full pott -DONE
                             *@
                             <div class="card score-card">
-                                <p class="score-text" >Total completed chapters: </p>
+                                <p class="score-text" >Completed chapters: </p>
                                 <span class="score-value">@TotalCompletedChapters</span>
                             </div>
                             <div class="card score-card">
-                                <p class="score-text" >Totalt correct answers: </p>
+                                <p class="score-text" >Correct<br> answers: </p>
                                 <span class="score-value">@TotalCorrectAnswers</span>
                             </div>
                             <div class="card score-card">
-                                <p class="score-text" >Chapters with full score: </p>
+                                <p class="score-text" >Chapters with <br> full score: </p>
                                 <span class="score-value">@ChaptersWithFullScore</span>
                             </div>
                             <div class="card score-card">
-                                <p class="score-text" >Totalt score: </p>
+                                <p class="score-text" >Totalt<br> score: </p>
                                 <span class="score-value">@ProcentageCorrectAnswers %</span>
                             </div>
                     </div>
@@ -137,15 +137,15 @@
 
                         <div class="achievement-group">
                             <h3 class="achievement-status-title">Achievements!</h3>
-                            @foreach (var achievement in FinishedAchievements)
-                            {
                                 <div class="images-wrapper">
-                                    <div class="achievement-box">
-                                        <img class="achievement-img" src="@UrlResolver.GetUrl(achievement.ImageUrl)" alt="@achievement.ImageAltText">
-                                        <h4 class="img-title">@achievement.Name</h4>
-                                    </div>
+                                    @foreach (var achievement in FinishedAchievements)
+                                    {
+                                            <div class="achievement-box">
+                                                <img class="achievement-img" src="@UrlResolver.GetUrl(achievement.ImageUrl)" alt="@achievement.ImageAltText">
+                                                <h4 class="img-title">@achievement.Name</h4>
+                                            </div>
+                                    }
                                 </div>
-                            }
                             @* <div class="images-wrapper">
                                 <div class="achievement-box">
                                     <img class="achievement-img" src="images/achievement7.webp" alt="">
@@ -167,15 +167,15 @@
                         </div>
                         <div class="achievement-group">
                             <h3 class="achievement-status-title">Not achieved jet</h3>
-                            @foreach (var achievement in NotFinishedAchievements)
-                            {
                                 <div class="images-wrapper">
-                                    <div class="achievement-box disabled">
-                                        <img class="achievement-img" src="@UrlResolver.GetUrl(achievement.ImageUrl)" alt="@achievement.ImageAltText">
-                                        <h4 class="img-title">@achievement.Name</h4>
-                                    </div>
+                                    @foreach (var achievement in NotFinishedAchievements)
+                                    {
+                                            <div class="achievement-box disabled">
+                                                <img class="achievement-img" src="@UrlResolver.GetUrl(achievement.ImageUrl)" alt="@achievement.ImageAltText">
+                                                <h4 class="img-title">@achievement.Name</h4>
+                                            </div>
+                                    }
                                 </div>
-                            }
                             @* <div class="images-wrapper">
                                 <div class="achievement-box disabled">
                                     <img class="achievement-img" src="images/achievement11.webp" alt="">
