@@ -28,7 +28,7 @@ namespace BookBuddy.Business.Services.StartPageService
 
             var bookPages = searchResult.Items.ToList();
             var bookPageModel = bookPages
-                .Select(bookspage => BookPageFactory.CreateBookPageModel(bookspage, _urlResolver, null))
+                .Select(bookspage => BookPageFactory.CreateBookPageModel(bookspage, _urlResolver, new List<CategoryModel>()))
                 .ToList();
 
             return bookPageModel;
