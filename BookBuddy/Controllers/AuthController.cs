@@ -1,10 +1,6 @@
-﻿using BookBuddy.Business.Services.AccountService;
-using BookBuddy.Business.Services.TranslationService;
-using BookBuddy.Models.ViewModels;
-using EPiServer.Cms.UI.AspNetIdentity;
+﻿using BookBuddy.Models.ViewModels;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using System.Globalization;
 
 
 namespace BookBuddy.Controllers

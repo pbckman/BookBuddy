@@ -1,11 +1,7 @@
-﻿using BookBuddy.Business.Services.AccountService;
-using BookBuddy.Business.Services.TranslationService;
-using BookBuddy.Models.ViewModels;
-using EPiServer.Cms.UI.AspNetIdentity;
+﻿using BookBuddy.Models.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using System.Globalization;
 
 namespace BookBuddy.Controllers;
 
@@ -18,7 +14,7 @@ public class AccountController(UserManager<ApplicationUser> userManager, SignInM
     private readonly AuthTranslationService _translationService = translationService;
 
     [HttpGet]
-    public IActionResult UpdateUser(string? lang)
+    public async Task<IActionResult> UpdateUser(string? lang)
     {
         var currentCulture = !string.IsNullOrEmpty(lang) ? lang : CultureInfo.CurrentCulture.TwoLetterISOLanguageName;
 
@@ -35,6 +31,12 @@ public class AccountController(UserManager<ApplicationUser> userManager, SignInM
         ViewData["ErrorMessage"] = "";
         ViewData["AccessTitle"] = _translationService.GetTranslation("updateuser", "accessDenied", currentCulture);
         ViewData["AccessMessage"] = _translationService.GetTranslation("updateuser", "mainProfileNeeded", currentCulture);
+
+        var user = await _userManager.GetUserAsync(User);
+        if (user == null)
+        {
+            return RedirectToAction("SignIn", "Auth");
+        }
 
         return View();
     }
