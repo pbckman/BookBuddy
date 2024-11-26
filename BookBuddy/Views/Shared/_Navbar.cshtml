@@ -1,10 +1,5 @@
-@using System.Globalization
-@using EPiServer.Core.Internal
-@inject IContentLoader ContentLoader
+
 @model IPageViewModel<SitePageData>
-@inject ProfileService ProfileService
-@inject AccountService AccountService
-@inject AuthTranslationService AuthTranslationService
 
 @{
     var navbarLinks = Model.SiteSettings.NavbarLinkList?.Select(item => item).ToList() ?? new List<PageReference>();

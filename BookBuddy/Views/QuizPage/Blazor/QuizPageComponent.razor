@@ -176,7 +176,7 @@
 
     private async Task UpdateResult()
     {
-        var achievements = await AchievementsService.GetAchievementsAsync(profileId, Language);
+        var achievements = await AchievementService.GetAchievementsAsync(profileId, Language);
 
         var chapterResult = await QuizResultService.SaveChapterResultAsync(Model.CurrentChapter!, Model.QuizResult!.Id);
         if (chapterResult != null)
@@ -218,7 +218,7 @@
 
     private async Task<List<Achievement>> CheckForNewAchievements(List<Achievement> previousAchievementState)
     {
-        var updatedAchievements = await AchievementsService.GetAchievementsAsync(profileId, Language);
+        var updatedAchievements = await AchievementService.GetAchievementsAsync(profileId, Language);
         if (updatedAchievements.Count > previousAchievementState.Count)
         {
             NewAchievements = updatedAchievements
