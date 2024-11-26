@@ -1,4 +1,4 @@
-﻿@charset "UTF-8";
+@charset "UTF-8";
 @import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
 @media (min-width: 1400px) {
   .container {
@@ -158,6 +158,320 @@
   }
 }
 
+.ongoing-quiz-card {
+  width: 100%;
+  padding: 0.6rem;
+  display: flex;
+  flex-direction: column; /* Gör kortet kolumn-baserat */
+  justify-content: space-between;
+  aspect-ratio: 8/3;
+  margin: 0 auto;
+  max-width: 500px;
+}
+@media (max-width: 480px) {
+  .ongoing-quiz-card {
+    aspect-ratio: 7/4;
+  }
+}
+.ongoing-quiz-card .bookcard-content {
+  display: flex;
+  height: 100%; /* Se till att innehållsbehållaren fyller kortets höjd */
+}
+.ongoing-quiz-card .bookcard-content .image-div {
+  height: auto; /* Låt bilden ta upp det utrymme den behöver */
+  flex-shrink: 0; /* Förhindra att bild-div krymper */
+}
+.ongoing-quiz-card .bookcard-content .image-div img {
+  max-height: 100%;
+}
+.ongoing-quiz-card .bookcard-content .content-div {
+  flex-grow: 1; /* Gör att content-div tar upp återstående plats */
+  display: flex;
+  flex-direction: column;
+}
+.ongoing-quiz-card .bookcard-content .content-div .card-body {
+  padding: 0.2rem 0.2rem 0 1rem;
+  height: 100%;
+  position: relative;
+}
+.ongoing-quiz-card .bookcard-content .content-div .card-body .btn {
+  float: right; /* Gör att knappen flyter upp i högra hörnet */
+  margin-left: 1rem; /* Skapar avstånd mellan knappen och texten */
+  background-color: #FFA500;
+  color: white;
+  padding: 0.5rem 1rem;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  text-transform: uppercase;
+}
+.ongoing-quiz-card .bookcard-content .content-div .card-body .chapters-progress {
+  font-size: 1rem;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  margin: 0;
+  padding-left: 0.9rem;
+  margin: 0.25rem;
+  font-family: "Tektur", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 500;
+  font-style: normal;
+  font-variation-settings: "wdth" 100;
+}
+.ongoing-quiz-card .bookcard-content .content-div .card-body .card-title {
+  font-size: 1.3em;
+  margin: 0.5rem 0;
+  justify-content: self-end;
+}
+@media (max-width: 480px) {
+  .ongoing-quiz-card .bookcard-content .content-div .card-body .card-title {
+    font-size: 1rem;
+  }
+}
+.ongoing-quiz-card .bookcard-content .content-div .card-body .plot-text {
+  max-height: 100px; /* Begränsa höjden för att passa antalet rader */
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 4; /* Begränsa antalet synliga rader */
+  -webkit-box-orient: vertical;
+  line-height: 1.5em; /* Justera linjehöjd om det behövs för att anpassa */
+  height: 6em; /* Ställ in höjden för att matcha linjehöjden och antalet rader */
+  font-size: clamp(0.75rem, 2vw, 0.8rem);
+  margin-bottom: 0.25rem;
+}
+.ongoing-quiz-card .bookcard-content .content-div .card-body p {
+  font-size: 0.8em;
+}
+.ongoing-quiz-card .bookcard-content .content-div .card-body .authors {
+  margin-top: auto;
+  font-weight: 500;
+}
+.ongoing-quiz-card .progress-wrapper {
+  width: 95%;
+  margin: 0.75rem auto 0.25rem;
+}
+.ongoing-quiz-card .progress-wrapper .progress {
+  height: 0.4rem;
+  width: 100%;
+  max-width: 500px;
+  margin: 0;
+}
+.ongoing-quiz-card .progress-wrapper .progress .progress-bar {
+  background-color: #2e7d32;
+}
+.ongoing-quiz-card .progress-wrapper .progress .progress-bar.red {
+  background-color: #ce6060;
+}
+
+@media (max-width: 768px) {
+  .content-div {
+    font-size: 0.9em;
+  }
+}
+.completed-quiz-card {
+  width: 100%;
+  padding: 0.6rem;
+  display: flex;
+  flex-direction: column; /* Gör kortet kolumn-baserat */
+  justify-content: space-between;
+  aspect-ratio: 8/3;
+  margin: 0 auto;
+  max-width: 500px;
+}
+@media (max-width: 480px) {
+  .completed-quiz-card {
+    aspect-ratio: 7/4;
+  }
+}
+.completed-quiz-card .bookcard-content {
+  display: flex;
+  height: 100%; /* Se till att innehållsbehållaren fyller kortets höjd */
+}
+.completed-quiz-card .image-div {
+  height: auto; /* Låt bilden ta upp det utrymme den behöver */
+  flex-shrink: 0; /* Förhindra att bild-div krymper */
+}
+.completed-quiz-card .image-div img {
+  max-height: 100%;
+}
+.completed-quiz-card .content-div {
+  flex-grow: 1; /* Gör att content-div tar upp återstående plats */
+  display: flex;
+  flex-direction: column;
+}
+.completed-quiz-card .content-div .card-body {
+  padding: 0.2rem 0.2rem 0 1rem;
+  height: 100%;
+  position: relative;
+}
+.completed-quiz-card .content-div .card-body .btn {
+  float: right; /* Gör att knappen flyter upp i högra hörnet */
+  margin-left: 1rem; /* Skapar avstånd mellan knappen och texten */
+  background-color: rgba(23, 125, 14, 0.7);
+  color: white;
+  padding: 0.5rem 1rem;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  text-transform: uppercase;
+}
+.completed-quiz-card .content-div .card-body .total-score {
+  font-size: 2.5rem;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  margin: 0;
+  padding-left: 0.9rem;
+  margin: 0.25rem;
+  font-family: "Tektur", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 500;
+  font-style: normal;
+  font-variation-settings: "wdth" 100;
+}
+.completed-quiz-card .content-div .card-body .total-score span {
+  color: #315a59;
+}
+.completed-quiz-card .content-div .card-body .total-score span .orange {
+  color: #FFA500;
+}
+.completed-quiz-card .content-div .card-body .total-score span .green {
+  color: #2e7d32;
+}
+.completed-quiz-card .content-div .card-body .card-title {
+  font-size: 1.3em;
+  margin: 0.5rem 0;
+  justify-content: self-end;
+}
+@media (max-width: 480px) {
+  .completed-quiz-card .content-div .card-body .card-title {
+    font-size: 1rem;
+  }
+}
+.completed-quiz-card .content-div .card-body .plot-text {
+  max-height: 100px; /* Begränsa höjden för att passa antalet rader */
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 4; /* Begränsa antalet synliga rader */
+  -webkit-box-orient: vertical;
+  line-height: 1.5em; /* Justera linjehöjd om det behövs för att anpassa */
+  height: 6em; /* Ställ in höjden för att matcha linjehöjden och antalet rader */
+  font-size: clamp(0.75rem, 2vw, 0.8rem);
+  margin-bottom: 0.25rem;
+}
+.completed-quiz-card .content-div .card-body p {
+  font-size: 0.8em;
+}
+.completed-quiz-card .content-div .card-body .authors {
+  margin-top: auto;
+  font-weight: 500;
+}
+.completed-quiz-card .progress-wrapper {
+  width: 95%;
+  margin: 0.75rem auto 0.25rem;
+  border-radius: 5px; /* Valfritt: Runda hörn för en mjukare effekt */
+  box-shadow: 0 0 10px rgba(46, 125, 50, 0.8), 0 0 20px rgba(46, 125, 50, 0.6), 0 0 30px rgba(46, 125, 50, 0.4); /* Ännu bredare grönt sken */
+}
+.completed-quiz-card .progress-wrapper .progress {
+  height: 0.4rem;
+  width: 100%;
+  max-width: 500px;
+  margin: 0;
+}
+.completed-quiz-card .progress-wrapper .progress .progress-bar {
+  background-color: #2e7d32;
+}
+.completed-quiz-card .progress-wrapper .progress .progress-bar.red {
+  background-color: #ce6060;
+}
+
+@media (max-width: 768px) {
+  .content-div {
+    font-size: 0.9em;
+  }
+}
+.achievement-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.8); /* Mörk overlay */
+  z-index: 1000;
+  display: none;
+  justify-content: center;
+  align-items: center;
+}
+
+.achievement-popup {
+  background: white;
+  border-radius: 10px;
+  padding: 20px;
+  text-align: center;
+  box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.3);
+  animation: popupFadeIn 0.5s ease-in-out;
+  border: 6px solid #76C0BD;
+  width: 70%;
+  max-width: 500px;
+  padding: 1.25rem 0;
+}
+
+.achievement-content img {
+  width: 100%;
+  height: auto;
+  margin-top: -50%;
+  margin-bottom: 1rem;
+}
+
+.achievement-content h2 {
+  font-size: 2rem;
+  color: #333;
+  margin: 0 1rem 1.25rem;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  font-weight: 600;
+}
+
+.close-btn {
+  background-color: #76C0BD;
+  border: none;
+  color: white;
+  padding: 10px 20px;
+  font-size: 1rem;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  margin: 2rem 0;
+}
+
+.close-btn {
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+  transform: translateY(0);
+  transition: transform 0.2s ease, background-color 0.3s ease;
+}
+
+.close-btn:hover {
+  background-color: #5ba3a2;
+  transform: translateY(-3px); /* Höjer knappen vid hover */
+}
+
+.close-btn:active {
+  transform: translateY(0); /* Sänker knappen vid klick */
+}
+
+@keyframes popupFadeIn {
+  from {
+    transform: scale(0.8);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
 * {
   box-sizing: border-box;
   margin: 0;
@@ -1531,7 +1845,8 @@ body {
   left: 0;
   width: 100%;
   height: 100%;
-  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+          backdrop-filter: blur(10px);
   background: rgba(0, 0, 0, 0.2);
   z-index: -1;
 }
@@ -1581,7 +1896,8 @@ body {
 .book-card .book-container .book-cover img {
   width: 100%;
   height: auto;
-  object-fit: cover;
+  -o-object-fit: cover;
+     object-fit: cover;
   max-width: 100%;
   border-radius: inherit;
 }
@@ -1687,7 +2003,8 @@ body {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(20rem, 1fr));
   row-gap: 2rem;
-  column-gap: 1.5rem;
+  -moz-column-gap: 1.5rem;
+       column-gap: 1.5rem;
   margin: 4rem auto 0;
   max-width: 95%;
 }
@@ -1969,6 +2286,7 @@ body {
 }
 
 .cookie-page {
+  width: -moz-fit-content;
   width: fit-content;
   max-width: 80%;
   margin-bottom: 10rem;
@@ -2249,17 +2567,26 @@ body {
 .my-quizzes {
   color: white;
 }
+.my-quizzes .spinner-container.card {
+  background-color: white;
+  padding: 0;
+  overflow: hidden;
+  width: 50%;
+  max-width: 300px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
 .my-quizzes .container {
   display: flex;
   flex-direction: column;
   gap: 1px;
-  margin-top: 10vh;
   padding: 0;
-  width: 100%;
 }
 .my-quizzes .container .overall-summary {
-  position: relative; /* Ensure overlay is positioned relative to this div */
-  padding: 10px 0; /* Add padding to create space around the content */
+  position: relative;
+  padding: 10px 0;
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
   justify-content: space-evenly;
@@ -2285,18 +2612,25 @@ body {
   left: 0;
   width: 100%;
   height: 100%;
-  background: rgba(0, 0, 0, 0.05); /* Adjust the color and opacity as needed */
+  background: rgba(0, 0, 0, 0.05);
   z-index: 1;
   border-radius: 12px;
 }
 .my-quizzes .container .detail-summary {
-  position: relative; /* Ensure overlay is positioned relative to this div */
+  position: relative;
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 0.75fr 1fr;
   grid-template-areas: "quizzes summary";
   justify-content: space-evenly;
   padding: 30px 0;
   width: 100%;
+  gap: 1rem;
+}
+@media (max-width: 1200px) {
+  .my-quizzes .container .detail-summary {
+    grid-template-columns: 1fr;
+    grid-template-areas: "quizzes" "summary";
+  }
 }
 .my-quizzes .container .detail-summary .detail-overlay {
   position: absolute;
@@ -2304,23 +2638,18 @@ body {
   left: 0;
   width: 100%;
   height: 100%;
-  background: rgba(0, 0, 0, 0.05); /* Adjust the color and opacity as needed */
+  background: rgba(0, 0, 0, 0.05);
   z-index: 1;
   border-radius: 12px;
 }
 .my-quizzes .container .detail-summary .quizzes-section {
   grid-area: quizzes;
-  width: 80%;
-  margin-left: auto;
-  margin-right: auto;
-  padding: 20px; /* Add padding to create space around the content */
-  z-index: 2;
 }
 .my-quizzes .container .detail-summary .quizzes-section .button-group {
   display: flex;
   justify-content: center;
-  margin-bottom: 20px;
-  gap: 10px;
+  margin-bottom: 1.75rem;
+  gap: 1rem;
 }
 .my-quizzes .container .detail-summary .quizzes-section .button-group .toggle-btn {
   z-index: 2;
@@ -2362,11 +2691,12 @@ body {
     font-size: 0.75rem;
   }
 }
-.my-quizzes .container .detail-summary .quizzes-section .quiz-content {
+.my-quizzes .container .detail-summary .quizzes-section .quiz-content .book-card-wrapper {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(20rem, 1fr));
+  gap: 1.5rem;
 }
-.my-quizzes .container .detail-summary .quizzes-section .quiz-content .quiz-card {
+.my-quizzes .container .detail-summary .quizzes-section .quiz-content .book-card-wrapper .quiz-card {
   background-color: white;
   animation: fadeIn 0.3s ease-in-out;
   display: flex;
@@ -2378,26 +2708,165 @@ body {
   margin-bottom: 10px;
   border: 0.5px solid gray;
 }
-.my-quizzes .container .detail-summary .quizzes-section .quiz-content .quiz-card .card-image-section img {
+.my-quizzes .container .detail-summary .quizzes-section .quiz-content .book-card-wrapper .quiz-card .card-image-section img {
   width: 50px;
-  object-fit: cover;
+  -o-object-fit: cover;
+     object-fit: cover;
 }
-.my-quizzes .container .detail-summary .quizzes-section .quiz-content .quiz-card .card-content-section {
+.my-quizzes .container .detail-summary .quizzes-section .quiz-content .book-card-wrapper .quiz-card .card-content-section {
   color: black;
 }
-.my-quizzes .container .detail-summary .quizzes-section .quiz-content .quiz-card .card-content-section h3 {
+.my-quizzes .container .detail-summary .quizzes-section .quiz-content .book-card-wrapper .quiz-card .card-content-section h3 {
   font-size: 0.8rem;
   font-weight: bold;
 }
 .my-quizzes .container .detail-summary .summary-section {
   grid-area: summary;
-  z-index: 2;
-  width: 80%;
+  display: flex;
+  flex-direction: column;
+  gap: 1.75rem;
+}
+.my-quizzes .container .detail-summary .summary-section h2 {
+  color: #76C0BD;
+  height: 2.5rem;
+  font-size: 1.75rem;
+  font-weight: 500;
+  margin: 0;
+}
+.my-quizzes .container .detail-summary .summary-section .summary-heading {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.my-quizzes .container .detail-summary .summary-section .summary-card {
+  margin: 0;
+}
+.my-quizzes .container .detail-summary .summary-section .summary-content {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(185px, 1fr));
+  gap: 0.75rem;
+}
+.my-quizzes .container .detail-summary .summary-section .summary-content .score-card {
+  background-color: rgba(255, 255, 255, 0.7);
+  border-radius: 8px;
+  padding: 1rem;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+  position: relative;
+  aspect-ratio: 3/2;
+  font-size: 1.4rem;
+  height: 100%;
+  margin: 0;
+  min-width: 165px;
+}
+.my-quizzes .container .detail-summary .summary-section .summary-content .score-card .score-text {
+  position: absolute;
+  top: 0;
+  left: 0;
+  font-size: 1rem;
+  font-size: clamp(0.5em, 2vw, 0.85em);
+  font-weight: 500;
+  color: #495057;
+  margin: 10% 1rem;
+  max-width: 220px;
+  font-family: "Tektur", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 500;
+  font-style: normal;
+  font-variation-settings: "wdth" 100;
+}
+.my-quizzes .container .detail-summary .summary-section .summary-content .score-card .score-value {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  font-size: 2.5em;
+  font-size: clamp(0.9em, 3vw, 1.25em);
+  font-weight: 500;
+  color: #76C0BD;
+  text-align: center;
+  min-width: 35px;
+  margin: 0 0 6% 10%;
+  white-space: nowrap;
+}
+.my-quizzes .container .detail-summary .summary-section .summary-content .score-card img {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  opacity: 0.4;
+  height: 80%;
+  width: auto;
+}
+@media (max-width: 990px) {
+  .my-quizzes .container .detail-summary .summary-section .summary-content .score-card {
+    font-size: 1.4rem;
+  }
+}
+@media (max-width: 769px) {
+  .my-quizzes .container .detail-summary .summary-section .summary-content {
+    gap: 0.6rem;
+  }
+}
+@media (max-width: 420px) {
+  .my-quizzes .container .detail-summary .summary-section .summary-content {
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    gap: 0.4rem;
+  }
+  .my-quizzes .container .detail-summary .summary-section .summary-content .score-card {
+    font-size: 1.2rem;
+    font-size: 1.5rem;
+  }
+}
+.my-quizzes .container .detail-summary .summary-section .achievement-heading {
+  margin-top: 1rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.my-quizzes .container .detail-summary .summary-section .summary-achievement .achievement-group {
+  padding: 1rem;
+}
+.my-quizzes .container .detail-summary .summary-section .summary-achievement .achievement-group .achievement-status-title {
+  font-size: 1.5rem;
+  color: #76C0BD;
+  font-weight: 500;
+  text-transform: capitalize;
+}
+.my-quizzes .container .detail-summary .summary-section .summary-achievement .achievement-group .images-wrapper {
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(9rem, 1fr));
+  gap: 1rem;
+  margin: 1rem 0;
+}
+.my-quizzes .container .detail-summary .summary-section .summary-achievement .achievement-group .images-wrapper .achievement-box {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  max-width: 200px;
+}
+.my-quizzes .container .detail-summary .summary-section .summary-achievement .achievement-group .images-wrapper .achievement-box.disabled {
+  opacity: 0.3;
+}
+.my-quizzes .container .detail-summary .summary-section .summary-achievement .achievement-group .images-wrapper .achievement-box .achievement-img {
+  width: 100%;
+  max-width: 150px;
+  height: auto;
+}
+.my-quizzes .container .detail-summary .summary-section .summary-achievement .achievement-group .images-wrapper .achievement-box h4 {
+  font-size: 1.15rem;
+  font-weight: 500;
+  text-align: center;
+  color: #495057;
+  text-transform: uppercase;
+}
+.my-quizzes .container .detail-summary .section-size {
+  padding: 1rem;
+  width: 99%;
   margin-left: auto;
   margin-right: auto;
-  padding: 20px; /* Add padding to create space around the content */
-  border: 1px solid white;
+  z-index: 2;
 }
+
 @keyframes fadeIn {
   from {
     opacity: 0;
@@ -2407,6 +2876,7 @@ body {
   }
 }
 .cookie-page {
+  width: -moz-fit-content;
   width: fit-content;
   max-width: 80%;
   margin-bottom: 10rem;
@@ -2715,7 +3185,8 @@ body {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(20rem, 1fr));
   row-gap: 2rem;
-  column-gap: 1.5rem;
+  -moz-column-gap: 1.5rem;
+       column-gap: 1.5rem;
   margin: 4rem auto 0;
   max-width: 95%;
 }
@@ -2763,6 +3234,7 @@ body {
   align-items: center;
   gap: 20px;
   margin-bottom: 10px;
+}
 }
 
 .startpage {

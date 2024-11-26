@@ -1,17 +1,28 @@
 ﻿.my-quizzes {
     color: white;
+    .spinner-container {
+        &.card {
+            background-color: white;
+            padding: 0;
+            overflow: hidden;
+            width: 50%;
+            max-width: 300px;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+    }
 
     .container {
         display: flex;
         flex-direction: column;
         gap: 1px;
-        margin-top: 10vh;
         padding: 0;
-        width: 100%;
 
         .overall-summary {
-            position: relative; /* Ensure overlay is positioned relative to this div */
-            padding: 10px 0; /* Add padding to create space around the content */
+            position: relative;
+            padding: 10px 0;
             display: grid;
             grid-template-columns: 1fr 1fr 1fr;
             justify-content: space-evenly;
@@ -40,20 +51,25 @@
                 left: 0;
                 width: 100%;
                 height: 100%;
-                background: rgba(0, 0, 0, 0.05); /* Adjust the color and opacity as needed */
+                background: rgba(0, 0, 0, 0.05);
                 z-index: 1;
                 border-radius: 12px;
             }
         }
 
         .detail-summary {
-            position: relative; /* Ensure overlay is positioned relative to this div */
+            position: relative;
             display: grid;
-            grid-template-columns: 1fr 1fr;
+            grid-template-columns: .75fr 1fr;
             grid-template-areas: "quizzes summary";
             justify-content: space-evenly;
             padding: 30px 0;
             width: 100%;
+            gap: 1rem;
+            @media (max-width: 1200px) {
+                grid-template-columns: 1fr;
+                grid-template-areas: "quizzes" "summary";
+            }
 
 
             .detail-overlay {
@@ -62,26 +78,19 @@
                 left: 0;
                 width: 100%;
                 height: 100%;
-                background: rgba(0, 0, 0, 0.05); /* Adjust the color and opacity as needed */
+                background: rgba(0, 0, 0, 0.05);
                 z-index: 1;
                 border-radius: 12px;
             }
 
             .quizzes-section {
                 grid-area: quizzes;
-                width: 80%;
-                margin-left: auto;
-                margin-right: auto;
-                padding: 20px; /* Add padding to create space around the content */
-                z-index: 2;
-
-
 
                 .button-group {
                     display: flex;
                     justify-content: center;
-                    margin-bottom: 20px;
-                    gap: 10px;
+                    margin-bottom: 1.75rem;
+                    gap: 1rem;
 
 
                     .toggle-btn {
@@ -135,53 +144,192 @@
 
 
                 .quiz-content {
-                    display: grid;
-                    grid-template-columns: repeat(auto-fit, minmax(20rem, 1fr));
-
-
-
-                    .quiz-card {
-                        background-color: white;
-                        animation: fadeIn 0.3s ease-in-out;
-                        display: flex;
-                        flex-direction: row;
-                        gap: 30px;
-                        padding: 7px;
-                        z-index: 2;
-                        border-radius: 12px;
-                        margin-bottom: 10px;
-                        border: 0.5px solid gray;
-
-                        .card-image-section {
-                            img {
-                                width: 50px;
-                                object-fit: cover;
+                    .book-card-wrapper {
+                        display: grid;
+                        grid-template-columns: repeat(auto-fit, minmax(20rem, 1fr));
+                        gap: 1.5rem;
+                        .quiz-card {
+                            background-color: white;
+                            animation: fadeIn 0.3s ease-in-out;
+                            display: flex;
+                            flex-direction: row;
+                            gap: 30px;
+                            padding: 7px;
+                            z-index: 2;
+                            border-radius: 12px;
+                            margin-bottom: 10px;
+                            border: 0.5px solid gray;
+    
+                            .card-image-section {
+                                img {
+                                    width: 50px;
+                                    object-fit: cover;
+                                }
                             }
-                        }
-
-                        .card-content-section {
-                            color: black;
-
-                            h3 {
-                                font-size: 0.8rem;
-                                font-weight: bold;
+    
+                            .card-content-section {
+                                color: black;
+    
+                                h3 {
+                                    font-size: 0.8rem;
+                                    font-weight: bold;
+                                }
                             }
-                        }
+                        }   
                     }
                 }
             }
 
             .summary-section {
                 grid-area: summary;
-                z-index: 2;
-                width: 80%;
+                display: flex;
+                flex-direction: column;
+                gap: 1.75rem;
+                h2 {
+                    color: #76C0BD;
+                    height: 2.5rem;
+                    font-size: 1.75rem;
+                    font-weight: 500;
+                    margin: 0;
+                }
+                
+                .summary-heading {
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    h2 {
+
+                    }
+                }
+                .summary-card {
+                    margin: 0;
+                }
+                .summary-content {
+                    display: grid;
+                    grid-template-columns: repeat(auto-fit, minmax(185px, 1fr));
+                    gap: .75rem;
+                    .score-card {
+                        background-color: rgba(255, 255, 255, 0.7);
+                        border-radius: 8px;
+                        padding: 1rem; 
+                        box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); 
+                        position: relative;
+                        aspect-ratio: 3/2;
+                        font-size: 1.4rem;
+                        height: 100%;
+                        margin: 0;
+                        min-width: 165px;
+                        .score-text {
+                            position: absolute;
+                            top: 0;
+                            left: 0;
+                            font-size: 1rem;
+                            font-size: clamp(.5em, 2vw, .85em);
+                            font-weight: 500;
+                            color: #495057;
+                            margin: 10% 1rem;
+                            max-width: 220px;
+                            font-family: "Tektur", sans-serif;
+                            font-optical-sizing: auto;
+                            font-weight: 500;
+                            font-style: normal;
+                            font-variation-settings: "wdth" 100;
+                        }
+                        .score-value {
+                            position: absolute;
+                            bottom: 0;
+                            left: 0;
+                            font-size: 2.5em;
+                            font-size: clamp(.9em, 3vw, 1.25em);
+                            font-weight: 500;
+                            color: #76C0BD;
+                            text-align: center;
+                            min-width: 35px;
+                            margin: 0 0 6% 10%;
+                            white-space: nowrap;
+                        }
+                        img {
+                            position: absolute;
+                            bottom: 0;
+                            right: 0;
+                            opacity: 0.4;
+                            height: 80%;
+                            width: auto;
+                        }
+                    }
+                    @media (max-width: 990px) {
+                        .score-card {
+                            font-size: 1.4rem;
+                        }
+                    }
+                    @media (max-width: 769px) {
+                        gap: .6rem;
+                    }
+                    @media (max-width: 420px) {
+                        grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+                        gap: .4rem;
+                        .score-card {
+                            font-size: 1.2rem;
+                            font-size: 1.5rem;
+                        }
+                    }
+                }
+                .achievement-heading {
+                    margin-top: 1rem;
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    h2 {
+                    }
+                }
+                .summary-achievement {
+                    .achievement-group {
+                        padding: 1rem;
+                        .achievement-status-title {
+                            font-size: 1.5rem;
+                            color: #76C0BD;
+                            font-weight: 500;
+                            text-transform: capitalize;
+                        }
+                        .images-wrapper {
+                            width: 100%;
+                            display: grid;
+                            grid-template-columns: repeat(auto-fit, minmax(9rem, 1fr));
+                            gap: 1rem;
+                            margin: 1rem 0;
+                            .achievement-box {
+                                display: flex;
+                                flex-direction: column;
+                                justify-content: center;
+                                align-items: center;
+                                max-width: 200px;
+                                &.disabled {
+                                    opacity: 0.3;
+                                }
+                                .achievement-img {
+                                    width: 100%;
+                                    max-width: 150px;
+                                    height: auto;
+                                }
+                                h4 {
+                                    font-size: 1.15rem;
+                                    font-weight: 500;
+                                    text-align: center;
+                                    color: #495057;
+                                    text-transform: uppercase;
+                                }
+                            }
+                        }
+                    }
+                }
+
+            }
+            .section-size {
+                padding: 1rem;
+                width: 99%;
                 margin-left: auto;
                 margin-right: auto;
-                padding: 20px; /* Add padding to create space around the content */
-                border: 1px solid white;
-
-                h3 {
-                }
+                z-index: 2;
             }
         }
     }

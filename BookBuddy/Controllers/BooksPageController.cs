@@ -2,6 +2,7 @@ using System;
 using System.Globalization;
 using System.Linq;
 using BookBuddy.Business.Factories;
+using BookBuddy.Business.Services.AuthorizedService;
 using BookBuddy.Business.Services.BooksPageService;
 using BookBuddy.Business.Services.CategoryService;
 using BookBuddy.Business.Services.SiteSettingsService;
@@ -21,8 +22,9 @@ namespace BookBuddy.Controllers
         private readonly ICategoryService _categoryService;
         private readonly SiteSettingsService _siteSettingsService;
         private readonly TranslationFactory _translationFactory;
+        private readonly IAuthorizedService _authorizedService;
 
-        public BooksPageController(IContentLoader contentLoader, IBooksPageService booksPageService, UrlResolver urlResolver, ILogger<BooksPageController> logger, ICategoryService categoryService, SiteSettingsService siteSettingsService, TranslationFactory translationFactory)
+        public BooksPageController(IContentLoader contentLoader, IBooksPageService booksPageService, UrlResolver urlResolver, ILogger<BooksPageController> logger, ICategoryService categoryService, SiteSettingsService siteSettingsService, TranslationFactory translationFactory, IAuthorizedService authorizedService)
         {
             _contentLoader = contentLoader;
             _booksPageService = booksPageService;
@@ -31,6 +33,7 @@ namespace BookBuddy.Controllers
             _categoryService = categoryService;
             _siteSettingsService = siteSettingsService;
             _translationFactory = translationFactory;
+            _authorizedService = authorizedService;
         }
 
         public IActionResult Index(BooksPage currentPage)
@@ -54,45 +57,18 @@ namespace BookBuddy.Controllers
             }
         }
 
-        // [HttpGet]
-        // public async Task<IActionResult> Search(BooksPage currentPage, [FromQuery] string query)
-        // {
-        //     try
-        //     {
-        //         var siteSettingsReference = currentPage.SiteSettingsPage;
-        //         var currentCulture = CultureInfo.CurrentCulture.TwoLetterISOLanguageName;
-
-        //         SiteSettingsPage siteSettings = null;
-        //         if (siteSettingsReference != null)
-        //         {
-        //             siteSettings = _contentLoader.Get<SiteSettingsPage>(siteSettingsReference);
-        //         }
-
-        //         var allCategories = _categoryService.GetAllCategories(currentCulture);
-        //         var searchResult = await _booksPageService.SearchAsync(query, currentPage.Language);
-        //         var bookPages = searchResult.Items.Select(item => item).ToList();
-        //         var bookPageModels = bookPages.Select(bookpage => BookPageFactory.CreateBookPageModel(bookpage, _urlResolver, allCategories)).ToList();
-        //         var filteredCategories = allCategories.Where(category => bookPageModels.Any(book => book.Categories.Any(cat => cat.Value == category.Value)));
-        //         var model = new BooksPageViewModel(currentPage, siteSettings)
-        //         {
-        //             Query = query,
-        //             Result = bookPageModels,
-        //             Categories = filteredCategories.ToList()
-        //         };
-        //         return View("Index", model);
-                
-        //     }
-        //     catch (Exception ex)
-        //     {
-        //         _logger.LogError($"ERROR : BooksPageController.Search() : {ex.Message}");
-        //         return View("Error");
-        //     }
-        // }
         [HttpGet]
         public async Task<IActionResult> Search(BooksPage currentPage, [FromQuery] string query, [FromQuery] string category)
         {
             try
             {
+
+                if (!_authorizedService.IsUserAuthorizedAsync().Result)
+                {
+                    System.Diagnostics.Debug.WriteLine("User is not authorized");
+                    return RedirectToAction("SignIn", "Auth");
+                }
+
                 var fileName = "BooksPage.xml";
                 var translations = _translationFactory.GetTranslationsForView(fileName, "bookspage", CultureInfo.CurrentCulture.TwoLetterISOLanguageName);
                 ViewData["Translations"] = translations;
