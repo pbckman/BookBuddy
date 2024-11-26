@@ -1,14 +1,81 @@
-﻿@using BookBuddy.Models.QuizModels
-<div class="quiz-card">
+﻿@using BookBuddy.Models.MyQuizzesModels
+@using BookBuddy.Models.QuizModels
+@using BookBuddy.Models.ResultModels
+
+@* <div class="quiz-card">
     <div class="card-image-section">
         <img src="@Model.ImageUrl" alt="@Model.ImageAltText" />
     </div>
     <div class="card-content-section">
         <h3>@Model.Title</h3>
     </div>
+</div> *@
+
+@* <div class="card bookcard ongoing-quiz-card">
+    <div class="bookcard-content">
+        <div class="image-div">
+            <img src="@Model.ImageUrl" loading="lazy" class="img-fluid" alt="@Model.ImageAltText">
+        </div>
+        <div class="content-div">
+            <div class="card-body h-100">
+                <button class="btn btn-primary btn-sm">Continue</button>
+                <h5 class="card-title">@Model.Title</h5>
+                <p class="chapters-progress">Chapters: @AnsweredChapters / @TotalChapters</p>
+            </div>
+        </div>
+    </div>
+    <div class="progress-wrapper">
+        <div class="progress" role="progressbar" aria-label="Progress bar" aria-valuenow="@progress" aria-valuemin="0" aria-valuemax="100">
+            <div class="progress-bar" style="width: @progress%"></div>
+        </div>
+    </div>
+</div> *@
+<div class="card bookcard ongoing-quiz-card">
+    <div class="bookcard-content">
+        <div class="image-div">
+            <img src="@MyQuiz.ImageUrl" loading="lazy" class="img-fluid" alt="@MyQuiz.ImageAltText">
+        </div>
+        <div class="content-div">
+            <div class="card-body h-100">
+                <a href="@MyQuiz.PageUrl" class="btn btn-primary btn-sm">Continue</a>
+                <h5 class="card-title">@MyQuiz.Title</h5>
+                <p class="chapters-progress">@AnsweredChapters of @TotalChapters chapters completed</p>
+            </div>
+        </div>
+    </div>
+    <div class="progress-wrapper">
+        <div class="progress" role="progressbar" aria-label="Progress bar" aria-valuenow="@progress" aria-valuemin="0" aria-valuemax="100">
+            <div class="progress-bar" style="width: @progress%"></div>
+        </div>
+    </div>
 </div>
 
 
 @code {
-    [Parameter] public QuizCardModel Model { get; set; } = null!;
+    @* [Parameter] public QuizCardModel Model { get; set; } = null!;
+    [Parameter] public QuizResultModel? Result { get; set; } = null!;
+    [Parameter] public QuizModel? QuizModel { get; set; } = null!; *@
+    [Parameter] public MyQuizzesModel? MyQuiz { get; set; } = null!;
+    [Parameter] public string Language { get; set; } = null!;
+    public int progress { get; set; }
+    public int TotalChapters { get; set; }
+    public int AnsweredChapters { get; set; }
+
+
+    protected override void OnInitialized()
+    {
+        CountProgress();
+        StateHasChanged();
+    }
+
+    private void CountProgress()
+    {
+        if (MyQuiz != null)
+        {
+            AnsweredChapters = MyQuiz?.QuizResult?.ChapterResults?.Count() ?? 0;
+            TotalChapters = MyQuiz?.TotalChapters ?? 0;
+            progress = (int)((double)AnsweredChapters / TotalChapters * 100);
+        }
+    }
+
 }

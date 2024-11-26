@@ -5,6 +5,7 @@ using BookBuddy.Models.Blocks;
 using BookBuddy.Models.Pages;
 using BookBuddy.Models.ResultModels;
 using EPiServer.Shell;
+using EPiServer.Web.Routing;
 
 namespace BookBuddy.Business.Services.AchievementService
 {
@@ -13,13 +14,15 @@ namespace BookBuddy.Business.Services.AchievementService
         private readonly IPageService _pageService;
         private readonly IContentLoader _contentLoader;
         private readonly IQuizResultService _quizResultService;
+        private readonly IUrlResolver _urlResolver;
 
 
-        public AchievementService(IPageService pageService, IContentLoader contentLoader, IQuizResultService quizResultService)
+        public AchievementService(IPageService pageService, IContentLoader contentLoader, IQuizResultService quizResultService, IUrlResolver urlResolver)
         {
             _pageService = pageService;
             _contentLoader = contentLoader;
             _quizResultService = quizResultService;
+            _urlResolver = urlResolver;
         }
 
         public async Task<List<Achievement>> GetAchievementsAsync(int profileId, string lang)
@@ -120,14 +123,24 @@ namespace BookBuddy.Business.Services.AchievementService
                 }
             }
 
-            return achievements.Select(achievement => new AchievementModel
+            return achievements.Select(achievement =>
             {
-                Name = achievement.Title,
-                ImageUrl = achievement.Image.GetUri().ToString(),
-                ImageAltText = achievement.ImageAltText,
-                AmountOfBooks = achievement.NumberOfBooks,
-                AmountOfChapters = achievement.NumberOfChapters,
-                CorrectPercent = achievement.Percentage
+                string resolvedImageUrl = string.Empty;
+
+                if (achievement.Image != null)
+                {
+                    resolvedImageUrl = _urlResolver.GetUrl(achievement.Image) ?? string.Empty;
+                }
+
+                return new AchievementModel
+                {
+                    Name = achievement.Title,
+                    ImageUrl = resolvedImageUrl,
+                    ImageAltText = achievement.ImageAltText,
+                    AmountOfBooks = achievement.NumberOfBooks,
+                    AmountOfChapters = achievement.NumberOfChapters,
+                    CorrectPercent = achievement.Percentage
+                };
             }).ToList();
         }
 

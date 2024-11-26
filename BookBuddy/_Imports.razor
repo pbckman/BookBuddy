@@ -20,7 +20,25 @@
 @using EPiServer.Cms.Shell
 @using EPiServer.Core.Internal
 @using BookBuddy.Business.Services.LanguageService
+@using BookBuddy.Business.Services.AccountService
+@using BookBuddy.Business.Services.AchievementService
+@using BookBuddy.Business.Services.MyQuizzesService
+@using BookBuddy.Business.Services.QuizResultService
+@using BookBuddy.Business.Services.QuizService
+@using BookBuddy.Models.AchievementModels
+@using BookBuddy.Models.MyQuizzesModels
+@using System.Security.Claims
+@using BookBuddy.Models.ResultModels
+@using Microsoft.AspNetCore.Components.Authorization
 
+@inject ProfileService ProfileService
+@inject IQuizResultService QuizResultService
+@inject IQuizService QuizService
+@inject IPageService PageService
+@inject AuthenticationStateProvider AuthenticationStateProvider
+@inject AccountService AccountService
+@inject IMyQuizzesService MyQuizzesService
+@inject IAchievementService AchievementService
 @inject ILanguageService LanguageService
 @inject IUrlResolver UrlResolver
 @inject ContentLoader _contentLoader

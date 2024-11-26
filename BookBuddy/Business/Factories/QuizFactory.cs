@@ -64,7 +64,7 @@ namespace BookBuddy.Business.Factories
 
 
 
-        private List<QuestionModel> GetQuestions(List<QuestionPage> questionPages)
+        public List<QuestionModel> GetQuestions(List<QuestionPage> questionPages)
         {
             var result = new List<QuestionModel>();
             for(int i = 0; i < questionPages.Count(); i++)

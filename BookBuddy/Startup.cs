@@ -60,11 +60,14 @@ namespace BookBuddy
             services.AddScoped<IBooksPageService, BooksPageService>();
             services.AddScoped<IScheduledJobsService, ScheduledJobsService>();
             services.AddScoped<ICategoryService, CategoryService>();
+            services.AddScoped<IMyQuizzesService, MyQuizzesService>();
             services.AddScoped<ILanguageService, LanguageService>();
+            services.AddScoped<IAuthorizedService, AuthorizedService>();
             services.AddTransient<SiteSettingsService>();
             services.AddTransient<BookPageFactory>();
             services.AddTransient<CategorySelectionFactory>();
             services.AddTransient<TranslationFactory>();
+            services.AddTransient<MyQuizzesFactory>();
             services.AddHttpClient();
             services.AddServerSideBlazor();
             services.AddBlazoredLocalStorage();
