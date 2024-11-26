@@ -26,7 +26,7 @@
 					<passwordPlaceholder>Enter your password</passwordPlaceholder>
 					<confirmPasswordPlaceholder>Confirm your password</confirmPasswordPlaceholder>
 					<signUpButton>Sign up</signUpButton>
-					<statusMessage>User successfully created!</statusMessage>
+					<createStatusMessage>User successfully created!</createStatusMessage>
 					<errorMessage>Something went wrong, please try again later.</errorMessage>
 				</properties>
 			</signup>

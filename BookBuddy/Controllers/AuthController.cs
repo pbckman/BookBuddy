@@ -30,7 +30,7 @@ namespace BookBuddy.Controllers
             ViewData["PasswordPlaceholder"] = _translationService.GetTranslation("signup", "passwordPlaceholder", currentCulture);
             ViewData["ConfirmPasswordPlaceholder"] = _translationService.GetTranslation("signup", "confirmPasswordPlaceholder", currentCulture);
             ViewData["SignUpButton"] = _translationService.GetTranslation("signup", "signUpButton", currentCulture);
-            ViewData["StatusMessage"] = "";
+            ViewData["CreateStatusMessage"] = "";
             ViewData["ErrorMessage"] = "";
 
             return View();
@@ -51,7 +51,7 @@ namespace BookBuddy.Controllers
 
             if (result.Succeeded)
             {
-                TempData["StatusMessage"] = _translationService.GetTranslation("signup", "statusMessage", currentCulture);
+                TempData["CreateStatusMessage"] = _translationService.GetTranslation("signup", "createStatusMessage", currentCulture);
                 return RedirectToAction("SignIn", "Auth", new { currentCulture });
             }
 
@@ -109,7 +109,7 @@ namespace BookBuddy.Controllers
                 }
             }
 
-            
+
 
             TempData["ErrorMessage"] = _translationService.GetTranslation("signin", "errorMessage", currentCulture);
             return RedirectToAction("SignIn", "Auth", new { currentCulture });
