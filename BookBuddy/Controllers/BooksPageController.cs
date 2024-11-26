@@ -66,7 +66,7 @@ namespace BookBuddy.Controllers
                 if (!_authorizedService.IsUserAuthorizedAsync().Result)
                 {
                     System.Diagnostics.Debug.WriteLine("User is not authorized");
-                    return RedirectToAction("Index", "StartPage");
+                    return RedirectToAction("SignIn", "Auth");
                 }
 
                 var fileName = "BooksPage.xml";
