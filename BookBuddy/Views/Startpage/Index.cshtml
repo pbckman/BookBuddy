@@ -13,6 +13,10 @@
     
     <component type="typeof(CounterBlazorPage)" render-mode="Server" />
     <component type="typeof(TestForm)" render-mode="Server" />
+
+    <div class="newsletter">
+        @Html.PropertyFor(x => x.CurrentPage.Forms)
+    </div>
 </div>
 
 
