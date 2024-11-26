@@ -1,0 +1,56 @@
+﻿@inject NavigationManager Navigation
+
+
+@code {
+
+    [Parameter]
+    public HeroSectionModel? HeroSectionModel { get; set; }
+
+    private string GetSignUpUrl()
+    {
+        var lang = HeroSectionModel?.Lang;
+
+        if (string.IsNullOrEmpty(lang))
+        {
+            lang = "en";
+        }
+
+        return $"/{lang}/auth/signup";
+    }
+
+    private string GetSignInUrl()
+    {
+        var lang = HeroSectionModel?.Lang;
+
+        if (string.IsNullOrEmpty(lang))
+        {
+            lang = "en";
+        }
+
+        return $"/{lang}/auth/signin";
+    }
+
+    private bool isLoaded = false;
+
+    protected override async Task OnInitializedAsync()
+    {
+        await Task.Delay(2000);
+        isLoaded = true;
+    }
+
+}
+@if (isLoaded)
+{
+    <div class="hero-section container">
+        <h1 class="hero-h1">@HeroSectionModel!.Title</h1>
+        <p class="hero-p">@HeroSectionModel.Description</p>
+        <div class="button-group herosection-btn">
+            <a href="@GetSignUpUrl()" class="btn btn-primary">@HeroSectionModel.ButtonSignUp</a>
+            <a href="@GetSignInUrl()" class="btn btn-secondary">@HeroSectionModel.ButtonSignIn</a>
+        </div>
+    </div>
+}
+else
+{
+   // <div class="loading-page">Loading....</div>
+}

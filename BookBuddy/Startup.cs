@@ -62,6 +62,8 @@ namespace BookBuddy
             services.AddScoped<ICategoryService, CategoryService>();
             services.AddScoped<ILanguageService, LanguageService>();
             services.AddTransient<SiteSettingsService>();
+            services.AddScoped<StartPageService>();
+            services.AddTransient<StartPageFactory>();
             services.AddTransient<BookPageFactory>();
             services.AddTransient<CategorySelectionFactory>();
             services.AddTransient<TranslationFactory>();

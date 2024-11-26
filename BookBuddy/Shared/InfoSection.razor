@@ -1,0 +1,57 @@
+﻿@code {
+    [Parameter]
+    public InfoSectionModel? InfoSectionModel { get; set; }
+
+    private bool isLoaded = false;
+
+    protected override async Task OnInitializedAsync()
+    {
+        await Task.Delay(2000);
+        isLoaded = true;
+    }
+}
+
+
+@if (isLoaded)
+{
+    <div class="learning-section container">
+        <div class="container">
+            <div class="info">
+
+@*                 <div class="col-md-6">
+                   
+                </div> *@
+
+                <div class="info-content">
+                    <h2 class="learning-h2">@InfoSectionModel?.InfoTitle</h2>
+                    <h5>@InfoSectionModel?.InfoFooter</h5>
+                    @if (InfoSectionModel?.BulletPoints != null)
+                    {
+                        <ul class="benefits-list">
+                            @foreach (var bullet in InfoSectionModel.BulletPoints)
+                            {
+                                <li class="learning-li">
+                                    <i class="fa-solid fa-check"></i> <p>@bullet.Text</p>
+                                </li>
+                            }
+                        </ul>
+                    }
+                    else
+                    {
+                        <p>No bullet points available.</p>
+                    }
+                 
+                </div>
+
+                <img class="learning-image" src="/images/quiz-img02.webp" alt="picture of the quiz" />
+            </div>
+        </div>
+    </div>
+}
+else
+{
+    <div class="loading-page">
+        <div class="spinner"></div>
+        <img src="images/BookLoader-unscreen.gif" alt="Loading..." class="spin-gif">
+    </div>
+}

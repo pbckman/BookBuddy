@@ -1,5 +1,7 @@
 ﻿@{
     Layout = "~/Views/Shared/Layouts/_ErrorLayout.cshtml";
+
+    var currentLang = CultureInfo.CurrentCulture.TwoLetterISOLanguageName;
 }
 
 
@@ -8,9 +10,22 @@
         <img src="~/images/boy-error.webp"  class="responsive-img" alt="Boy holding error sign" />
         <h1 class="display-1 text-danger">@Model.ErrorText @Model.StatusCode</h1>
         <p class="lead text-muted mb-4">@Model.ErrorMessage</p>
-        <a href="/" class="btn btn-success btn-lg">@Model.GoToHomeButtonText</a>
+        <a href="@GetHomeUrl()" class="btn btn-success btn-lg">@Model.GoToHomeButtonText</a>
     </div>
 </div>
 
 
 
+@functions {
+    private string GetHomeUrl()
+    {
+        var lang = CultureInfo.CurrentCulture.TwoLetterISOLanguageName;
+
+        if (lang == "en")
+        {
+            return "/";
+        }
+
+        return $"/{lang}";
+    }
+}
