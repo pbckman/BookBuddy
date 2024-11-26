@@ -43,5 +43,15 @@ namespace BookBuddy.Models.Pages
         )]
         [CultureSpecific]
         public virtual ContentReference? SiteSettingsPage { get; set; }
+
+        [CultureSpecific]
+        [Display(
+          GroupName = SystemTabNames.Content,
+          Order = 40,
+          Name = "Forms",
+           Description = ""
+          )]
+        public virtual ContentArea Forms { get; set; }
+
     }
 }
