@@ -1,5 +1,14 @@
-﻿<!DOCTYPE html>
-<html lang="sv">
+﻿@inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
+
+@{
+    var currentLang = CultureInfo.CurrentCulture.TwoLetterISOLanguageName;
+    var userLang = HttpContextAccessor.HttpContext.Request.Query["language"].FirstOrDefault() ??
+                   (HttpContextAccessor.HttpContext.Request.Path.Value.Contains("/sv") ? "sv-SE" : "en-GB");
+}
+
+
+<!DOCTYPE html>
+<html lang="@currentLang">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
