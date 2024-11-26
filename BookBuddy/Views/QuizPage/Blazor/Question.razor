@@ -1,13 +1,10 @@
-﻿@using BookBuddy.Business.Services.StateService
-@using BookBuddy.Models.QuizModels
-
-@inject IStateService StateService
-
+﻿
 @{
     var totalQuestions = Model.CurrentChapter?.Questions.Count ?? 1;
     var answeredQuestions = Model.CurrentChapter?.Questions.Count(q => q.Options.Any(o => o.IsSelected)) ?? 0;
     var progress = (answeredQuestions / (double)totalQuestions) * 100;
 }
+
 @if (!Model.QuizResult.ChapterResults.Any(c => c.ChapterId == Model.CurrentChapter.ChapterId)){
     <div class="progress" role="progressbar" aria-label="Progress bar" aria-valuenow="@progress" aria-valuemin="0" aria-valuemax="100">
     <div class="progress-bar" style="width: @progress%"></div>

@@ -1,31 +1,8 @@
-﻿@using BookBuddy.Business.Factories
-@using BookBuddy.Business.Services.AccountService
-@using BookBuddy.Business.Services.AchievementService
-@using BookBuddy.Business.Services.PageService
-@using BookBuddy.Business.Services.QuizResultService
-@using BookBuddy.Business.Services.QuizService
-@using BookBuddy.Business.Services.StateService
-@using BookBuddy.Models.AchievementModels
-@using BookBuddy.Models.QuizModels
-@using BookBuddy.Models.ResultModels
-@using BookBuddy.Models.ViewModels
-@using Blazored.LocalStorage
-@using BookBuddy.Views.MyQuizzesPage.Blazor
-@using Microsoft.AspNetCore.Components.Authorization
-@using System.Security.Claims
-
-@inject IQuizService QuizService
-@inject ProfileService ProfileService
-@inject IPageService PageService
-@inject IQuizFactory QuizFactory
-@inject IQuizResultService QuizResultService
-@inject IStateService StateService
-@inject ILocalStorageService localStorage
-@inject IJSRuntime JSRuntime
-@inject IAchievementService AchievementsService
-
-
+﻿
 <section class="quiz-page">
+    <a href="@GetBackUrl()" class="quiz-back-btn btn">
+        <i class="fa-solid fa-x"></i>
+    </a>
     @if (isLoading)
     {
         <div class="spinner-container card">
@@ -64,8 +41,8 @@
                 OnBtnSummaryClick="HandleSelectedSummary" />
         </div>
     }
-    @* <button @onclick="TriggerAchievementsPopup">Show Achievements</button>
-    <AchievementPopup @ref="popup" TestAchievements="TestAchievements" /> *@
+    <button @onclick="TestAchievementsPopup">Show Achievements</button>
+    <AchievementPopup @ref="popup" /> 
 </section> 
 
 <script>
@@ -80,6 +57,7 @@
 @code {
     [Parameter] public int QuizPageId { get; set; }
     [Parameter] public string Language { get; set; } = null!;
+    [Parameter] public string Referer { get; set; } = null!;
 
     public QuizModel Model { get; set; } = new();
     private List<Achievement>? NewAchievements { get; set; }
@@ -90,7 +68,7 @@
 
     protected override async Task OnInitializedAsync()
     {
-
+        @* SetBackUrl(); *@
         var profile = await ProfileService.GetSelectedProfileAsync();
         if (profile != null)
         {
@@ -107,6 +85,12 @@
         }
         isLoading = false;
         StateHasChanged();
+    }
+    private string GetBackUrl()
+    {
+        return string.IsNullOrEmpty(Referer) 
+            ? $"/{(@Language == "en" ? "" : @Language)}" 
+            : Referer;
     }
 
     private async Task ToggleNav()
@@ -257,6 +241,16 @@
             if (popup != null)
             {
                 await popup.ShowAchievementsAsync(NewAchievements);
+            }
+        }
+    }
+    private async Task TestAchievementsPopup()
+    {
+        if (TestAchievements.Any())
+        {
+            if (popup != null)
+            {
+                await popup.ShowAchievementsAsync(TestAchievements);
             }
         }
     }

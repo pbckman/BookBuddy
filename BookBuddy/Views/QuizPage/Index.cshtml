@@ -1,8 +1,8 @@
-﻿@using BookBuddy.Views.QuizPage.Blazor
-@model QuizPageViewModel
+﻿@model QuizPageViewModel
 @{
     Layout = "~/Views/Shared/Layouts/QuizLayout.cshtml";
+    var backUrl = Context.Request.Headers["Referer"].ToString();
 }
 
 
-<component param-QuizPageId="Model.CurrentPage.ContentLink.ID" param-Language="Model.CurrentPage.Language.Name" type="typeof(QuizPageComponent)" render-mode="Server" />
+<component param-QuizPageId="Model.CurrentPage.ContentLink.ID" param-Language="Model.CurrentPage.Language.Name" type="typeof(QuizPageComponent)" render-mode="Server" param-Referer="backUrl" />

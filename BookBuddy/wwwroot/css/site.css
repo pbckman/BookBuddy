@@ -1241,6 +1241,34 @@ body {
   overflow: auto;
   z-index: 2;
 }
+.quiz-page .quiz-back-btn {
+  position: absolute;
+  top: 2rem;
+  right: 2rem;
+  border-radius: 50%;
+  width: 2.2rem;
+  height: 2.2rem;
+  z-index: 10;
+  border: none;
+  background-color: #e5e5e5;
+  color: #7e7e7e;
+  transition: 0.4s;
+  cursor: pointer;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.1);
+}
+.quiz-page .quiz-back-btn:hover {
+  background-color: #7e7e7e;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.3);
+  border: none;
+  cursor: pointer;
+  color: white;
+}
+.quiz-page .quiz-back-btn i {
+  font-size: 0.8rem;
+  text-align: center;
+  justify-self: center;
+  font-weight: 600;
+}
 .quiz-page .spinner-container.card {
   background-color: white;
   padding: 0;

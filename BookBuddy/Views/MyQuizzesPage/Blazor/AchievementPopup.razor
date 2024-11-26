@@ -1,6 +1,4 @@
-﻿@using BookBuddy.Models.AchievementModels
-@inject IJSRuntime JSRuntime
-
+﻿
 <div class="achievement-overlay" style="@(isVisible ? "display: flex;" : "display: none;")">
     <div class="achievement-popup card">
         @if (CurrentAchievement != null)
@@ -15,7 +13,6 @@
 </div>
 
 @code {
-    [Parameter] public List<Achievement> TestAchievements { get; set; }
     public List<Achievement> Achievements { get; set; }
     private Achievement? CurrentAchievement { get; set; }
     private int currentIndex = 0;
@@ -24,11 +21,6 @@
     public async Task ShowAchievementsAsync(List<Achievement> newAchievements)
     {
         Achievements = newAchievements;
-        @* System.Diagnostics.Debug.WriteLine($"Triggering Popup with {Achievements.Count} Achievements");
-        @foreach (var achievement in Achievements)
-        {
-            System.Diagnostics.Debug.WriteLine($"Achievement: {achievement.Name}");
-        } *@
         if (Achievements == null || Achievements.Count == 0)
             return;
 
@@ -44,20 +36,18 @@
     {
         if (currentIndex < Achievements.Count - 1)
         {
-            // Visa nästa achievement
             await StartConfettiAsync();
             currentIndex++;
             CurrentAchievement = Achievements[currentIndex];
         }
         else
         {
-            // Stäng popupen när listan är slut
             CurrentAchievement = null;
             isVisible = false;
             await StopConfettiAsync();
         }
         Achievements = new List<Achievement>(); 
-        StateHasChanged(); // Uppdatera gränssnittet
+        StateHasChanged();
     }
     public async Task StartConfettiAsync()
     {

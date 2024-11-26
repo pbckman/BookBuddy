@@ -30,18 +30,21 @@
 @using System.Security.Claims
 @using BookBuddy.Models.ResultModels
 @using Microsoft.AspNetCore.Components.Authorization
+@using Blazored.LocalStorage
+@using BookBuddy.Views.MyQuizzesPage.Blazor
+@using Microsoft.AspNetCore.Http
 
+@inject IQuizFactory QuizFactory
+@inject ILocalStorageService localStorage
+@inject IHttpContextAccessor HttpContextAccessor
 @inject ProfileService ProfileService
 @inject IQuizResultService QuizResultService
 @inject IQuizService QuizService
-@inject IPageService PageService
 @inject AuthenticationStateProvider AuthenticationStateProvider
 @inject AccountService AccountService
 @inject IMyQuizzesService MyQuizzesService
 @inject IAchievementService AchievementService
 @inject ILanguageService LanguageService
-@inject IUrlResolver UrlResolver
-@inject ContentLoader _contentLoader
 @inject ContentLoader _contentLoader
 @inject TranslationFactory TranslationFactory
 @inject IStateService StateService
