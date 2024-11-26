@@ -1,0 +1,334 @@
+﻿@page "/my-quizzes"
+@using BookBuddy.Business.Factories
+@using BookBuddy.Business.Services.AccountService
+@using BookBuddy.Business.Services.MyQuizzesService
+@using BookBuddy.Business.Services.QuizResultService
+@using BookBuddy.Business.Services.QuizService
+@using BookBuddy.Models.MyQuizzesModels
+@using BookBuddy.Models.QuizModels
+@using System.Security.Claims
+@using BookBuddy.Models.ResultModels
+@using Microsoft.AspNetCore.Components.Authorization
+@inject ProfileService ProfileService
+@inject IQuizResultService QuizResultService
+@inject IQuizService QuizService
+@inject IPageService PageService
+@inject AuthenticationStateProvider AuthenticationStateProvider
+@inject AccountService AccountService
+@inject IMyQuizzesService MyQuizzesService
+
+    @* 
+@if (CurrentPage != null)
+{
+    <section class="my-quizzes">
+        <div class="container position-relative">
+            
+            <div class="detail-summary">
+                <div class="quizzes-section section-size">
+
+                    @if ((MyQuizzesList != null && MyQuizzesList.Count > 0))
+                    {
+                        <div class="button-group">
+                            <button class="toggle-btn @(showOngoing ? "active" : "")" @onclick="ShowOngoing">@(CurrentPage.HeadingOnGoing.Length > 0 ? CurrentPage.HeadingOnGoing : "Ongoing") @(AmountOfOngoing) 
+                            </button>
+                            <button class="toggle-btn @(showCompleted ? "active" : "")" @onclick="ShowCompleted">@(CurrentPage.HeadingFinished.Length > 0 ? CurrentPage.HeadingFinished : "Completed") @(AmountOfCompleted) 
+                            </button>
+                        </div>
+                        <div class="quiz-content">
+                            @if (showOngoing)
+                            {
+                                <div class="book-card-wrapper">
+                                    @if (MyQuizzesList == null)
+                                    {
+                                        <p>Laddar...</p>
+                                    }
+                                    else if (MyQuizzesList.Count(x => x.IsCompleted == false) == 0)
+                                    {
+                                        <p>There are no ongoing quizzes.</p>
+                                    }
+                                    else
+                                    {
+                                        @foreach (var quiz in MyQuizzesList)
+                                        {
+                                            if (!quiz.IsCompleted)
+                                            {
+                                                <OngoingQuizCard MyQuiz="@quiz" />
+                                            }
+                                        }
+                                    }
+                                    @if (Quizzes == null)
+                                    {
+                                        <p>Laddar...</p>
+                                    }
+                                    else if (Quizzes.Count(x => x.IsCompleted == false) == 0)
+                                    {
+                                        <p>There are no ongoing quizzes.</p>
+                                    }
+                                    else
+                                    {
+                                        @foreach (var quiz in Quizzes)
+                                        {
+                                            if (!quiz.IsCompleted)
+                                            {
+                                                <OngoingQuizCard Model="@quiz" Result="@FilteredResults.FirstOrDefault(q => q.QuizId == quiz.QuizId)" Language="@Language" QuizModel="@ListOfQuizzes.FirstOrDefault(q => q.Id == quiz.QuizId)" />
+                                            }
+                                        }
+                                    } 
+                                </div>
+                            } *@
+                            @* else if (showCompleted)
+                            {
+                                <div class="book-card-wrapper">
+                                    @if (MyQuizzesList == null)
+                                    {
+                                        <p>Laddar...</p>
+                                    }
+                                    else if (MyQuizzesList.Count(x => x.IsCompleted) == 0)
+                                    {
+                                        <p>There are no completed quizzes.</p>
+                                    }
+                                    else
+                                    {
+                                        @foreach (var quiz in MyQuizzesList)
+                                        {
+                                            if (quiz.IsCompleted)
+                                            {
+                                                <CompletedQuizCard MyQuiz="@quiz" />
+                                                <CompletedQuizCard MyQuiz="@quiz" Result="@FilteredResults.FirstOrDefault(q => q.QuizId == quiz.QuizId)" Language="@Language" QuizModel="@ListOfQuizzes.FirstOrDefault(q => q.Id == quiz.QuizId)" /> 
+                                            }
+                                        }
+                                    }
+                                </div>
+                            }
+                            else if (showCompleted)
+                            {
+                                <div class="book-card-wrapper">
+                                    @if (Quizzes == null)
+                                    {
+                                        <p>Laddar...</p>
+                                    }
+                                    else if (Quizzes.Count(x => x.IsCompleted) == 0)
+                                    {
+                                        <p>There are no completed quizzes.</p>
+                                    }
+                                    else
+                                    {
+                                        @foreach (var quiz in Quizzes)
+                                        {
+                                            if (quiz.IsCompleted)
+                                            {
+                                                <CompletedQuizCard Model="@quiz" Result="@FilteredResults.FirstOrDefault(q => q.QuizId == quiz.QuizId)" Language="@Language" QuizModel="@ListOfQuizzes.FirstOrDefault(q => q.Id == quiz.QuizId)" />
+                                            }
+                                        }
+                                    }
+                                </div>
+                            }
+                        </div>
+                    }
+                    else
+                    {
+                        <p>There are no quizzes to show.</p>
+                    }
+                </div> *@
+
+                @* <div class="summary-section section-size">
+                    <div class="summary-heading">
+                        <h2>Your performance</h2>
+                    </div>
+                    <div class="summary-content summary-card card">
+
+                        <div class="overall-summary">
+                        </div>
+
+                    </div> *@
+                    @* <div class="achievement-heading">
+                        <h2>Your Achievements</h2>
+                    </div> *@
+                    @* 
+                    --------- ACHIEVEMENTS ---------
+                    --------------------------------
+                     *@
+
+                            @*
+                            Slutförda quiz
+                            Slutförda kapitel 
+                            Besvarade frågor
+                            Procent korrekta svar
+                            Antal korrekta svar
+                            Kaptiel med full pott
+                            *@
+                        @* <div class="achievement-group">
+                            <h3 class="achievement-status-title">Achievements!</h3>
+                            <div class="images-wrapper">
+                                <div class="achievement-box">
+                                    <img class="achievement-img" src="images/achievement7.webp" alt="">
+                                    <h4 class="img-title">3 quizzes done</h4>
+                                </div>
+                                <div class="achievement-box">
+                                    <img class="achievement-img" src="images/achievement8.webp" alt="">
+                                    <h4 class="img-title">3 quizzes done</h4>
+                                </div>
+                                <div class="achievement-box">
+                                    <img class="achievement-img" src="images/achievement9.webp" alt="">
+                                    <h4 class="img-title">3 quizzes done</h4>
+                                </div>
+                                <div class="achievement-box">
+                                    <img class="achievement-img" src="images/achievement10.webp" alt="">
+                                    <h4 class="img-title">3 quizzes done</h4>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="achievement-group">
+                            <h3 class="achievement-status-title">Not achieved jet</h3>
+                            <div class="images-wrapper">
+                                <div class="achievement-box disabled">
+                                    <img class="achievement-img" src="images/achievement11.webp" alt="">
+                                    <h4 class="img-title">3 quizzes done</h4>
+                                </div>
+                                <div class="achievement-box disabled">
+                                    <img class="achievement-img" src="images/achievement12.webp" alt="">
+                                    <h4 class="img-title">3 quizzes done</h4>
+                                </div>
+                                <div class="achievement-box disabled">
+                                    <img class="achievement-img" src="images/achievement13.webp" alt="">
+                                    <h4 class="img-title">3 quizzes done</h4>
+                                </div>
+                                <div class="achievement-box disabled">
+                                    <img class="achievement-img" src="images/achievement14.webp" alt="">
+                                    <h4 class="img-title">3 quizzes done</h4>
+                                </div>
+                                <div class="achievement-box disabled">
+                                    <img class="achievement-img" src="images/achievement15.webp" alt="">
+                                    <h4 class="img-title">3 quizzes done</h4>
+                                </div>
+                                <div class="achievement-box disabled">
+                                    <img class="achievement-img" src="images/achievement16.webp" alt="">
+                                    <h4 class="img-title">3 quizzes done</h4>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+        </div>
+    </section> *@
+    @* 
+}
+
+@code {
+    [Parameter] public string Language { get; set; } = null!;
+    public List<QuizCardModel>? Quizzes { get; set; }
+    public MyQuizzesPage? CurrentPage { get; set; }
+    private bool showOngoing = true;
+    private bool showCompleted = false;
+    private int AmountOfOngoing { get; set; }
+    private int AmountOfCompleted { get; set; }
+    private int ProcentageCorrectAnswers { get; set; }
+    private List<QuizResultModel> FilteredResults { get; set; } = new List<QuizResultModel>(); 
+    private List<QuizModel> ListOfQuizzes { get; set; } = new List<QuizModel>();
+    private List<MyQuizzesModel> MyQuizzesList { get; set; } = new List<MyQuizzesModel>();
+    private
+    
+
+    protected override async Task OnInitializedAsync()
+    {
+        CurrentPage = PageService.GetMyQuizzesPage(Language);
+        var profile = await ProfileService.GetSelectedProfileAsync();
+
+        if (profile != null)
+        {
+            MyQuizzesList = await MyQuizzesService.GetMyQuizzesAsync(profile.Id, Language);
+            if (MyQuizzesList != null && MyQuizzesList.Count > 0)
+            {
+                AmountOfOngoing = MyQuizzesList.Count(x => !x.IsCompleted);
+                AmountOfCompleted = MyQuizzesList.Count(x => x.IsCompleted);
+            }
+        }
+
+            
+            var results = await QuizResultService.GetResultsByProfileIdAsync(profile.Id);
+            if (results != null)
+            {
+                Quizzes = await QuizService.GetActiveQuizzesAsync(results, Language);
+                AmountOfOngoing = Quizzes.Count(x => !x.IsCompleted);
+                AmountOfCompleted = Quizzes.Count(x => x.IsCompleted);
+
+                FilteredResults = results
+                    .Where(result => Quizzes.Any(quiz => quiz.QuizId == result.QuizId))
+                    .ToList();
+
+                foreach (var quiz in Quizzes)
+                {
+                    var result = FilteredResults.FirstOrDefault(q => q.QuizId == quiz.QuizId);
+                    if (result != null)
+                    {
+                        var quizPageId = await QuizService.GetQuizPageId(quiz.BookId, Language);
+                        var createdQuiz = QuizService.GetQuizData(quizPageId, Language);
+                        ListOfQuizzes.Add(createdQuiz);
+                    }
+                }
+            } 
+
+        ShowOngoing();
+    } *@
+
+
+
+    @* 
+    private void GetQuizPageIdByBookId(int bookId)
+    {
+        var quizPageId = QuizService.GetQuizPageId(bookId, Language);
+    }
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            CurrentPage = PageService.GetMyQuizzesPage(Language);
+            var profile = await ProfileService.GetSelectedProfileAsync();
+            var results = await QuizResultService.GetResultsByProfileIdAsync(profile.Id);
+            if (results != null)
+            {
+                Quizzes = await QuizService.GetActiveQuizzesAsync(results, Language);
+                AmountOfOngoing = Quizzes.Count(x => x.IsCompleted == false);
+                AmountOfCompleted = Quizzes.Count(x => x.IsCompleted);
+                // ProcentageCorrectAnswers = QuizResultService.GetProcentageCorrectAnswers(Language);
+
+                FilteredResults = results.Where(result => Quizzes.Any(quiz => quiz.QuizId == result.QuizId)).ToList();
+
+                @foreach (var quiz in ListOfQuizzes)
+                {
+                    var result = FilteredResults.FirstOrDefault(q => q.QuizId == quiz.Id);
+                    if (result != null)
+                    {
+                        var Quiz = await QuizService.CreateQuizAsync(quiz, result);
+                        ListOfQuizzes.Add(Quiz);
+                    }
+                }
+
+
+                // if (filteredResults.Count > 0)
+                // {
+                //     ProcentageCorrectAnswers = 
+                // }
+            }
+
+            ShowOngoing();
+
+            StateHasChanged();
+        }
+    } *@
+
+    @* private void ShowOngoing()
+    {
+        showOngoing = true;
+        showCompleted = false;
+    }
+
+    private void ShowCompleted()
+    {
+        showOngoing = false;
+        showCompleted = true;
+    } 
+}
+    *@

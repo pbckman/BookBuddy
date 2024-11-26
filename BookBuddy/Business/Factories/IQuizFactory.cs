@@ -8,6 +8,7 @@ namespace BookBuddy.Business.Factories
     public interface IQuizFactory
     {
         QuizModel Create(QuizPage currentPage);
+        List<QuestionModel> GetQuestions(List<QuestionPage> questionPages);
        
     }
 }

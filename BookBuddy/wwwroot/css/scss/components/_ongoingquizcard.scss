@@ -1,0 +1,156 @@
+// .ongoing-quiz-card {
+//     background-color: white;
+//     animation: fadeIn 0.3s ease-in-out;
+//     display: flex;
+//     flex-direction: row;
+//     gap: 30px;
+//     padding: 7px;
+//     z-index: 2;
+//     border-radius: 12px;
+//     margin-bottom: 10px;
+//     border: 0.5px solid gray;
+
+//     .card-image-section {
+//         img {
+//             width: 50px;
+//             object-fit: cover;
+//         }
+//     }
+
+//     .card-content-section {
+//         color: black;
+
+//         h3 {
+//             font-size: 0.8rem;
+//             font-weight: bold;
+//         }
+//     }
+// }
+
+    .ongoing-quiz-card {
+        width: 100%;
+        padding: 0.6rem;
+        display: flex;
+        flex-direction: column; /* Gör kortet kolumn-baserat */
+        justify-content: space-between;
+        aspect-ratio: 8/3;
+        margin: 0 auto;
+        max-width: 500px;
+        @media (max-width: 480px) {
+            aspect-ratio: 7/4;
+        }
+        // &:hover {
+        //     background-color: #F3F3F3;
+        //     transform: scale(1.05);
+        //     transition: transform 0.3s ease-in-out;
+        //     cursor: pointer;
+        // }
+    
+        .bookcard-content {
+            display: flex;
+            height: 100%; /* Se till att innehållsbehållaren fyller kortets höjd */
+            
+            .image-div {
+                height: auto; /* Låt bilden ta upp det utrymme den behöver */
+                flex-shrink: 0; /* Förhindra att bild-div krymper */
+                img {
+                    max-height: 100%;
+                }
+            }
+            
+            .content-div {
+                flex-grow: 1; /* Gör att content-div tar upp återstående plats */
+                display: flex;
+                flex-direction: column;
+                .card-body {
+                    padding: .2rem .2rem 0 1rem;
+                    height: 100%;
+                    position: relative;
+                    .btn {
+                        // width: fit-content;
+                        // // align-self: flex-end;
+                        // padding: .4rem .75rem;
+                        // font-size: 1rem;
+                        // background-color: #FBA033;
+                        // border: none;
+                        // position: relative;
+                        float: right; /* Gör att knappen flyter upp i högra hörnet */
+                        margin-left: 1rem; /* Skapar avstånd mellan knappen och texten */
+                        background-color: #FFA500;
+                        color: white;
+                        padding: 0.5rem 1rem;
+                        border: none;
+                        border-radius: 5px;
+                        cursor: pointer;
+                        text-transform: uppercase;
+                    }
+                    .chapters-progress {
+                        font-size: 1rem;
+                        position: absolute;
+                        bottom: 0;
+                        left: 0;
+                        margin: 0;
+                        padding-left: .9rem;
+                        margin: .25rem;
+                        // text-transform: uppercase;
+                        font-family: "Tektur", sans-serif;
+                        font-optical-sizing: auto;
+                        font-weight: 500;
+                        font-style: normal;
+                        font-variation-settings:
+                            "wdth" 100;
+                    }
+                    .card-title {
+                        font-size: 1.3em;
+                        margin: .5rem 0;
+                        justify-content: self-end;
+                        @media (max-width: 480px) {
+                            font-size: 1rem;
+                        }
+                    }
+                    .plot-text {
+                        max-height: 100px; /* Begränsa höjden för att passa antalet rader */
+                        overflow: hidden;
+                        text-overflow: ellipsis;
+                        display: -webkit-box;
+                        -webkit-line-clamp: 4; /* Begränsa antalet synliga rader */
+                        -webkit-box-orient: vertical;
+                        line-height: 1.5em; /* Justera linjehöjd om det behövs för att anpassa */
+                        height: calc(1.5em * 4); /* Ställ in höjden för att matcha linjehöjden och antalet rader */
+                        font-size: clamp(.75rem, 2vw, .8rem);
+                        margin-bottom: .25rem;
+                    }
+                    p {
+                        font-size: .8em;
+                    }
+                    .authors {
+                        margin-top: auto;
+                        font-weight: 500;
+                    }
+                }
+            }
+        }
+        .progress-wrapper {
+            width: 95%;
+            margin: .75rem auto .25rem;
+            .progress {
+                height: .4rem;
+                width: 100%;
+                max-width: 500px;
+                margin: 0;
+                .progress-bar {
+                    background-color: #2e7d32;
+                    &.red {
+                        background-color: #ce6060;
+                    }
+                }
+            }
+        }
+    }
+
+
+@media (max-width: 768px) {
+    .content-div {
+        font-size: 0.9em; 
+    }
+}

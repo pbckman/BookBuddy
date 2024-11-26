@@ -1,134 +1,311 @@
 ﻿@page "/my-quizzes"
-@using BookBuddy.Business.Factories
-@using BookBuddy.Business.Services.AccountService
-@using BookBuddy.Business.Services.QuizResultService
-@using BookBuddy.Business.Services.QuizService
-@using BookBuddy.Models.QuizModels
-@using System.Security.Claims
-@using Microsoft.AspNetCore.Components.Authorization
-@inject ProfileService ProfileService
-@inject IQuizResultService QuizResultService
-@inject IQuizService QuizService
-@inject IPageService PageService
-@inject AuthenticationStateProvider AuthenticationStateProvider
-@inject AccountService AccountService
 
+
+<section class="my-quizzes">
 @if (CurrentPage != null)
 {
-    <section class="my-quizzes">
-        <div class="container position-relative">
-            
-            <div class="overall-summary">
-                <div class="overall-overlay card"></div>
-                <div><p>Antal pågående quiz: @(AmountOfOngoing)st</p></div>
-                <div><p>Antal quiz avklarade: @(AmountOfCompleted)st</p></div>
-                <div><p>Procent korrekta svar: @(ProcentageCorrectAnswers)%</p></div>
-            </div>
-            <div class="detail-summary">
-                <div class="detail-overlay card"></div>
-                <div class="quizzes-section">
-
-                    <div class="button-group">
-                        <button class="toggle-btn @(showOngoing ? "active" : "")" @onclick="ShowOngoing">@(CurrentPage.HeadingOnGoing.Length > 0 ? CurrentPage.HeadingOnGoing : "Ongoing") @(AmountOfOngoing) <i class="fa-solid fa-circle"></i></button>
-                        <button class="toggle-btn @(showCompleted ? "active" : "")" @onclick="ShowCompleted">@(CurrentPage.HeadingFinished.Length > 0 ? CurrentPage.HeadingFinished : "Completed") @(AmountOfCompleted) <i class="fa-solid fa-circle"></i></button>
-                    </div>
-                    <div class="quiz-content">
-                        @if (showOngoing)
-                        {
-                            <div class="ongoing-quizzes">
-                                @if (Quizzes == null)
-                                {
-                                    <p>Laddar...</p>
-                                }
-                                else if (Quizzes.Count(x => x.IsCompleted == false) == 0)
-                                {
-                                    <p>There are no ongoing quizzes.</p>
-                                }
-                                else
-                                {
-                                    @foreach (var quiz in Quizzes)
-                                    {
-                                        if (!quiz.IsCompleted)
-                                        {
-                                            <OngoingQuizCard Model="@quiz" />
-                                        }
-                                    }
-                                }
-                            </div>
-                        }
-                        else if (showCompleted)
-                        {
-                            <div class="completed-quizzes">
-                                @if (Quizzes == null)
-                                {
-                                    <p>Laddar...</p>
-                                }
-                                else if (Quizzes.Count(x => x.IsCompleted) == 0)
-                                {
-                                    <p>There are no completed quizzes.</p>
-                                }
-                                else
-                                {
-                                    @foreach (var quiz in Quizzes)
-                                    {
-                                        if (quiz.IsCompleted)
-                                        {
-                                            <CompletedQuizCard Model="@quiz" />
-                                        }
-                                    }
-                                }
-                            </div>
-                        }
-                    </div>
-                </div>
-
-                <div class="summary-section">
-                    <h3>Summary</h3>
-                </div>
-            </div>
-            
+    @if (isLoading)
+    {
+        <div class="spinner-container card">
+            <img src="images/BookLoader.gif" alt="Loading..." class="spinnger-gif">
         </div>
-    </section>
+    }
+    else 
+    {
+            <div class="container position-relative">
+            
+                <div class="detail-summary">
+                    <div class="quizzes-section section-size">
+
+                        @if ((MyQuizzesList != null && MyQuizzesList.Count > 0))
+                        {
+                            <div class="button-group">
+                                <button class="toggle-btn @(showOngoing ? "active" : "")" @onclick="ShowOngoing">@(CurrentPage.HeadingOnGoing.Length > 0 ? CurrentPage.HeadingOnGoing : Translations["ongoing"] ) @(AmountOfOngoing) 
+                                </button>
+                                <button class="toggle-btn @(showCompleted ? "active" : "")" @onclick="ShowCompleted">@(CurrentPage.HeadingFinished.Length > 0 ? CurrentPage.HeadingFinished : Translations["completed"] ) @(AmountOfCompleted) 
+                                </button>
+                            </div>
+                            <div class="quiz-content">
+                                @if (showOngoing)
+                                {
+                                    <div class="book-card-wrapper">
+                                        @if (MyQuizzesList == null)
+                                        {
+                                            <p>@Translations["loading"]</p>
+                                        }
+                                        else if (MyQuizzesList.Count(x => x.IsCompleted == false) == 0)
+                                        {
+                                            <p>@Translations["noongoingquizzes"]</p>
+                                        }
+                                        else
+                                        {
+                                            @foreach (var quiz in MyQuizzesList)
+                                            {
+                                                if (!quiz.IsCompleted)
+                                                {
+                                                    <OngoingQuizCard MyQuiz="@quiz" />
+                                                }
+                                            }
+                                        }
+                                    </div>
+                                }
+                                else if (showCompleted)
+                                {
+                                    <div class="book-card-wrapper">
+                                        @if (MyQuizzesList == null)
+                                        {
+                                            <p>@Translations["loading"]</p>
+                                        }
+                                        else if (MyQuizzesList.Count(x => x.IsCompleted) == 0)
+                                        {
+                                            <p>@Translations["nocompletedquizzes"]</p>
+                                        }
+                                        else
+                                        {
+                                            @foreach (var quiz in MyQuizzesList)
+                                            {
+                                                if (quiz.IsCompleted)
+                                                {
+                                                    <CompletedQuizCard MyQuiz="@quiz" />
+                                                }
+                                            }
+                                        }
+                                    </div>
+                                }
+                            </div>
+                        }
+                        else
+                        {
+                            @* <p>@Translations["noquizzes"]</p> *@
+                        }
+                    </div>
+
+                    <div class="summary-section section-size">
+                        <div class="summary-heading">
+                            <h2 ></h2>
+                        </div>
+                        @* 
+                        -------- RESULT SUMMARY -------
+                        -------------------------------
+                        *@
+                        <div class="summary-content summary-card">
+                                <div class="card score-card">
+                                    <p class="score-text" >@Translations["completedchapters"] </p>
+                                    <span class="score-value">@TotalCompletedChapters</span>
+                                    <img src="/images/scorecard1.png" alt="">
+                                </div>
+                                <div class="card score-card">
+                                    <p class="score-text" >@Translations["correctanswers"] </p>
+                                    <span class="score-value">@TotalCorrectAnswers</span>
+                                    <img src="/images/scorecard2.png" alt="">
+                                </div>
+                                <div class="card score-card">
+                                    <p class="score-text" >@Translations["totalansweredquestions"] </p>
+                                    <span class="score-value">@TotaltAnsweredQuestions</span>
+                                    <img src="/images/scorecard5.png" alt="">
+                                </div>
+                                <div class="card score-card">
+                                    <p class="score-text" >@Translations["chapterswithfullscore"] </p>
+                                    <span class="score-value">@ChaptersWithFullScore</span>
+                                    <img src="/images/scorecard3.png" alt="">
+                                </div>
+                                <div class="card score-card">
+                                    <p class="score-text" >@Translations["totalscore"] </p>
+                                    <span class="score-value">@ProcentageCorrectAnswers %</span>
+                                    <img src="/images/scorecard4.png" alt="">
+                                </div>
+                                <div class="card score-card">
+                                    <p class="score-text" >@Translations["bestanswerstreak"]</p>
+                                    <span class="score-value">@BestCorrectAnswerStreak</span>
+                                    <img src="/images/scorecard6.png" alt="">
+                                </div>
+                        </div>
+                        @* 
+                        --------- ACHIEVEMENTS ---------
+                        --------------------------------
+                        *@
+                        <div class="summary-achievement summary-card card">
+
+                            <div class="achievement-group">
+                                <h3 class="achievement-status-title">@Translations["achievements"]</h3>
+                                    <div class="images-wrapper">
+                                        @foreach (var achievement in FinishedAchievements)
+                                        {
+                                                <div class="achievement-box">
+                                                    <img class="achievement-img" src="@UrlResolver.GetUrl(achievement.ImageUrl)" alt="@achievement.ImageAltText">
+                                                    <h4 class="img-title">@achievement.Name</h4>
+                                                </div>
+                                        }
+                                    </div>
+                            </div>
+                            <div class="achievement-group">
+                                <h3 class="achievement-status-title">@Translations["notachievedyet"]</h3>
+                                    <div class="images-wrapper">
+                                        @foreach (var achievement in NotFinishedAchievements)
+                                        {
+                                                <div class="achievement-box disabled">
+                                                    <img class="achievement-img" src="@UrlResolver.GetUrl(achievement.ImageUrl)" alt="@achievement.ImageAltText">
+                                                    <h4 class="img-title">@achievement.Name</h4>
+                                                </div>
+                                        }
+                                    </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+            </div>
+            <button></button>
+            @* 
+            <button @onclick="TriggerAchievementsPopup">Show Achievements</button>
+            <AchievementPopup @ref="popup" Achievements="FinishedAchievements" /> 
+            *@
+    }
 }
+</section>
 
 @code {
     [Parameter] public string Language { get; set; } = null!;
-    public List<QuizCardModel>? Quizzes { get; set; }
     public MyQuizzesPage? CurrentPage { get; set; }
+    private bool isLoading = true;
     private bool showOngoing = true;
     private bool showCompleted = false;
     private int AmountOfOngoing { get; set; }
     private int AmountOfCompleted { get; set; }
+    private int TotalCompletedChapters { get; set; }
+    private int TotalCorrectAnswers { get; set; }
+    private int TotaltAnsweredQuestions { get; set; }
+    private int ChaptersWithFullScore { get; set; }
     private int ProcentageCorrectAnswers { get; set; }
-    private ClaimsPrincipal? User;
+    private int BestCorrectAnswerStreak { get; set; }
+    private List<MyQuizzesModel> MyQuizzesList { get; set; } = new List<MyQuizzesModel>();
+    private List<Achievement> FinishedAchievements { get; set; } = new List<Achievement>();
+    private List<Achievement> NotFinishedAchievements { get; set; } = new List<Achievement>();
+    private AchievementPopup? popup { get; set; }
+    private Dictionary<string, string> Translations = new Dictionary<string, string>();
+    
 
-    protected override async Task OnAfterRenderAsync(bool firstRender)
+    protected override async Task OnInitializedAsync()
     {
-        if (firstRender)
+        CurrentPage = PageService.GetMyQuizzesPage(Language);
+
+        await GetMyQuizzesAsync();
+        CountCompletedQuiz();
+        CountOngoingQuiz();
+        CountTotalCompletedChapters();
+        CountTotalCorrectAnswers();
+        CountChaptersWithFullScore();
+        CountPercentageCorrectAnswers();
+        CountTotaltAnsweredQuestions();
+        CountBestCorrectAnswerStreak();
+        UpdateTranslations();
+        await GetFinishedAchievements();
+        await GetNotFinishedAchievements();
+
+        isLoading = false;
+        ShowOngoing();
+        StateHasChanged();
+    }
+
+    private async Task GetMyQuizzesAsync()
+    {
+        var profile = await ProfileService.GetSelectedProfileAsync();
+        if (profile != null)
         {
-            CurrentPage = PageService.GetMyQuizzesPage(Language);
-            var user = await AccountService.GetCurrentFrontEndUser(User);
-            var userId = user?.Id;
-            var profile = await ProfileService.GetSelectedProfileAsync(userId);
-            var results = await QuizResultService.GetResultsByProfileIdAsync(profile.Id);
-            if (results != null)
+            MyQuizzesList = await MyQuizzesService.GetMyQuizzesAsync(profile.Id, Language);
+            if (MyQuizzesList != null && MyQuizzesList.Count > 0)
             {
-                Quizzes = await QuizService.GetActiveQuizzesAsync(results, Language);
-                AmountOfOngoing = Quizzes.Count(x => x.IsCompleted == false);
-                AmountOfCompleted = Quizzes.Count(x => x.IsCompleted);
-                // ProcentageCorrectAnswers = QuizResultService.GetProcentageCorrectAnswers(Language);
-
-                var filteredResults = results.Where(result => Quizzes.Any(quiz => quiz.QuizId == result.QuizId)).ToList();
-
-                // if (filteredResults.Count > 0)
-                // {
-                //     ProcentageCorrectAnswers = 
-                // }
+                AmountOfOngoing = MyQuizzesList.Count(x => !x.IsCompleted);
+                AmountOfCompleted = MyQuizzesList.Count(x => x.IsCompleted);
             }
+        }
+    }
 
-            ShowOngoing();
+    private void CountOngoingQuiz()
+    {
+        AmountOfOngoing = MyQuizzesList.Count(x => !x.IsCompleted);
+    }
+    private void CountCompletedQuiz()
+    {
+        AmountOfCompleted = MyQuizzesList.Count(x => x.IsCompleted);
+    }
+    private void CountTotalCompletedChapters()
+    {
+        TotalCompletedChapters = MyQuizzesList.Where(quiz => quiz.QuizResult != null && quiz.QuizResult.ChapterResults != null)
+            .Sum(quiz => quiz.QuizResult?.ChapterResults?.Count() ?? 0);
+    }
+    private void CountTotalCorrectAnswers()
+    {
+        TotalCorrectAnswers = MyQuizzesList.Sum(quiz => quiz.TotalCorrectAnswers);
+    }
+    private void CountChaptersWithFullScore()
+    {
+        ChaptersWithFullScore = MyQuizzesList
+            .Where(quiz => quiz.QuizResult != null && quiz.QuizResult.ChapterResults != null)
+            .Sum(quiz => quiz.QuizResult.ChapterResults
+            .Count(chapter => chapter.QuestionResults
+            .All(question => question.IsCorrect)));
+    }
+    private void CountPercentageCorrectAnswers()
+    {
+        var totalWrongAnswers = MyQuizzesList.Sum(quiz => quiz.TotalWrongAnswers);
+        ProcentageCorrectAnswers = (int)((double)TotalCorrectAnswers / (TotalCorrectAnswers + totalWrongAnswers) * 100);
+    }
+    private void CountTotaltAnsweredQuestions()
+    {
+        TotaltAnsweredQuestions = TotalCorrectAnswers + MyQuizzesList.Sum(quiz => quiz.TotalWrongAnswers);
+    }
+    private void CountBestCorrectAnswerStreak()
+    {
+        BestCorrectAnswerStreak = 0;
+        int currentStreak = 0;
 
-            StateHasChanged();
+        foreach (var quiz in MyQuizzesList)
+        {
+            if (quiz.QuizResult?.ChapterResults == null)
+                continue;
+
+            foreach (var chapter in quiz.QuizResult.ChapterResults)
+            {
+                foreach (var question in chapter.QuestionResults)
+                {
+                    if (question.IsCorrect)
+                    {
+                        currentStreak++;
+                        if (currentStreak > BestCorrectAnswerStreak)
+                        {
+                            BestCorrectAnswerStreak = currentStreak;
+                        }
+                    }
+                    else
+                    {
+                        currentStreak = 0;
+                    }
+                }
+            }
+        }
+    }
+    private void UpdateTranslations()
+    {
+        var fileName = "MyQuizzesPage.xml";
+        Translations = TranslationFactory.GetTranslationsForView(fileName, "myquizzespage", Language);
+    }
+
+    private async Task GetFinishedAchievements()
+    {
+        var profile = await ProfileService.GetSelectedProfileAsync();
+        FinishedAchievements = await AchievementService.GetAchievementsAsync(profile.Id, Language);
+    }
+    private async Task GetNotFinishedAchievements()
+    {
+        var profile = await ProfileService.GetSelectedProfileAsync();
+        NotFinishedAchievements = await AchievementService.GetUnFinishedAchievementsAsync(profile.Id, Language);
+    }
+    private void TriggerAchievementsPopup()
+    {
+        if (FinishedAchievements.Any())
+        {
+            @* popup?.ShowAchievementsAsync(FinishedAchievements); *@
         }
     }
 

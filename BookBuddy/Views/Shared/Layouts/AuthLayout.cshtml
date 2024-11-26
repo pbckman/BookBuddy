@@ -1,6 +1,9 @@
 ﻿@using System.Globalization
 @{
     var currentCulture = CultureInfo.CurrentCulture.TwoLetterISOLanguageName;
+
+    var currentPath = Context.Request.Path.Value;
+    var currentLanguage = currentPath.Split('/').Skip(1).FirstOrDefault();
 }
 
 <!DOCTYPE html>
@@ -19,9 +22,11 @@
 
         <div class="auth-right">
             <div class="auth-content">
-                <div class="logo-container">
-                    <img src="~/images/BookBuddyLogo2.png" alt="Logotyp" class="logo">
-                </div>
+                <a href="/@(currentLanguage == "en" ? "" : currentLanguage)">
+                    <div class="logo-container">
+                        <img src="~/images/BookBuddyLogo.webp" alt="Logotyp" class="logo">
+                    </div>
+                </a>
                 <div class="form-container">
                         @RenderBody()
                 </div>

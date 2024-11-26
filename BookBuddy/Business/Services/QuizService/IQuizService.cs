@@ -18,5 +18,6 @@ namespace BookBuddy.Business.Services.QuizService
         Task SaveToLocalStorageAsync(QuizModel quiz, string selectedOption);
         Task RemoveLocalStorageQuizState(int quizResultId);
         Task<List<QuizCardModel>> GetActiveQuizzesAsync(List<QuizResultModel> results, string lang);
+        Task<int> GetQuizPageId(int bookId, string lang);
     }
 }

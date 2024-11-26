@@ -1,5 +1,7 @@
-﻿@using BookBuddy.Models.QuizModels
-<div class="quiz-card">
+﻿@using BookBuddy.Models.MyQuizzesModels
+@using BookBuddy.Models.QuizModels
+@using BookBuddy.Models.ResultModels
+@* <div class="quiz-card">
     <div class="card-image-section">
         <img src="@Model.ImageUrl" alt="@Model.ImageAltText" />
     </div>
@@ -7,8 +9,70 @@
         <h3>@Model.Title</h3>
     </div>
     
+</div> *@
+
+<div class="card bookcard completed-quiz-card">
+    <div class="bookcard-content">
+        <div class="image-div">
+            <img src="@MyQuiz.ImageUrl" loading="lazy" class="img-fluid" alt="@MyQuiz.ImageAltText">
+        </div>
+        <div class="content-div">
+            <div class="card-body h-100">
+                <a href="@MyQuiz.PageUrl" class="btn btn-primary btn-sm">See result</a>
+                <h5 class="card-title">@MyQuiz.Title</h5>
+                <p class="total-score"><span class="@ProgressColor" >@PercentageScore</span>%</p>
+            </div>
+        </div>
+    </div>
+    @* <div class="bookcard-content">
+        <div class="image-div">
+            <img src="@MyQuiz.ImageUrl" loading="lazy" class="img-fluid" alt="@MyQuiz.ImageAltText">
+        </div>
+        <div class="content-div">
+            <div class="card-body h-100">
+                <a href="@MyQuiz.PageUrl" class="btn btn-primary btn-sm">Continue</a>
+                <h5 class="card-title">@MyQuiz.Title</h5>
+                <p class="chapters-progress">Score: @CorrectQuestions / @TotalQuestions correct questions</p>
+                <p>@MyQuiz.BookId</p>
+                <p>@MyQuiz.QuizId</p>
+                <p>@MyQuiz.ImageUrl</p>
+                <p>@MyQuiz.IsCompleted</p>
+            </div>
+        </div>
+    </div> *@
+    @* <div class="progress-wrapper">
+        <div class="progress" role="progressbar" aria-label="Progress bar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100">
+            <div class="progress-bar" style="width: 100%"></div>
+        </div>
+    </div> *@
 </div>
 
 @code {
-    [Parameter] public QuizCardModel Model { get; set; } = null!;
+    [Parameter] public MyQuizzesModel? MyQuiz { get; set; } = null!;
+    public int PercentageScore { get; set; }
+    public int TotalQuestions { get; set; }
+    public string ProgressColor { get; set; } = "";
+
+
+    protected override void OnInitialized()
+    {
+        CountPercentageScore();
+        StateHasChanged();
+    }
+
+    private void CountPercentageScore()
+    {
+        PercentageScore = (int)Math.Round((double)MyQuiz.TotalCorrectAnswers / MyQuiz.TotalQuestions * 100);
+    }
+    private void SetProgressColor()
+    {
+        if (PercentageScore < 30)
+        {
+            ProgressColor = "orange";
+        }
+        else if (PercentageScore > 70)
+        {
+            ProgressColor = "green";
+        }
+    }
 }
