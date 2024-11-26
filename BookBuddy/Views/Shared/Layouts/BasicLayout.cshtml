@@ -10,7 +10,10 @@
 <body>
     <div class="container d-flex flex-column align-items-center justify-content-center min-vh-100">
         @RenderBody()
+        @await Html.PartialAsync("~/Views/Shared/Partials/cookiepartial.cshtml")
     </div>
     <script src="_framework/blazor.server.js"></script>
+    <script src="~/js/cookieConsent.js" defer></script>
+    <script src="https://cdn.cookietractor.com/cookietractor.js" data-lang="@userLang" data-id="e470af12-ff81-4cd2-b3df-79f942173b8a" defer></script>
 </body>
 </html>
