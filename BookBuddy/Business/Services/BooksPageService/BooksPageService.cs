@@ -46,7 +46,7 @@ public class BooksPageService : IBooksPageService
             var results = Task.Run(() => searchClient.Search<BookPage>()
                 .For(query)
                 .Filter(x => x.Language.Name.Match(culture.Name))
-                .Take(18)
+                .Take(16)
                 .GetContentResult());
 
             return results;
