@@ -30,7 +30,9 @@
                     {
                         if (ContentLoader.TryGet(pageRef, out SitePageData site))
                         {
-                            <li class="navbar-item">
+                            var isActive = Url.ContentUrl(site.ContentLink).Equals(Context.Request.Path, StringComparison.OrdinalIgnoreCase);
+
+                            <li class="navbar-item @(isActive ? "active" : "")">
                                 <a href="@Url.ContentUrl(site.ContentLink)" target="_self">
                                     @if (site.NavbarIcon != null)
                                     {
@@ -46,6 +48,27 @@
                         }
                     }
                 </ul>
+               @*  <ul class="navbar-list">
+                    @foreach (var pageRef in navbarLinks)
+                    {
+                        if (ContentLoader.TryGet(pageRef, out SitePageData site))
+                        {
+                            <li class="navbar-item">
+                                <a href="@Url.ContentUrl(site.ContentLink)" target="_self">
+                                    @if (site.NavbarIcon != null)
+                                    {
+                                        <img src="@Url.ContentUrl(site.NavbarIcon)" alt="@(!string.IsNullOrEmpty(site.NavbarIconAltText) ? site.NavbarIconAltText : $"Icon for {site.NavbarTitle} link")" class="nav-icon" />
+                                    }
+                                    else
+                                    {
+                                        <img src="~/images/Box_Ikon.svg" alt="Icon for @site.NavbarTitle link" class="nav-icon">
+                                    }
+                                    <span>@site.NavbarTitle</span>
+                                </a>
+                            </li>
+                        }
+                    }
+                </ul> *@
             </div>
 
 

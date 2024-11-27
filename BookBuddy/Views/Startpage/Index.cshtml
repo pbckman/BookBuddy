@@ -1,23 +1,61 @@
-﻿@model StartPageViewModel
+﻿﻿@using BookBuddy.Business.Services.StartPageService
+@using BookBuddy.Models.DataModels
+@model StartPageViewModel
+@inject StartPageService _startPageService
 
-<div class="container-sm startpage-wrapper">
-    <img class="flying-boy" src="~/images/Flying_boy.webp" alt="">
-    <div class="startpage-header">
-        <h1 class="card-title">@Model.CurrentPage.Heading</h1>
-    </div>
+@{
+    Layout = "~/Views/Shared/Layouts/StartPageLayout.cshtml";
+    ViewData["Title"] = "Start";
 
-    <div class="startpage-mainbody">
-        @Html.Raw(Model.CurrentPage.MainBody)
-    </div>
+    var currentPage = Model.CurrentPage;
+    var books = _startPageService.GetBooksAsync(currentPage).Result;
 
-    
-    <component type="typeof(CounterBlazorPage)" render-mode="Server" />
-    <component type="typeof(TestForm)" render-mode="Server" />
+}
 
-    <div class="newsletter">
+
+@if (Model.HeroSectionModel != null)
+{
+    <component type="typeof(HeroSection)" render-mode="Server"
+               param-HeroSectionModel="Model.HeroSectionModel" />
+
+}
+else
+{
+    <p>HeroSectionModel is null</p>
+}
+
+
+@if (Model.InfoSectionModel != null)
+{
+    <component type="typeof(InfoSection)" render-mode="Server"
+               param-InfoSectionModel="Model.InfoSectionModel" />
+
+}
+else
+{
+    <p>InfoSectionModel is null</p>
+}
+
+@if (Model.Books != null)
+{
+    <component type="typeof(Carousel)" render-mode="Server"
+               param-books="Model.Books"
+               param-SlideShowTitle="Model.SlideShowTitle"
+               param-SlideShowContent="Model.SlideShowContent" />
+}
+else
+{
+    <p>Carousel is not available</p>
+}
+
+
+<div id="newsletter-container" class="container">
+    <div class="newsletter hidden">
         @Html.PropertyFor(x => x.CurrentPage.Forms)
     </div>
 </div>
 
 
 
+
+<script src="/js/carousel.js"></script>

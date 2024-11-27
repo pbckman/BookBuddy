@@ -1,0 +1,63 @@
+﻿.startpage {
+    background-image: url("/images/background-img.webp");
+    background-size: cover;
+    background-position: center;
+    font-display: swap;
+
+    .hero-section {
+        margin-top: 2rem;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        padding: 5rem 1rem;
+        background-color: transparent;
+        border-radius: 8px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+
+        .hero-h1 {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #fff;
+            margin-bottom: 0.5rem;
+
+            @media (max-width: 576px) {
+                font-size: 1.5rem;
+            }
+        }
+
+        .hero-p {
+            font-size: 1.25rem;
+            color: #fff;
+            margin-bottom: 1.5rem;
+
+            @media (max-width: 576px) {
+                font-size: 0.8rem;
+            }
+        }
+
+        .herosection-btn {
+            display: flex;
+            gap: 1rem;
+            padding: 1rem 1.5rem;
+            font-size: 1rem;
+            font-weight: 500;
+            border-radius: 5px;
+            text-transform: uppercase;
+            color: #fff;
+
+            &.btn-primary {
+                background-color: #0056b3;
+            }
+
+            &.btn-secondary {
+                background-color: #6c757d;
+            }
+
+            &:hover {
+                opacity: 0.9;
+            }
+        }
+    }
+}

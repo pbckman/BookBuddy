@@ -1,4 +1,5 @@
 ﻿using BookBuddy.Models.Pages;
+using BookBuddy.Models.ResultModels;
 using BootstrapBlazor.Components;
 
 namespace BookBuddy.Models.ViewModels
@@ -22,6 +23,7 @@ namespace BookBuddy.Models.ViewModels
         public string Plot { get; set; }
         public string ImageUrl { get; set; }
         public string ImageAltText { get; set; }
+        public ResultStatus Status { get; set; }
 
     }
 }

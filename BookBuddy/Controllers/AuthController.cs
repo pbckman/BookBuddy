@@ -1,21 +1,19 @@
-﻿using BookBuddy.Business.Services.AccountService;
-using BookBuddy.Business.Services.TranslationService;
-using BookBuddy.Models.ViewModels;
-using EPiServer.Cms.UI.AspNetIdentity;
+﻿using BookBuddy.Models.ViewModels;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using System.Globalization;
 
 
 namespace BookBuddy.Controllers
 {
-    public class AuthController(UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager, AccountService accountService, AuthTranslationService translationService, ProfileService profileService) : Controller
+    public class AuthController(UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager, AccountService accountService, AuthTranslationService translationService, ProfileService profileService, IContentLoader contentLoader, UrlResolver urlResolver) : Controller
     {
         private readonly UserManager<ApplicationUser> _userManager = userManager;
         private readonly SignInManager<ApplicationUser> _signInManager = signInManager;
         private readonly AccountService _accountService = accountService;
         private readonly AuthTranslationService _translationService = translationService;
         private readonly ProfileService _profileService = profileService;
+        private readonly IContentLoader _contentLoader = contentLoader;
+        private readonly UrlResolver _urlResolver = urlResolver;
 
         [HttpGet]
         public IActionResult SignUp(string lang)
@@ -30,7 +28,7 @@ namespace BookBuddy.Controllers
             ViewData["PasswordPlaceholder"] = _translationService.GetTranslation("signup", "passwordPlaceholder", currentCulture);
             ViewData["ConfirmPasswordPlaceholder"] = _translationService.GetTranslation("signup", "confirmPasswordPlaceholder", currentCulture);
             ViewData["SignUpButton"] = _translationService.GetTranslation("signup", "signUpButton", currentCulture);
-            ViewData["StatusMessage"] = "";
+            ViewData["CreateStatusMessage"] = "";
             ViewData["ErrorMessage"] = "";
 
             return View();
@@ -51,7 +49,7 @@ namespace BookBuddy.Controllers
 
             if (result.Succeeded)
             {
-                TempData["StatusMessage"] = _translationService.GetTranslation("signup", "statusMessage", currentCulture);
+                TempData["CreateStatusMessage"] = _translationService.GetTranslation("signup", "createStatusMessage", currentCulture);
                 return RedirectToAction("SignIn", "Auth", new { currentCulture });
             }
 
@@ -104,12 +102,13 @@ namespace BookBuddy.Controllers
                     if (result.Succeeded)
                     {
                         await _signInManager.RefreshSignInAsync(user);
-                        return RedirectToAction("Index", "StartPage");
+
+                        return RedirectToAction("Index", "StartPage", new { lang });
                     }
                 }
             }
 
-            
+
 
             TempData["ErrorMessage"] = _translationService.GetTranslation("signin", "errorMessage", currentCulture);
             return RedirectToAction("SignIn", "Auth", new { currentCulture });

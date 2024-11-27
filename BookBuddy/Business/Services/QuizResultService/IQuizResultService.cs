@@ -12,5 +12,6 @@ namespace BookBuddy.Business.Services.QuizResultService
         Task<QuizResultModel> CompleteQuizAsync(int quizResultId);
         Task<List<QuizResultModel>> GetResultsByProfileIdAsync(int profileId);
         Task<List<QuizResultModel>> GetResultsAsync(int profileId, string lang);
+        Task<ResultStatus> GetResultStatusAsync(int profileId, int quizPageId);
     }
 }

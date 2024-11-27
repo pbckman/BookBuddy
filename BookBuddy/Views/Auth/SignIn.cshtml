@@ -21,19 +21,19 @@
                 </div>
             }
 
-            <div class="form-group mb-3">
+            <div class="form-group mb-3 form-margin">
                 <label asp-for="Email">@ViewData["EmailPlaceholder"]</label>
                 <input asp-for="Email" type="email" class="form-control" id="email" name="Email" placeholder="@ViewData["EmailPlaceholder"]">
                 <span asp-validation-for="Email"></span>
             </div>
 
-            <div class="form-group mb-3 position-relative">
+            <div class="form-group mb-3 position-relative form-margin">
                 <label asp-for="Password">@ViewData["PasswordPlaceholder"]</label>
                 <input asp-for="Password" type="password" class="form-control" id="password" name="Password" placeholder="@ViewData["PasswordPlaceholder"]">
                 <span asp-validation-for="Password"></span>
             </div>
 
-            <div class="form-check mb-4">
+            <div class="form-check mb-4 form-margin">
                 <input asp-for="RememberMe" type="checkbox" class="form-check-input" id="rememberMe">
                 <label asp-for="RememberMe" class="form-check-label" for="rememberMe">@ViewData["RememberMeLabel"]</label>
                 <span asp-validation-for="RememberMe"></span>

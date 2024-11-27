@@ -7,8 +7,8 @@ global using BookBuddy.Business.Services.BookPageService;
 global using BookBuddy.Business.Services.BookService;
 global using BookBuddy.Business.Services.AccountService;
 global using BookBuddy.Business.Services.BooksPageService;
-global using BookBuddy.Business.Services.Interfaces;
 global using BookBuddy.Business.Services.PageService;
+global using BookBuddy.Business.Services.StartPageService;
 global using BookBuddy.Data.Contexts;
 global using EPiServer.Cms.Shell;
 global using EPiServer.Cms.UI.AspNetIdentity;
@@ -30,8 +30,6 @@ global using BookBuddy.Business.Services.SiteSettingsService;
 global using Microsoft.Extensions.Logging.Abstractions;
 global using BookBuddy.Business.Services.LanguageService;
 global using Microsoft.AspNetCore.Mvc.ViewFeatures;
-//using BookBuddy.Business.Services.ErrorMessageService;
-//using BookBuddy.Business.Services.SiteMapService;
 global using BookBuddy.Business.Services.AchievementService;
 global using BookBuddy.Models.Blocks;
 global using BookBuddy.Models.Validations;
@@ -39,3 +37,8 @@ global using EPiServer.Validation;
 global using EPiServer.Forms.Core.Options;
 global using BookBuddy.Business.Services.MyQuizzesService;
 global using BookBuddy.Business.Services.AuthorizedService;
+global using BookBuddy.Business.Services.ErrorMessageService;
+global using BookBuddy.Business.Services.XmlSitemapService;
+global using BookBuddy.Models.Pages;
+
+

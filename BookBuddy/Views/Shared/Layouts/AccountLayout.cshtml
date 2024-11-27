@@ -98,6 +98,7 @@
 
                     <div class="form-container">
                         @RenderBody()
+                        @await Html.PartialAsync("~/Views/Shared/Partials/cookiepartial.cshtml")
                     </div>
 
                 </div>
@@ -111,5 +112,6 @@
     <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
     <script src="~/js/cookieConsent.js" defer></script>
     <script src="~/js/particles-config.js"></script>
+    <script src="~/js/validation.js" asp-append-version="true"></script>
 </body>
 </html>

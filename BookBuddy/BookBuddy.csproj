@@ -56,10 +56,18 @@
   <ItemGroup>
     <None Remove="Resources\Translations\AchievementProperties.xml" />
     <None Remove="Resources\Translations\Auth.xml" />
+    <None Remove="Resources\Translations\BookCardBig.xml" />
     <None Remove="Resources\Translations\Error.xml" />
   </ItemGroup>
   
   <ItemGroup>
     <None Include="compilerconfig.json" />
+  </ItemGroup>
+  
+  <ItemGroup>
+    <Content Update="wwwroot\images\quiz-pic.webp">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
   </ItemGroup>
 </Project>

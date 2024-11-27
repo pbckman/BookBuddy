@@ -150,6 +150,19 @@ namespace BookBuddy.Business.Services.QuizResultService
 
             return null!;
         }
+
+        public async Task<ResultStatus> GetResultStatusAsync(int profileId, int quizPageId)
+        {
+            var result = await _dbContext.QuizResults.FirstOrDefaultAsync(x => x.ProfileId == profileId && x.QuizId == quizPageId);
+
+            if (result == null)
+                return ResultStatus.None;
+
+            if(result.IsCompleted)
+                return ResultStatus.Completed;
+           
+            return ResultStatus.InProgress;
+        }
     }
 
 }
