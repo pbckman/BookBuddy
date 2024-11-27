@@ -36,26 +36,26 @@
                 </div>
             }
 
-            
-            <div class="form-group mb-3">
+
+            <div class="form-group mb-3 form-margin">
                 <label asp-for="CurrentPassword">@ViewData["CurrentPasswordLabel"]</label>
-                <input asp-for="CurrentPassword" placeholder="@ViewData["CurrentPasswordPlaceholder"]" />
+                <input asp-for="CurrentPassword" class="form-control" type="password" placeholder="@ViewData["CurrentPasswordPlaceholder"]" />
                 <span asp-validation-for="CurrentPassword"></span>
             </div>
 
-            <div class="form-group mb-3">
+            <div class="form-group mb-3 form-margin">
                 <label asp-for="NewPassword">@ViewData["NewPasswordLabel"]</label>
-                <input asp-for="NewPassword" placeholder="@ViewData["NewPasswordPlaceholder"]" />
+                <input asp-for="NewPassword" class="form-control" type="password" placeholder="@ViewData["NewPasswordPlaceholder"]" />
                 <span asp-validation-for="NewPassword"></span>
             </div>
 
-            <div class="form-group mb-3">
+            <div class="form-group mb-3 form-margin">
                 <label asp-for="ConfirmNewPassword">@ViewData["ConfirmNewPasswordLabel"]</label>
-                <input asp-for="ConfirmNewPassword" placeholder="@ViewData["ConfirmNewPasswordPlaceholder"]" />
+                <input asp-for="ConfirmNewPassword" class="form-control" type="password" placeholder="@ViewData["ConfirmNewPasswordPlaceholder"]" />
                 <span asp-validation-for="ConfirmNewPassword"></span>
             </div>
 
-            <button type="submit" class="btn btn-success w-100 mb-3">@ViewData["UpdateButton"]</button>
+            <button type="submit" class="btn btn-success w-100 mb-3 form-margin-submit">@ViewData["UpdateButton"]</button>
         </form>
     }
     else

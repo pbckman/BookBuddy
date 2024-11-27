@@ -31,9 +31,11 @@
                 @TempData["ErrorMessageCreate"]
             </div>
         }
-        <div class="form-group mb-3">
-            <label asp-for="FirstName">@ViewData["FirstNameCreate"]</label>
-            <input asp-for="FirstName" placeholder="@ViewData["FirstNamePlaceholder"]" />
+        <div class="form-group form-margin form-create">
+            <div>
+                <label asp-for="FirstName">@ViewData["FirstNameCreate"]</label>
+                <input asp-for="FirstName" placeholder="@ViewData["FirstNamePlaceholder"]" />
+            </div>
             <span asp-validation-for="FirstName"></span>
         </div>
 
