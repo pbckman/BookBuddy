@@ -26,6 +26,27 @@
 
 .form-group {
   margin-bottom: 1rem;
+  position: relative;
+}
+.form-group span {
+  position: absolute;
+}
+
+.form-margin {
+  margin-top: 1.75rem;
+}
+
+.form-margin-submit {
+  margin-top: 2rem;
+}
+
+.form-create {
+  display: grid;
+  position: relative;
+}
+.form-create span {
+  position: absolute;
+  top: 98%;
 }
 
 .form-control {
@@ -38,6 +59,16 @@
   box-shadow: none;
   border: none;
   background-color: rgba(0, 0, 0, 0.2);
+}
+
+.field-validation-error {
+  font-size: 14px;
+  font-weight: 400 !important;
+  color: firebrick;
+}
+
+.input-validation-error {
+  border-color: firebrick !important;
 }
 
 .bookcard-btn .bookcard {
@@ -623,25 +654,30 @@ body {
   z-index: -1;
 }
 
+.hidden {
+  display: none;
+}
+
 .newsletter {
-  width: 100%;
-  max-width: 700px;
+  width: 50%;
   margin: 0 auto;
   z-index: 10;
+  text-align: center;
+  color: white;
 }
 .newsletter .EPiServerForms {
   display: flex;
   width: 100%;
-  max-width: 700px;
   padding: 1.5rem;
-  background-color: #f9f9f9;
+  background-color: transparent;
   border-radius: 8px;
-  box-shadow: 0 8px 18px rgba(0, 0, 0, 0.5);
+  box-shadow: 0 8px 18px rgba(0, 0, 0, 0.1);
   flex-direction: column;
 }
 .newsletter .EPiServerForms .Form__Title {
-  font-size: 1.75rem;
+  font-size: 2rem;
   margin-bottom: 1rem;
+  font-weight: 600;
 }
 .newsletter .EPiServerForms .Form__MainBody {
   display: flex;

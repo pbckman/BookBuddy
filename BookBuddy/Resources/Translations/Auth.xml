@@ -17,16 +17,16 @@
 			<signup>
 				<properties>
 					<title>Sign up</title>
-					<description>Sign up as user by filling in firstname, lastname, email and password.</description>
+					<description>Sign up as user by filling in first name, last name, email and password.</description>
 					<createAccountHeading>Create Account</createAccountHeading>
 					<createAccountPrompt>Fill in the details below to create a new account</createAccountPrompt>
-					<firstnamePlaceholder>Enter your firstname</firstnamePlaceholder>
-					<lastnamePlaceholder>Enter your lastname</lastnamePlaceholder>
+					<firstnamePlaceholder>Enter your first name</firstnamePlaceholder>
+					<lastnamePlaceholder>Enter your last name</lastnamePlaceholder>
 					<emailPlaceholder>Enter your email</emailPlaceholder>
 					<passwordPlaceholder>Enter your password</passwordPlaceholder>
 					<confirmPasswordPlaceholder>Confirm your password</confirmPasswordPlaceholder>
 					<signUpButton>Sign up</signUpButton>
-					<statusMessage>User successfully created!</statusMessage>
+					<createStatusMessage>User successfully created!</createStatusMessage>
 					<errorMessage>Something went wrong, please try again later.</errorMessage>
 				</properties>
 			</signup>

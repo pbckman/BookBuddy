@@ -1,11 +1,35 @@
 .form-group {
     margin-bottom: 1rem;
+    position: relative;
+
+    span {
+        position: absolute;
+    }
+}
+
+.form-margin {
+    margin-top: 1.75rem;
+}
+
+.form-margin-submit {
+    margin-top: 2rem;
+}
+
+.form-create {
+    display: grid;
+    position: relative;
+
+    span {
+        position: absolute;
+        top: 98%;
+    }
 }
 
 .form-control {
     -webkit-appearance: none;
     -moz-appearance: none;
     appearance: none;
+
     &:focus-visible, :focus {
         outline: none;
         // border-color: $primary;
@@ -15,3 +39,12 @@
     }
 }
 
+.field-validation-error {
+    font-size: 14px;
+    font-weight: 400 !important;
+    color: firebrick;
+}
+
+.input-validation-error {
+    border-color: firebrick !important;
+}

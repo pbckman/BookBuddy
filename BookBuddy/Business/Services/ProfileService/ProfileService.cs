@@ -1,8 +1,5 @@
-﻿using BookBuddy.Data.Contexts;
-using BookBuddy.Data.Entities;
+﻿using BookBuddy.Data.Entities;
 using BookBuddy.Models.ViewModels;
-using EPiServer.Cms.UI.AspNetIdentity;
-using Microsoft.EntityFrameworkCore;
 using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace BookBuddy.Business.Services.AccountService
