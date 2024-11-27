@@ -1,9 +1,9 @@
-﻿@model BookPageViewModel
+﻿@* @model BookPageViewModel
 
 
 <div class="overlay"></div>
 <div class="book-card">
-@*     <div class="favorite-button">⭐</div> *@
+@*     <div class="favorite-button">⭐</div> 
     <div class="book-container">
         <div class="book-cover">
             <img src="@Model.ImageUrl" alt="@Model.ImageAltText" />
@@ -22,6 +22,39 @@
     </div>
 
     <div class="button-quiz">
-        @* <a class="quiz-button">Go to Quiz</a> *@
+        <a class="quiz-button">Go to Quiz</a> 
+    </div>
+</div>
+ *@
+
+
+ @model BookPageViewModel
+
+@{
+    var translations = ViewData["Translation"] as IDictionary<string, string> ?? new Dictionary<string, string>();
+}
+
+<div class="overlay"></div>
+<div class="book-card">
+    <button class="back-arrow-button" onclick="window.history.back();">
+        <i class="fas fa-arrow-left"></i>
+    </button>
+    <div class="book-container">
+        <div class="book-cover">
+            <img class="cover-img" src="@Model.ImageUrl" alt="@Model.ImageAltText" />
+        </div>
+        <div class="book-info">
+            <h1>@Model.Title</h1>
+            <div class="author-release">
+                <p><strong>@translations["authors"]:</strong> @Model.Authors</p>
+                <div class="book-plot">
+                    <p> @Model.Plot</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="button-quiz">
+        <a href="@ViewData["QuizUrl"]" class="quiz-button">@translations["gotoquiz"]</a>
     </div>
 </div>
