@@ -1,6 +1,7 @@
 ﻿using BookBuddy.Business.Services.StartPageService;
 using BookBuddy.Models.Pages;
 using BookBuddy.Models.ViewModels;
+using EPiServer.Find.Framework;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BookBuddy.Controllers
@@ -11,17 +12,19 @@ namespace BookBuddy.Controllers
         private readonly IContentLoader _contentLoader;
         private readonly StartPageFactory _startPageFactory;
         private readonly UrlResolver _urlResolver;
+        private readonly IPageService _pageService;
 
-        public StartPageController(StartPageService startPageService, IContentLoader contentLoader, StartPageFactory startPageFactory, UrlResolver urlResolver)
+        public StartPageController(StartPageService startPageService, IContentLoader contentLoader, StartPageFactory startPageFactory, UrlResolver urlResolver, IPageService pageService)
         {
             _startPageService = startPageService;
             _contentLoader = contentLoader;
             _startPageFactory = startPageFactory;
             _urlResolver = urlResolver;
+            _pageService = pageService;
         }
 
         [Route("/")]
-        public async Task<IActionResult> Index(StartPage currentPage)
+        public async Task<IActionResult> Index(StartPage currentPage, string lang)
         {
             SiteSettingsPage siteSettings = null!;
 
@@ -52,19 +55,20 @@ namespace BookBuddy.Controllers
             }
             else if (User.Identity.IsAuthenticated)
             {
-                Console.WriteLine("User is authenticated.");
-                var searchPage = _contentLoader.GetChildren<BooksPage>(currentPage.ContentLink).FirstOrDefault();
-                if (searchPage != null)
+                var booksPage = _pageService.GetBooksPage(lang);
+                if (booksPage != null)
                 {
-                    Console.WriteLine($"Redirecting to SearchPage: {_urlResolver.GetUrl(searchPage.ContentLink)}");
-
-                    return Redirect(_urlResolver.GetUrl(searchPage.ContentLink));
-
+                    var fallbackUrl = lang == "sv" ? "/sv/bocker/" : "/books/";
+                    return Redirect(fallbackUrl);
+                   
                 }
                 else
                 {
-                    return View(currentPage);
+                   
+                    var booksPageUrl = _urlResolver.GetUrl(booksPage.ContentLink);
+                    return Redirect(booksPageUrl);
                 }
+
             }
             else
             {

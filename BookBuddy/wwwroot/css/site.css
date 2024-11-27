@@ -659,14 +659,13 @@ body {
 }
 
 .newsletter {
-  width: 50%;
+  width: 100%;
   margin: 0 auto;
   z-index: 10;
   text-align: center;
   color: white;
 }
 .newsletter .EPiServerForms {
-  display: flex;
   width: 100%;
   padding: 1.5rem;
   background-color: transparent;
@@ -679,13 +678,17 @@ body {
   margin-bottom: 1rem;
   font-weight: 600;
 }
+.newsletter .EPiServerForms .Form__Element {
+  display: grid;
+  justify-items: center;
+}
 .newsletter .EPiServerForms .Form__MainBody {
   display: flex;
   flex-direction: column;
   width: 100%;
 }
 .newsletter .EPiServerForms .Form__MainBody .FormTextbox {
-  width: 100%;
+  width: 75%;
   margin-bottom: 0.25rem;
 }
 .newsletter .EPiServerForms .Form__MainBody .FormTextbox__Input {
@@ -971,6 +974,22 @@ body {
   align-items: center;
   height: 100%;
 }
+.navbar .navbar-wrapper .nav-items .navbar-item.active > a {
+  position: relative;
+  font-weight: 500;
+  text-decoration: none;
+  color: #FA9F34;
+}
+.navbar .navbar-wrapper .nav-items .navbar-item.active > a::after {
+  content: "";
+  position: absolute;
+  bottom: -4px;
+  left: 65%;
+  width: 30%;
+  height: 2px;
+  background-color: #FA9F34;
+  transform: translateX(-50%);
+}
 .navbar .navbar-wrapper .nav-items .nav-links {
   color: #696F79;
   display: flex;
@@ -1157,6 +1176,22 @@ body {
   justify-content: space-between;
   align-items: center;
   height: 100%;
+}
+.navbar .navbar-wrapper .nav-items .navbar-item.active > a {
+  position: relative;
+  font-weight: 500;
+  text-decoration: none;
+  color: #FA9F34;
+}
+.navbar .navbar-wrapper .nav-items .navbar-item.active > a::after {
+  content: "";
+  position: absolute;
+  bottom: -4px;
+  left: 65%;
+  width: 30%;
+  height: 2px;
+  background-color: #FA9F34;
+  transform: translateX(-50%);
 }
 .navbar .navbar-wrapper .nav-items .nav-links {
   color: #696F79;

@@ -38,13 +38,14 @@ namespace BookBuddy.Controllers
 
             try
             {
+
                 var fileName = "BookCardBig.xml";
                 var translation = _translationFactory.GetTranslationsForView(fileName, "bookpage", CultureInfo.CurrentCulture.TwoLetterISOLanguageName);
                 ViewData["Translation"] = translation;
 
                 var currentCulture = CultureInfo.CurrentCulture;
 
-                var startPage = _contentLoader.Get<StartPage>(ContentReference.StartPage);
+                var startPage = _contentLoader.Get<StartPage>(ContentReference.StartPage, new LanguageSelector("sv"));
 
                 var siteSettings = _contentLoader.Get<SiteSettingsPage>(startPage.SiteSettingsPage);
 

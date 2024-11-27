@@ -1,6 +1,7 @@
 ﻿using BookBuddy.Business.Services.ErrorMessageService;
 using BookBuddy.Models.Pages;
 using BookBuddy.Models.ViewModels;
+using EPiServer.Core;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Globalization;
@@ -17,18 +18,37 @@ namespace BookBuddy.Controllers
             _errorMessageService = errorMessageService;
         }
 
+        [Route("/error")]
         [Route("/{culture}/error")]
         public IActionResult Index(string culture, int statusCode, ErrorPage currentPage)
         {
-            if (string.IsNullOrEmpty(culture) || (culture != "sv" && culture != "en"))
-            {
-                culture = "en"; 
-            }
+            culture ??= "en";
 
             CultureInfo.CurrentCulture = new CultureInfo(culture);
             CultureInfo.CurrentUICulture = new CultureInfo(culture);
 
-            // Skapa modellen med rätt språk
+            if (currentPage == null)
+            {
+                var contentLoader = HttpContext.RequestServices.GetService<IContentLoader>();
+
+                if (culture == "sv")
+                {
+                    currentPage = contentLoader.GetChildren<ErrorPage>(ContentReference.StartPage)
+                                               .FirstOrDefault(p => p.Language.Name == "sv");
+                }
+                else
+                {
+                    currentPage = contentLoader.GetChildren<ErrorPage>(ContentReference.StartPage)
+                                               .FirstOrDefault(p => p.Language.Name == "en");
+                }
+
+                if (currentPage == null)
+                {
+                    Console.WriteLine($"ErrorPage not found for culture: {culture}");
+                    return View("StaticError", new { StatusCode = statusCode });
+                }
+            }
+
             var model = new ErrorPageViewModel(currentPage, null!)
             {
                 StatusCode = statusCode,
@@ -38,7 +58,7 @@ namespace BookBuddy.Controllers
             };
 
             return View("Index", model);
-          
+
         }
 
     }
