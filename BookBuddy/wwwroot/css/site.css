@@ -935,6 +935,22 @@ body {
   align-items: center;
   height: 100%;
 }
+.navbar .navbar-wrapper .nav-items .navbar-item.active > a {
+  position: relative;
+  font-weight: 500;
+  text-decoration: none;
+  color: #FA9F34;
+}
+.navbar .navbar-wrapper .nav-items .navbar-item.active > a::after {
+  content: "";
+  position: absolute;
+  bottom: -4px;
+  left: 65%;
+  width: 30%;
+  height: 2px;
+  background-color: #FA9F34;
+  transform: translateX(-50%);
+}
 .navbar .navbar-wrapper .nav-items .nav-links {
   color: #696F79;
   display: flex;
@@ -1121,6 +1137,22 @@ body {
   justify-content: space-between;
   align-items: center;
   height: 100%;
+}
+.navbar .navbar-wrapper .nav-items .navbar-item.active > a {
+  position: relative;
+  font-weight: 500;
+  text-decoration: none;
+  color: #FA9F34;
+}
+.navbar .navbar-wrapper .nav-items .navbar-item.active > a::after {
+  content: "";
+  position: absolute;
+  bottom: -4px;
+  left: 65%;
+  width: 30%;
+  height: 2px;
+  background-color: #FA9F34;
+  transform: translateX(-50%);
 }
 .navbar .navbar-wrapper .nav-items .nav-links {
   color: #696F79;
