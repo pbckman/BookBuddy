@@ -191,4 +191,31 @@ public class BooksPageService : IBooksPageService
         }
             return new List<BookPageModel>();   
     }
+
+    public async Task<BooksModel> GetFilteredBookPages(string query, BooksPage currentPage, string category, List<CategoryModel> allUsedCategories, int pageNumber, int pageSize)
+    {
+        try
+        {
+            var searchResult = await SearchAsync(query, currentPage.Language);
+            var bookPages = searchResult.Items.Select(item => item).ToList();
+            var bookPageModels = bookPages.Select(bookpage => BookPageFactory.CreateBookPageModel(bookpage, _urlResolver, allUsedCategories)).ToList();
+
+            if (!string.IsNullOrEmpty(category))
+            {
+                bookPageModels = bookPageModels.Where(book => book.Categories.Any(cat => cat.Value == category)).ToList();
+            }
+
+            var paginatedBooks = bookPageModels
+                .Skip((pageNumber - 1) * pageSize)
+                .Take(pageSize)
+                .ToList();
+
+            return new BooksModel { ResultCount = bookPageModels.Count, Books = paginatedBooks};
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError($"ERROR : BooksPageService.GetFilteredBookPages() : {ex.Message}");
+        }
+        return new BooksModel();
+    }
 }

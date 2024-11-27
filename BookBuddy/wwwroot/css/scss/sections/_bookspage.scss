@@ -31,6 +31,42 @@
     column-gap: 1.5rem;
     margin: 4rem auto 0;
     max-width: 95%;
+    position: relative;
+
+    .pagination {
+        position: absolute;
+        bottom: -70px;
+        left: 43%;
+
+        button {
+            background-color: #f8f9fa;
+            border: 1px solid #ced4da;
+            border: none;
+            border-radius: 0.25rem;
+            padding: 0.5rem 1rem;
+            color: #495057;
+            transition: all 0.3s ease;
+            white-space: nowrap;
+            margin-right: 10px;
+
+            &:hover {
+                background-color: #e2e6ea;
+                background-color: #cdebea;
+                box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.3);
+                cursor: pointer;
+            }
+
+            &.disabled {
+                background-color: lightgray;
+                color: #fff;
+
+                &:hover {
+                    cursor: default;
+                    box-shadow: none;
+                }
+            }
+        }
+    }
 }
 .no-results {
     display: flex;
