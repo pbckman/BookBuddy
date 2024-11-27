@@ -70,4 +70,10 @@ else
     <p>Carousel is not available</p>
 }
 
+<div class="container">
+    <div class="newsletter hidden">
+        @Html.PropertyFor(x => x.CurrentPage.Forms)
+    </div>
+</div>
+
 <script src="/js/carousel.js"></script>
