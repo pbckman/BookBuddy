@@ -41,7 +41,9 @@
                 OnBtnSummaryClick="HandleSelectedSummary" />
         </div>
     }
-    <button @onclick="TestAchievementsPopup">Show Achievements</button>
+    <button class="test-achievement btn" @onclick="TestAchievementsPopup">
+        <i class="fa-solid fa-fire"></i>
+    </button>
     <AchievementPopup @ref="popup" /> 
 </section> 
 

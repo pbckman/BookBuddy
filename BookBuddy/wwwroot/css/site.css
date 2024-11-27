@@ -1241,6 +1241,29 @@ body {
   overflow: auto;
   z-index: 2;
 }
+.quiz-page .test-achievement {
+  width: 2rem;
+  height: 2rem;
+  border-radius: 50%;
+  padding: 0.25rem;
+  border: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.quiz-page .test-achievement i {
+  color: #FBA033;
+  text-align: center;
+}
+.quiz-page .test-achievement:hover {
+  background-color: #FBA033;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.3);
+  border: none;
+  cursor: pointer;
+}
+.quiz-page .test-achievement:hover i {
+  color: white;
+}
 .quiz-page .quiz-back-btn {
   position: absolute;
   top: 2rem;
