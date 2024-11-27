@@ -1,0 +1,20 @@
+﻿
+@code {
+    [Parameter]
+    public BookPageModel Book {get; set;}
+}
+
+@if(Book != null)
+{
+    <div class=" carousel-card card bg-white ">
+        <img src="@Book.ImageUrl" alt="@Book.Title" class="card-img-top">
+        <div class="card-body">
+            <h6 class="carousel-card-h6 mt-3">@Book.Title</h6>
+            <p class="carousel-card-p">@Book.Authors</p>
+        </div>
+    </div>
+}
+else
+{
+    <p>No book data available</p>
+}

@@ -20,7 +20,6 @@ namespace BookBuddy.Models.Pages
         typeof(SiteSettingsPage)
 
     ])]
-
     public class StartPage : SitePageData
     {
         [Display(
@@ -52,6 +51,69 @@ namespace BookBuddy.Models.Pages
            Description = ""
           )]
         public virtual ContentArea Forms { get; set; }
+
+        [CultureSpecific]
+        [Display(
+        Name = "Title for herosection",
+        GroupName = "HeroSection",
+        Order = 35)]
+        public virtual string? Title { get; set; }
+
+        [CultureSpecific]
+        [Display(
+            Name = "Description for herosection",
+            GroupName = "HeroSection",
+            Order = 40)]
+        public virtual string? Description { get; set; }
+
+        [CultureSpecific]
+        [Display(
+            Name = "Button Sign In Text",
+            GroupName = "HeroSection",
+            Order = 50)]
+        public virtual string? ButtonSignIn { get; set; }
+
+        [CultureSpecific]
+        [Display(
+            Name = "Button Sign Up Text",
+            GroupName = "HeroSection",
+            Order = 60)]
+        public virtual string? ButtonSignUp { get; set; }
+
+        [CultureSpecific]
+        [Display(
+            Name = "InfoSection Title",
+            GroupName = "InfoSection",
+            Order = 70)]
+        public virtual string? InfoTitle { get; set; }
+
+        [CultureSpecific]
+        [Display(
+            Name = "InfoSection Footer",
+            GroupName = "InfoSection",
+            Order = 75)]
+        public virtual string? InfoFooter { get; set; }
+
+        [CultureSpecific]
+        [Display(
+            Name = "Bullet Points",
+            GroupName = "InfoSection",
+            Order = 80)]
+        public virtual IList<string> BulletPoints { get; set; } = new List<string>();
+
+        [CultureSpecific]
+        [Display(
+            Name = "Slideshow title",
+            GroupName = "Slideshow",
+            Order = 85)]
+        public virtual string? SlideShowTitle { get; set; }
+
+        [CultureSpecific]
+        [Display
+            (Name = "Slideshow Content",
+            GroupName = "Slideshow",
+            Order = 90)]
+        public virtual string? SlideShowContent { get; set; }
 
     }
 }

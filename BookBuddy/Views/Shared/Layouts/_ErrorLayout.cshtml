@@ -2,6 +2,7 @@
 @{
     ViewData["Title"] = "Error";
     var currentCulture = CultureInfo.CurrentCulture.TwoLetterISOLanguageName;
+
 }
 
 @model IPageViewModel<SitePageData>
@@ -13,7 +14,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="">
+    @* <meta name="description" content="@Model.CurrentPage.MetaDescription" /> *@
     <title> @ViewData["Title"]</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="~/css/site.css" />
@@ -22,6 +23,5 @@
     <div class="container d-flex flex-column align-items-center justify-content-center min-vh-100">
         @RenderBody()
     </div>
-    @* <script src="_framework/blazor.server.js" defer></script> *@
 </body>
 </html>

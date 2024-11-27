@@ -1,9 +1,8 @@
 ﻿using BookBuddy.Business.Extensions;
-using BookBuddy.Business.Services.Interfaces;
 using BookBuddy.Models.Pages;
 using MimeKit.Cryptography;
 
-namespace BookBuddy.Business.Services
+namespace BookBuddy.Business.Services.XmlSitemapService
 {
     public class XmlSitemapService : IXmlSitemapService
     {
