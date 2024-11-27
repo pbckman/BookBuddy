@@ -1,7 +1,17 @@
-﻿ @model BookPageViewModel
+﻿@using BookBuddy.Models.ResultModels
+ @model BookPageViewModel
+
 
 @{
     var translations = ViewData["Translation"] as IDictionary<string, string> ?? new Dictionary<string, string>();
+
+    string btnText;
+    if(Model.Status == ResultStatus.InProgress)
+        btnText = translations["continuequiz"];
+    else if (Model.Status == ResultStatus.Completed)
+        btnText = translations["seeresult"];
+    else
+        btnText = translations["gotoquiz"];
 }
 
 <div class="book-card">
@@ -24,6 +34,6 @@
     </div>
 
     <div class="button-quiz">
-        <a href="@ViewData["QuizUrl"]" class="quiz-button">@translations["gotoquiz"]</a>
+        <a href="@ViewData["QuizUrl"]" class="quiz-button">@btnText</a>
     </div>
 </div>
