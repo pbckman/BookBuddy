@@ -24,7 +24,7 @@ inputs.forEach(input => {
 
 
 const handleValidationOutput = (isValid, e, text = "") => {
-    let span = document.querySelector('[data-valmsg-for="${ e.target.name }"]')
+    let span = document.querySelector(`[data-valmsg-for="${e.target.name}"]`)
 
     if (isValid) {
         e.target.classList.remove('input-validation-error')
