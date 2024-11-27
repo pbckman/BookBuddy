@@ -1,18 +1,8 @@
-﻿.overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    backdrop-filter: blur(10px);
-    background: rgba(0, 0, 0, 0.2);
-    z-index: -1;
-}
-
+﻿
 .book-card {
     display: flex;
     flex-direction: column;
-    background-color: #f0f0f0;
+    background-color: #fff;
     border-radius: 8px;
     padding: 30px;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
@@ -23,6 +13,26 @@
 
     @media (max-width: 768px) {
         padding: 15px;
+    }
+
+    .back-arrow-button {
+        background-color: transparent;
+        border: none;
+        cursor: pointer;
+        font-size: 24px;
+        padding: 10px;
+        position: relative;
+        color: #ff9800;
+        display: flex;
+        align-items: center;
+
+        .back-button i {
+            margin-right: 8px;
+        }
+
+        .back-arrow-button:hover::before {
+            color: #e65100;
+        }
     }
 
     .book-container {
@@ -121,26 +131,6 @@
             &:hover {
                 background-color: darken(#9b6ef3, 5%);
             }
-        }
-    }
-
-    .back-arrow-button {
-        background-color: transparent;
-        border: none;
-        cursor: pointer;
-        font-size: 24px;
-        padding: 10px;
-        position: relative;
-        color: #ff9800;
-        display: flex;
-        align-items: center;
-
-        .back-button i {
-            margin-right: 8px;
-        }
-
-        .back-arrow-button:hover::before {
-            color: #e65100;
         }
     }
 }

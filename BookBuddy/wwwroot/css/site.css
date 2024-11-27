@@ -612,6 +612,17 @@ body {
   margin-bottom: 20px;
 }
 
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  backdrop-filter: blur(10px);
+  background: rgba(0, 0, 0, 0.2);
+  z-index: -1;
+}
+
 .newsletter {
   width: 100%;
   max-width: 700px;
@@ -1839,21 +1850,10 @@ body {
   color: #666;
 }
 
-.overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  backdrop-filter: blur(10px);
-  background: rgba(0, 0, 0, 0.2);
-  z-index: -1;
-}
-
 .book-card {
   display: flex;
   flex-direction: column;
-  background-color: #f0f0f0;
+  background-color: #fff;
   border-radius: 8px;
   padding: 30px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
@@ -1866,6 +1866,23 @@ body {
   .book-card {
     padding: 15px;
   }
+}
+.book-card .back-arrow-button {
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  font-size: 24px;
+  padding: 10px;
+  position: relative;
+  color: #ff9800;
+  display: flex;
+  align-items: center;
+}
+.book-card .back-arrow-button .back-button i {
+  margin-right: 8px;
+}
+.book-card .back-arrow-button .back-arrow-button:hover::before {
+  color: #e65100;
 }
 .book-card .book-container {
   display: flex;
@@ -1958,23 +1975,6 @@ body {
 }
 .book-card .button-quiz .quiz-button:hover {
   background-color: #8b56f1;
-}
-.book-card .back-arrow-button {
-  background-color: transparent;
-  border: none;
-  cursor: pointer;
-  font-size: 24px;
-  padding: 10px;
-  position: relative;
-  color: #ff9800;
-  display: flex;
-  align-items: center;
-}
-.book-card .back-arrow-button .back-button i {
-  margin-right: 8px;
-}
-.book-card .back-arrow-button .back-arrow-button:hover::before {
-  color: #e65100;
 }
 
 .search-box {

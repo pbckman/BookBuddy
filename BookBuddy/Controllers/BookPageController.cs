@@ -25,11 +25,11 @@ namespace BookBuddy.Controllers
 
         public IActionResult Index(BookPage currentPage)
         {
-            if(!_authorizedService.IsUserAuthorizedAsync().Result)
-               {
-                  System.Diagnostics.Debug.WriteLine("User is not authorized");
-                  return RedirectToAction("SignIn", "Auth");
-               }
+            if (!_authorizedService.IsUserAuthorizedAsync().Result)
+            {
+                System.Diagnostics.Debug.WriteLine("User is not authorized");
+                return RedirectToAction("SignIn", "Auth");
+            }
 
             try
             {
@@ -58,15 +58,6 @@ namespace BookBuddy.Controllers
                 _logger.LogError($"ERROR : BookPageController.Search() : {ex.Message}");
                 return View("Error");
             }
-
-
-            //var startPage = _contentLoader.Get<StartPage>(ContentReference.StartPage);
-
-            //var siteSettingsPage = _contentLoader.Get<SiteSettingsPage>(startPage.SiteSettingsPage);
-
-            //var model = new BookPageViewModel(currentPage, siteSettingsPage);
-
-            //return View(model);
         }
     }
 }
