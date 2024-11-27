@@ -16,4 +16,5 @@ public interface IBooksPageService
     Task<List<BookPageModel>> GetFilteredBookPages(string query, BooksPage currentPage, string category, List<CategoryModel> allUsedCategories);
     Task<List<BookPageModel>> GetAllBookPages(BooksPage currentPage, List<CategoryModel> allUsedCategories);
     Task<List<BookPageModel>> GetAllByLanguageBookPages(string lang, List<CategoryModel> allCategories);
+    Task<BooksModel> GetFilteredBookPages(string query, BooksPage currentPage, string category, List<CategoryModel> allUsedCategories, int pageNumber, int pageSize);
 }

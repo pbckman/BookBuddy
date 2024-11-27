@@ -6,6 +6,8 @@
 				<properties>
 					<nosearchresult>No book found for </nosearchresult>
                     <searchforbooks>Search for a book... </searchforbooks>
+					<nextbtn>Next</nextbtn>
+					<prevbtn>Previous</prevbtn>
 				</properties>
 			</bookspage>
 		</contenttypes>
@@ -16,6 +18,8 @@
 				<properties>
 					<nosearchresult>Inga böcker hittades för </nosearchresult>
                     <searchforbooks>Sök böcker... </searchforbooks>
+					<nextbtn>Nästa</nextbtn>
+					<prevbtn>Föregående</prevbtn>
 				</properties>
 			</bookspage>
 		</contenttypes>

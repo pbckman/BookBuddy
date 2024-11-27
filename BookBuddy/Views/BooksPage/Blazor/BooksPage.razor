@@ -1,6 +1,7 @@
 ﻿@code {
     [Parameter] [SupplyParameterFromQuery(Name = "query")] public string? Query { get; set; }
     [Parameter] [SupplyParameterFromQuery(Name = "category")] public string? Category { get; set; }
+    [Parameter][SupplyParameterFromQuery(Name = "page")] public int PageNumber { get; set; }
     [Parameter] public List<BookPageModel>? Result { get; set; }
     [Parameter] public List<CategoryModel> Categories { get; set; } = new List<CategoryModel>();
     [Parameter] public string? Language { get; set; }
@@ -19,13 +20,20 @@
         set => _internalQuery = value;
     }
     private List<BookPageModel> FilteredBooks { get; set; }
+ 
+    private int PageSize { get; set; } = 6;
+    private int TotalPages { get; set; }
+
     
 
-    protected override void OnInitialized()
+    protected override async Task OnInitializedAsync()
     {
         _internalQuery = Query;
-        FilteredBooks = Result;
         CurrentUri = new Uri(NavigationManager.Uri);
+        if(PageNumber == 0)
+            PageNumber = 1;
+        
+        await LoadPage(PageNumber);
     }
 
     private async Task HandleCategorySelected(string category)
@@ -45,15 +53,40 @@
     }
     private async Task SearchBookByFilter()
     {
+        PageNumber = 1;
+        await LoadPage(PageNumber);
+    }
+    private async Task LoadPage(int pageNumber)
+    {
+        PageNumber = pageNumber;
+        var currentPage = PageService.GetBooksPage(Language);
+        var result = await BooksPageService.GetFilteredBookPages(InternalQuery, currentPage, SelectedCategory, Categories, PageNumber, PageSize);
+        FilteredBooks = result.Books;
+        TotalPages = (int)Math.Ceiling((double)result.ResultCount / PageSize);
+
         var uriBuilder = new UriBuilder(CurrentUri)
-        {
-            Query = $"query={InternalQuery}&category={SelectedCategory}"
-        };
+            {
+                Query = $"query={InternalQuery}&category={SelectedCategory}&page={PageNumber}"
+            };
 
         NavigationManager.NavigateTo(uriBuilder.ToString(), forceLoad: false);
-        var currentPage = PageService.GetBooksPage(Language);
-        FilteredBooks = await BooksPageService.GetFilteredBookPages(InternalQuery, currentPage, SelectedCategory, Categories);
         StateHasChanged();
+    }
+    private async Task PreviousPage()
+    {
+        if (PageNumber > 1)
+        {
+            PageNumber--;
+            await LoadPage(PageNumber);
+        }
+    }
+    private async Task NextPage()
+    {
+        if (PageNumber < TotalPages)
+        {
+            PageNumber++;
+            await LoadPage(PageNumber);
+        }
     }
 }
 
@@ -73,7 +106,17 @@
             {
                 <BookCard result="@result"/>
             }
+            @if(TotalPages > 1)
+            {
+                <div class="pagination">
+                    <button class="@(PageNumber == 1 ? "disabled" : "")" @onclick="PreviousPage" disabled="@(PageNumber == 1)">@(Translations != null ? Translations["prevbtn"] : "Previous")</button>
+                    <button class="@(PageNumber == TotalPages ? "disabled" : "")" @onclick="NextPage" disabled="@(PageNumber == TotalPages)">@(Translations != null ? Translations["nextbtn"] : "Next")</button>
+                </div>
+            }
+          
         </div>
+      
+        
     }
     else
     {
