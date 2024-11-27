@@ -1,10 +1,6 @@
-﻿using BookBuddy.Business.Services.AccountService;
-using BookBuddy.Business.Services.TranslationService;
-using BookBuddy.Models.ViewModels;
-using EPiServer.Cms.UI.AspNetIdentity;
+﻿using BookBuddy.Models.ViewModels;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using System.Globalization;
 using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace BookBuddy.Controllers
@@ -16,9 +12,9 @@ namespace BookBuddy.Controllers
         private readonly AuthTranslationService _translationService = translationService;
 
         [HttpPost]
-        public async Task<IActionResult> CreateProfile(ProfileViewModel model)
+        public async Task<IActionResult> CreateProfile(ProfileViewModel model, string lang)
         {
-            var currentCulture = CultureInfo.CurrentCulture.TwoLetterISOLanguageName;
+            var currentCulture = !string.IsNullOrEmpty(lang) ? lang : CultureInfo.CurrentCulture.TwoLetterISOLanguageName;
 
             var user = await _userManager.GetUserAsync(User);
             if (user == null)

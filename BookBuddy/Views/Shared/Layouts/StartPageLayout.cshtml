@@ -29,5 +29,15 @@
     <script src="~/js/cookieConsent.js" defer></script>
     <script src="https://cdn.cookietractor.com/cookietractor.js" data-lang="@userLang" data-id="e470af12-ff81-4cd2-b3df-79f942173b8a" defer></script>
     <script src="_framework/blazor.server.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            setTimeout(function () {
+                var newsletter = document.querySelector(".newsletter");
+                if (newsletter) {
+                    newsletter.classList.remove("hidden");
+                }
+            }, 2120);
+        });
+    </script>
 </body>
 </html>
