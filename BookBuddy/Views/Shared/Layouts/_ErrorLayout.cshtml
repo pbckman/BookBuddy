@@ -2,6 +2,7 @@
 @{
     ViewData["Title"] = "Error";
     var currentCulture = CultureInfo.CurrentCulture.TwoLetterISOLanguageName;
+
 }
 
 @model IPageViewModel<SitePageData>
@@ -22,6 +23,5 @@
     <div class="container d-flex flex-column align-items-center justify-content-center min-vh-100">
         @RenderBody()
     </div>
-    @* <script src="_framework/blazor.server.js" defer></script> *@
 </body>
 </html>

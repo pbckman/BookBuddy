@@ -1,7 +1,7 @@
 ﻿using System.Globalization;
 using System.Xml.Linq;
 
-namespace BookBuddy.Business.Services
+namespace BookBuddy.Business.Services.ErrorMessageService
 {
     public class ErrorMessageService
     {

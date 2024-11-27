@@ -1,9 +1,13 @@
 ﻿@using System.Globalization
+@inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
 @{
     var currentCulture = CultureInfo.CurrentCulture.TwoLetterISOLanguageName;
 
     var currentPath = Context.Request.Path.Value;
     var currentLanguage = currentPath.Split('/').Skip(1).FirstOrDefault();
+
+    var userLang = HttpContextAccessor.HttpContext.Request.Query["language"].FirstOrDefault() ??
+                  (HttpContextAccessor.HttpContext.Request.Path.Value.Contains("/sv") ? "sv-SE" : "en-GB");
 }
 
 <!DOCTYPE html>
@@ -29,6 +33,7 @@
                 </a>
                 <div class="form-container">
                         @RenderBody()
+                    @await Html.PartialAsync("~/Views/Shared/Partials/cookiepartial.cshtml")
                 </div>
             </div>
         </div>
@@ -36,5 +41,7 @@
 
     <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
     <script src="~/js/particles-config.js"></script>
+    <script src="~/js/cookieConsent.js" defer></script>
+    <script src="https://cdn.cookietractor.com/cookietractor.js" data-lang="@userLang" data-id="e470af12-ff81-4cd2-b3df-79f942173b8a" defer></script>
 </body>
 </html>

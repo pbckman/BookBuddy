@@ -61,4 +61,11 @@
   <ItemGroup>
     <None Include="compilerconfig.json" />
   </ItemGroup>
+  
+  <ItemGroup>
+    <Content Update="wwwroot\images\quiz-pic.webp">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+  </ItemGroup>
 </Project>

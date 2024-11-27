@@ -1,4 +1,4 @@
-@charset "UTF-8";
+﻿@charset "UTF-8";
 @import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
 @media (min-width: 1400px) {
   .container {
@@ -616,6 +616,7 @@ body {
   width: 100%;
   max-width: 700px;
   margin: 0 auto;
+  z-index: 10;
 }
 .newsletter .EPiServerForms {
   display: flex;
@@ -693,6 +694,29 @@ body {
   margin-top: 0.45rem;
 }
 
+.loading-page {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-color: transparent;
+  border-radius: 8px;
+  text-align: center;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
 .header {
   position: sticky;
   padding: 0.75rem 2rem;
@@ -1821,8 +1845,7 @@ body {
   left: 0;
   width: 100%;
   height: 100%;
-  -webkit-backdrop-filter: blur(10px);
-          backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
   background: rgba(0, 0, 0, 0.2);
   z-index: -1;
 }
@@ -1872,8 +1895,7 @@ body {
 .book-card .book-container .book-cover img {
   width: 100%;
   height: auto;
-  -o-object-fit: cover;
-     object-fit: cover;
+  object-fit: cover;
   max-width: 100%;
   border-radius: inherit;
 }
@@ -1979,8 +2001,7 @@ body {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(20rem, 1fr));
   row-gap: 2rem;
-  -moz-column-gap: 1.5rem;
-       column-gap: 1.5rem;
+  column-gap: 1.5rem;
   margin: 4rem auto 0;
   max-width: 95%;
 }
@@ -2262,7 +2283,6 @@ body {
 }
 
 .cookie-page {
-  width: -moz-fit-content;
   width: fit-content;
   max-width: 80%;
   margin-bottom: 10rem;
@@ -2686,8 +2706,7 @@ body {
 }
 .my-quizzes .container .detail-summary .quizzes-section .quiz-content .book-card-wrapper .quiz-card .card-image-section img {
   width: 50px;
-  -o-object-fit: cover;
-     object-fit: cover;
+  object-fit: cover;
 }
 .my-quizzes .container .detail-summary .quizzes-section .quiz-content .book-card-wrapper .quiz-card .card-content-section {
   color: black;
@@ -2852,7 +2871,6 @@ body {
   }
 }
 .cookie-page {
-  width: -moz-fit-content;
   width: fit-content;
   max-width: 80%;
   margin-bottom: 10rem;
@@ -3161,8 +3179,7 @@ body {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(20rem, 1fr));
   row-gap: 2rem;
-  -moz-column-gap: 1.5rem;
-       column-gap: 1.5rem;
+  column-gap: 1.5rem;
   margin: 4rem auto 0;
   max-width: 95%;
 }
@@ -3210,4 +3227,242 @@ body {
   align-items: center;
   gap: 20px;
   margin-bottom: 10px;
+}
+
+.startpage {
+  background-image: url("/images/background-img.webp");
+  background-size: cover;
+  background-position: center;
+  font-display: swap;
+}
+.startpage .hero-section {
+  margin-top: 2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 5rem 1rem;
+  background-color: transparent;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+.startpage .hero-section .hero-h1 {
+  font-size: 2rem;
+  font-weight: bold;
+  color: #fff;
+  margin-bottom: 0.5rem;
+}
+@media (max-width: 576px) {
+  .startpage .hero-section .hero-h1 {
+    font-size: 1.5rem;
+  }
+}
+.startpage .hero-section .hero-p {
+  font-size: 1.25rem;
+  color: #fff;
+  margin-bottom: 1.5rem;
+}
+@media (max-width: 576px) {
+  .startpage .hero-section .hero-p {
+    font-size: 0.8rem;
+  }
+}
+.startpage .hero-section .herosection-btn {
+  display: flex;
+  gap: 1rem;
+  padding: 1rem 1.5rem;
+  font-size: 1rem;
+  font-weight: 500;
+  border-radius: 5px;
+  text-transform: uppercase;
+  color: #fff;
+}
+.startpage .hero-section .herosection-btn.btn-primary {
+  background-color: #0056b3;
+}
+.startpage .hero-section .herosection-btn.btn-secondary {
+  background-color: #6c757d;
+}
+.startpage .hero-section .herosection-btn:hover {
+  opacity: 0.9;
+}
+
+.learning-section {
+  background-color: transparent;
+  color: #fff;
+  padding: 2rem;
+  border-radius: 8px;
+  margin: 2rem 0;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+}
+.learning-section .info {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  width: 100%;
+}
+@media (max-width: 1200px) {
+  .learning-section .info {
+    flex-direction: column;
+    align-content: center;
+  }
+}
+.learning-section .info .info-content {
+  padding-right: 40px;
+}
+.learning-section .info .learning-image {
+  flex: 1;
+  max-width: 550px;
+  height: auto;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  margin-left: 20px;
+}
+@media (max-width: 1000px) {
+  .learning-section .info .learning-image {
+    max-width: 450px;
+  }
+}
+@media (max-width: 768px) {
+  .learning-section .info .learning-image {
+    max-width: 400px;
+  }
+}
+@media (max-width: 576px) {
+  .learning-section .info .learning-image {
+    max-width: 350px;
+  }
+}
+@media (max-width: 420px) {
+  .learning-section .info .learning-image {
+    max-width: 300px;
+  }
+}
+.learning-section .info .learning-h2 {
+  font-size: 1.5rem;
+  padding: 10px;
+  font-weight: 600;
+}
+@media (max-width: 576px) {
+  .learning-section .info .learning-h2 {
+    font-size: 0.75rem;
+  }
+}
+.learning-section .info .benefits-list {
+  flex: 1;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+.learning-section .info .benefits-list .learning-li {
+  font-size: 0.9rem;
+  margin-bottom: 0.75rem;
+  display: flex;
+  align-items: center;
+  font-display: swap;
+  font-weight: 500;
+}
+@media (max-width: 576px) {
+  .learning-section .info .benefits-list .learning-li {
+    font-size: 0.75rem;
+  }
+}
+.learning-section .info .benefits-list .learning-li .fa-check {
+  color: forestgreen;
+  margin-right: 0.5rem;
+}
+
+.carousel-wrapper-container {
+  margin: 0 auto;
+  overflow: hidden;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  border-radius: 15px;
+  padding: 10px;
+  position: relative;
+  margin-bottom: 25px;
+}
+.carousel-wrapper-container .carousel-text {
+  color: #ffffff;
+  padding: 10px;
+  font-weight: 700;
+}
+.carousel-wrapper-container .carousel-wrapper {
+  width: 100%;
+  overflow: hidden;
+  position: relative;
+}
+.carousel-wrapper-container .carousel-wrapper .carousel-content {
+  display: flex;
+  gap: 1rem;
+  will-change: transform;
+}
+.carousel-wrapper-container .carousel-wrapper .carousel-content .carousel-card {
+  min-width: 270px;
+  height: auto;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  margin: 15px auto;
+  display: flex;
+  flex-direction: column;
+}
+@media (max-width: 768px) {
+  .carousel-wrapper-container .carousel-wrapper .carousel-content .carousel-card {
+    min-width: 200px;
+    height: 450px;
+  }
+}
+@media (max-width: 576px) {
+  .carousel-wrapper-container .carousel-wrapper .carousel-content .carousel-card {
+    min-width: 200px;
+    height: 400px;
+  }
+}
+.carousel-wrapper-container .carousel-wrapper .carousel-content .carousel-card .card-body {
+  text-align: center;
+}
+.carousel-wrapper-container .carousel-wrapper .carousel-content .carousel-card .card-body .carousel-card-h6 {
+  font-size: 1rem;
+  margin-bottom: 8px;
+}
+@media (max-width: 768px) {
+  .carousel-wrapper-container .carousel-wrapper .carousel-content .carousel-card .card-body .carousel-card-h6 {
+    font-size: 0.7rem;
+  }
+}
+@media (max-width: 576px) {
+  .carousel-wrapper-container .carousel-wrapper .carousel-content .carousel-card .card-body .carousel-card-h6 {
+    font-size: 0.5rem;
+  }
+}
+.carousel-wrapper-container .carousel-wrapper .carousel-content .carousel-card .card-body .carousel-card-p {
+  font-size: 0.9rem;
+  color: #666;
+  margin-bottom: 5px;
+}
+@media (max-width: 768px) {
+  .carousel-wrapper-container .carousel-wrapper .carousel-content .carousel-card .card-body .carousel-card-p {
+    font-size: 0.5rem;
+  }
+}
+@media (max-width: 576px) {
+  .carousel-wrapper-container .carousel-wrapper .carousel-content .carousel-card .card-body .carousel-card-p {
+    font-size: 0.3rem;
+  }
+}
+.carousel-wrapper-container .carousel-wrapper .carousel-content .carousel-card .card-img-top {
+  width: 100%;
+  height: 300px;
+  object-fit: cover;
+}
+@media (max-width: 768px) {
+  .carousel-wrapper-container .carousel-wrapper .carousel-content .carousel-card .card-img-top {
+    height: 200px;
+  }
 }
