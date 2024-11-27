@@ -6,6 +6,8 @@
 				<properties>
 					<authors>Authors</authors>
 					<gotoquiz>Go to Quiz</gotoquiz>
+					<seeresult>See Result</seeresult>
+					<continuequiz>Continue Quiz</continuequiz>
 				</properties>
 			</bookpage>
 		</contenttypes>
@@ -16,6 +18,8 @@
 				<properties>
 					<authors>Författare</authors>
 					<gotoquiz>Gå till quizet</gotoquiz>
+					<seeresult>Se resultat</seeresult>
+					<continuequiz>Fortsätt quizet</continuequiz>
 				</properties>
 			</bookpage>
 		</contenttypes>
