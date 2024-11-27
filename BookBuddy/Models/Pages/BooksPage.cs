@@ -25,4 +25,6 @@ namespace BookBuddy.Models.Pages;
         )]
         [CultureSpecific]
         public virtual ContentReference? SiteSettingsPage { get; set; }
-    }
+
+
+     }
