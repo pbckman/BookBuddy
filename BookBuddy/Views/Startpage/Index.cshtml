@@ -13,28 +13,6 @@
 }
 
 
-@* <div class="container-sm startpage-wrapper">
-    <img class="flying-boy" src="~/images/Flying_boy.webp" alt="">
-    <div class="startpage-header">
-        <h1 class="card-title">@Model.CurrentPage.Heading</h1>
-    </div>
-
-    <div class="startpage-mainbody">
-        @Html.Raw(Model.CurrentPage.MainBody)
-    </div>
-
-    
-    <component type="typeof(CounterBlazorPage)" render-mode="Server" />
-    <component type="typeof(TestForm)" render-mode="Server" />
-
-    <div class="newsletter">
-        @Html.PropertyFor(x => x.CurrentPage.Forms)
-    </div>
-</div>
- *@
-
-
-
 @if (Model.HeroSectionModel != null)
 {
     <component type="typeof(HeroSection)" render-mode="Server"
@@ -70,10 +48,14 @@ else
     <p>Carousel is not available</p>
 }
 
-<div class="container">
+
+<div id="newsletter-container" class="container">
     <div class="newsletter hidden">
         @Html.PropertyFor(x => x.CurrentPage.Forms)
     </div>
 </div>
+
+
+
 
 <script src="/js/carousel.js"></script>

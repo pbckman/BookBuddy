@@ -8,9 +8,14 @@
 
     private string GetSignUpUrl()
     {
-        var lang = HeroSectionModel?.Lang;
+        var url = NavigationManager.Uri;
 
-        if (string.IsNullOrEmpty(lang))
+        string lang;
+        if (url.Contains("/sv"))
+        {
+            lang = "sv";
+        }
+        else
         {
             lang = "en";
         }
@@ -20,13 +25,19 @@
 
     private string GetSignInUrl()
     {
-        var lang = HeroSectionModel?.Lang;
 
-        if (string.IsNullOrEmpty(lang))
+        var url = NavigationManager.Uri;
+
+        string lang;
+        if (url.Contains("/sv"))
+        {
+            lang = "sv";
+        }
+        else
         {
             lang = "en";
         }
-
+     
         return $"/{lang}/auth/signin";
     }
 
@@ -34,7 +45,7 @@
 
     protected override async Task OnInitializedAsync()
     {
-        await Task.Delay(2000);
+        await Task.Delay(1500);
         isLoaded = true;
     }
 
@@ -52,5 +63,5 @@
 }
 else
 {
-   // <div class="loading-page">Loading....</div>
+   
 }
