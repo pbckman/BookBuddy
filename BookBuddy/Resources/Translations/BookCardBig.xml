@@ -1,0 +1,24 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<languages>
+	<language name="English" id="en">
+		<contenttypes>
+			<bookpage>
+				<properties>
+					<authors>Authors</authors>
+					<gotoquiz>Go to Quiz</gotoquiz>
+				</properties>
+			</bookpage>
+		</contenttypes>
+	</language>
+	<language name="Svenska" id="sv">
+		<contenttypes>
+			<bookpage>
+				<properties>
+					<authors>Författare</authors>
+					<gotoquiz>Gå till quizet</gotoquiz>
+				</properties>
+			</bookpage>
+		</contenttypes>
+	</language>
+</languages>
+
