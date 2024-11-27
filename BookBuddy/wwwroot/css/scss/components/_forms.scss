@@ -6,6 +6,7 @@
     -webkit-appearance: none;
     -moz-appearance: none;
     appearance: none;
+
     &:focus-visible, :focus {
         outline: none;
         // border-color: $primary;
@@ -15,3 +16,12 @@
     }
 }
 
+.field-validation-error {
+    font-size: 14px;
+    font-weight: 400 !important;
+    color: firebrick;
+}
+
+.input-validation-error {
+    border-color: firebrick !important;
+}

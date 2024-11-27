@@ -12,9 +12,9 @@ namespace BookBuddy.Controllers
         private readonly AuthTranslationService _translationService = translationService;
 
         [HttpPost]
-        public async Task<IActionResult> CreateProfile(ProfileViewModel model)
+        public async Task<IActionResult> CreateProfile(ProfileViewModel model, string lang)
         {
-            var currentCulture = CultureInfo.CurrentCulture.TwoLetterISOLanguageName;
+            var currentCulture = !string.IsNullOrEmpty(lang) ? lang : CultureInfo.CurrentCulture.TwoLetterISOLanguageName;
 
             var user = await _userManager.GetUserAsync(User);
             if (user == null)
