@@ -65,7 +65,7 @@ namespace BookBuddy.Business.Services.AchievementService
                 }
                 else if(achievement.AmountOfChapters > 0 && achievement.AmountOfBooks == 0 && achievement.CorrectPercent > 0)
                 {
-                    if (results.Count(x => x.ChapterResults.Any(x => IsMatchingPercent(x, achievement.CorrectPercent))) >= achievement.AmountOfChapters)
+                    if (results.Sum(x => x.ChapterResults.Count(x => IsMatchingPercent(x, achievement.CorrectPercent))) >= achievement.AmountOfChapters)
                         achievements.Add(achievement);
                 }
                 else if(achievement.AmountOfChapters == 0 && achievement.AmountOfBooks > 0 && achievement.CorrectPercent > 0)
@@ -95,6 +95,9 @@ namespace BookBuddy.Business.Services.AchievementService
 
         private bool IsMatchingPercent(QuizResultModel quizResult, int correctPercent)
         {
+            if (quizResult.IsCompleted == false)
+                return false;
+
             decimal correctAnswers = quizResult.ChapterResults.Sum(chapterResult => chapterResult.QuestionResults.Count(x => x.IsCorrect));
             decimal totalAnswers = quizResult.ChapterResults.Sum(chapterResult => chapterResult.QuestionResults.Count);
             decimal percent = (correctAnswers / totalAnswers) * 100;

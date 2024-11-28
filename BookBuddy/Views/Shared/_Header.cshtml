@@ -1,9 +1,5 @@
-@using System.Globalization
+
 @model IPageViewModel<SitePageData>
-@inject ProfileService ProfileService
-@inject AccountService AccountService
-@inject UserManager<ApplicationUser> _userManager
-@inject AuthTranslationService AuthTranslationService
 
 @{
     var user = await AccountService.GetCurrentFrontEndUser(User);

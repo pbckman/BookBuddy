@@ -13,12 +13,19 @@
 @using EPiServer.Cms.Shell
 @using EPiServer.Core.Internal
 @using EPiServer.Web.Routing
+@using BookBuddy.Views.QuizPage.Blazor
+@using System.Globalization
 
+
+@inject IContentLoader ContentLoader
+@inject ProfileService ProfileService
+@inject AccountService AccountService
+@inject UserManager<ApplicationUser> _userManager
+@inject AuthTranslationService AuthTranslationService
 @inject IContentLoader _contentLoader
 @inject SignInManager<ApplicationUser> _signInManager
 @inject UserManager<ApplicationUser> _userManager
 @inject IConfiguration _configuration
-
 
 
 @addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
